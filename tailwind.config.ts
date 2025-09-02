@@ -18,7 +18,15 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				'montserrat': ['Montserrat', 'sans-serif'],
+			},
 			colors: {
+				// Cyoda brand colors
+				'cyoda-teal': 'hsl(var(--cyoda-teal))',
+				'cyoda-orange': 'hsl(var(--cyoda-orange))',
+				'cyoda-purple': 'hsl(var(--cyoda-purple))',
+				'cyoda-green': 'hsl(var(--cyoda-green))',
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
