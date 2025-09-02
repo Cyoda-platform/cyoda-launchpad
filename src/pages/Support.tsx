@@ -1,0 +1,316 @@
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import { Button } from '@/components/ui/button';
+import { 
+  MessageCircle, 
+  Mail, 
+  FileText, 
+  Video, 
+  Users, 
+  Search,
+  ArrowRight,
+  ExternalLink,
+  HelpCircle,
+  BookOpen,
+  Zap
+} from 'lucide-react';
+
+const Support = () => {
+  const supportChannels = [
+    {
+      icon: MessageCircle,
+      title: "Discord Community",
+      description: "Join our active Discord community for real-time help, discussions, and networking with other developers.",
+      action: "Join Discord",
+      link: "https://discord.gg/cyoda",
+      primary: true
+    },
+    {
+      icon: Mail,
+      title: "Email Support",
+      description: "Get direct assistance from our support team. We typically respond within 24 hours.",
+      action: "Send Email",
+      link: "mailto:support@cyoda.net",
+      primary: false
+    },
+    {
+      icon: FileText,
+      title: "Documentation",
+      description: "Comprehensive guides, API references, and tutorials to help you build with Cyoda.",
+      action: "Browse Docs",
+      link: "/docs",
+      primary: false
+    }
+  ];
+
+  const resources = [
+    {
+      icon: BookOpen,
+      title: "Application Documentation",
+      description: "Complete API documentation and integration guides",
+      link: "/docs/api"
+    },
+    {
+      icon: Zap,
+      title: "How-To Guides",
+      description: "Step-by-step tutorials for common use cases",
+      link: "/docs/guides"
+    },
+    {
+      icon: Video,
+      title: "Video Explanations",
+      description: "Visual tutorials and product demonstrations",
+      status: "Coming Soon",
+      link: "#"
+    }
+  ];
+
+  const faqs = [
+    {
+      question: "How do I get started with Cyoda?",
+      answer: "Simply visit ai.cyoda.net and describe your application idea in natural language. Our AI will generate a prototype that you can then customize and deploy."
+    },
+    {
+      question: "What programming languages does Cyoda support?",
+      answer: "Cyoda generates applications using modern web technologies including TypeScript, React, Node.js, and supports deployment to various cloud platforms."
+    },
+    {
+      question: "Can I export my code from Cyoda?",
+      answer: "Yes! You have full access to your generated code and can export it to work in your preferred development environment or IDE."
+    },
+    {
+      question: "What kind of applications can I build?",
+      answer: "Cyoda excels at building data-driven applications like order management systems, customer portals, analytics dashboards, and enterprise workflows."
+    },
+    {
+      question: "Is there a limit to how many applications I can create?",
+      answer: "It depends on your plan. The free Developer plan allows up to 3 applications, while Professional and Enterprise plans offer unlimited applications."
+    },
+    {
+      question: "How secure are applications built with Cyoda?",
+      answer: "Security is built into every application with features like authentication, authorization, encryption, and compliance with standards like SOC2 and GDPR."
+    }
+  ];
+
+  const statusItems = [
+    { service: "AI Builder", status: "Operational", color: "text-cyoda-green" },
+    { service: "Deployment Engine", status: "Operational", color: "text-cyoda-green" },
+    { service: "API Services", status: "Operational", color: "text-cyoda-green" },
+    { service: "Documentation", status: "Operational", color: "text-cyoda-green" }
+  ];
+
+  return (
+    <div className="min-h-screen bg-background">
+      <Header />
+      <main>
+        {/* Hero Section */}
+        <section className="pt-24 pb-16 bg-gradient-dark relative">
+          <div className="absolute inset-0 texture-overlay opacity-30" />
+          
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="text-center max-w-4xl mx-auto">
+              <h1 className="text-5xl md:text-6xl font-bold text-gradient-hero mb-6">
+                How Can We Help?
+              </h1>
+              <p className="text-xl text-muted-foreground mb-8">
+                Get the support you need to build amazing applications with Cyoda. Our community and resources are here to help you succeed.
+              </p>
+              
+              {/* Search */}
+              <div className="max-w-2xl mx-auto relative">
+                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
+                <input
+                  type="search"
+                  placeholder="Search for help..."
+                  className="w-full h-14 pl-12 pr-4 rounded-xl border border-border/50 bg-background/50 backdrop-blur focus:border-primary focus:ring-1 focus:ring-primary text-lg"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Support Channels */}
+        <section className="py-24 relative">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold text-gradient-primary mb-6">
+                Get Support
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                Choose the support channel that works best for you
+              </p>
+            </div>
+
+            <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              {supportChannels.map((channel, index) => (
+                <div 
+                  key={index}
+                  className={`p-8 rounded-2xl border transition-all duration-300 ${
+                    channel.primary 
+                      ? 'border-primary bg-card/50 glow-primary scale-105' 
+                      : 'border-border/50 bg-card/30 hover:bg-card/50 glow-hover'
+                  }`}
+                >
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-primary flex items-center justify-center mb-6 glow-primary">
+                    <channel.icon className="w-8 h-8 text-white" />
+                  </div>
+                  
+                  <h3 className="text-2xl font-bold mb-4 text-foreground">
+                    {channel.title}
+                  </h3>
+                  <p className="text-muted-foreground mb-6">
+                    {channel.description}
+                  </p>
+                  
+                  <Button 
+                    className={`w-full ${
+                      channel.primary 
+                        ? 'bg-gradient-primary text-white glow-primary' 
+                        : 'bg-card/20 backdrop-blur border border-primary/30 hover:bg-primary/10 hover:border-primary glow-hover'
+                    }`}
+                    onClick={() => window.open(channel.link, '_blank')}
+                  >
+                    {channel.action} <ExternalLink className="w-4 h-4 ml-2" />
+                  </Button>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Resources */}
+        <section className="py-24 bg-gradient-dark relative">
+          <div className="absolute inset-0 texture-overlay opacity-20" />
+          
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold text-gradient-accent mb-6">
+                Learning Resources
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                Everything you need to master Cyoda development
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+              {resources.map((resource, index) => (
+                <div 
+                  key={index}
+                  className="group p-6 rounded-xl border border-border/50 bg-card/20 backdrop-blur hover:bg-card/40 transition-all duration-300 glow-hover"
+                >
+                  <div className="flex items-start space-x-4">
+                    <div className="flex-shrink-0">
+                      <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center glow-primary">
+                        <resource.icon className="w-6 h-6 text-white" />
+                      </div>
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-2">
+                        <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
+                          {resource.title}
+                        </h3>
+                        {resource.status && (
+                          <span className="text-xs bg-cyoda-orange/20 text-cyoda-orange px-2 py-1 rounded">
+                            {resource.status}
+                          </span>
+                        )}
+                      </div>
+                      <p className="text-muted-foreground text-sm leading-relaxed mb-3">
+                        {resource.description}
+                      </p>
+                      <Button 
+                        variant="ghost" 
+                        size="sm"
+                        className="text-primary hover:text-primary hover:bg-primary/10 p-0"
+                        disabled={resource.status === "Coming Soon"}
+                      >
+                        Learn More <ArrowRight className="w-3 h-3 ml-1" />
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="py-24 relative">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold text-gradient-hero mb-6">
+                Frequently Asked Questions
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                Quick answers to common questions
+              </p>
+            </div>
+
+            <div className="max-w-4xl mx-auto space-y-6">
+              {faqs.map((faq, index) => (
+                <div 
+                  key={index}
+                  className="p-6 rounded-xl border border-border/50 bg-card/20 backdrop-blur hover:bg-card/30 transition-all duration-300"
+                >
+                  <div className="flex items-start space-x-4">
+                    <HelpCircle className="w-6 h-6 text-primary mt-1 flex-shrink-0" />
+                    <div>
+                      <h3 className="text-lg font-semibold text-foreground mb-3">
+                        {faq.question}
+                      </h3>
+                      <p className="text-muted-foreground leading-relaxed">
+                        {faq.answer}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Status Section */}
+        <section className="py-24 bg-gradient-dark relative">
+          <div className="absolute inset-0 texture-overlay opacity-20" />
+          
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold text-gradient-primary mb-6">
+                System Status
+              </h2>
+              <p className="text-xl text-muted-foreground">
+                All systems operational
+              </p>
+            </div>
+
+            <div className="max-w-2xl mx-auto">
+              <div className="bg-card/20 backdrop-blur border border-border/50 rounded-xl p-6">
+                <div className="space-y-4">
+                  {statusItems.map((item, index) => (
+                    <div key={index} className="flex items-center justify-between">
+                      <span className="text-foreground">{item.service}</span>
+                      <span className={`font-medium ${item.color}`}>{item.status}</span>
+                    </div>
+                  ))}
+                </div>
+                
+                <div className="mt-6 pt-6 border-t border-border/30">
+                  <Button 
+                    variant="ghost" 
+                    className="text-primary hover:text-primary hover:bg-primary/10"
+                    onClick={() => window.open('https://status.cyoda.net', '_blank')}
+                  >
+                    View Status Page <ExternalLink className="w-4 h-4 ml-2" />
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </div>
+  );
+};
+
+export default Support;

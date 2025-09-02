@@ -1,0 +1,203 @@
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import { Database, Cloud, Shield, Zap, Users, BarChart3, Bot, Code, Rocket, CheckCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+
+const Products = () => {
+  const features = [
+    {
+      icon: Database,
+      title: "Smart Data Models",
+      description: "AI-generated entity relationships with built-in validation and complex business logic. Handle intricate data structures that real enterprises depend on."
+    },
+    {
+      icon: Cloud,
+      title: "Cloud Native",
+      description: "Scalable microservices architecture with auto-scaling and load balancing. Deploy anywhere with confidence."
+    },
+    {
+      icon: Shield,
+      title: "Enterprise Security",
+      description: "Built-in authentication, authorization, and compliance frameworks. SOC2, GDPR, and HIPAA ready."
+    },
+    {
+      icon: Zap,
+      title: "Real-time APIs",
+      description: "GraphQL and REST endpoints with real-time subscriptions and webhooks. Connect everything seamlessly."
+    },
+    {
+      icon: Users,
+      title: "Team Collaboration",
+      description: "Multi-tenant workspaces with role-based access and version control. Work together effectively."
+    },
+    {
+      icon: BarChart3,
+      title: "Analytics Ready",
+      description: "Built-in metrics, logging, and business intelligence integrations. Make data-driven decisions."
+    }
+  ];
+
+  const platforms = [
+    {
+      icon: Bot,
+      name: "AI Builder",
+      description: "Natural language to production-ready applications",
+      features: ["Entity relationship modeling", "Business logic generation", "API endpoint creation", "Database schema design"]
+    },
+    {
+      icon: Code,
+      name: "Developer IDE",
+      description: "Full-featured development environment",
+      features: ["Code completion", "Real-time debugging", "Version control integration", "Testing frameworks"]
+    },
+    {
+      icon: Rocket,
+      name: "Deployment Engine",
+      description: "One-click deployment to any cloud",
+      features: ["Auto-scaling infrastructure", "Load balancing", "SSL/TLS certificates", "Monitoring & alerts"]
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-background">
+      <Header />
+      <main>
+        {/* Hero Section */}
+        <section className="pt-24 pb-16 bg-gradient-dark relative">
+          <div className="absolute inset-0 texture-overlay opacity-30" />
+          
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="text-center max-w-4xl mx-auto">
+              <h1 className="text-5xl md:text-6xl font-bold text-gradient-hero mb-6">
+                Products Built for Modern Development
+              </h1>
+              <p className="text-xl text-muted-foreground mb-8">
+                Discover our comprehensive suite of tools designed to accelerate your development workflow from concept to production.
+              </p>
+              <Button 
+                size="lg"
+                className="bg-gradient-primary text-white text-lg px-8 py-4 glow-primary"
+                onClick={() => window.open('https://ai.cyoda.net', '_blank')}
+              >
+                Start Building Today
+              </Button>
+            </div>
+          </div>
+        </section>
+
+        {/* Platform Overview */}
+        <section className="py-24 relative">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold text-gradient-primary mb-6">
+                The Complete Platform
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                Three integrated products that work seamlessly together
+              </p>
+            </div>
+
+            <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              {platforms.map((platform, index) => (
+                <div 
+                  key={index}
+                  className="p-8 rounded-2xl border border-border/50 bg-card/30 backdrop-blur hover:bg-card/50 transition-all duration-300 glow-hover"
+                >
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-primary flex items-center justify-center mb-6 glow-primary">
+                    <platform.icon className="w-8 h-8 text-white" />
+                  </div>
+                  
+                  <h3 className="text-2xl font-bold mb-4 text-foreground">
+                    {platform.name}
+                  </h3>
+                  <p className="text-muted-foreground mb-6">
+                    {platform.description}
+                  </p>
+                  
+                  <ul className="space-y-3">
+                    {platform.features.map((feature, idx) => (
+                      <li key={idx} className="flex items-center text-sm text-muted-foreground">
+                        <CheckCircle className="w-4 h-4 text-cyoda-green mr-3 flex-shrink-0" />
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Features Grid */}
+        <section className="py-24 bg-gradient-dark relative">
+          <div className="absolute inset-0 texture-overlay opacity-20" />
+          
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold text-gradient-accent mb-6">
+                Enterprise-Grade Features
+              </h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                Everything you need to build, deploy, and scale applications with confidence
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              {features.map((feature, index) => (
+                <div 
+                  key={index}
+                  className="group p-6 rounded-xl border border-border/50 bg-card/20 backdrop-blur hover:bg-card/40 transition-all duration-300 glow-hover"
+                >
+                  <div className="flex items-start space-x-4">
+                    <div className="flex-shrink-0">
+                      <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center glow-primary">
+                        <feature.icon className="w-6 h-6 text-white" />
+                      </div>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold mb-2 text-foreground group-hover:text-primary transition-colors">
+                        {feature.title}
+                      </h3>
+                      <p className="text-muted-foreground text-sm leading-relaxed">
+                        {feature.description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="py-24 relative">
+          <div className="container mx-auto px-4 text-center">
+            <h2 className="text-4xl md:text-5xl font-bold text-gradient-hero mb-6">
+              Ready to Transform Your Development?
+            </h2>
+            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+              Join thousands of developers building the future with Cyoda's AI-powered platform.
+            </p>
+            <Button 
+              size="lg"
+              className="bg-gradient-primary text-white text-lg px-8 py-4 glow-primary mr-4"
+              onClick={() => window.open('https://ai.cyoda.net', '_blank')}
+            >
+              Try it Now
+            </Button>
+            <Button 
+              size="lg"
+              variant="outline"
+              className="bg-card/20 backdrop-blur border-primary/30 hover:bg-primary/10 hover:border-primary glow-hover"
+            >
+              View Documentation
+            </Button>
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </div>
+  );
+};
+
+export default Products;

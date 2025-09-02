@@ -44,12 +44,18 @@ const Header = () => {
         <NavigationMenu className="hidden lg:flex">
           <NavigationMenuList className="gap-6">
             <NavigationMenuItem>
-              <NavigationMenuLink className="text-foreground hover:text-primary transition-colors font-medium">
+              <NavigationMenuLink 
+                href="/products"
+                className="text-foreground hover:text-primary transition-colors font-medium"
+              >
                 Products
               </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuLink className="text-foreground hover:text-primary transition-colors font-medium">
+              <NavigationMenuLink 
+                href="/pricing"
+                className="text-foreground hover:text-primary transition-colors font-medium"
+              >
                 Pricing
               </NavigationMenuLink>
             </NavigationMenuItem>
@@ -72,12 +78,18 @@ const Header = () => {
               </NavigationMenuContent>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuLink className="text-foreground hover:text-primary transition-colors font-medium">
+              <NavigationMenuLink 
+                href="/blog"
+                className="text-foreground hover:text-primary transition-colors font-medium"
+              >
                 Blog
               </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuLink className="text-foreground hover:text-primary transition-colors font-medium">
+              <NavigationMenuLink 
+                href="/support"
+                className="text-foreground hover:text-primary transition-colors font-medium"
+              >
                 Support
               </NavigationMenuLink>
             </NavigationMenuItem>
@@ -134,8 +146,8 @@ const Header = () => {
         <div className="lg:hidden border-t border-border/40 bg-background/95 backdrop-blur">
           <div className="container py-4 space-y-4">
             <nav className="space-y-2">
-              <a href="#" className="block py-2 text-foreground hover:text-primary transition-colors">Products</a>
-              <a href="#" className="block py-2 text-foreground hover:text-primary transition-colors">Pricing</a>
+              <a href="/products" className="block py-2 text-foreground hover:text-primary transition-colors">Products</a>
+              <a href="/pricing" className="block py-2 text-foreground hover:text-primary transition-colors">Pricing</a>
               <div className="py-2">
                 <button className="flex items-center space-x-1 text-foreground hover:text-primary transition-colors">
                   <span>Docs</span>
@@ -147,8 +159,8 @@ const Header = () => {
                   <span className="block py-1 text-sm text-muted-foreground">Video Explanations (coming soon)</span>
                 </div>
               </div>
-              <a href="#" className="block py-2 text-foreground hover:text-primary transition-colors">Blog</a>
-              <a href="#" className="block py-2 text-foreground hover:text-primary transition-colors">Support</a>
+              <a href="/blog" className="block py-2 text-foreground hover:text-primary transition-colors">Blog</a>
+              <a href="/support" className="block py-2 text-foreground hover:text-primary transition-colors">Support</a>
             </nav>
             
             <div className="flex flex-col space-y-2 pt-4 border-t border-border/40">
