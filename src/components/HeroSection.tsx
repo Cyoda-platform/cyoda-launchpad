@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import heroBackground from '@/assets/hero-bg.jpg';
 
@@ -38,19 +38,27 @@ const HeroSection = () => {
 
           {/* Input section */}
           <div className="max-w-2xl mx-auto space-y-6">
-            <div className="relative">
-              <Input
+            <form action="https://ai.cyoda.net" method="GET" target="_blank" id="start-form" className="relative">
+              <Textarea
+                name="name"
+                id="name"
+                required
+                minLength={1}
+                maxLength={10000}
+                aria-label="Describe what you want to build..."
                 placeholder="Describe your application idea..."
-                className="h-14 text-lg bg-background/10 backdrop-blur border-2 border-primary/30 focus:border-primary glow-primary placeholder:text-foreground/60"
+                className="min-h-[120px] text-lg bg-background/10 backdrop-blur border-2 border-primary/30 focus:border-primary glow-primary placeholder:text-foreground/60 pr-32"
               />
               <Button 
+                type="submit"
+                id="start-btn"
                 size="lg"
                 className="absolute right-2 top-2 bg-gradient-primary text-white glow-primary"
               >
                 <Sparkles className="w-5 h-5 mr-2" />
                 Start Building
               </Button>
-            </div>
+            </form>
 
             {/* Pre-baked examples */}
             <div className="space-y-3">
