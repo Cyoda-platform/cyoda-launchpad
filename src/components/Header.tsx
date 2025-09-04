@@ -36,9 +36,9 @@ const Header = () => {
       <div className="container flex h-16 max-w-screen-2xl items-center justify-between">
         {/* Logo */}
         <div className="flex items-center space-x-2">
-          <a href="/" className="flex items-center space-x-2 glow-hover">
+          <Link to="/" className="flex items-center space-x-2 glow-hover">
             <img src={cyodaLogo} alt="Cyoda" className="h-10" />
-          </a>
+          </Link>
         </div>
 
         {/* Desktop Navigation */}
