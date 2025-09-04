@@ -8,13 +8,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import MarkdownRenderer from '@/components/MarkdownRenderer';
 import { BlogDevTools } from '@/components/BlogDevTools';
-import { 
-  useBlogPosts, 
-  useBlogPostPreviews, 
+import {
+  useBlogPosts,
+  useBlogPostPreviews,
   useFeaturedBlogPosts,
   useBlogCategories,
   useSearchBlogPosts,
   useBlogPost,
+  useBlogPostsByCategory,
 } from '@/hooks/use-blog';
 import { Search, Clock, User, Calendar, Tag, Star, CheckCircle, XCircle, Loader2 } from 'lucide-react';
 
@@ -70,6 +71,7 @@ const BlogSystemTest = () => {
             <SinglePostTest selectedSlug={selectedSlug} setSelectedSlug={setSelectedSlug} />
           </TabsContent>
         </Tabs>
+        </div>
       </div>
     </div>
   );
