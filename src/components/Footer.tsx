@@ -1,13 +1,14 @@
+import { Link } from 'react-router-dom';
 import { Github, Linkedin, Twitter, Youtube } from 'lucide-react';
 import cyodaLogo from '@/assets/cyoda-logo.png';
 
 const Footer = () => {
   const footerLinks = [
-    { name: 'Products', href: '#' },
-    { name: 'Pricing', href: '#' },
+    { name: 'Products', href: '/products' },
+    { name: 'Pricing', href: '/pricing' },
     { name: 'Docs', href: '#' },
-    { name: 'Blog', href: '#' },
-    { name: 'Support', href: '#' },
+    { name: 'Blog', href: '/blog' },
+    { name: 'Support', href: '/support' },
   ];
 
   const socialLinks = [
@@ -73,13 +74,23 @@ const Footer = () => {
             <h3 className="font-semibold mb-4 text-foreground">Platform</h3>
             <nav className="space-y-3">
               {footerLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  className="block text-muted-foreground hover:text-primary transition-colors"
-                >
-                  {link.name}
-                </a>
+                link.href.startsWith('#') ? (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    className="block text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    {link.name}
+                  </a>
+                ) : (
+                  <Link
+                    key={link.name}
+                    to={link.href}
+                    className="block text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    {link.name}
+                  </Link>
+                )
               ))}
             </nav>
           </div>

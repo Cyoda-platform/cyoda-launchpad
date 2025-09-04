@@ -1,10 +1,11 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ThemeToggle';
-import { 
-  Github, 
-  Linkedin, 
-  Twitter, 
+import {
+  Github,
+  Linkedin,
+  Twitter,
   Youtube,
   Menu,
   X,
@@ -44,19 +45,23 @@ const Header = () => {
         <NavigationMenu className="hidden lg:flex">
           <NavigationMenuList className="gap-6">
             <NavigationMenuItem>
-              <NavigationMenuLink 
-                href="/products"
-                className="text-foreground hover:text-primary transition-colors font-medium"
-              >
-                Products
+              <NavigationMenuLink asChild>
+                <Link
+                  to="/products"
+                  className="text-foreground hover:text-primary transition-colors font-medium"
+                >
+                  Products
+                </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuLink 
-                href="/pricing"
-                className="text-foreground hover:text-primary transition-colors font-medium"
-              >
-                Pricing
+              <NavigationMenuLink asChild>
+                <Link
+                  to="/pricing"
+                  className="text-foreground hover:text-primary transition-colors font-medium"
+                >
+                  Pricing
+                </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
@@ -78,19 +83,23 @@ const Header = () => {
               </NavigationMenuContent>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuLink 
-                href="/blog"
-                className="text-foreground hover:text-primary transition-colors font-medium"
-              >
-                Blog
+              <NavigationMenuLink asChild>
+                <Link
+                  to="/blog"
+                  className="text-foreground hover:text-primary transition-colors font-medium"
+                >
+                  Blog
+                </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <NavigationMenuLink 
-                href="/support"
-                className="text-foreground hover:text-primary transition-colors font-medium"
-              >
-                Support
+              <NavigationMenuLink asChild>
+                <Link
+                  to="/support"
+                  className="text-foreground hover:text-primary transition-colors font-medium"
+                >
+                  Support
+                </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
           </NavigationMenuList>
@@ -146,8 +155,8 @@ const Header = () => {
         <div className="lg:hidden border-t border-border/40 bg-background/95 backdrop-blur">
           <div className="container py-4 space-y-4">
             <nav className="space-y-2">
-              <a href="/products" className="block py-2 text-foreground hover:text-primary transition-colors">Products</a>
-              <a href="/pricing" className="block py-2 text-foreground hover:text-primary transition-colors">Pricing</a>
+              <Link to="/products" className="block py-2 text-foreground hover:text-primary transition-colors">Products</Link>
+              <Link to="/pricing" className="block py-2 text-foreground hover:text-primary transition-colors">Pricing</Link>
               <div className="py-2">
                 <button className="flex items-center space-x-1 text-foreground hover:text-primary transition-colors">
                   <span>Docs</span>
@@ -159,8 +168,8 @@ const Header = () => {
                   <span className="block py-1 text-sm text-muted-foreground">Video Explanations (coming soon)</span>
                 </div>
               </div>
-              <a href="/blog" className="block py-2 text-foreground hover:text-primary transition-colors">Blog</a>
-              <a href="/support" className="block py-2 text-foreground hover:text-primary transition-colors">Support</a>
+              <Link to="/blog" className="block py-2 text-foreground hover:text-primary transition-colors">Blog</Link>
+              <Link to="/support" className="block py-2 text-foreground hover:text-primary transition-colors">Support</Link>
             </nav>
             
             <div className="flex flex-col space-y-2 pt-4 border-t border-border/40">
