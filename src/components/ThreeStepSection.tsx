@@ -29,7 +29,7 @@ const ThreeStepSection = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gradient-primary mb-6">
-            From Concept to Production in Minutes, Not Months
+            Focus on the solution, not infrastructure
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Transform your ideas into scalable applications with our AI-powered development platform

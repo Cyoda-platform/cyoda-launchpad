@@ -17,21 +17,21 @@ const HeroSection = () => {
         className="absolute inset-0 bg-cover bg-center bg-no-repeat texture-overlay"
         style={{ backgroundImage: `url(${heroBackground})` }}
       />
-      <div className="absolute inset-0 bg-gradient-dark opacity-80" />
+      <div className="absolute inset-0 bg-gradient-dark opacity-70" />
       
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 text-center">
-        <div className="max-w-4xl mx-auto space-y-8">
+        <div className="max-w-4xl mx-auto space-y-6">
           {/* Hero headline */}
           <div className="space-y-4">
-            <h1 className="text-5xl md:text-7xl font-bold text-gradient-hero leading-tight">
-              From Problem → Prototype → Production
+            <h1 className="text-3xl md:text-5xl font-bold text-gradient-hero leading-tight">
+              Problem → Prototype → Production
             </h1>
             
             {/* Subtext */}
-            <p className="text-xl md:text-2xl text-foreground/90 leading-relaxed max-w-3xl mx-auto">
-              Cyoda is a developer-first application platform with an AI builder. 
-              It helps you turn problems into scalable, enterprise-grade systems in minutes. 
+            <p className="text-l md:text-l text-foreground/90 leading-relaxed max-w-2xl mx-auto">
+              Cyoda is a developer-first event driven application platform with an AI builder.
+              It helps you turn problems into scalable, enterprise-grade systems.
               Build complex, data-driven backends, iterate in your IDE, and deploy to production with confidence.
             </p>
           </div>
