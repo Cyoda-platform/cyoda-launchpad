@@ -20,4 +20,15 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  define: {
+    global: 'globalThis',
+  },
+  optimizeDeps: {
+    include: ['gray-matter', 'buffer'],
+  },
+  esbuild: {
+    define: {
+      global: 'globalThis'
+    }
+  },
 }));
