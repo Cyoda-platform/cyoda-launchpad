@@ -1,3 +1,14 @@
+---
+title: "When Transactions Meet Workflows: Building Reliable Systems Without Glue Code"
+author: "Paul Schleger"
+date: "2025-08-30"
+category: "Architecture"
+excerpt: "Most enterprises build reliable systems by stitching together PostgreSQL, Kafka, and workflow engines. Cyoda offers a different vision: a unified platform where transactions, workflows, and queries reduce complexity while improving reliability."
+featured: false
+published: true
+tags: ["transactions", "workflows", "architecture", "reliability", "integration"]
+---
+
 # When Transactions Meet Workflows: Building Reliable Systems Without Glue Code
 
 In most enterprises, building reliable systems isn't just about writing

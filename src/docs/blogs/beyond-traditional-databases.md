@@ -1,3 +1,14 @@
+---
+title: "Beyond Traditional Databases: Why Entity-Centric Architecture Matters"
+author: "Paul Schleger"
+date: "2025-08-18"
+category: "Architecture"
+excerpt: "Modern applications demand more than traditional databases can deliver. Discover how Entity-Centric Architecture and Cyoda's EDBMS addresses the gaps in relational and document databases for stateful, process-driven applications."
+featured: false
+published: true
+tags: ["architecture", "database", "entity-centric", "EDBMS", "enterprise"]
+---
+
 # Beyond Traditional Databases: Why Entity-Centric Architecture Matters
 
 Modern applications demand more than what traditional databases can

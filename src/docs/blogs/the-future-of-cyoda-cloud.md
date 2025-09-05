@@ -1,3 +1,14 @@
+---
+title: "The Future of Cyoda: Cloud-Native Entity Databases"
+author: "Patrick Stanton"
+date: "2025-06-12"
+category: "Cloud"
+excerpt: "Enterprises are shifting from on-premise, code-heavy platforms to cloud-native, configuration-driven systems. Discover how Cyoda Cloud reimagines mission-critical systems with a fully managed Entity Database Management System."
+featured: false
+published: true
+tags: ["cloud-native", "entity-database", "grpc", "modernization", "saas"]
+---
+
 # The Future of Cyoda: Cloud-Native Entity Databases
 
 Enterprises are undergoing a massive shift: from on-premise, code-heavy

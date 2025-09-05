@@ -1,3 +1,14 @@
+---
+title: "Designing for High-Availability in Distributed Systems: Lessons from Cyoda"
+author: "Patrick Stanton"
+date: "2025-09-03"
+category: "Infrastructure"
+excerpt: "Distributed systems power the modern enterprise, but with scale comes complexity. Learn how Cyoda's platform combines Cassandra, Zookeeper, and event-context sharding to deliver fault tolerance at scale."
+featured: false
+published: true
+tags: ["high-availability", "distributed-systems", "cassandra", "zookeeper", "fault-tolerance"]
+---
+
 # Designing for High-Availability in Distributed Systems: Lessons from Cyoda
 
 Distributed systems power the modern enterprise, but with scale comes
