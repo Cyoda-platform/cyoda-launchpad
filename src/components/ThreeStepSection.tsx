@@ -23,7 +23,7 @@ const ThreeStepSection = () => {
   ];
 
   return (
-    <section className="py-24 bg-gradient-dark relative">
+    <section className="py-24 bg-gradient-to-br from-background via-card to-secondary/20 relative">
       <div className="absolute inset-0 texture-overlay opacity-30" />
       
       <div className="container mx-auto px-4 relative z-10">

@@ -48,7 +48,7 @@
     --gradient-primary: linear-gradient(135deg, hsl(var(--cyoda-teal)), hsl(var(--cyoda-orange)));
     --gradient-hero: linear-gradient(135deg, hsl(var(--cyoda-purple)), hsl(var(--cyoda-teal)));
     --gradient-accent: linear-gradient(135deg, hsl(var(--cyoda-orange)), hsl(var(--cyoda-green)));
-    --gradient-dark: linear-gradient(135deg, hsl(240 10% 3.9%), hsl(240 6% 10%));
+    --gradient-dark: linear-gradient(135deg, hsl(220 13% 91%), hsl(0 0% 98%));
     
     /* Animations */
     --transition-glow: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -76,6 +76,9 @@
     --border: 240 5% 15%;
     --input: 240 5% 15%;
     --ring: 175 67% 52%;
+
+    /* Dark mode gradients */
+    --gradient-dark: linear-gradient(135deg, hsl(240 10% 3.9%), hsl(240 6% 10%));
   }
   
   * {
@@ -147,8 +150,8 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: 
-      radial-gradient(circle at 1px 1px, rgba(255,255,255,0.1) 1px, transparent 0);
+    background-image:
+      radial-gradient(circle at 1px 1px, hsl(var(--foreground) / 0.1) 1px, transparent 0);
     background-size: 20px 20px;
     pointer-events: none;
     opacity: 0.3;
@@ -156,7 +159,7 @@
   
   /* Code syntax highlighting */
   .code-block {
-    background: hsl(var(--surface-dark));
+    background: hsl(var(--card));
     border: 1px solid hsl(var(--border));
     border-radius: var(--radius);
     padding: 1rem;

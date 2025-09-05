@@ -1,14 +1,20 @@
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { ArrowRight, Sparkles } from 'lucide-react';
-import heroBackground from '@/assets/hero-bg.jpg';
+import { useTheme } from 'next-themes';
+import heroBackgroundDark from '@/assets/hero-bg.jpg';
+import heroBackgroundLight from '@/assets/hero-bg-lm.png';
 
 const HeroSection = () => {
+  const { theme } = useTheme();
   const prebakedExamples = [
     "Order Management System",
-    "Customer Onboarding Portal", 
+    "Customer Onboarding Portal",
     "Real-Time Analytics Dashboard"
   ];
+
+  // Select background image based on theme
+  const heroBackground = theme === 'light' ? heroBackgroundLight : heroBackgroundDark;
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
