@@ -134,7 +134,7 @@ const Header = () => {
               className="bg-gradient-primary text-white glow-primary" 
               onClick={() => window.open('https://ai.cyoda.net', '_blank')}
             >
-              Try it Now
+              Try Now
             </Button>
           </div>
 
@@ -180,7 +180,7 @@ const Header = () => {
                 className="bg-gradient-primary text-white justify-start"
                 onClick={() => window.open('https://ai.cyoda.net', '_blank')}
               >
-                Try it Now
+                Try Now
               </Button>
             </div>
 

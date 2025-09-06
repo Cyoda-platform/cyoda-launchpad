@@ -118,12 +118,15 @@ const Footer = () => {
             © 2025 Cyoda. All rights reserved.
           </p>
           <div className="flex items-center space-x-6 mt-4 md:mt-0">
-            <a href="#" className="text-muted-foreground hover:text-primary text-sm transition-colors">
+            <Link to="/cookie-policy" className="text-muted-foreground hover:text-primary text-sm transition-colors">
+              Cookie Policy
+            </Link>
+            <Link to="/privacy-policy" className="text-muted-foreground hover:text-primary text-sm transition-colors">
               Privacy Policy
-            </a>
-            <a href="#" className="text-muted-foreground hover:text-primary text-sm transition-colors">
+            </Link>
+            <Link to="/terms-of-service" className="text-muted-foreground hover:text-primary text-sm transition-colors">
               Terms of Service
-            </a>
+            </Link>
           </div>
         </div>
       </div>

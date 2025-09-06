@@ -183,7 +183,7 @@ const Products = () => {
               className="bg-gradient-primary text-white text-lg px-8 py-4 glow-primary mr-4"
               onClick={() => window.open('https://ai.cyoda.net', '_blank')}
             >
-              Try it Now
+              Try Now
             </Button>
             <Button 
               size="lg"

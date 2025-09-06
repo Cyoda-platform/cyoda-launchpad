@@ -1,0 +1,140 @@
+Privacy Policy
+‍
+
+The Cyoda Privacy Policy was last updated: 31st March 2024
+‍
+
+Data privacy is important to Cyoda. Our Privacy Policy covers how we collect, use, disclose, transfer, and store your information. Please take a moment to read our privacy practices and let us know if you have any questions.
+
+1. Purpose
+CYODA LIMITED (“The Company”) are committed to protecting your Personal Information when you use our website, products and services. We recognise that when you choose to provide us with information about yourself, you trust us to treat it in a responsible manner.
+
+The purpose of this Website Privacy Policy is to inform you about how the Company may use your Personal Information.
+
+In order to optimise the provision of our services to you and to facilitate some of our marketing efforts, we collect certain specific information about you.
+
+This Website Privacy Policy explains the following:
+
+what information we may collect about you;
+how we will use information we collect about you;
+whether the Company will disclose your details to anyone else;
+where we might send your information;
+the use of cookies on the Company’s websites; and
+how you can reject cookies.
+The Company uses all Personal Information that you provide to us or that we collect from you in accordance with all applicable laws, including those concerning the protection of Personal Information such as the EU General Data Protection Regulation.
+
+2. Definitions
+In this privacy policy, the following definitions are used:
+
+GDPR: the General Data Protection Regulation (“GDPR”) is a regulation in EU law on data protection and privacy in the European Union (EU) and the European Economic Area (EEA). It also addresses the transfer of personal data outside the EU and EEA areas. The primary aim of the “GDPR” is to give control to individuals over their personal data and to simplify the regulatory environment for international business by unifying the regulation within the EU.
+
+Data Protection Law: all legislation and regulations in force from time to time regulating the use of personal data and the privacy of electronic communications including, but not limited to, EU Regulation 2016/679 (the“GDPR”), the Data Protection Act 2018, and any successor legislation or other directly applicable EU regulation relating to data protection and privacy for as long as, and to the extent that, EU law has legal effect in the UK).
+
+Encryption or encrypted data: The most effective way to achieve data security. To read an encrypted file, you must have access to a secret key or password that enables you to decrypt it. Unencrypted data is called plain text.
+
+ICO: Information Commissioner’s Office. The supervisory authority for data protection in the UK.
+
+Personal Data: any information relating to an identifiable person who can be directly or indirectly identified from that information, for example, a person’s name, identification number, location, online identifier. It can also include pseudonymised data. The terms Personal Data and Personal Information are used interchangeably within this policy.
+
+Personal Data Breach: a breach of security leading to the accidental or unlawful destruction, loss, alteration, unauthorised disclosure of, or access to, personal data transmitted, stored or otherwise processed.
+
+Special Categories of Personal Data: this data needs more protection because it is sensitive. It includes data which relates to an individual’s health, sexual orientation, race, ethnic origin, political opinion, religion, and trade union membership. It also includes genetic and biometric data (where used for ID purposes).
+
+3. Website Privacy Policy Scope
+This Website Privacy Policy applies only to the actions of the Company and use of the Company’s website.
+
+The website may contain hyperlinks to websites owned and operated by third parties. These third party websites have their own privacy policies, and are also likely to use cookies. We recommend that you review these policies which will govern the use of Personal Information which you submit when visiting these websites and which may also be collected by cookies. We do not accept any liability for such third party websites and your use of such websites is at your own risk.
+
+4. The Collection and Use of Data
+4.1. How do we collect information
+This Policy relates to the Company’s use of any Personal Information collected from you via the
+following services:
+
+CYODA LIMITED’s website;
+social media;
+messaging services; and
+any official email address or SMS number
+4.2. What information do we collect
+When you participate in, access or sign up to any of the Company’s services, activities or online content (including on social media and messaging applications), such as newsletters, promotions, live chats, message boards, web and mobile notifications or votes, we may receive Personal Information about you.
+
+This may include:
+
+your first and last name
+email address
+job title
+employer
+postal address
+telephone or mobile number
+IP address (numbers that can uniquely identify a specific computer or other network device on the internet)
+information provided by you in relation to submitting a job application to us (this may include sensitive personal
+information)
+information collected about your use of CYODA LIMITED’s services
+4.3. How will we use the information?
+Depending on your use of our site, we will use your personal information for a number of purposes including:
+
+To provide our services, activities or online content, or communicating information about them (e.g. relating to upcoming promotions or new product launches) or dealing with your requests and enquiries.
+To provide you with better ways of accessing information from this website.
+For service administration, which means that we may contact you for reasons related to the service, activity or online content you have signed up for.
+To contact you about any submission you have made.
+To use IP addresses and device identifiers to identify the location of users, blocking disruptive use, establishing the number of visits from different countries, tailoring the content of our sites, apps or other services based on browsing behaviours, and determining the country from which you are accessing the services.
+For analysis and research so that we may improve the services we offer.
+We collect and use the Personal Information about you for the purposes described above, because we have a legitimate business interest to do so that is not overridden by your right to have your Personal Information adequately protected. You do not have to provide us with any of the Personal Information described above, but if you chose not to do so, you may not be able to receive certain Company services, access certain parts of our website or receive information from us that you have requested.
+
+4.4. Data aggregation
+The Company may collect, use and share aggregated data.
+
+Aggregated data could be derived from your Personal Information but is not considered Personal Data under the “GDPR” on the basis that it does not directly or indirectly reveal your identity. The Company may share this anonymous data with third-parties.
+
+For the avoidance of doubt, if the aggregated or combined data we hold on you can directly or indirectly identify you, the Company treats the data as Personal Data which will be used in accordance with this Policy.
+
+4.5. Sharing information with third parties
+We may send your personal information to other affiliates and third parties to help us process your personal information for the purposes set out in this policy.
+
+We may disclose personal information to third parties when we reasonably believe we are required by law, and in order to investigate, prevent, or take action regarding suspected or actual unlawful or otherwise prohibited activities, including, but not limited to, fraud.
+
+4.6. Where do we send your information
+The Company may be required to transfer personal data to a country/countries around the world including ( Europe , US , Asia , Africa ). We will, where the country to which your data is transferred has not been found to provide an adequate level of protection, put in place appropriate safeguards to ensure your Personal Information is protected.
+
+5. Cookies
+We may use information obtained from cookies or similar technology.
+
+Cookies are text files placed on your computer to collect standard internet log information and visitor behaviour information. This information is used to track visitor use of the website and to compile statistical reports on website activity. For further information visit www.aboutcookies.org. You can set your browser not to accept cookies and the above website tells you how to remove cookies from your browser. However, if you do so in a few cases some of our website features may not function as a result.
+
+During the course of any visit to our website, the pages you see, along with a cookie, are downloaded to your device. Many websites do this, because cookies enable website publishers to do useful things like find out whether the device (and probably its user) has visited the website before. This is done on a repeat visit by checking to see, and finding, the cookie left there on the last visit. If you continue without changing your settings, we’ll assume that you are happy to receive all cookies on our website. However, you can change your cookie settings at any time.
+
+5.1. What do we use cookies for?
+This website uses cookies that fall into one or more of all the categories below:
+
+Strictly necessary cookies – these enable services you have specifically asked for. These cookies are essential to enable you to move around our website and use its features, such as accessing secure areas of the website. Without these cookies certain services you have asked for cannot be provided
+Performance cookies – these collect information on the pages visited. These cookies collect information about how users use a website, for instance which pages users go to most often, and if they get error messages. These cookies don’t collect information that identifies a visitor. All information these cookies collect is aggregated and therefore anonymous. They are only used to help us make improvements to the website for a better user experience.
+Functionality cookies – these remember choices you make to improve your experience. These cookies allow the website to remember choices you make and provide enhanced, more personal features. They may be used to help provide services you have asked for such as watching a video. The information these cookies collect may be anonymised and they cannot track your browsing activity to other websites.
+6. Keeping Data Secure
+6.1. Third Party Websites
+Our website links to third party sites which we do not operate or endorse. These websites may use cookies and collect your personal information in accordance with their own privacy policies. This privacy policy does not apply to third party websites and we are not responsible for third party websites.
+
+6.2. How do we protect your information?
+We take appropriate measures to ensure that any personal information which you disclose to us is kept secure, accurate and up to date and kept only for so long as is necessary for the purposes for which it is used. The security measures taken may include, but are not limited to, data encryption.
+
+7. What are your rights?
+Under the “GDPR”, you have the following rights, which the Company will always work to uphold:
+
+Right to access – for a copy of the Personal Information we hold about you, and details about how we are processing your Personal Information. If we provide you with access to the information we hold about you, we will not charge you for this, unless your request is “manifestly unfounded or excessive”. Where we are legally permitted to do so, we may refuse your request. If we refuse your request, we will tell you the reasons why.
+Right to correct – to have any inaccuracies in your Personal Information corrected.
+Right to erase – to have your Personal Information erased, or for our use of it to be restricted (for example, if your preferences change, or if you don’t want us to send you the information you have requested).
+Right to restrict use – the right to “block” CYODA LIMITED from using your data or limit the way in which we can use it;
+Right to data portability – if we are processing your Personal Information by automated means and on the basis of your consent (see “How do we use it?”, above), for us to provide your personal information to you in a structured, commonly-used and machine-readable format. You can also ask us to provide your personal information directly to a third party in this format, and, if technically feasible, we will do so;
+Right to object – the right to object to our use of your data including where we use it for our legitimate interests.
+7.1. Right to opt out
+You can request that we stop sending you marketing materials at any time. Electronic communications typically include an unsubscribe link that allows you to manage your
+communication preferences including the ability to unsubscribe from all future marketing. If for any reason that has not been successful please contact us using the details provided below.
+
+7.2. How to contact us
+This Website Privacy Policy should tell you everything you need to know, but you can always contact us to ask any questions or if you wish to exercise any of your rights in relation to your Personal Information, using the contact information below:
+
+Email address: infosec@cyoda.com
+Postal address: Cyoda Ltd, 1 Darell Road, Richmond, London, TW9 4LF
+You have the right to make a complaint to the supervisory authority if you are unhappy with how we’ve handled your Personal Information. In the UK, the supervisory authority is the Information
+
+Commissioner’s Office (http://www.ico.org.uk).
+
+Cyoda Ltd, UK

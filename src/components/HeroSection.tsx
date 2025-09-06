@@ -58,11 +58,10 @@ const HeroSection = () => {
               <Button 
                 type="submit"
                 id="start-btn"
-                size="lg"
-                className="absolute right-2 top-2 bg-gradient-primary text-white glow-primary"
+                size="sm"
+                className="absolute right-2 bottom-2 bg-gradient-primary text-white glow-primary"
               >
                 <Sparkles className="w-5 h-5 mr-2" />
-                Start Building
               </Button>
             </form>
 
@@ -90,7 +89,7 @@ const HeroSection = () => {
               className="bg-gradient-primary text-white text-lg px-8 py-4 glow-primary"
               onClick={() => window.open('https://ai.cyoda.net', '_blank')}
             >
-              Try it Now
+              Try Now
               <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
           </div>

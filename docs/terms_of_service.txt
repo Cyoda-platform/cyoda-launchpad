@@ -1,0 +1,132 @@
+Cyoda - Alpha/Beta Terms of Service
+Effective Date: 2nd June 2025
+
+PLEASE READ THESE TERMS OF SERVICE CAREFULLY. BY ACCESSING OR USING THE SERVICES, YOU AGREE TO BE BOUND BY THESE TERMS. IF YOU DO NOT AGREE TO ALL OF THESE TERMS, DO NOT ACCESS OR USE THE SERVICES.
+
+Welcome to Cyoda! These Terms of Service ("Terms") govern your access to and use of the alpha or beta versions (the "Alpha/Beta Period") of Cyoda's products and services, including the Cyoda Cloud, Cyoda Platform, and AI Assistant (collectively, the "Services"). These Services are provided by Cyoda Limited, a company registered in the United Kingdom ("Cyoda", "we", "us", or "our").
+
+These Terms constitute a legally binding agreement between you ("User", "you", or "your") and Cyoda.
+
+1. Definitions
+
+"AI Assistant": Cyoda's artificial intelligence tool designed to assist users in building applications, accessed via a cloud-hosted interface provided by Cyoda.
+"Alpha/Beta Period": The current experimental phase during which the Services are offered for testing and feedback purposes before a general commercial release.
+"Cyoda Cloud": The managed cloud environment provided by Cyoda where users can host applications built on the Cyoda Platform.
+"Cyoda Platform": The Cyoda-hosted platform enabling users to run applications. For the purpose of these Alpha/Beta Terms, this refers only to the version hosted by Cyoda.
+"Large Language Models (LLMs)": Third-party artificial intelligence models that the AI Assistant may interact with to process User Input Prompts and generate responses.
+"Open Source Contributions": Any code, suggestions, or materials you voluntarily contribute to Cyoda's designated open-source repositories.
+"Services": Collectively, the Cyoda Cloud, Cyoda Platform, and AI Assistant as offered during the Alpha/Beta Period.
+"User Application Data": Data, information, or content that you upload, process, or store using the Services other than Open Source Contributions, User Input Prompts, or AI-Generated Code. This includes application data specific to your use of the hosted Services on the Cyoda Cloud or Cyoda Platform.
+"User Input Prompts": Any text, queries, instructions, code snippets, or other data that You directly and intentionally provide to the AI Assistant to elicit a response, action, or output from the AI Assistant.
+"AI-Generated Code": Specific code snippets, scripts, algorithms, or other programmatic outputs directly created and provided to You by the AI Assistant in response to Your User Input Prompts.
+2. Acceptance of Terms
+
+By creating an account, accessing, or using any part of the Services, you acknowledge that you have read, understood, and agree to be bound by these Terms. If you are using the Services on behalf of an organization, you represent and warrant that you have the authority to bind that organization to these Terms, and "you" and "your" will refer to that organization.
+
+3. Scope of Services & Alpha/Beta Nature
+
+Experimental Services: You acknowledge that the Services are provided during an Alpha/Beta Period and are experimental, pre-release versions. They may contain bugs, errors, and defects, and may not operate correctly or continuously.
+"AS IS" and "AS AVAILABLE": The Services are provided strictly on an "AS IS" and "AS AVAILABLE" basis, without any warranties or representations of any kind, express or implied.
+No Service Level Agreement (SLA): Cyoda provides NO SERVICE LEVEL AGREEMENT (SLA) during the Alpha/Beta Period. We do not guarantee any level of availability, performance, uptime, or response times for the Services. Outages and interruptions may occur without notice.
+Best Efforts Only: While Cyoda will use reasonable, best efforts to maintain service availability and address reported issues, we make no commitments regarding bug resolution timelines or the correction of any specific reported issue. Cyoda may, at its sole discretion, decide not to resolve issues reported by users.
+Not for Production Use: The Services, in their current Alpha/Beta state, are NOT INTENDED OR WARRANTED FOR PRODUCTION USE. Any use in a production or critical business context is strictly at your own risk. If you wish to discuss potential production use, please contact Cyoda directly.
+Changes and Discontinuation: Cyoda reserves the right to modify, suspend, or discontinue the Services (or any part thereof) at any time, with or without notice, particularly during the Alpha/Beta Period.
+4. Account Registration and Eligibility
+
+Account Requirement: While contributing to Cyoda's open-source repositories may not require an account, accessing and using the Cyoda Platform to run applications requires you to register for an account.
+Accurate Information: You agree to provide accurate, current, and complete information during the registration process and to update such information to keep it accurate, current, and complete.
+Account Security: You are responsible for safeguarding your account password and for any activities or actions under your account. You agree to notify Cyoda immediately of any unauthorized use of your account.
+Eligibility: You must have the legal capacity to enter into a binding agreement to use the Services. You represent and warrant that you are not located in, under the control of, or a national or resident of any country subject to sanctions by the United Kingdom government that would prohibit your use of the Services. Cyoda reserves the right to refuse service or terminate accounts for users found to be in violation of applicable sanctions or these eligibility requirements.
+5. Use Rights and Restrictions
+
+Limited License: Subject to your compliance with these Terms, Cyoda grants you a limited, non-exclusive, non-transferable, non-sublicensable, revocable license to access and use the Services during the Alpha/Beta Period solely for internal evaluation and testing purposes.
+Prohibited Uses: You agree not to:
+Use the Services for any illegal, harmful, or fraudulent activities.
+Reverse engineer, decompile, disassemble, or otherwise attempt to discover the source code or underlying ideas or algorithms of the non-open-source components of the Services (including the Cyoda Platform hosting infrastructure and proprietary aspects of the AI Assistant). Note: This does not prohibit you from using Cyoda's designated open-source components as permitted by their respective licenses to build applications.
+Conduct performance testing, benchmarking, or vulnerability scanning on the Services without prior written consent from Cyoda.
+Use the Services in a manner that infringes upon the intellectual property rights of Cyoda or any third party.
+Interfere with or disrupt the integrity or performance of the Services or the data contained therein.
+Attempt to gain unauthorized access to the Services or their related systems or networks.
+Use the Services for any production or commercial purposes during the Alpha/Beta period without explicit written agreement from Cyoda.
+Engage in any activity that constitutes abuse of the Services or negatively impacts other users, as determined by Cyoda in its sole discretion.
+Abuse: Cyoda reserves the right to suspend or terminate your access to the Services immediately and without notice if we suspect, in our sole discretion, that you are engaging in prohibited uses or otherwise abusing the Services.
+6. User Content Data Management
+
+This section, as amended, outlines how Cyoda handles User Content, with particular focus on the data We may use to improve and develop Our AI Assistant and, critically, the data We commit not to access or use for such purposes. Your trust is of paramount importance to Us, and We are dedicated to maintaining transparency in Our data practices. All other provisions, terms, and conditions of the 'User Content Data Management' section not expressly amended herein, along with all other sections of Our Terms of Service and Privacy Policy, shall remain in full force and effect.
+
+A. Data We Use for AI Assistant Improvement
+
+To continuously develop, improve, and enhance the functionality, accuracy, safety, and overall performance of Our AI Assistant, Cyoda may use the categories of data specified below ("Improvement Data"). By accessing or using the AI Assistant, You grant Cyoda a worldwide, non-exclusive, royalty-free, irrevocable, perpetual, sublicensable, and transferable license to use, reproduce, modify, adapt, create derivative works from, and otherwise exploit such Improvement Data solely for the purpose of AI Assistant Improvement as defined herein, and for no other purpose without Your explicit consent:
+
+User Input Prompts:
+We may use Your User Input Prompts to understand user needs, refine the AI Assistant's ability to generate relevant and accurate responses, identify patterns and areas for improvement, and to train, fine-tune, and evaluate the underlying machine learning models and algorithms that power the AI Assistant. For example, if You provide a prompt seeking a specific type of code or a solution to a particular problem, We may use that prompt (and the corresponding AI-Generated Code, as described below) to better understand context, intent, and to improve the quality and relevance of future outputs generated by the AI Assistant in similar scenarios.
+AI-Generated Code:
+We may use the AI-Generated Code produced by Our AI Assistant in direct response to Your User Input Prompts to further teach, train, evaluate, and improve the AI Assistant. This includes, but is not limited to, using such AI-Generated Code as training data for Our machine learning models to enhance their coding capabilities, logical reasoning, accuracy, efficiency, and safety. This process is integral to refining the quality, utility, and reliability of the code and other outputs the AI Assistant can produce. For clarity, this right pertains to the specific AI-Generated Code output by the AI Assistant and not to Your broader codebase or applications into which You may choose to incorporate such AI-Generated Code, unless such broader codebase is separately provided as a User Input Prompt or an Open Source Repository Contribution.
+Open Source Repository Contributions:
+If You voluntarily choose to contribute code, documentation, or other materials to the specific public open-source software repositories expressly designated by Cyoda for the AI Assistant's development, maintenance, or related components ("Open Source Repository Contributions"), We may use these contributions for AI Assistant Improvement. Your Open Source Repository Contributions are primarily governed by the terms of the applicable open-source licenses associated with those specific repositories. By making such contributions, You acknowledge and agree that, in addition to the rights granted under the applicable open-source license, Cyoda may also use these contributions for the purposes of AI Assistant Improvement as described in these Terms.
+B. Data We Do Not Access or Use for AI Assistant Improvement
+
+Notwithstanding any other provision in these Terms or any other agreement You may have with Cyoda, Cyoda explicitly and unequivocally commits to the following regarding Your data:
+
+User Application Data in Your Running System: Cyoda will not, retrieve, copy, use Your User Application Data that is located, stored, and managed within Your Running System for the purposes of AI Assistant Improvement, or for training, fine-tuning, or evaluating any of Cyoda's AI models or algorithms. Our AI Assistant is designed and intended to operate without needing to access or process the entirety of Your applications, databases, or proprietary data repositories residing within Your Running System, unless You explicitly and intentionally extract specific portions of such data and provide them as User Input Prompts to the AI Assistant. The boundary of Your Running System is respected as Your private operational domain.
+C. Data Processing by Third-Party LLMs and Open Source Option
+
+You acknowledge and agree that when You use the AI Assistant, Your User Input Prompts may be transmitted to and processed by third-party Large Language Models (LLMs) that Cyoda utilizes to provide the AI Assistant's functionality.1 Cyoda does not control the data processing practices of these third-party LLM providers once Your User Input Prompts are transmitted to them. We encourage You to review the terms and privacy policies of any such third-party LLM providers if You have concerns about their data handling. Currently the LLMs being utilised include, but are not restricted to:  "gpt-4o-mini", "gpt-4.1-mini", "gpt-4o", "gpt-4.1-nano", "o4-mini"
+
+The Cyoda AI Assistant is an open-source project. If You wish to have direct control over which LLMs Your User Input Prompts are sent to, or if You prefer to use Your own LLM instances, You have the option to download the AI Assistant's open-source code and configure it to use the LLM(s) of Your choice according to the project's documentation and licensing. In such a self-hosted or self-configured scenario, Your use of the AI Assistant and the processing of Your data by LLMs will be governed by Your own configurations and the terms of the LLMs You choose to integrate.
+
+D. Data Retention and Loss (Alpha/Beta Period)
+
+YOU ACKNOWLEDGE AND AGREE THAT DURING THE ALPHA/BETA PERIOD, CYODA PROVIDES NO GUARANTEES REGARDING DATA RETENTION OR DURABILITY FOR ANY USER DATA, USER INPUT PROMPTS, OR AI-GENERATED CODE. Such data may be lost, corrupted, or become inaccessible due to bugs, updates, system failures, or intentional data wipes necessary during development. Cyoda reserves the right to delete such data at any time. While Cyoda may endeavour to provide at least three (3) UK working days' notice before planned data deletion events affecting active users, THIS NOTICE IS NOT GUARANTEED.
+
+E. User Responsibility for Backups
+
+YOU ARE SOLELY RESPONSIBLE FOR CREATING AND MAINTAINING BACKUPS OF YOUR USER DATA, USER INPUT PROMPTS, AND ANY AI-GENERATED CODE YOU WISH TO PRESERVE. Cyoda accepts no responsibility or liability for any loss, corruption, or deletion of such data.
+
+F. Upholding Other Protections and User Responsibilities
+
+These amendments are supplementary to, and form an integral part of, the overall 'User Content Data Management' section of these Terms of Service. All other terms, conditions, user rights, obligations, and responsibilities outlined in that section, and in Our broader Terms of Service and Privacy Policy, continue to apply in full. You remain solely responsible for the content, legality, and appropriateness of Your User Input Prompts and any Open Source Repository Contributions You make, ensuring they comply with all applicable laws, regulations, and do not infringe upon the intellectual property rights or other rights of any third party.
+
+7. Intellectual Property
+
+Except for the limited license granted in Section 5, Cyoda and its licensors retain all right, title, and interest in and to the Services, including all related intellectual property rights. These Terms do not grant you any rights to use Cyoda's trademarks, logos, domain names, or other brand features. Open Source Contributions are subject to the relevant open-source licenses. You retain ownership of Your User Input Prompts and User Application Data, subject to the licenses granted herein. Cyoda makes no claim of ownership over AI-Generated Code; however, your use of AI-Generated Code may be subject to third-party licenses (including open-source licenses) if the AI Assistant incorporates or references third-party materials in generating such code.2 You are responsible for ensuring your use of AI-Generated Code complies with any applicable licenses.
+
+8. Disclaimers of Warranties
+
+THE SERVICES ARE PROVIDED "AS IS," "AS AVAILABLE," AND WITHOUT WARRANTY OF ANY KIND. TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, CYODA EXPRESSLY DISCLAIMS ALL WARRANTIES, WHETHER EXPRESS, IMPLIED, STATUTORY, OR OTHERWISE, INCLUDING, BUT NOT LIMITED TO, WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, QUIET ENJOYMENT, ACCURACY, AND NON-INFRINGEMENT. CYODA DOES NOT WARRANT THAT THE SERVICES WILL BE UNINTERRUPTED, ERROR-FREE, BUG-FREE, SECURE, OR RELIABLE; THAT ANY DEFECTS OR ERRORS WILL BE CORRECTED; OR THAT THE SERVICES WILL MEET YOUR REQUIREMENTS. NO ADVICE OR INFORMATION, WHETHER ORAL OR WRITTEN, OBTAINED BY YOU FROM CYODA OR THROUGH THE SERVICES WILL CREATE ANY WARRANTY NOT EXPRESSLY STATED HEREIN.
+
+9. Limitation of Liability
+
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL CYODA, ITS AFFILIATES, DIRECTORS, EMPLOYEES, AGENTS, OR LICENSORS BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, PUNITIVE, OR EXEMPLARY DAMAGES, INCLUDING BUT NOT LIMITED TO, DAMAGES FOR LOSS OF PROFITS, GOODWILL, USE, DATA, OR OTHER INTANGIBLE LOSSES (EVEN IF CYODA HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES), ARISING OUT OF OR IN CONNECTION WITH YOUR ACCESS TO OR USE OF, OR INABILITY TO ACCESS OR USE, THE SERVICES DURING THE ALPHA/BETA PERIOD. THIS INCLUDES, WITHOUT LIMITATION, DAMAGES RESULTING FROM BUGS, ERRORS, OMISSIONS, INTERRUPTIONS, DELETIONS, DEFECTS, DELAYS IN OPERATION OR TRANSMISSION, COMPUTER VIRUSES, COMMUNICATION LINE FAILURE, OR DATA LOSS.
+
+CYODA'S TOTAL CUMULATIVE LIABILITY TO YOU FOR ANY AND ALL CLAIMS ARISING FROM OR RELATING TO THESE TERMS OR YOUR USE OF THE SERVICES DURING THE ALPHA/BETA PERIOD, REGARDLESS OF THE FORM OF ACTION, SHALL NOT EXCEED TEN POUNDS STERLING (£10.00 GBP).
+
+SOME JURISDICTIONS DO NOT ALLOW THE EXCLUSION OF CERTAIN WARRANTIES OR THE LIMITATION OR EXCLUSION OF LIABILITY FOR INCIDENTAL OR CONSEQUENTIAL DAMAGES. ACCORDINGLY, SOME OF THE ABOVE LIMITATIONS MAY NOT APPLY TO YOU.
+
+10. Indemnification
+
+You agree to defend, indemnify, and hold harmless Cyoda, its affiliates, licensors, and their respective officers, directors, employees, contractors, agents, licensors, suppliers, successors, and assigns from and against any claims, liabilities, damages, judgments, awards, losses, costs, expenses, or fees (including reasonable attorneys' fees) arising out of or relating to your violation of these Terms or your use of the Services, including, but not limited to, your User Application Data, User Input Prompts, AI-Generated Code, your Open Source Contributions, any use of the Services' content, services, and products other than as expressly authorized in these Terms, or your use of any information obtained from the Services.
+
+11. Termination
+
+By Cyoda: Cyoda may terminate or suspend your access to all or part of the Services immediately, without prior notice or liability, for any reason or no reason, including without limitation if you breach these Terms, violate applicable laws or regulations (including sanctions), or engage in abusive conduct.
+By You: You may stop using the Services at any time.
+Effect of Termination: Upon termination, your right to use the Services will immediately cease. Cyoda may, in its sole discretion, delete your account and any associated data upon termination. Sections 6 (User Content Data Management aspects), 7 (Intellectual Property), 8 (Disclaimers), 9 (Limitation of Liability), 10 (Indemnification), 12 (Governing Law), 13 (Updates), and 14 (Miscellaneous) shall survive termination.
+12. Governing Law and Dispute Resolution
+
+These Terms and any dispute or claim arising out of or in connection with them or their subject matter or formation (including non-contractual disputes or claims) shall be governed by and construed in accordance with the laws of England and Wales, without giving effect to any choice or conflict of law provision or rule.
+
+Any legal suit, action, or proceeding arising out of, or related to, these Terms or the Services shall be instituted exclusively in the courts of England and Wales. You waive any and all objections to the exercise of jurisdiction over you by such courts and to venue in such courts.
+
+13. Updates to Terms
+
+Cyoda reserves the right, at its sole discretion, to modify or replace these Terms at any time. If a revision is material, we will make reasonable efforts to provide notice prior to any new terms taking effect (e.g., by posting on our website or notifying you through the Services). What constitutes a material change will be determined at our sole discretion. By continuing to access or use our Services after those revisions become effective, you agree to be bound by the revised terms.
+
+14. Miscellaneous
+
+Entire Agreement: These Terms constitute the entire agreement between you and Cyoda regarding the Services during the Alpha/Beta Period and supersede all prior and contemporaneous understandings, agreements, representations, and warranties, both written and oral.
+Severability: If any provision of these Terms is held by a court of competent jurisdiction to be invalid, illegal, or unenforceable for any reason, such provision shall be eliminated or limited to the minimum extent such that the remaining provisions of the Terms will continue in full force and effect.
+Waiver: No waiver by Cyoda of any term or condition set out in these Terms shall be deemed a further or continuing waiver of such term or condition or a waiver of any other term or condition, and any failure of Cyoda to assert a right or provision under these Terms shall not constitute a waiver of such right or provision.
+Assignment: You may not assign or transfer these Terms, by operation of law or otherwise, without Cyoda's prior written consent. Any attempt by you to assign or transfer these Terms, without such consent, will be null and void. Cyoda may freely assign or transfer these Terms without restriction.
+Privacy: Your use of the Services is also subject to Cyoda's Privacy Policy, which explains how we collect, use, and protect your personal information. Please review the Privacy Policy carefully. Compliance with GDPR and the UK Data Protection Act is primarily addressed in the Privacy Policy.
+Contact Information: If you have any questions about these Terms, please contact Cyoda at: Contact
