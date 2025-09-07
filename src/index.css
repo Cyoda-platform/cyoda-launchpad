@@ -21,20 +21,24 @@
     --card-foreground: 258 74% 37%;
     --popover: 0 0% 100%;
     --popover-foreground: 258 74% 37%;
-    --primary: 175 67% 52%;
+    --primary: 175 67% 42%;  /* Darker teal for better contrast in light mode */
     --primary-foreground: 0 0% 100%;
     --secondary: 220 13% 91%;
     --secondary-foreground: 258 74% 37%;
     --muted: 220 13% 91%;
     --muted-foreground: 215 15% 35%;
-    --accent: 32 95% 59%;
+    --accent: 32 95% 50%;  /* Slightly darker orange for better contrast */
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 210 40% 98%;
-    --border: 220 13% 91%;
+    --border: 220 13% 85%;  /* Slightly darker border for better visibility */
     --input: 220 13% 91%;
-    --ring: 175 67% 52%;
+    --ring: 175 67% 42%;
     --radius: 0.75rem;
+
+
+      --link: 215 20% 30%;         /* dark slate for light mode (good contrast) */
+      --link-hover: 175 67% 40%;   /* darker teal for hover on light */
     
     /* Gaming UI Effects */
     --glow-primary: 175 67% 52%;
@@ -76,6 +80,8 @@
     --border: 240 5% 15%;
     --input: 240 5% 15%;
     --ring: 175 67% 52%;
+      --link: 210 40% 96%;         /* near-white for dark mode */
+      --link-hover: 175 67% 60%;   /* brighter teal on dark */
 
     /* Dark mode gradients */
     --gradient-dark: linear-gradient(135deg, hsl(240 10% 3.9%), hsl(240 6% 10%));

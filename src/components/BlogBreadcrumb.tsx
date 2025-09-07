@@ -20,7 +20,7 @@ const BlogBreadcrumb = ({ title, category }: BlogBreadcrumbProps) => {
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link to="/" className="flex items-center gap-1 hover:text-primary transition-colors">
+            <Link to="/" className="flex items-center gap-1 text-foreground hover:text-primary transition-colors">
               <Home className="w-3 h-3" />
               Home
             </Link>
@@ -29,7 +29,7 @@ const BlogBreadcrumb = ({ title, category }: BlogBreadcrumbProps) => {
         <BreadcrumbSeparator />
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link to="/blog" className="hover:text-primary transition-colors">
+            <Link to="/blog" className="text-foreground hover:text-primary transition-colors">
               Blog
             </Link>
           </BreadcrumbLink>
@@ -41,7 +41,7 @@ const BlogBreadcrumb = ({ title, category }: BlogBreadcrumbProps) => {
               <BreadcrumbLink asChild>
                 <Link 
                   to={`/blog?category=${encodeURIComponent(category)}`}
-                  className="hover:text-primary transition-colors"
+                  className="text-foreground hover:text-primary transition-colors"
                 >
                   {category}
                 </Link>

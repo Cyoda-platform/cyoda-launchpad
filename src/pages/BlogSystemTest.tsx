@@ -117,13 +117,13 @@ function PostsTest() {
           </p>
           
           {posts.map((post) => (
-            <Card key={post.slug} className="bg-card/20 backdrop-blur border border-border/50 glow-hover transition-all duration-300 hover:bg-card/40">
+            <Card key={post.slug} className="bg-card border-2 dark:bg-card/20 dark:border backdrop-blur border-border dark:border-border/50 glow-hover transition-all duration-300 hover:bg-card/90 dark:hover:bg-card/40 shadow-sm dark:shadow-none">
               <CardContent className="p-6">
                 <div className="space-y-4">
                   <h3 className="text-xl font-bold text-foreground">{post.frontmatter.title}</h3>
                   <div className="flex flex-wrap gap-2">
-                    <Badge variant="outline" className="bg-primary/20 text-primary border-primary/30">{post.frontmatter.author}</Badge>
-                    <Badge variant="outline" className="bg-primary/20 text-primary border-primary/30">{post.frontmatter.category}</Badge>
+                    <Badge variant="outline" className="bg-primary text-primary-foreground dark:bg-primary/20 dark:text-primary dark:border-primary/30">{post.frontmatter.author}</Badge>
+                    <Badge variant="outline" className="bg-primary text-primary-foreground dark:bg-primary/20 dark:text-primary dark:border-primary/30">{post.frontmatter.category}</Badge>
                     <Badge variant="outline" className="bg-accent/20 text-accent border-accent/30">{post.readTime}</Badge>
                     <Badge variant="outline" className="bg-accent/20 text-accent border-accent/30">{post.wordCount} words</Badge>
                     {post.frontmatter.featured && (

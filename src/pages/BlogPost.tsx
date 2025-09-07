@@ -113,7 +113,7 @@ const BlogPost = () => {
               <article>
                 <header className="mb-12">
                   <div className="mb-6">
-                    <span className="inline-block bg-primary/20 text-primary px-3 py-1 rounded-full text-sm font-medium">
+                    <span className="inline-block bg-primary text-primary-foreground dark:bg-primary/20 dark:text-primary px-3 py-1 rounded-full text-sm font-medium dark:border dark:border-primary/30">
                       {post.frontmatter.category}
                     </span>
                     {post.frontmatter.featured && (
@@ -158,7 +158,7 @@ const BlogPost = () => {
                       {post.frontmatter.tags.map((tag, index) => (
                         <span 
                           key={index}
-                          className="bg-card/20 backdrop-blur border border-border/50 px-2 py-1 rounded text-xs text-muted-foreground"
+                          className="bg-secondary text-secondary-foreground dark:bg-card/20 dark:text-muted-foreground backdrop-blur border border-border dark:border-border/50 px-2 py-1 rounded text-xs"
                         >
                           {tag}
                         </span>

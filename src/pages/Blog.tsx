@@ -296,8 +296,8 @@ const Blog = () => {
                     variant="outline"
                     size="sm"
                     onClick={() => setSelectedCategory(category)}
-                    className={`bg-card/20 backdrop-blur border-primary/30 hover:bg-primary/10 hover:border-primary glow-hover ${
-                      selectedCategory === category ? 'bg-primary/20 border-primary' : ''
+                    className={`bg-secondary text-secondary-foreground dark:bg-card/20 dark:text-foreground backdrop-blur border border-border dark:border-primary/30 hover:bg-primary hover:text-primary-foreground dark:hover:bg-primary/10 dark:hover:text-primary hover:border-primary glow-hover ${
+                      selectedCategory === category ? 'bg-primary text-primary-foreground dark:bg-primary/20 dark:text-primary border-primary' : ''
                     }`}
                     aria-pressed={selectedCategory === category}
                     aria-label={`Filter posts by ${category} category`}
@@ -324,11 +324,11 @@ const Blog = () => {
                   {filteredPosts.map((post, index) => (
                     <article
                       key={post.slug || index}
-                      className="group bg-card/20 backdrop-blur border border-border/50 rounded-xl overflow-hidden hover:bg-card/40 transition-all duration-300 glow-hover"
+                      className="group bg-card border-2 dark:bg-card/20 dark:border backdrop-blur border-border dark:border-border/50 rounded-xl overflow-hidden hover:bg-card/90 dark:hover:bg-card/40 transition-all duration-300 glow-hover shadow-sm dark:shadow-none"
                     >
                       <div className="p-6">
                         <div className="mb-4">
-                          <span className="inline-block bg-primary/20 text-primary px-2 py-1 rounded text-xs font-medium">
+                          <span className="inline-block bg-primary text-primary-foreground dark:bg-primary/20 dark:text-primary px-2 py-1 rounded text-xs font-medium dark:border dark:border-primary/30">
                             {post.category}
                           </span>
                         </div>
