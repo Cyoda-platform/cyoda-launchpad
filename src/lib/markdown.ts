@@ -44,7 +44,7 @@ export function parseMarkdown(content: string): {
 /**
  * Validate and sanitize string fields
  */
-function validateAndSanitizeString(value: any, defaultValue?: string): string | undefined {
+function validateAndSanitizeString(value: unknown, defaultValue?: string): string | undefined {
   if (value === null || value === undefined) {
     return defaultValue;
   }
@@ -67,7 +67,7 @@ function validateAndSanitizeString(value: any, defaultValue?: string): string | 
 /**
  * Validate date field
  */
-function validateDate(value: any): string {
+function validateDate(value: unknown): string {
   if (!value) {
     return new Date().toISOString();
   }
@@ -87,7 +87,7 @@ function validateDate(value: any): string {
 /**
  * Validate tags array
  */
-function validateTags(value: any): string[] {
+function validateTags(value: unknown): string[] {
   if (!value) {
     return [];
   }

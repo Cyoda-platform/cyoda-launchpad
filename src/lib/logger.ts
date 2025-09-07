@@ -8,7 +8,7 @@ type LogLevel = 'debug' | 'info' | 'warn' | 'error';
 interface LogContext {
   component?: string;
   action?: string;
-  data?: any;
+  data?: unknown;
   error?: Error | string;
   timestamp?: string;
 }
@@ -130,7 +130,7 @@ class BlogLogger {
     }
   }
 
-  cacheOperation(operation: 'hit' | 'miss' | 'invalidate', key: string, data?: any) {
+  cacheOperation(operation: 'hit' | 'miss' | 'invalidate', key: string, data?: unknown) {
     this.debug(`Cache ${operation}`, {
       component: 'BlogCache',
       action: operation,
@@ -138,7 +138,7 @@ class BlogLogger {
     });
   }
 
-  componentError(component: string, error: Error, context?: any) {
+  componentError(component: string, error: Error, context?: unknown) {
     this.error(`Component error occurred`, {
       component,
       action: 'render',
@@ -147,7 +147,7 @@ class BlogLogger {
     });
   }
 
-  performanceMetric(operation: string, duration: number, context?: any) {
+  performanceMetric(operation: string, duration: number, context?: unknown) {
     this.debug(`Performance metric`, {
       component: 'Performance',
       action: operation,
@@ -156,7 +156,7 @@ class BlogLogger {
   }
 
   // Method to log user interactions for debugging
-  userInteraction(action: string, component: string, data?: any) {
+  userInteraction(action: string, component: string, data?: unknown) {
     this.debug(`User interaction`, {
       component,
       action,
@@ -189,19 +189,19 @@ export const logMarkdownProcessing = (filename: string, success: boolean, error?
   blogLogger.markdownProcessing(filename, success, error);
 };
 
-export const logCacheOperation = (operation: 'hit' | 'miss' | 'invalidate', key: string, data?: any) => {
+export const logCacheOperation = (operation: 'hit' | 'miss' | 'invalidate', key: string, data?: unknown) => {
   blogLogger.cacheOperation(operation, key, data);
 };
 
-export const logComponentError = (component: string, error: Error, context?: any) => {
+export const logComponentError = (component: string, error: Error, context?: unknown) => {
   blogLogger.componentError(component, error, context);
 };
 
-export const logPerformance = (operation: string, duration: number, context?: any) => {
+export const logPerformance = (operation: string, duration: number, context?: unknown) => {
   blogLogger.performanceMetric(operation, duration, context);
 };
 
-export const logUserInteraction = (action: string, component: string, data?: any) => {
+export const logUserInteraction = (action: string, component: string, data?: unknown) => {
   blogLogger.userInteraction(action, component, data);
 };
 

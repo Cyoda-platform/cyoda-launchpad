@@ -4,19 +4,19 @@ const ThreeStepSection = () => {
   const steps = [
     {
       icon: Bot,
-      title: "Let AI build your prototype",
+      title: "1. Let AI build your prototype",
       description: "Describe your application in natural language. Our AI understands complex business requirements and generates enterprise-grade data models, APIs, and workflows in seconds.",
       gradient: "bg-gradient-primary"
     },
     {
       icon: Code,
-      title: "Iterate in your IDE", 
+      title: "2. Iterate in your IDE",
       description: "Export to your favorite development environment. Customize, extend, and refine using familiar tools and workflows. Full control over your codebase.",
       gradient: "bg-gradient-accent"
     },
     {
       icon: Rocket,
-      title: "Deploy to production",
+      title: "3. Deploy to production",
       description: "One-click deployment to scalable infrastructure. Built-in monitoring, security, and compliance features ensure your application is production-ready from day one.",
       gradient: "bg-gradient-hero"
     }
@@ -42,12 +42,7 @@ const ThreeStepSection = () => {
               key={index}
               className="group relative p-8 rounded-2xl border border-border/50 bg-card/30 backdrop-blur hover:bg-card/50 transition-all duration-300 glow-hover"
             >
-              {/* Step number */}
-              <div className="absolute -top-4 left-8">
-                <div className={`w-8 h-8 rounded-full ${step.gradient} flex items-center justify-center text-white font-bold text-sm`}>
-                  {index + 1}
-                </div>
-              </div>
+
 
               {/* Icon */}
               <div className={`w-16 h-16 rounded-2xl ${step.gradient} flex items-center justify-center mb-6 glow-primary`}>

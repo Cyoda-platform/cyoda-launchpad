@@ -2,7 +2,7 @@
 import { Buffer } from 'buffer';
 
 // Make Buffer available globally
-(globalThis as any).Buffer = Buffer;
+(globalThis as typeof globalThis & { Buffer: typeof Buffer }).Buffer = Buffer;
 
 // Export for explicit imports if needed
 export { Buffer };

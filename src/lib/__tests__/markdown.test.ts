@@ -116,7 +116,7 @@ Content here.`;
   describe('extractImages', () => {
     it('should extract images from content and frontmatter', () => {
       const content = 'Here is an image: ![Alt](/image1.jpg) and another ![Alt2](/image2.png)';
-      const frontmatter = { image: '/frontmatter-image.jpg' } as any;
+      const frontmatter = { image: '/frontmatter-image.jpg' } as Record<string, unknown>;
       
       const images = extractImages(content, frontmatter);
       
@@ -128,7 +128,7 @@ Content here.`;
 
     it('should not duplicate images', () => {
       const content = 'Image: ![Alt](/image.jpg) and again ![Alt](/image.jpg)';
-      const frontmatter = {} as any;
+      const frontmatter = {} as Record<string, unknown>;
       
       const images = extractImages(content, frontmatter);
       
