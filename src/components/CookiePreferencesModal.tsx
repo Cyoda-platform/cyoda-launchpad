@@ -59,14 +59,14 @@ export function CookiePreferencesModal({ open, onOpenChange, policyUrl = '/cooki
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-lg">
+      <DialogContent className="sm:max-w-3xl sm:min-h-[600px] max-w-[calc(100vw-2rem)] mx-auto">
         <DialogHeader>
-          <DialogTitle>Cookie Preferences</DialogTitle>
-          <DialogDescription>
+          <DialogTitle className="text-lg sm:text-xl">Cookie Preferences</DialogTitle>
+          <DialogDescription className="text-sm sm:text-base">
             {cookieConsentLegalConfig.modal.intro} See our{' '}
             <a
               href={policyUrl}
-              className="underline hover:no-underline focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded"
+              className="underline hover:no-underline focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded text-primary"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Read our Cookie Policy in a new tab"
@@ -76,7 +76,7 @@ export function CookiePreferencesModal({ open, onOpenChange, policyUrl = '/cooki
             </a> and{' '}
             <a
               href={privacyUrl}
-              className="underline hover:no-underline focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded"
+              className="underline hover:no-underline focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded text-primary"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Read our Privacy Policy in a new tab"
@@ -87,56 +87,104 @@ export function CookiePreferencesModal({ open, onOpenChange, policyUrl = '/cooki
           </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-5">
+        <div className="space-y-4 sm:space-y-5">
           {/* Essential */}
-          <section className="flex items-start justify-between gap-4">
-            <div>
-              <h4 className="font-medium">Essential</h4>
-              <p className="text-sm text-muted-foreground">These are necessary for the website to function properly. Always On.</p>
+          <section className="flex items-start justify-between gap-3 sm:gap-4">
+            <div className="flex-1 min-w-0">
+              <h4 className="font-medium text-sm sm:text-base">Essential</h4>
+              <p className="text-xs sm:text-sm text-muted-foreground mt-1">These are necessary for the website to function properly. Always On.</p>
               <p className="text-xs text-muted-foreground mt-1">{cookieConsentLegalConfig.modal.essentialNote}</p>
             </div>
-            <Switch checked={essentialGranted} disabled aria-readonly aria-label="Essential cookies are always on" />
+            <div className="flex-shrink-0">
+              <Switch checked={essentialGranted} disabled aria-readonly aria-label="Essential cookies are always on" />
+            </div>
           </section>
 
           <Separator />
 
           {/* Analytics */}
-          <section className="flex items-start justify-between gap-4">
-            <div>
-              <h4 className="font-medium">Analytics</h4>
-              <p className="text-sm text-muted-foreground">Measures usage and improves your experience. (e.g., Google Analytics).</p>
+          <section className="flex items-start justify-between gap-3 sm:gap-4">
+            <div className="flex-1 min-w-0">
+              <h4 className="font-medium text-sm sm:text-base">Analytics</h4>
+              <p className="text-xs sm:text-sm text-muted-foreground mt-1">Measures usage and improves your experience. (e.g., Google Analytics).</p>
             </div>
-            <Switch checked={analytics} onCheckedChange={setAnalytics} aria-label="Toggle analytics cookies" />
+            <div className="flex-shrink-0">
+              <Switch checked={analytics} onCheckedChange={setAnalytics} aria-label="Toggle analytics cookies" />
+            </div>
           </section>
 
           {/* Marketing */}
-          <section className="flex items-start justify-between gap-4">
-            <div>
-              <h4 className="font-medium">Marketing</h4>
-              <p className="text-sm text-muted-foreground">These may be used to deliver personalized ads and track effectiveness across websites (e.g., Facebook Pixel, Google Ads).</p>
+          <section className="flex items-start justify-between gap-3 sm:gap-4">
+            <div className="flex-1 min-w-0">
+              <h4 className="font-medium text-sm sm:text-base">Marketing</h4>
+              <p className="text-xs sm:text-sm text-muted-foreground mt-1">These may be used to deliver personalized ads and track effectiveness across websites (e.g., Facebook Pixel, Google Ads).</p>
             </div>
-            <Switch checked={marketing} onCheckedChange={setMarketing} aria-label="Toggle marketing cookies" />
+            <div className="flex-shrink-0">
+              <Switch checked={marketing} onCheckedChange={setMarketing} aria-label="Toggle marketing cookies" />
+            </div>
           </section>
 
           {/* Personalization */}
-          <section className="flex items-start justify-between gap-4">
-            <div>
-              <h4 className="font-medium">Personalization</h4>
-              <p className="text-sm text-muted-foreground">Remembers your preferences and provides enhanced features.</p>
+          <section className="flex items-start justify-between gap-3 sm:gap-4">
+            <div className="flex-1 min-w-0">
+              <h4 className="font-medium text-sm sm:text-base">Personalization</h4>
+              <p className="text-xs sm:text-sm text-muted-foreground mt-1">Remembers your preferences and provides enhanced features.</p>
             </div>
-            <Switch checked={personalization} onCheckedChange={setPersonalization} aria-label="Toggle personalization cookies" />
+            <div className="flex-shrink-0">
+              <Switch checked={personalization} onCheckedChange={setPersonalization} aria-label="Toggle personalization cookies" />
+            </div>
           </section>
         </div>
 
-        <DialogFooter className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pt-4">
-          <div className="flex gap-2">
-            <Button variant="ghost" onClick={() => { deleteConsentRecord(); toast({ title: 'Consent data erased', description: 'Your consent record has been deleted. You can set your preferences again.' }); onOpenChange(false); }} aria-label="Delete consent record">Delete consent record</Button>
+        <DialogFooter className="flex flex-col gap-3 pt-4 sm:pt-6">
+          {/* Mobile-first: Stack buttons vertically, then horizontal on larger screens */}
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+            {/* Primary actions - most important buttons */}
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 sm:ml-auto">
+              <Button
+                variant="outline"
+                onClick={() => onOpenChange(false)}
+                className="w-full sm:w-auto"
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="outline"
+                onClick={handleSave}
+                aria-label="Save cookie preferences"
+                className="w-full sm:w-auto"
+              >
+                Save Preferences
+              </Button>
+              <Button
+                variant="destructive"
+                onClick={() => { rejectAll(); toast({ title: 'All non-essential cookies rejected', description: 'You have withdrawn consent for non-essential cookies.' }); onOpenChange(false); }}
+                aria-label="Reject all non-essential cookies"
+                className="w-full sm:w-auto"
+              >
+                Reject All
+              </Button>
+              <Button
+                onClick={handleAcceptAll}
+                aria-label="Accept all cookies"
+                className="w-full sm:w-auto"
+              >
+                Accept All
+              </Button>
+            </div>
           </div>
-          <div className="flex gap-2">
-            <Button variant="outline" onClick={() => onOpenChange(false)}>Cancel</Button>
-            <Button variant="outline" onClick={handleSave} aria-label="Save cookie preferences">Save Preferences</Button>
-            <Button variant="destructive" onClick={() => { rejectAll(); toast({ title: 'All non-essential cookies rejected', description: 'You have withdrawn consent for non-essential cookies.' }); onOpenChange(false); }} aria-label="Reject all non-essential cookies">Reject All</Button>
-            <Button onClick={handleAcceptAll} aria-label="Accept all cookies">Accept All</Button>
+
+          {/* Secondary action - less prominent */}
+          <div className="flex justify-center sm:justify-start">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => { deleteConsentRecord(); toast({ title: 'Consent data erased', description: 'Your consent record has been deleted. You can set your preferences again.' }); onOpenChange(false); }}
+              aria-label="Delete consent record"
+              className="text-xs sm:text-sm"
+            >
+              Delete consent record
+            </Button>
           </div>
         </DialogFooter>
       </DialogContent>

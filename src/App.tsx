@@ -71,10 +71,12 @@ const App = () => {
                 </Routes>
               </Suspense>
 
-              {/* Global Cookie Consent Banner */}
-              <ErrorBoundary>
-                <CookieConsentBanner onManagePreferences={() => setPrefOpen(true)} />
-              </ErrorBoundary>
+              {/* Global Cookie Consent Banner - hide when preferences modal is open */}
+              {!prefOpen && (
+                <ErrorBoundary>
+                  <CookieConsentBanner onManagePreferences={() => setPrefOpen(true)} />
+                </ErrorBoundary>
+              )}
               <ErrorBoundary>
                 <Suspense fallback={null}>
                   <LazyCookiePreferencesModal open={prefOpen} onOpenChange={setPrefOpen} />
