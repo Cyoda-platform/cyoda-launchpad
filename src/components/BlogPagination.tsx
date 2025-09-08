@@ -1,3 +1,4 @@
+import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, MoreHorizontal } from 'lucide-react';
 import { BlogPostPreview } from '@/types/blog';
@@ -154,7 +155,7 @@ export function PaginatedBlogList({
 }
 
 // Hook for managing pagination state
-export function usePagination(items: any[], itemsPerPage: number = 12) {
+export function usePagination<T>(items: T[], itemsPerPage: number = 12) {
   const [currentPage, setCurrentPage] = React.useState(1);
   
   // Reset to page 1 when items change
