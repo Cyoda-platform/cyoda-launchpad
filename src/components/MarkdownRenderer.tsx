@@ -1,14 +1,71 @@
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { cn } from '@/lib/utils';
 import MermaidDiagram from './MermaidDiagram';
+import CopyableCodeBlock from './CopyableCodeBlock';
+import CopyableTextBlock from './CopyableTextBlock';
 
 interface MarkdownRendererProps {
   content: string;
   className?: string;
 }
+
+// Utility functions to detect copyable content patterns
+const detectCopyableContent = (text: string): { isCopyable: boolean; variant: 'prompt' | 'command' | 'code'; extractedText: string } => {
+  const cleanText = text.trim();
+
+  // Detect prompts (common patterns)
+  const promptPatterns = [
+    /^(copy this|use this prompt|prompt:|sample prompt)/i,
+    /^(generate|create|build|make).*using/i,
+    /^(here's the prompt|this prompt)/i,
+  ];
+
+  // Detect commands (bash, shell, etc.)
+  const commandPatterns = [
+    /^(curl|npm|yarn|pip|docker|git|mvn|gradle|cargo)\s/i,
+    /^(sudo|chmod|mkdir|cd|ls|cat|echo)\s/i,
+    /^\$\s/,
+    /^#\s/,
+  ];
+
+  // Check for prompt patterns
+  for (const pattern of promptPatterns) {
+    if (pattern.test(cleanText)) {
+      return { isCopyable: true, variant: 'prompt', extractedText: cleanText };
+    }
+  }
+
+  // Check for command patterns
+  for (const pattern of commandPatterns) {
+    if (pattern.test(cleanText)) {
+      return { isCopyable: true, variant: 'command', extractedText: cleanText };
+    }
+  }
+
+  // Check if it looks like a long copyable text block (configuration, etc.)
+  if (cleanText.length > 100 && (cleanText.includes('\n') || cleanText.includes('='))) {
+    return { isCopyable: true, variant: 'code', extractedText: cleanText };
+  }
+
+  return { isCopyable: false, variant: 'code', extractedText: cleanText };
+};
+
+const extractTextFromChildren = (children: any): string => {
+  if (typeof children === 'string') {
+    return children;
+  }
+
+  if (Array.isArray(children)) {
+    return children.map(extractTextFromChildren).join('');
+  }
+
+  if (children?.props?.children) {
+    return extractTextFromChildren(children.props.children);
+  }
+
+  return '';
+};
 
 const MarkdownRenderer = ({ content, className }: MarkdownRendererProps) => {
   return (
@@ -48,12 +105,31 @@ const MarkdownRenderer = ({ content, className }: MarkdownRendererProps) => {
             </h6>
           ),
           
-          // Custom paragraph styling
-          p: ({ children }) => (
-            <p className="text-foreground leading-relaxed mb-6">
-              {children}
-            </p>
-          ),
+          // Custom paragraph styling with copyable content detection
+          p: ({ children }) => {
+            const textContent = extractTextFromChildren(children);
+            const { isCopyable, variant } = detectCopyableContent(textContent);
+
+            // Only make paragraphs copyable if they contain commands or are very specific patterns
+            // Avoid making regular text copyable to prevent UI clutter
+            if (isCopyable && (variant === 'command' || textContent.length > 200)) {
+              return (
+                <CopyableTextBlock
+                  text={textContent}
+                  variant={variant}
+                  className="my-6"
+                >
+                  <div className="text-foreground leading-relaxed">{children}</div>
+                </CopyableTextBlock>
+              );
+            }
+
+            return (
+              <p className="text-foreground leading-relaxed mb-6">
+                {children}
+              </p>
+            );
+          },
           
           // Custom link styling
           a: ({ href, children }) => (
@@ -82,17 +158,35 @@ const MarkdownRenderer = ({ content, className }: MarkdownRendererProps) => {
             <li className="leading-relaxed text-muted-foreground">{children}</li>
           ),
           
-          // Custom blockquote styling
-          blockquote: ({ children }) => (
-            <blockquote className="border-l-4 border-primary/50 pl-6 py-4 my-6 bg-card/20 backdrop-blur border border-border/50 rounded-r-lg">
-              <div className="text-muted-foreground italic leading-relaxed">{children}</div>
-            </blockquote>
-          ),
+          // Custom blockquote styling with copyable content detection
+          blockquote: ({ children }) => {
+            const textContent = extractTextFromChildren(children);
+            const { isCopyable, variant } = detectCopyableContent(textContent);
+
+            if (isCopyable) {
+              return (
+                <CopyableTextBlock
+                  text={textContent}
+                  variant={variant}
+                  className="my-6"
+                >
+                  <div className="text-foreground leading-relaxed">{children}</div>
+                </CopyableTextBlock>
+              );
+            }
+
+            return (
+              <blockquote className="border-l-4 border-primary/50 pl-6 py-4 my-6 bg-card/20 backdrop-blur border border-border/50 rounded-r-lg">
+                <div className="text-muted-foreground italic leading-relaxed">{children}</div>
+              </blockquote>
+            );
+          },
           
-          // Custom code styling with syntax highlighting and mermaid support
+          // Custom code styling with syntax highlighting, copy functionality, and mermaid support
           code: ({ inline, className, children, ...props }) => {
             const match = /language-(\w+)/.exec(className || '');
             const language = match ? match[1] : '';
+            const codeContent = String(children).replace(/\n$/, '');
 
             if (inline) {
               return (
@@ -106,36 +200,22 @@ const MarkdownRenderer = ({ content, className }: MarkdownRendererProps) => {
             if (language === 'mermaid') {
               return (
                 <MermaidDiagram
-                  chart={String(children).replace(/\n$/, '')}
+                  chart={codeContent}
                   className="my-6"
                 />
               );
             }
 
+            // Use the new CopyableCodeBlock component
+            const lineCount = codeContent.split('\n').length;
             return (
-              <div className="relative mb-6">
-                {language && (
-                  <div className="absolute top-0 right-0 bg-card/80 backdrop-blur border border-border/50 px-3 py-1 text-xs text-muted-foreground rounded-bl-lg rounded-tr-lg z-10">
-                    {language}
-                  </div>
-                )}
-                <div className="code-block bg-card/20 backdrop-blur border border-border/50 rounded-lg overflow-hidden">
-                  <SyntaxHighlighter
-                    style={oneDark}
-                    language={language || 'text'}
-                    PreTag="div"
-                    className="!bg-transparent !text-sm"
-                    customStyle={{
-                      margin: 0,
-                      padding: '1.5rem',
-                      background: 'transparent',
-                    }}
-                    {...props}
-                  >
-                    {String(children).replace(/\n$/, '')}
-                  </SyntaxHighlighter>
-                </div>
-              </div>
+              <CopyableCodeBlock
+                language={language}
+                showLineNumbers={language && language !== 'text' && lineCount > 10}
+                maxHeight={lineCount > 15 ? '400px' : undefined}
+              >
+                {codeContent}
+              </CopyableCodeBlock>
             );
           },
 

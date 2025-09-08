@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copy Functionality Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #fff;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #333;
+            border-radius: 8px;
+        }
+        .copy-button {
+            background: #4FB8B0;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        .copy-button:hover {
+            background: #3a9a93;
+        }
+        .success {
+            color: #4ade80;
+        }
+        .error {
+            color: #ef4444;
+        }
+    </style>
+</head>
+<body>
+    <h1>Copy Functionality Test</h1>
+    
+    <div class="test-section">
+        <h2>Test 1: Basic Copy Functionality</h2>
+        <p>This tests if the browser supports the Clipboard API:</p>
+        <button class="copy-button" onclick="testBasicCopy()">Test Basic Copy</button>
+        <div id="basic-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 2: Fallback Copy Method</h2>
+        <p>This tests the fallback method for older browsers:</p>
+        <button class="copy-button" onclick="testFallbackCopy()">Test Fallback Copy</button>
+        <div id="fallback-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Test 3: Copy Code Block</h2>
+        <p>Sample code to copy:</p>
+        <pre id="code-sample">function greet(name) {
+  console.log(`Hello, ${name}!`);
+}
+
+greet('World');</pre>
+        <button class="copy-button" onclick="copyCodeSample()">Copy Code</button>
+        <div id="code-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Instructions</h2>
+        <p>1. Click each test button</p>
+        <p>2. Try pasting (Ctrl+V or Cmd+V) in a text editor</p>
+        <p>3. Check if the content was copied correctly</p>
+        <p>4. If all tests pass, the copy functionality is working</p>
+    </div>
+
+    <script>
+        async function testBasicCopy() {
+            const resultDiv = document.getElementById('basic-result');
+            const testText = 'Hello from Clipboard API!';
+            
+            try {
+                await navigator.clipboard.writeText(testText);
+                resultDiv.innerHTML = '<span class="success">✓ Clipboard API works! Try pasting to verify.</span>';
+            } catch (err) {
+                resultDiv.innerHTML = '<span class="error">✗ Clipboard API failed: ' + err.message + '</span>';
+            }
+        }
+
+        function testFallbackCopy() {
+            const resultDiv = document.getElementById('fallback-result');
+            const testText = 'Hello from fallback method!';
+            
+            try {
+                const textArea = document.createElement('textarea');
+                textArea.value = testText;
+                textArea.style.position = 'fixed';
+                textArea.style.left = '-999999px';
+                textArea.style.top = '-999999px';
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                const success = document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                if (success) {
+                    resultDiv.innerHTML = '<span class="success">✓ Fallback method works! Try pasting to verify.</span>';
+                } else {
+                    resultDiv.innerHTML = '<span class="error">✗ Fallback method failed</span>';
+                }
+            } catch (err) {
+                resultDiv.innerHTML = '<span class="error">✗ Fallback method error: ' + err.message + '</span>';
+            }
+        }
+
+        async function copyCodeSample() {
+            const resultDiv = document.getElementById('code-result');
+            const codeElement = document.getElementById('code-sample');
+            const codeText = codeElement.textContent;
+            
+            try {
+                // Try modern API first
+                if (navigator.clipboard) {
+                    await navigator.clipboard.writeText(codeText);
+                    resultDiv.innerHTML = '<span class="success">✓ Code copied with Clipboard API! Try pasting to verify.</span>';
+                } else {
+                    // Fallback method
+                    const textArea = document.createElement('textarea');
+                    textArea.value = codeText;
+                    textArea.style.position = 'fixed';
+                    textArea.style.left = '-999999px';
+                    textArea.style.top = '-999999px';
+                    document.body.appendChild(textArea);
+                    textArea.focus();
+                    textArea.select();
+                    const success = document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    
+                    if (success) {
+                        resultDiv.innerHTML = '<span class="success">✓ Code copied with fallback method! Try pasting to verify.</span>';
+                    } else {
+                        resultDiv.innerHTML = '<span class="error">✗ Copy failed</span>';
+                    }
+                }
+            } catch (err) {
+                resultDiv.innerHTML = '<span class="error">✗ Copy error: ' + err.message + '</span>';
+            }
+        }
+
+        // Test browser capabilities on load
+        window.onload = function() {
+            console.log('Clipboard API supported:', !!navigator.clipboard);
+            console.log('execCommand supported:', document.queryCommandSupported('copy'));
+        };
+    </script>
+</body>
+</html>

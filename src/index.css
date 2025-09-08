@@ -96,6 +96,15 @@
     font-family: 'Montserrat', sans-serif;
   }
   
+  /* Copy functionality styles */
+  .copy-button-visible {
+    opacity: 1 !important;
+  }
+
+  .code-block-container:hover .copy-button {
+    opacity: 1;
+  }
+
   /* Gaming UI Utilities */
   .glow-primary {
     box-shadow: 0 0 20px hsl(var(--glow-primary) / 0.3), 0 0 40px hsl(var(--glow-primary) / 0.1);
