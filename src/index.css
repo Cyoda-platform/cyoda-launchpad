@@ -232,6 +232,56 @@
     @apply p-4 sm:p-6 lg:p-8 my-4 sm:my-6 lg:my-8;
     @apply transition-all duration-300 hover:bg-card/30;
   }
+
+  /* Mobile-optimized typography utilities */
+  .mobile-text-xs {
+    @apply text-xs sm:text-sm;
+  }
+
+  .mobile-text-sm {
+    @apply text-sm sm:text-base;
+  }
+
+  .mobile-text-base {
+    @apply text-base sm:text-lg;
+  }
+
+  .mobile-text-lg {
+    @apply text-lg sm:text-xl;
+  }
+
+  .mobile-text-xl {
+    @apply text-xl sm:text-2xl;
+  }
+
+  .mobile-text-2xl {
+    @apply text-xl sm:text-2xl md:text-3xl;
+  }
+
+  .mobile-text-3xl {
+    @apply text-2xl sm:text-3xl md:text-4xl;
+  }
+
+  .mobile-text-4xl {
+    @apply text-3xl sm:text-4xl md:text-5xl;
+  }
+
+  .mobile-text-5xl {
+    @apply text-4xl sm:text-5xl md:text-6xl;
+  }
+
+  /* Mobile button text sizing */
+  .mobile-btn-text {
+    @apply text-sm sm:text-base;
+  }
+
+  .mobile-btn-text-sm {
+    @apply text-xs sm:text-sm;
+  }
+
+  .mobile-btn-text-lg {
+    @apply text-base sm:text-lg;
+  }
 }
 
 /* Print styles for legal documents */

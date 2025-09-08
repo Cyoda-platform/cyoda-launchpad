@@ -30,12 +30,12 @@ const HeroSection = () => {
         <div className="max-w-4xl mx-auto space-y-6">
           {/* Hero headline */}
           <div className="space-y-4">
-            <h1 className="text-3xl md:text-5xl font-bold text-gradient-hero leading-tight">
+            <h1 className="mobile-text-4xl font-bold text-gradient-hero leading-tight">
               Problem → Prototype → Production
             </h1>
-            
+
             {/* Subtext */}
-            <p className="text-l md:text-l text-foreground/90 leading-relaxed max-w-2xl mx-auto">
+            <p className="mobile-text-base text-foreground/90 leading-relaxed max-w-2xl mx-auto">
               Cyoda is a developer-first event driven application platform with an AI builder.
               It helps you turn problems into scalable, enterprise-grade systems.
               Build complex, data-driven backends, iterate in your IDE, and deploy to production with confidence.
@@ -53,27 +53,29 @@ const HeroSection = () => {
                 maxLength={10000}
                 aria-label="Describe what you want to build..."
                 placeholder="Describe your application idea..."
-                className="min-h-[120px] text-lg bg-background/10 backdrop-blur border-2 border-primary/30 focus:border-primary glow-primary placeholder:text-foreground/60 pr-32"
+                className="min-h-[120px] mobile-text-base bg-background/10 backdrop-blur border-2 border-primary/30 focus:border-primary glow-primary placeholder:text-foreground/60 pr-24 sm:pr-32"
               />
-              <Button 
+              <Button
                 type="submit"
                 id="start-btn"
-                size="sm"
-                className="absolute right-2 bottom-2 bg-gradient-primary text-white glow-primary"
+                size="mobile-sm"
+                className="absolute right-2 bottom-2 bg-gradient-primary text-white glow-primary min-h-[44px] min-w-[44px]"
               >
-                <Sparkles className="w-5 h-5 mr-2" />
+                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 sm:mr-2" />
+                <span className="hidden sm:inline">Start</span>
               </Button>
             </form>
 
             {/* Pre-baked examples */}
             <div className="space-y-3">
-              <p className="text-sm text-muted-foreground">Or try these examples:</p>
+              <p className="mobile-text-sm text-muted-foreground">Or try these examples:</p>
               <div className="flex flex-wrap justify-center gap-3">
                 {prebakedExamples.map((example, index) => (
                   <Button
                     key={index}
                     variant="outline"
-                    className="bg-card/20 backdrop-blur border-primary/30 hover:bg-primary/10 hover:border-primary glow-hover text-sm"
+                    size="mobile-sm"
+                    className="bg-card/20 backdrop-blur border-primary/30 hover:bg-primary/10 hover:border-primary glow-hover mobile-btn-text-sm min-h-[44px]"
                   >
                     {example}
                   </Button>
@@ -84,13 +86,13 @@ const HeroSection = () => {
 
           {/* Call to action */}
           <div className="pt-8">
-            <Button 
-              size="lg"
-              className="bg-gradient-primary text-white text-lg px-8 py-4 glow-primary"
+            <Button
+              size="mobile-lg"
+              className="bg-gradient-primary text-white mobile-btn-text-lg px-6 py-3 sm:px-8 sm:py-4 glow-primary min-h-[44px]"
               onClick={() => window.open('https://ai.cyoda.net', '_blank')}
             >
               Try Now
-              <ArrowRight className="w-5 h-5 ml-2" />
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
             </Button>
           </div>
         </div>

@@ -37,7 +37,7 @@ const Header = () => {
         {/* Logo */}
         <div className="flex items-center space-x-2">
           <Link to="/" className="flex items-center space-x-2 glow-hover">
-            <img src={cyodaLogo} alt="Cyoda" className="h-10" />
+            <img src={cyodaLogo} alt="Cyoda" className="h-8 sm:h-10" />
           </Link>
         </div>
 
@@ -117,10 +117,10 @@ const Header = () => {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-lg hover:bg-secondary glow-hover transition-all"
+                className="p-2 rounded-lg hover:bg-secondary glow-hover transition-all min-h-[44px] min-w-[44px] flex items-center justify-center"
                 aria-label={social.label}
               >
-                <social.icon className="w-4 h-4" />
+                <social.icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               </a>
             ))}
           </div>
@@ -129,11 +129,11 @@ const Header = () => {
 
           {/* Action Buttons */}
           <div className="hidden md:flex items-center space-x-2">
-            <Button variant="ghost" className="glow-hover">
+            <Button variant="ghost" className="glow-hover mobile-btn-text">
               Contact (Discord)
             </Button>
-            <Button 
-              className="bg-gradient-primary text-white glow-primary" 
+            <Button
+              className="bg-gradient-primary text-white glow-primary mobile-btn-text"
               onClick={() => window.open('https://ai.cyoda.net', '_blank')}
             >
               Try Now
@@ -144,10 +144,11 @@ const Header = () => {
           <Button
             variant="ghost"
             size="sm"
-            className="lg:hidden"
+            className="lg:hidden glow-hover min-h-[44px] min-w-[44px] p-2"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Toggle menu"
           >
-            {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {isMenuOpen ? <X className="h-4 w-4 sm:h-5 sm:w-5" /> : <Menu className="h-4 w-4 sm:h-5 sm:w-5" />}
           </Button>
         </div>
       </div>
@@ -160,9 +161,9 @@ const Header = () => {
               <Link to="/products" className="block py-2 text-foreground hover:text-primary transition-colors">Products</Link>
               <Link to="/pricing" className="block py-2 text-foreground hover:text-primary transition-colors">Pricing</Link>
               <div className="py-2">
-                <button className="flex items-center space-x-1 text-foreground hover:text-primary transition-colors">
+                <button className="flex items-center space-x-1 text-foreground hover:text-primary transition-colors min-h-[44px]">
                   <span>Docs</span>
-                  <ChevronDown className="w-4 h-4" />
+                  <ChevronDown className="w-3.5 h-3.5" />
                 </button>
                 <div className="ml-4 mt-2 space-y-1">
                   <Link to="/guides" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">Guides</Link>
@@ -175,11 +176,11 @@ const Header = () => {
             </nav>
             
             <div className="flex flex-col space-y-2 pt-4 border-t border-border/40">
-              <Button variant="ghost" className="justify-start">
+              <Button variant="ghost" className="justify-start mobile-btn-text">
                 Contact (Discord)
               </Button>
-              <Button 
-                className="bg-gradient-primary text-white justify-start"
+              <Button
+                className="bg-gradient-primary text-white justify-start mobile-btn-text"
                 onClick={() => window.open('https://ai.cyoda.net', '_blank')}
               >
                 Try Now
@@ -193,7 +194,7 @@ const Header = () => {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 rounded-lg hover:bg-secondary glow-hover transition-all"
+                  className="p-3 rounded-lg hover:bg-secondary glow-hover transition-all min-h-[44px] min-w-[44px] flex items-center justify-center"
                   aria-label={social.label}
                 >
                   <social.icon className="w-4 h-4" />
