@@ -1,5 +1,6 @@
 import matter from 'gray-matter';
 import { BlogPost, BlogPostFrontmatter, BlogPostPreview } from '@/types/blog';
+import { Guide, GuideFrontmatter, GuidePreview } from '@/types/guide';
 
 /**
  * Parse markdown content with frontmatter and enhanced error handling
@@ -265,5 +266,97 @@ export function createBlogPostPreview(blogPost: BlogPost): BlogPostPreview {
     tags: blogPost.frontmatter.tags,
     image: blogPost.frontmatter.image,
     featured: blogPost.frontmatter.featured,
+  };
+}
+
+/**
+ * Process raw markdown content into a Guide object with enhanced error handling
+ */
+export function processGuide(filename: string, rawContent: string): Guide {
+  if (!filename || typeof filename !== 'string') {
+    throw new Error('Filename must be a non-empty string');
+  }
+
+  if (!rawContent || typeof rawContent !== 'string') {
+    throw new Error(`Content for file ${filename} must be a non-empty string`);
+  }
+
+  try {
+    const { frontmatter, content } = parseMarkdown(rawContent);
+    const slug = createSlug(filename);
+
+    // Validate slug generation
+    if (!slug || slug.length === 0) {
+      throw new Error(`Failed to generate valid slug from filename: ${filename}`);
+    }
+
+    // Generate excerpt if not provided in frontmatter
+    let excerpt: string;
+    try {
+      excerpt = frontmatter.excerpt || extractExcerpt(content);
+    } catch (error) {
+      console.warn(`Failed to extract excerpt for ${filename}:`, error);
+      excerpt = 'No excerpt available';
+    }
+
+    // Calculate read time if not provided in frontmatter
+    let readTime: string;
+    try {
+      readTime = frontmatter.readTime || calculateReadTime(content);
+    } catch (error) {
+      console.warn(`Failed to calculate read time for ${filename}:`, error);
+      readTime = '1 min read';
+    }
+
+    // Extract images
+    let images: string[];
+    try {
+      images = extractImages(content, frontmatter);
+    } catch (error) {
+      console.warn(`Failed to extract images for ${filename}:`, error);
+      images = [];
+    }
+
+    // Count words
+    let wordCount: number;
+    try {
+      wordCount = countWords(content);
+    } catch (error) {
+      console.warn(`Failed to count words for ${filename}:`, error);
+      wordCount = 0;
+    }
+
+    return {
+      slug,
+      frontmatter,
+      content,
+      excerpt,
+      readTime,
+      wordCount,
+      images,
+    };
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(`Failed to process guide ${filename}: ${error.message}`);
+    }
+    throw new Error(`Failed to process guide ${filename}: Unknown error`);
+  }
+}
+
+/**
+ * Convert Guide to GuidePreview
+ */
+export function createGuidePreview(guide: Guide): GuidePreview {
+  return {
+    slug: guide.slug,
+    title: guide.frontmatter.title,
+    excerpt: guide.excerpt,
+    author: guide.frontmatter.author,
+    date: guide.frontmatter.date,
+    readTime: guide.readTime,
+    category: guide.frontmatter.category,
+    tags: guide.frontmatter.tags,
+    image: guide.frontmatter.image,
+    featured: guide.frontmatter.featured,
   };
 }

@@ -21,6 +21,9 @@ const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 const BlogTest = lazy(() => import("./pages/BlogTest"));
 const BlogSystemTest = lazy(() => import("./pages/BlogSystemTest"));
+const Guides = lazy(() => import("./pages/Guides"));
+const Guide = lazy(() => import("./pages/Guide"));
+const GuideSystemTest = lazy(() => import("./pages/GuideSystemTest"));
 const Support = lazy(() => import("./pages/Support"));
 const CookiePolicy = lazy(() => import("./pages/CookiePolicy"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
@@ -61,6 +64,9 @@ const App = () => {
                   <Route path="/blog/:slug" element={<BlogPost />} />
                   <Route path="/blog-test" element={<BlogTest />} />
                   <Route path="/blog-system-test" element={<BlogSystemTest />} />
+                  <Route path="/guides" element={<Guides />} />
+                  <Route path="/guides/:slug" element={<Guide />} />
+                  <Route path="/guide-system-test" element={<GuideSystemTest />} />
                   <Route path="/cookie-consent-test" element={<CookieConsentTest />} />
                   <Route path="/support" element={<Support />} />
                   <Route path="/cookie-policy" element={<CookiePolicy />} />

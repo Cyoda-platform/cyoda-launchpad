@@ -27,7 +27,7 @@ const Support = () => {
           title: "How to and worked examples",
           description: "Follow worked examples and learn how to build with Cyoda.",
           action: "How to's",
-          link: "/how-to",
+          link: "/guides",
           primary: false
       },
     {
@@ -52,7 +52,7 @@ const Support = () => {
       icon: Zap,
       title: "How-To Guides",
       description: "Step-by-step tutorials for common use cases",
-      link: "/docs/guides",
+      link: "/guides",
       openInNewTab: false
     },
     {

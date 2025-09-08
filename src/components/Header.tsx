@@ -70,11 +70,13 @@ const Header = () => {
               </NavigationMenuTrigger>
               <NavigationMenuContent>
                 <div className="grid w-64 gap-3 p-4">
-                  <NavigationMenuLink className="text-sm hover:text-primary transition-colors">
-                    Application Documentation
+                  <NavigationMenuLink asChild>
+                    <Link to="/guides" className="text-sm hover:text-primary transition-colors">
+                      Guides
+                    </Link>
                   </NavigationMenuLink>
                   <NavigationMenuLink className="text-sm hover:text-primary transition-colors">
-                    How-To Guides
+                    Application Documentation
                   </NavigationMenuLink>
                   <NavigationMenuLink className="text-sm text-muted-foreground">
                     Video Explanations (coming soon)
@@ -163,8 +165,8 @@ const Header = () => {
                   <ChevronDown className="w-4 h-4" />
                 </button>
                 <div className="ml-4 mt-2 space-y-1">
+                  <Link to="/guides" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">Guides</Link>
                   <a href="#" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">Application Documentation</a>
-                  <a href="#" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">How-To Guides</a>
                   <span className="block py-1 text-sm text-muted-foreground">Video Explanations (coming soon)</span>
                 </div>
               </div>
