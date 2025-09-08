@@ -1,18 +1,15 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
-import { 
-  MessageCircle, 
-  Mail, 
-  FileText, 
-  Video, 
-  Users, 
-  Search,
-  ArrowRight,
-  ExternalLink,
-  HelpCircle,
-  BookOpen,
-  Zap
+import {
+    MessageCircle,
+    FileText,
+    Video,
+    ArrowRight,
+    ExternalLink,
+    HelpCircle,
+    BookOpen,
+    Zap
 } from 'lucide-react';
 
 const Support = () => {
@@ -22,23 +19,23 @@ const Support = () => {
       title: "Discord Community",
       description: "Join our active Discord community for real-time help, discussions, and networking with other developers.",
       action: "Join Discord",
-      link: "https://discord.gg/cyoda",
+      link: "https://discord.gg/95rdAyBZr2",
       primary: true
     },
-    {
-      icon: Mail,
-      title: "Email Support",
-      description: "Get direct assistance from our support team. We typically respond within 24 hours.",
-      action: "Send Email",
-      link: "mailto:support@cyoda.net",
-      primary: false
-    },
+      {
+          icon: BookOpen,
+          title: "How to and worked examples",
+          description: "Follow worked examples and learn how to build with Cyoda.",
+          action: "How to's",
+          link: "/how-to",
+          primary: false
+      },
     {
       icon: FileText,
       title: "Documentation",
       description: "Comprehensive guides, API references, and tutorials to help you build with Cyoda.",
       action: "Browse Docs",
-      link: "/docs",
+      link: "https://docs.cyoda.net/",
       primary: false
     }
   ];
@@ -48,43 +45,46 @@ const Support = () => {
       icon: BookOpen,
       title: "Application Documentation",
       description: "Complete API documentation and integration guides",
-      link: "/docs/api"
+      link: "https://docs.cyoda.net/",
+      openInNewTab: true
     },
     {
       icon: Zap,
       title: "How-To Guides",
       description: "Step-by-step tutorials for common use cases",
-      link: "/docs/guides"
+      link: "/docs/guides",
+      openInNewTab: false
     },
     {
       icon: Video,
       title: "Video Explanations",
       description: "Visual tutorials and product demonstrations",
       status: "Coming Soon",
-      link: "#"
+      link: "#",
+      openInNewTab: false
     }
   ];
 
   const faqs = [
     {
       question: "How do I get started with Cyoda?",
-      answer: "Simply visit ai.cyoda.net and describe your application idea in natural language. Our AI will generate a prototype that you can then customize and deploy."
+      answer: "The easiest way to get started is to sign up for a free account and try our AI builder. You can also check out our documentation and how-to guides for more information."
     },
     {
       question: "What programming languages does Cyoda support?",
-      answer: "Cyoda generates applications using modern web technologies including TypeScript, React, Node.js, and supports deployment to various cloud platforms."
+      answer: "Cyoda generates applications in Java or Python, but you can export and work with the code in any language.If you want another language, please let us know."
     },
     {
       question: "Can I export my code from Cyoda?",
-      answer: "Yes! You have full access to your generated code and can export it to work in your preferred development environment or IDE."
+      answer: "Yes! You have full access to your generated code and can export it to work in your preferred IDE via the GitHub branch supplied during the AI interactions."
     },
     {
       question: "What kind of applications can I build?",
-      answer: "Cyoda excels at building data-driven applications like order management systems, customer portals, analytics dashboards, and enterprise workflows."
+      answer: "Cyoda excels at building data-driven applications like order management systems, customer portals, and enterprise workflows. It was orginally designed for financial services, but can be used for any complex, data-driven system."
     },
     {
-      question: "Is there a limit to how many applications I can create?",
-      answer: "It depends on your plan. The free Developer plan allows up to 3 applications, while Professional and Enterprise plans offer unlimited applications."
+      question: "can I run the AI builder locally?",
+      answer: "Yes, it's an open source project, built on Cyoda Cloud, you're welcome to download it, configure your own LLMs, and run it locally."
     },
     {
       question: "How secure are applications built with Cyoda?",
@@ -115,16 +115,7 @@ const Support = () => {
               <p className="text-xl text-muted-foreground mb-8">
                 Get the support you need to build amazing applications with Cyoda. Our community and resources are here to help you succeed.
               </p>
-              
-              {/* Search */}
-              <div className="max-w-2xl mx-auto relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
-                <input
-                  type="search"
-                  placeholder="Search for help..."
-                  className="w-full h-14 pl-12 pr-4 rounded-xl border border-border/50 bg-background/50 backdrop-blur focus:border-primary focus:ring-1 focus:ring-primary text-lg"
-                />
-              </div>
+
             </div>
           </div>
         </section>
@@ -166,7 +157,7 @@ const Support = () => {
                     className={`w-full ${
                       channel.primary 
                         ? 'bg-gradient-primary text-white glow-primary' 
-                        : 'bg-card/20 backdrop-blur border border-primary/30 hover:bg-primary/10 hover:border-primary glow-hover'
+                        : 'bg-card/20 text-white backdrop-blur border border-primary/30 hover:bg-primary/10 hover:border-primary glow-hover'
                     }`}
                     onClick={() => window.open(channel.link, '_blank')}
                   >
@@ -218,11 +209,20 @@ const Support = () => {
                       <p className="text-muted-foreground text-sm leading-relaxed mb-3">
                         {resource.description}
                       </p>
-                      <Button 
-                        variant="ghost" 
+                      <Button
+                        variant="ghost"
                         size="sm"
                         className="text-primary hover:text-primary hover:bg-primary/10 p-0"
                         disabled={resource.status === "Coming Soon"}
+                        onClick={() => {
+                          if (resource.status !== "Coming Soon") {
+                            if (resource.openInNewTab) {
+                              window.open(resource.link, '_blank');
+                            } else {
+                              window.location.href = resource.link;
+                            }
+                          }
+                        }}
                       >
                         Learn More <ArrowRight className="w-3 h-3 ml-1" />
                       </Button>
@@ -269,7 +269,7 @@ const Support = () => {
           </div>
         </section>
 
-        {/* Status Section */}
+        {/* Status Section
         <section className="py-24 bg-gradient-dark relative">
           <div className="absolute inset-0 texture-overlay opacity-20" />
           
@@ -306,7 +306,7 @@ const Support = () => {
               </div>
             </div>
           </div>
-        </section>
+        </section>*/}
       </main>
       <Footer />
     </div>
