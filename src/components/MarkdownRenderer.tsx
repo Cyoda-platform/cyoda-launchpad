@@ -3,6 +3,7 @@ import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { cn } from '@/lib/utils';
+import MermaidDiagram from './MermaidDiagram';
 
 interface MarkdownRendererProps {
   content: string;
@@ -88,7 +89,7 @@ const MarkdownRenderer = ({ content, className }: MarkdownRendererProps) => {
             </blockquote>
           ),
           
-          // Custom code styling with syntax highlighting
+          // Custom code styling with syntax highlighting and mermaid support
           code: ({ inline, className, children, ...props }) => {
             const match = /language-(\w+)/.exec(className || '');
             const language = match ? match[1] : '';
@@ -98,6 +99,16 @@ const MarkdownRenderer = ({ content, className }: MarkdownRendererProps) => {
                 <code className="bg-muted px-1.5 py-0.5 rounded text-sm font-mono text-foreground">
                   {children}
                 </code>
+              );
+            }
+
+            // Handle mermaid diagrams
+            if (language === 'mermaid') {
+              return (
+                <MermaidDiagram
+                  chart={String(children).replace(/\n$/, '')}
+                  className="my-6"
+                />
               );
             }
 
