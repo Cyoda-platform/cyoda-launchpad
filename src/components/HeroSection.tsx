@@ -36,9 +36,7 @@ const HeroSection = () => {
 
             {/* Subtext */}
             <p className="mobile-text-base text-foreground/90 leading-relaxed max-w-2xl mx-auto">
-              Cyoda is a developer-first event driven application platform with an AI builder.
-              It helps you turn problems into scalable, enterprise-grade systems.
-              Build complex, data-driven backends, iterate in your IDE, and deploy to production with confidence.
+                Developer-first application platform for event-driven backends. One developer building enterprise systems that used to require a team.
             </p>
           </div>
 
@@ -62,7 +60,6 @@ const HeroSection = () => {
                 className="absolute right-2 bottom-2 bg-gradient-primary text-white glow-primary min-h-[44px] min-w-[44px]"
               >
                 <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 sm:mr-2" />
-                <span className="hidden sm:inline">Start</span>
               </Button>
             </form>
 

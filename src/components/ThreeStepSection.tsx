@@ -23,37 +23,37 @@ const ThreeStepSection = () => {
   ];
 
   return (
-    <section className="py-24 bg-gradient-to-br from-background via-card to-secondary/20 relative">
+    <section className="py-16 sm:py-20 md:py-24 bg-gradient-to-br from-background via-card to-secondary/20 relative">
       <div className="absolute inset-0 texture-overlay opacity-30" />
       
       <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gradient-primary mb-6">
+        <div className="text-center mb-12 sm:mb-16">
+          <h2 className="mobile-text-3xl font-bold text-gradient-primary mb-4 sm:mb-6">
             Focus on the solution, not infrastructure
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <p className="mobile-text-lg text-muted-foreground max-w-3xl mx-auto">
             Transform your ideas into scalable applications with our AI-powered development platform
           </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {steps.map((step, index) => (
-            <div 
+            <div
               key={index}
-              className="group relative p-8 rounded-2xl border border-border/50 bg-card/30 backdrop-blur hover:bg-card/50 transition-all duration-300 glow-hover"
+              className="group relative p-6 sm:p-7 md:p-8 rounded-2xl border border-border/50 bg-card/30 backdrop-blur hover:bg-card/50 transition-all duration-300 glow-hover"
             >
 
 
               {/* Icon */}
-              <div className={`w-16 h-16 rounded-2xl ${step.gradient} flex items-center justify-center mb-6 glow-primary`}>
-                <step.icon className="w-8 h-8 text-white" />
+              <div className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-2xl ${step.gradient} flex items-center justify-center mb-6 glow-primary`}>
+                <step.icon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white" />
               </div>
 
               {/* Content */}
-              <h3 className="text-2xl font-bold mb-4 text-foreground">
+              <h3 className="mobile-text-xl font-bold mb-3 sm:mb-4 text-foreground">
                 {step.title}
               </h3>
-              <p className="text-muted-foreground leading-relaxed">
+              <p className="mobile-text-sm text-muted-foreground leading-relaxed">
                 {step.description}
               </p>
 

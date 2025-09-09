@@ -37,7 +37,7 @@ const Header = () => {
         {/* Logo */}
         <div className="flex items-center space-x-2">
           <Link to="/" className="flex items-center space-x-2 glow-hover">
-            <img src={cyodaLogo} alt="Cyoda" className="h-8 sm:h-10" />
+            <img src={cyodaLogo} alt="Cyoda" className="h-6 sm:h-6" />
           </Link>
         </div>
 

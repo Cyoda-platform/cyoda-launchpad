@@ -45,7 +45,8 @@ const Footer = () => {
           {/* Logo and description */}
           <div className="md:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
-              <img src={cyodaLogo} alt="Cyoda" className="h-8" />
+
+                <img src={cyodaLogo} alt="Cyoda" className="h-6 sm:h-6" />
             </div>
             <p className="text-muted-foreground mb-6 max-w-md">
               Developer-first application platform with AI builder. 
