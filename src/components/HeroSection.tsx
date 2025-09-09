@@ -1,8 +1,10 @@
+import { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { useTheme } from 'next-themes';
 import { useTypewriter } from '@/hooks/use-typewriter';
 import { heroPhrases } from '@/data/HeroPhrases';
+import { Sparkles } from 'lucide-react';
 import heroBackgroundDark from '@/assets/hero-bg.jpg';
 import heroBackgroundLight from '@/assets/hero-bg-lm.png';
 

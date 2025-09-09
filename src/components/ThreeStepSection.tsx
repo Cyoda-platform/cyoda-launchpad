@@ -1,5 +1,6 @@
 
-import {Button} from "@/components/ui/button.tsx";
+import { Button } from "@/components/ui/button";
+import { Bot, Code, Rocket } from "lucide-react";
 
 const ThreeStepSection = () => {
   const steps = [
