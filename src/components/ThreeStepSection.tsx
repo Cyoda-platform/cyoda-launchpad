@@ -26,7 +26,7 @@ const ThreeStepSection = () => {
 
   return (
     <section className="py-16 sm:py-20 md:py-24 bg-gradient-to-br from-background via-card to-secondary/20 relative">
-      <div className="absolute inset-0 texture-overlay opacity-30" />
+        <div className="absolute inset-0 texture-overlay opacity-30 pointer-events-none" />
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-12 sm:mb-16">
@@ -68,11 +68,13 @@ const ThreeStepSection = () => {
         {/* Call to action */}
         <div className="pt-8 flex justify-center">
             <Button
+                asChild
                 size="mobile-lg"
                 className="bg-gradient-primary text-white mobile-btn-text-lg px-6 py-3 sm:px-8 sm:py-4 glow-primary min-h-[44px]"
-                onClick={() => window.open('https://ai.cyoda.net', '_blank')}
             >
-                Try Now
+                <a href="https://ai.cyoda.net" target="_blank" rel="noopener noreferrer">
+                    Try Now
+                </a>
             </Button>
         </div>
     </section>

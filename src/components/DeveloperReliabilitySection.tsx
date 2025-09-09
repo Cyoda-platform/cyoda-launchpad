@@ -139,37 +139,66 @@ const DeveloperReliabilitySection = () => {
           </p>
         </div>
 
-        <div className="max-w-5xl mx-auto">
-          <div className="bg-card/10 backdrop-blur border border-border/50 rounded-2xl p-6 glow-primary">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-foreground">
-                Complex Product Entity Model
-              </h3>
-              <div className="flex items-center space-x-2">
-                <div className="w-3 h-3 rounded-full bg-destructive"></div>
-                <div className="w-3 h-3 rounded-full bg-cyoda-orange"></div>
-                <div className="w-3 h-3 rounded-full bg-cyoda-green"></div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+          {/* LEFT: JSON example */}
+          <div className="w-full">
+            <div className="bg-card/10 backdrop-blur border border-border/50 rounded-2xl p-6 glow-primary h-full">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold text-foreground">Complex Entity Model (Example)</h3>
+                <div className="text-xs text-muted-foreground">cyoda: entity-first • event-sourced • audited</div>
               </div>
+              <div className="flex items-center gap-3 mb-4">
+                <span className="w-2 h-2 rounded-full bg-green-500" />
+                <span className="w-2 h-2 rounded-full bg-yellow-500" />
+                <span className="w-2 h-2 rounded-full bg-red-500" />
+                <span className="text-xs text-muted-foreground">/models/entity.json</span>
+              </div>
+              <ScrollArea className="h-96 w-full md:h-[28rem]">
+                <pre className="code-block text-[10px] md:text-[11px] leading-tight">
+                  <code
+                    dangerouslySetInnerHTML={{
+                      __html: complexEntityJson
+                        .replace(/"([^"]+)":/g, '<span class="key">"$1":</span>')
+                        .replace(/: "([^"]+)"/g, ': <span class="string">"$1"</span>')
+                        .replace(/: (\d+)(?![^<]*>)/g, ': <span class="number">$1</span>')
+                        .replace(/: (true|false)/g, ': <span class="boolean">$1</span>')
+                    }}
+                  />
+                </pre>
+              </ScrollArea>
             </div>
-            
-            <ScrollArea className="h-96 w-full">
-              <pre className="code-block text-xs">
-                <code dangerouslySetInnerHTML={{ 
-                  __html: complexEntityJson
-                    .replace(/"([^"]+)":/g, '<span class="key">"$1":</span>')
-                    .replace(/: "([^"]*[^\\])"/g, ': <span class="string">"$1"</span>')
-                    .replace(/: (\d+\.?\d*),?/g, ': <span class="number">$1</span>,')
-                    .replace(/: (true|false),?/g, ': <span class="boolean">$1</span>,')
-                    .replace(/\/\/ (.+)/g, '<span class="comment">// $1</span>')
-                }} />
-              </pre>
-            </ScrollArea>
-            
-            <div className="mt-4 text-sm text-muted-foreground">
-              <p>
-                <strong>This demonstrates:</strong> Rich entities, complex relationships, localization, 
-                inventory management, compliance tracking, and event sourcing—Cyoda's core strengths.
-              </p>
+          </div>
+
+          {/* RIGHT: Why Cyoda */}
+          <div className="w-full">
+            <div className="bg-card/10 backdrop-blur border border-border/50 rounded-2xl p-6 h-full">
+              <h3 className="text-lg font-semibold text-foreground mb-4">Why Cyoda for Complex Data Models</h3>
+              <ul className="space-y-3 text-sm text-muted-foreground text-left">
+                <li>
+                  <span className="font-medium text-foreground">Entity-first modeling:</span>
+                  &nbsp;capture rich entities, nested attributes & relationships without schema pain.
+                </li>
+                <li>
+                  <span className="font-medium text-foreground">Event-sourced history:</span>
+                  &nbsp;every change is auditable and replayable.
+                </li>
+                <li>
+                  <span className="font-medium text-foreground">Built-in workflow & rules:</span>
+                  &nbsp;encode state machines, approvals and business rules close to data.
+                </li>
+                <li>
+                  <span className="font-medium text-foreground">Query how you think:</span>
+                  &nbsp;flexible filters across current state and historic events.
+                </li>
+                <li>
+                  <span className="font-medium text-foreground">Scale & reliability:</span>
+                  &nbsp;designed for high-volume, high-integrity enterprise data flows.
+                </li>
+                <li>
+                  <span className="font-medium text-foreground">Prototype → production:</span>
+                  &nbsp;move fast without re-platforming when you need to scale.
+                </li>
+              </ul>
             </div>
           </div>
         </div>
