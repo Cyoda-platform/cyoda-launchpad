@@ -1,8 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { ArrowRight, Sparkles } from 'lucide-react';
 import { useTheme } from 'next-themes';
-import { useState, useRef, useEffect } from 'react';
 import { useTypewriter } from '@/hooks/use-typewriter';
 import { heroPhrases } from '@/data/HeroPhrases';
 import heroBackgroundDark from '@/assets/hero-bg.jpg';
@@ -27,9 +25,9 @@ const HeroSection = () => {
     'Build a ',
     {
       typeSpeed: 80,
-      deleteSpeed: 40,
-      pauseDuration: 800,
-      phrasesGap: 400,
+      deleteSpeed: 30,
+      pauseDuration: 600,
+      phrasesGap: 300,
       loop: true,
       autoStart: true,
     }
@@ -162,17 +160,7 @@ const HeroSection = () => {
             </div>
           </div>
 
-          {/* Call to action */}
-          <div className="pt-8">
-            <Button
-              size="mobile-lg"
-              className="bg-gradient-primary text-white mobile-btn-text-lg px-6 py-3 sm:px-8 sm:py-4 glow-primary min-h-[44px]"
-              onClick={() => window.open('https://ai.cyoda.net', '_blank')}
-            >
-              Try Now
-              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
-            </Button>
-          </div>
+
         </div>
       </div>
 

@@ -1,4 +1,5 @@
-import { Bot, Code, Rocket } from 'lucide-react';
+
+import {Button} from "@/components/ui/button.tsx";
 
 const ThreeStepSection = () => {
   const steps = [
@@ -63,6 +64,16 @@ const ThreeStepSection = () => {
           ))}
         </div>
       </div>
+        {/* Call to action */}
+        <div className="pt-8 flex justify-center">
+            <Button
+                size="mobile-lg"
+                className="bg-gradient-primary text-white mobile-btn-text-lg px-6 py-3 sm:px-8 sm:py-4 glow-primary min-h-[44px]"
+                onClick={() => window.open('https://ai.cyoda.net', '_blank')}
+            >
+                Try Now
+            </Button>
+        </div>
     </section>
   );
 };
