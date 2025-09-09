@@ -2,6 +2,9 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { useTheme } from 'next-themes';
+import { useState, useRef, useEffect } from 'react';
+import { useTypewriter } from '@/hooks/use-typewriter';
+import { heroPhrases } from '@/data/HeroPhrases';
 import heroBackgroundDark from '@/assets/hero-bg.jpg';
 import heroBackgroundLight from '@/assets/hero-bg-lm.png';
 
@@ -13,8 +16,79 @@ const HeroSection = () => {
     "Real-Time Analytics Dashboard"
   ];
 
+  // Typewriter effect state
+  const [userText, setUserText] = useState('');
+  const [isUserTyping, setIsUserTyping] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  // Typewriter hook with configuration - using very slow speeds for testing
+  const [typewriterState, typewriterControls] = useTypewriter(
+    heroPhrases,
+    'Build a ',
+    {
+      typeSpeed: 80,
+      deleteSpeed: 40,
+      pauseDuration: 800,
+      phrasesGap: 400,
+      loop: true,
+      autoStart: true,
+    }
+  );
+
   // Select background image based on theme
   const heroBackground = theme === 'light' ? heroBackgroundLight : heroBackgroundDark;
+
+  // Handle user interaction with textarea
+  const handleFocus = () => {
+    setIsUserTyping(true);
+    typewriterControls.stop();
+    if (!userText) {
+      setUserText('');
+      if (textareaRef.current) {
+        textareaRef.current.value = '';
+      }
+    }
+  };
+
+  const handleBlur = () => {
+    const currentValue = textareaRef.current?.value || '';
+    setUserText(currentValue);
+
+    if (!currentValue.trim()) {
+      // Empty input - resume animation
+      setIsUserTyping(false);
+      typewriterControls.reset();
+      typewriterControls.start();
+    } else {
+      // User has content - keep it and don't resume animation
+      setIsUserTyping(true);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.target.value;
+    setUserText(value);
+
+    // If user clears the text while typing, we should be ready to resume animation on blur
+    if (!value.trim() && isUserTyping) {
+      // Don't resume animation yet, wait for blur
+    }
+  };
+
+  // Determine what text to show in the textarea
+  const displayValue = isUserTyping ? userText : typewriterState.displayText;
+
+  // Handle example button clicks
+  const handleExampleClick = (example: string) => {
+    setIsUserTyping(true);
+    setUserText(example);
+    typewriterControls.stop();
+
+    if (textareaRef.current) {
+      textareaRef.current.value = example;
+      textareaRef.current.focus();
+    }
+  };
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -36,7 +110,8 @@ const HeroSection = () => {
 
             {/* Subtext */}
             <p className="mobile-text-base text-foreground/90 leading-relaxed max-w-2xl mx-auto">
-                Developer-first application platform for event-driven backends. One developer building enterprise systems that used to require a team.
+                Developer-first application platform for event-driven backends. <br />
+                One developer building enterprise systems not a team.
             </p>
           </div>
 
@@ -44,13 +119,18 @@ const HeroSection = () => {
           <div className="max-w-2xl mx-auto space-y-6">
             <form action="https://ai.cyoda.net" method="GET" target="_blank" id="start-form" className="relative">
               <Textarea
+                ref={textareaRef}
                 name="name"
                 id="name"
                 required
                 minLength={1}
                 maxLength={10000}
+                value={displayValue}
+                onChange={handleChange}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
                 aria-label="Describe what you want to build..."
-                placeholder="Describe your application idea..."
+                placeholder={isUserTyping ? "Describe your application idea..." : ""}
                 className="min-h-[120px] mobile-text-base bg-background/10 backdrop-blur border-2 border-primary/30 focus:border-primary glow-primary placeholder:text-foreground/60 pr-24 sm:pr-32"
               />
               <Button
@@ -72,6 +152,7 @@ const HeroSection = () => {
                     key={index}
                     variant="outline"
                     size="mobile-sm"
+                    onClick={() => handleExampleClick(example)}
                     className="bg-card/20 backdrop-blur border-primary/30 hover:bg-primary/10 hover:border-primary glow-hover mobile-btn-text-sm min-h-[44px]"
                   >
                     {example}

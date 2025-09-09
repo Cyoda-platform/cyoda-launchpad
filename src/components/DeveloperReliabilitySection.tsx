@@ -153,7 +153,7 @@ const DeveloperReliabilitySection = () => {
             </div>
             
             <ScrollArea className="h-96 w-full">
-              <pre className="code-block text-sm">
+              <pre className="code-block text-xs">
                 <code dangerouslySetInnerHTML={{ 
                   __html: complexEntityJson
                     .replace(/"([^"]+)":/g, '<span class="key">"$1":</span>')

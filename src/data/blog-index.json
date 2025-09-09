@@ -1,0 +1,228 @@
+{
+  "agentic-ai-with-cyoda.md": {
+    "slug": "agentic-ai-with-cyoda",
+    "title": "Building Agentic AI Applications with Cyoda Online Platform",
+    "author": "Patrick Stanton",
+    "date": "2025-09-05",
+    "category": "AI",
+    "excerpt": "Cyoda's online platform enables developers to create agentic AI applications faster, safer, and with greater reliability. By combining entity-centric design, workflows, and transactional consistency, Cyoda provides a powerful alternative to traditional AI development stacks.",
+    "readTime": "4 min read",
+    "wordCount": 652,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "agentic AI",
+      "Cyoda",
+      "platform",
+      "AI builder",
+      "workflows"
+    ]
+  },
+  "asynchronous-workflow-automation.md": {
+    "slug": "asynchronous-workflow-automation",
+    "title": "Asynchronous Workflow Automation: State Machines as First-Class Citizens",
+    "author": "Cyoda Team",
+    "date": "2025-08-22",
+    "category": "Platform",
+    "excerpt": "This document compares the Cyoda Service Platform with a range of tools for workflow orchestration, data integration, cloud-native services, and AI-assisted development.",
+    "readTime": "5 min read",
+    "wordCount": 908,
+    "featured": true,
+    "published": true,
+    "tags": [
+      "comparison",
+      "platform",
+      "enterprise",
+      "workflow",
+      "cloud-native"
+    ]
+  },
+  "beyond-traditional-databases.md": {
+    "slug": "beyond-traditional-databases",
+    "title": "Beyond Traditional Databases: Why Entity-Centric Architecture Matters",
+    "author": "Paul Schleger",
+    "date": "2025-08-18",
+    "category": "Architecture",
+    "excerpt": "Modern applications demand more than traditional databases can deliver. Discover how Entity-Centric Architecture and Cyoda's EDBMS addresses the gaps in relational and document databases for stateful, process-driven applications.",
+    "readTime": "4 min read",
+    "wordCount": 606,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "architecture",
+      "database",
+      "entity-centric",
+      "EDBMS",
+      "enterprise"
+    ]
+  },
+  "cyoda_comparison_by_category.md": {
+    "slug": "cyoda-comparison-by-category",
+    "title": "Cyoda Platform Comparison Overview",
+    "author": "Cyoda Team",
+    "date": "2025-01-15",
+    "category": "Platform",
+    "excerpt": "This document compares the Cyoda Service Platform with a range of tools for workflow orchestration, data integration, cloud-native services, and AI-assisted development.",
+    "readTime": "6 min read",
+    "wordCount": 1053,
+    "featured": true,
+    "published": true,
+    "tags": [
+      "comparison",
+      "platform",
+      "enterprise",
+      "workflow",
+      "cloud-native"
+    ]
+  },
+  "designing-for-high-availability.md": {
+    "slug": "designing-for-high-availability",
+    "title": "Designing for High-Availability in Distributed Systems: Lessons from Cyoda",
+    "author": "Patrick Stanton",
+    "date": "2025-09-03",
+    "category": "Infrastructure",
+    "excerpt": "Distributed systems power the modern enterprise, but with scale comes complexity. Learn how Cyoda's platform combines Cassandra, Zookeeper, and event-context sharding to deliver fault tolerance at scale.",
+    "readTime": "4 min read",
+    "wordCount": 667,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "high-availability",
+      "distributed-systems",
+      "cassandra",
+      "zookeeper",
+      "fault-tolerance"
+    ]
+  },
+  "distributed-reporting-without-data-lakes.md": {
+    "slug": "distributed-reporting-without-data-lakes",
+    "title": "Distributed Reporting Without Data Lakes",
+    "author": "Cyoda Team",
+    "date": "2025-06-03",
+    "category": "Analytics",
+    "excerpt": "For many enterprises, reporting requires extracting data into separate lakes or warehouses. Cyoda takes a different approach by embedding distributed reporting directly into the transactional platform for real-time insights without ETL overhead.",
+    "readTime": "4 min read",
+    "wordCount": 722,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "reporting",
+      "analytics",
+      "data-lakes",
+      "real-time",
+      "distributed"
+    ]
+  },
+  "event-context-sharding.md": {
+    "slug": "event-context-sharding",
+    "title": "Event-Context Sharding vs. Traditional Sharding",
+    "author": "Paul Schleger",
+    "date": "2025-09-04",
+    "category": "Architecture",
+    "excerpt": "Distributed systems live and die by how they manage concurrency. Discover how Cyoda's event-context sharding approach aligns sharding with business entities to avoid conflicts and complexity in event-driven workflows.",
+    "readTime": "4 min read",
+    "wordCount": 768,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "sharding",
+      "event-driven",
+      "concurrency",
+      "distributed-systems",
+      "architecture"
+    ]
+  },
+  "from-banking-systems-to-saas.md": {
+    "slug": "from-banking-systems-to-saas",
+    "title": "From Banking Systems to SaaS: Why Cyoda Exists",
+    "author": "Patrick Stanton",
+    "date": "2025-08-24",
+    "category": "Platform",
+    "excerpt": "The modern enterprise landscape is defined by complexity, scale, and constant change. Discover how Cyoda was born from lessons learned in high-stakes investment banking back-office systems and why it matters for mission-critical applications.",
+    "readTime": "4 min read",
+    "wordCount": 614,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "banking",
+      "enterprise",
+      "platform",
+      "mission-critical",
+      "saas"
+    ]
+  },
+  "querying-the-past.md": {
+    "slug": "querying-the-past",
+    "title": "Querying the Past: Point-in-Time Data Access at Scale",
+    "author": "Cyoda Team",
+    "date": "2025-07-29",
+    "category": "Data Management",
+    "excerpt": "In an era where data-driven decisions are critical, the ability to query the past is more than convenience—it's necessity. Learn how Cyoda's consistency clock and snapshot isolation enable point-in-time queries at scale.",
+    "readTime": "4 min read",
+    "wordCount": 714,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "point-in-time",
+      "consistency",
+      "snapshot-isolation",
+      "audit",
+      "data-management"
+    ]
+  },
+  "test-post.md": {
+    "slug": "test-post",
+    "title": "Test Blog Post",
+    "author": "Test Author",
+    "date": "2025-01-15",
+    "category": "Testing",
+    "excerpt": "This is a test blog post to verify the blog data management system is working correctly.",
+    "readTime": "1 min read",
+    "wordCount": 140,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "test",
+      "blog",
+      "system"
+    ]
+  },
+  "the-future-of-cyoda-cloud.md": {
+    "slug": "the-future-of-cyoda-cloud",
+    "title": "The Future of Cyoda: Cloud-Native Entity Databases",
+    "author": "Patrick Stanton",
+    "date": "2025-06-12",
+    "category": "Cloud",
+    "excerpt": "Enterprises are shifting from on-premise, code-heavy platforms to cloud-native, configuration-driven systems. Discover how Cyoda Cloud reimagines mission-critical systems with a fully managed Entity Database Management System.",
+    "readTime": "4 min read",
+    "wordCount": 669,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "cloud-native",
+      "entity-database",
+      "grpc",
+      "modernization",
+      "saas"
+    ]
+  },
+  "when-transactions-meet-workflows.md": {
+    "slug": "when-transactions-meet-workflows",
+    "title": "When Transactions Meet Workflows: Building Reliable Systems Without Glue Code",
+    "author": "Paul Schleger",
+    "date": "2025-08-30",
+    "category": "Architecture",
+    "excerpt": "Most enterprises build reliable systems by stitching together PostgreSQL, Kafka, and workflow engines. Cyoda offers a different vision: a unified platform where transactions, workflows, and queries reduce complexity while improving reliability.",
+    "readTime": "4 min read",
+    "wordCount": 706,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "transactions",
+      "workflows",
+      "architecture",
+      "reliability",
+      "integration"
+    ]
+  }
+}
