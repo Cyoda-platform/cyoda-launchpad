@@ -6,15 +6,16 @@ import { CheckCircle, X } from 'lucide-react';
 const Pricing = () => {
   const plans = [
     {
-      name: "Developer",
+      name: "Trial",
       price: "Free",
-      description: "Perfect for personal projects and learning",
+      description: "Perfect for trying out the the platform",
       features: [
-        "Up to 3 applications",
-        "Basic AI assistance",
+        "Cyoda Cloud",
+        "5 data model",
+          "AI builder",
         "Community support",
-        "Standard templates",
-        "5GB storage"
+        "Restricted CPU",
+        "Restricted storage"
       ],
       limitations: [
         "Limited deployment options",
@@ -24,37 +25,50 @@ const Pricing = () => {
       popular: false
     },
     {
-      name: "Professional",
-      price: "$49",
+      name: "Developer",
+      price: "TBD",
       period: "/month",
-      description: "For serious developers and small teams",
+      description: "Developers and small teams",
       features: [
-        "Unlimited applications",
-        "Advanced AI builder",
-        "Priority support",
-        "Custom templates",
-        "100GB storage",
-        "Advanced analytics",
-        "API integrations",
-        "Custom domains"
+        "Cyoda Cloud",
+        "AI builder",
+        "Best effort support",
+        "Unlimited Data Models",
+        "Usage based pricing of storage",
+        "Usage based pricing of CPU",
+        "User defined upgrades"
       ],
       limitations: [],
       cta: "Start Free Trial",
       popular: true
     },
+      {
+          name: "Professional",
+          price: "TBD",
+          period: "/month",
+          description: "Developers and small teams",
+          features: [
+              "AWS/GCP/Azure Cloud",
+              "AI builder",
+              "SLA support",
+              "Unlimited Data Models",
+              "Usage based pricing of storage",
+              "Usage based pricing of CPU",
+              "User defined upgrades"
+          ],
+          limitations: [],
+          cta: "Start Free Trial",
+          popular: true
+      },
     {
       name: "Enterprise",
-      price: "Custom",
+      price: "Contact us",
       description: "For organizations with advanced needs",
       features: [
-        "Everything in Professional",
-        "Dedicated AI model training",
-        "24/7 dedicated support",
-        "Custom integrations",
+        "Private Cloud",
+        "Unlimited Models",
         "Unlimited storage",
-        "Advanced security features",
-        "Compliance certifications",
-        "On-premise deployment",
+        "Usage based pricing of CPU",
         "SLA guarantees"
       ],
       limitations: [],
@@ -73,8 +87,8 @@ const Pricing = () => {
       answer: "We accept all major credit cards, PayPal, and wire transfers for Enterprise customers. All payments are processed securely through Stripe."
     },
     {
-      question: "Is there a free trial available?",
-      answer: "Yes! Professional plans include a 14-day free trial with full access to all features. No credit card required to start."
+      question: "Is there a free version available?",
+      answer: "Yes! You can try Cyoda for free. No credit card required to start."
     },
     {
       question: "What happens to my data if I cancel?",
@@ -109,11 +123,11 @@ const Pricing = () => {
         {/* Pricing Cards */}
         <section className="py-24 relative">
           <div className="container mx-auto px-4">
-            <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div className="grid lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
               {plans.map((plan, index) => (
                 <div 
                   key={index}
-                  className={`relative p-8 rounded-2xl border transition-all duration-300 ${
+                  className={`relative p-8 rounded-xl border transition-all duration-300 ${
                     plan.popular 
                       ? 'border-primary bg-card/50 glow-primary scale-105' 
                       : 'border-border/50 bg-card/30 hover:bg-card/50 glow-hover'
@@ -122,7 +136,7 @@ const Pricing = () => {
                   {plan.popular && (
                     <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                       <div className="bg-gradient-primary text-white px-4 py-1 rounded-full text-sm font-medium">
-                        Most Popular
+                        Coming Soon
                       </div>
                     </div>
                   )}
@@ -132,7 +146,7 @@ const Pricing = () => {
                       {plan.name}
                     </h3>
                     <div className="flex items-baseline justify-center mb-2">
-                      <span className="text-4xl font-bold text-gradient-primary">
+                      <span className="text-2xl font-bold text-gradient-primary">
                         {plan.price}
                       </span>
                       {plan.period && (

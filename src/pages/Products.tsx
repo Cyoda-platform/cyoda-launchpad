@@ -3,13 +3,9 @@ import Footer from '@/components/Footer';
 import {
     Database,
     Cloud,
-    Shield,
     Zap,
-    Users,
     BarChart3,
     Bot,
-    Code,
-    Rocket,
     CheckCircle,
     Anvil,
     ShieldCheck, Boxes, Workflow
@@ -55,7 +51,7 @@ const Products = () => {
       icon: Bot,
       name: "AI Builder",
       description: "build your prototype in minutes",
-      features: ["Data modeling", "Business logic generation", "API endpoint creation", "Deploy your Services"]
+      features: ["Data modeling", "Business logic generation", "API endpoint creation", "Open Source", "Deploy Services"]
     },
     {
       icon: Anvil,
