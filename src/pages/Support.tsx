@@ -33,7 +33,7 @@ const Support = () => {
     {
       icon: FileText,
       title: "Documentation",
-      description: "Comprehensive guides, API references, and tutorials to help you build with Cyoda.",
+      description: "Guides, API references, and tutorials to help you build with Cyoda.",
       action: "Browse Docs",
       link: "https://docs.cyoda.net/",
       primary: false

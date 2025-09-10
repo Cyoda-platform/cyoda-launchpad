@@ -41,7 +41,7 @@ engineering effort goes into glue code:\
 - Writing compensating logic when workflows fail halfway\
 - Rebuilding audit trails from disparate logs
 
-This code doesn't deliver business value---it just holds the system
+This code doesn't deliver business value, it just holds the system
 together.
 
 ### Operational Fragility
@@ -64,7 +64,7 @@ this complexity is unsustainable.
 ## Cyoda's Unified Approach
 
 Cyoda was designed from the ground up to unify these concerns into a
-single platform【8†files_uploaded_in_conversation】:
+single platform:
 
 1.  **Transactions**
     -   Extended ACID semantics with **serializable snapshot

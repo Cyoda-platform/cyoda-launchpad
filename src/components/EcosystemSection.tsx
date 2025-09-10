@@ -49,7 +49,7 @@ const EcosystemSection = () => {
             Discover the Cyoda Ecosystem
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            A comprehensive platform designed for modern application development
+            A  platform designed for modern application development
           </p>
         </div>
 
