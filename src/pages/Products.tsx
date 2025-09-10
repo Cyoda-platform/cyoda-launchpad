@@ -1,60 +1,73 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { Database, Cloud, Shield, Zap, Users, BarChart3, Bot, Code, Rocket, CheckCircle } from 'lucide-react';
+import {
+    Database,
+    Cloud,
+    Shield,
+    Zap,
+    Users,
+    BarChart3,
+    Bot,
+    Code,
+    Rocket,
+    CheckCircle,
+    Anvil,
+    ShieldCheck, Boxes, Workflow
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const Products = () => {
-  const features = [
-    {
-      icon: Database,
-      title: "Smart Data Models",
-      description: "AI-generated entity relationships with built-in validation and complex business logic. Handle intricate data structures that real enterprises depend on."
-    },
-    {
-      icon: Cloud,
-      title: "Cloud Native",
-      description: "Scalable microservices architecture with auto-scaling and load balancing. Deploy anywhere with confidence."
-    },
-    {
-      icon: Shield,
-      title: "Enterprise Security",
-      description: "Built-in authentication, authorization, and compliance frameworks. SOC2, GDPR, and HIPAA ready."
-    },
-    {
-      icon: Zap,
-      title: "Real-time APIs",
-      description: "GraphQL and REST endpoints with real-time subscriptions and webhooks. Connect everything seamlessly."
-    },
-    {
-      icon: Users,
-      title: "Team Collaboration",
-      description: "Multi-tenant workspaces with role-based access and version control. Work together effectively."
-    },
-    {
-      icon: BarChart3,
-      title: "Analytics Ready",
-      description: "Built-in metrics, logging, and business intelligence integrations. Make data-driven decisions."
-    }
-  ];
+    const features = [
+        {
+            icon: Database,
+            title: "Entity Database",
+            description: "Model business entities as immutable facts with full history and bi-temporal querying, giving developers and enterprises a reliable single source of truth."
+        },
+        {
+            icon: Zap,
+            title: "Event-Driven Processing",
+            description: "React to every state change in real time with scalable, event-streamed workflows that keep systems responsive and decoupled."
+        },
+        {
+            icon: ShieldCheck,
+            title: "Transactional Consistency",
+            description: "Cluster-wide ACID transactions ensure correctness and reduce operational risk, even at enterprise scale."
+        },
+        {
+            icon: Boxes,
+            title: "Horizontal Scalability",
+            description: "Scale seamlessly across nodes to handle growing data volumes and workloads without costly re-architecture."
+        },
+        {
+            icon: Workflow,
+            title: "Automated Workflows",
+            description: "Attach business rules and actions directly to entity state transitions, streamlining complex processes into simple, reliable flows."
+        },
+        {
+            icon: BarChart3,
+            title: "SQL & Snapshot Isolation",
+            description: "Run SQL queries over current and historical state with distributed execution, enabling fast insight and compliance reporting."
+        }
+    ];
 
   const platforms = [
     {
       icon: Bot,
       name: "AI Builder",
-      description: "Natural language to production-ready applications",
-      features: ["Entity relationship modeling", "Business logic generation", "API endpoint creation", "Database schema design"]
+      description: "build your prototype in minutes",
+      features: ["Data modeling", "Business logic generation", "API endpoint creation", "Deploy your Services"]
     },
     {
-      icon: Code,
-      name: "Developer IDE",
-      description: "Full-featured development environment",
-      features: ["Code completion", "Real-time debugging", "Version control integration", "Testing frameworks"]
+      icon: Anvil,
+      name: "Cyoda Application Platform",
+      description: "Do more with less code",
+      features: ["Entity Database", "Horizontally scalable", "Event Driven Architecture", "Transactional Consistency"]
     },
     {
-      icon: Rocket,
-      name: "Deployment Engine",
-      description: "One-click deployment to any cloud",
-      features: ["Auto-scaling infrastructure", "Load balancing", "SSL/TLS certificates", "Monitoring & alerts"]
+      icon: Cloud,
+      name: "Cyoda Cloud",
+      description: "Test for free",
+      features: ["Cloud Native", "Thin Client Computing","Auto failover", "High Availability"]
     }
   ];
 
@@ -69,10 +82,10 @@ const Products = () => {
           <div className="container mx-auto px-4 relative z-10">
             <div className="text-center max-w-4xl mx-auto">
               <h1 className="text-5xl md:text-6xl font-bold text-gradient-hero mb-6">
-                Products Built for Modern Development
+                  Focus on Solutions,<br/> not Infrastructure
               </h1>
               <p className="text-xl text-muted-foreground mb-8">
-                Discover our comprehensive suite of tools designed to accelerate your development workflow from concept to production.
+                  A stateful, event-driven platform with an entity database, processing via workflows, horizontally scalable, transactional consistancy and real-time insight without complex infrastructure.
               </p>
               <Button 
                 size="lg"
@@ -90,10 +103,10 @@ const Products = () => {
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold text-gradient-primary mb-6">
-                The Complete Platform
+                The Enterprise Application Platform
               </h2>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                Three integrated products that work seamlessly together
+                Freeing developers to focus on building business value, not infrastructure.
               </p>
             </div>
 
@@ -176,7 +189,7 @@ const Products = () => {
               Ready to Transform Your Development?
             </h2>
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Join thousands of developers building the future with Cyoda's AI-powered platform.
+              Start building the future with Cyoda's AI-powered platform.
             </p>
             <Button 
               size="lg"
@@ -187,10 +200,10 @@ const Products = () => {
             </Button>
             <Button 
               size="lg"
-              variant="outline"
-              className="bg-card/20 backdrop-blur border-primary/30 hover:bg-primary/10 hover:border-primary glow-hover"
+              className="bg-gradient-primary text-white text-lg px-8 py-4 glow-primary mr-4"
+              onClick={() => window.open('https://docs.cyoda.net/', '_blank')}
             >
-              View Documentation
+              View Docs
             </Button>
           </div>
         </section>
