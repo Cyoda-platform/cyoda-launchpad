@@ -402,7 +402,7 @@ const Blog = () => {
           </div>
         </section>
 
-        {/* Newsletter Section */}
+        {/* Contact us */}
         <section className="py-24 relative">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
@@ -410,22 +410,21 @@ const Blog = () => {
                 Stay Updated
               </h2>
               <p className="text-xl text-muted-foreground mb-8">
-                Get the latest articles and updates delivered straight to your inbox.
+                Contact us, join our Discord, we are are backend devs and here to help.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  className="flex-1 h-12 px-4 rounded-lg border border-border/50 bg-background/50 backdrop-blur focus:border-primary focus:ring-1 focus:ring-primary"
-                />
-                <Button className="bg-gradient-primary text-white glow-primary">
-                  Subscribe
-                </Button>
+
+                       <Button className="bg-gradient-primary text-white glow-primary"
+                              onClick={() => window.open('https://discord.gg/uW9XaUR9', '_blank')}
+                      >
+                          Contact (Discord)
+                      </Button>
+
               </div>
               
               <p className="text-sm text-muted-foreground mt-4">
-                No spam, unsubscribe at any time.
+
               </p>
             </div>
           </div>

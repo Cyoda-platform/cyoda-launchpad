@@ -7,7 +7,7 @@
     "category": "AI",
     "excerpt": "Cyoda's online platform enables developers to create agentic AI applications faster, safer, and with greater reliability. By combining entity-centric design, workflows, and transactional consistency, Cyoda provides a powerful alternative to traditional AI development stacks.",
     "readTime": "4 min read",
-    "wordCount": 652,
+    "wordCount": 653,
     "featured": false,
     "published": true,
     "tags": [
@@ -214,7 +214,7 @@
     "category": "Architecture",
     "excerpt": "Most enterprises build reliable systems by stitching together PostgreSQL, Kafka, and workflow engines. Cyoda offers a different vision: a unified platform where transactions, workflows, and queries reduce complexity while improving reliability.",
     "readTime": "4 min read",
-    "wordCount": 706,
+    "wordCount": 707,
     "featured": false,
     "published": true,
     "tags": [

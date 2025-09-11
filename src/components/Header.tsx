@@ -129,7 +129,9 @@ const Header = () => {
 
           {/* Action Buttons */}
           <div className="hidden md:flex items-center space-x-2">
-            <Button variant="ghost" className="glow-hover mobile-btn-text">
+            <Button variant="ghost" className="glow-hover mobile-btn-text"
+                    onClick={() => window.open('https://discord.gg/uW9XaUR9', '_blank')}
+            >
               Contact (Discord)
             </Button>
             <Button
