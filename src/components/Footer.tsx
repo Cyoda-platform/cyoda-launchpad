@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import { Github, Linkedin, Twitter, Youtube } from 'lucide-react';
+import { SiGithub, SiLinkedin, SiX, SiYoutube } from "react-icons/si";
 import cyodaLogo from '@/assets/cyoda-logo.png';
-
+import { HashLink } from "react-router-hash-link";
 const Footer = () => {
   const footerLinks = [
     { name: 'Products', href: '/products' },
@@ -13,25 +13,25 @@ const Footer = () => {
 
   const socialLinks = [
     { 
-      icon: Linkedin, 
+      icon: SiLinkedin,
       href: 'https://www.linkedin.com/company/cyoda', 
       label: 'LinkedIn',
       hoverColor: 'hover:text-blue-400'
     },
     { 
-      icon: Twitter, 
+      icon: SiX,
       href: 'https://twitter.com/cyodaops', 
       label: 'X (Twitter)',
       hoverColor: 'hover:text-blue-400'
     },
     { 
-      icon: Youtube, 
+      icon: SiYoutube,
       href: 'https://www.youtube.com/@cyoda934', 
       label: 'YouTube',
       hoverColor: 'hover:text-red-400'
     },
     { 
-      icon: Github, 
+      icon: SiGithub,
       href: 'https://github.com/Cyoda-platform/', 
       label: 'GitHub',
       hoverColor: 'hover:text-gray-300'
@@ -109,7 +109,16 @@ const Footer = () => {
               >
                 Contact via Discord
               </a>
+<p/>
             </div>
+              <div className="space-y-3">
+                  <p className="text-muted-foreground">
+                      Send us a message
+                  </p>
+                  <HashLink smooth to="/support#contact" className="inline-flex items-center text-primary hover:text-primary/80 transition-colors font-medium">
+                      Contact Form
+                  </HashLink>
+              </div>
           </div>
         </div>
 

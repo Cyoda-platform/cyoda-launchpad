@@ -2,6 +2,8 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { CheckCircle, X } from 'lucide-react';
+import { Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 
 const Pricing = () => {
   const plans = [
@@ -96,7 +98,7 @@ const Pricing = () => {
     },
     {
       question: "Do you offer discounts for students or nonprofits?",
-      answer: "Yes, we offer 50% discounts for students and qualified nonprofit organizations. Contact our support team for more information."
+      answer: " Contact our support team for more information."
     }
   ];
 
@@ -175,23 +177,28 @@ const Pricing = () => {
                     ))}
                   </div>
 
-                  <Button 
-                    className={`w-full ${
-                      plan.popular 
-                        ? 'bg-gradient-primary text-white glow-primary' 
-                        : 'bg-card/20 backdrop-blur border border-primary/30 hover:bg-primary/10 hover:border-primary glow-hover'
-                    }`}
-                    onClick={() => {
-                      if (plan.name === 'Enterprise') {
-                        // Contact sales logic
-                        window.open('mailto:sales@cyoda.net', '_blank');
-                      } else {
-                        window.open('https://ai.cyoda.net', '_blank');
-                      }
-                    }}
-                  >
-                    {plan.cta}
-                  </Button>
+                    {plan.name === "Enterprise" ? (
+                        <Button
+                            className={`w-full bg-gradient-primary text-white glow-primary"}`}
+                            asChild
+                        >
+                            <HashLink smooth to="/support#contact">
+                                {plan.cta}
+                            </HashLink>
+
+                        </Button>
+                    ) : (
+                        <Button
+                            className={`w-full ${
+                                plan.popular
+                                    ? "bg-gradient-primary text-white glow-primary"
+                                    : "bg-card/20 backdrop-blur border border-primary/30 hover:bg-primary/10 hover:border-primary glow-hover"
+                            }`}
+                            onClick={() => window.open("https://ai.cyoda.net", "_blank")}
+                        >
+                            {plan.cta}
+                        </Button>
+                    )}
                 </div>
               ))}
             </div>

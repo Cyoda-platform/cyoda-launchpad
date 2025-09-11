@@ -2,15 +2,8 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ThemeToggle';
-import {
-  Github,
-  Linkedin,
-  Twitter,
-  Youtube,
-  Menu,
-  X,
-  ChevronDown
-} from 'lucide-react';
+import { SiGithub, SiLinkedin, SiX, SiYoutube, } from "react-icons/si";
+import { Menu,    X,    ChevronDown} from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -25,10 +18,10 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const socialLinks = [
-    { icon: Linkedin, href: 'https://www.linkedin.com/company/cyoda', label: 'LinkedIn' },
-    { icon: Twitter, href: 'https://twitter.com/cyodaops', label: 'X (Twitter)' },
-    { icon: Youtube, href: 'https://www.youtube.com/@cyoda934', label: 'YouTube' },
-    { icon: Github, href: 'https://github.com/Cyoda-platform/', label: 'GitHub' },
+    { icon: SiLinkedin, href: 'https://www.linkedin.com/company/cyoda', label: 'LinkedIn' },
+    { icon: SiX, href: 'https://twitter.com/cyodaops', label: 'X (Twitter)' },
+    { icon: SiYoutube, href: 'https://www.youtube.com/@cyoda934', label: 'YouTube' },
+    { icon: SiGithub, href: 'https://github.com/Cyoda-platform/', label: 'GitHub' },
   ];
 
   return (
