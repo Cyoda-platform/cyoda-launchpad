@@ -17,7 +17,7 @@ const Products = () => {
         {
             icon: Database,
             title: "Entity Database",
-            description: "Model business entities as immutable facts with full history and bi-temporal querying, giving developers and enterprises a reliable single source of truth."
+            description: "Model business entities as immutable facts with full history and point in time historical querying, giving developers and enterprises a reliable single source of truth."
         },
         {
             icon: Zap,
@@ -42,7 +42,7 @@ const Products = () => {
         {
             icon: BarChart3,
             title: "SQL & Snapshot Isolation",
-            description: "Run SQL queries over current and historical state with distributed execution, enabling fast insight and compliance reporting."
+            description: "Run SQL queries over current and historical dates with distributed scalable execution, enabling fast insight and compliance reporting."
         }
     ];
 
