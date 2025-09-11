@@ -92,12 +92,6 @@ const Support = () => {
     }
   ];
 
-  const statusItems = [
-    { service: "AI Builder", status: "Operational", color: "text-cyoda-green" },
-    { service: "Deployment Engine", status: "Operational", color: "text-cyoda-green" },
-    { service: "API Services", status: "Operational", color: "text-cyoda-green" },
-    { service: "Documentation", status: "Operational", color: "text-cyoda-green" }
-  ];
 
   return (
     <div className="min-h-screen bg-background">
