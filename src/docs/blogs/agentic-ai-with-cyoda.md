@@ -14,12 +14,12 @@ title: "Building Agentic AI Applications with Cyoda Online Platform"
 
 # Building Agentic AI Applications with Cyoda Online Platform
 
-The rise of **agentic AI applications**A I systems that can take
-action, make decisions, and coordinate processes---has shifted the
+The rise of **agentic AI applications** AI systems that can take
+action, make decisions, and coordinate processes has shifted the
 demands placed on development platforms. Developers now need tools that
 go beyond model inference or API orchestration. They require systems
-that ensure **consistency, reliability, and adaptability** while
-supporting the complexity of distributed, long-lived workflows.
+that ensure **consistency, reliability, dynamic workflows and adaptability** while
+supporting the complexity of distributed and long-lived workflows.
 
 Cyoda's online platform delivers exactly that. It enables developers to
 build **agentic AI applications** using the same principles that make

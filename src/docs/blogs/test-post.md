@@ -5,7 +5,7 @@ date: "2025-01-15"
 category: "Testing"
 excerpt: "This is a test blog post to verify the blog data management system is working correctly."
 featured: false
-published: true
+published: false
 tags: ["test", "blog", "system"]
 ---
 

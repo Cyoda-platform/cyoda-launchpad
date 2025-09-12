@@ -15,7 +15,7 @@ Modern distributed applications are no longer simple request/response
 systems. They are **stateful, long-lived, and highly orchestrated**.
 From customer onboarding journeys to complex financial transactions,
 these workflows often span days, involve multiple approvals, and must
-remain auditable end-to-end.
+remain auditable and consistent end-to-end.
 
 For developers, this presents a challenge: how do you ensure
 **automation without sacrificing reliability and auditability**?
@@ -24,38 +24,39 @@ systems around a database. But this creates fragile integrations,
 duplicated logic, and operational overhead.
 
 Cyoda's **Entity Database Management System (EDBMS)** takes a different
-approach---treating **state machines as first-class citizens** within
-the data platform itself【8†files_uploaded_in_conversation】. This shift
-changes how developers design, build, and maintain complex systems.
+approach by treating **state machines as first-class citizens** within
+the data platform itself. This shift changes how developers design, build, 
+and maintain complex systems.
 
 ------------------------------------------------------------------------
 
 ## Why State Machines Belong Inside the Platform
 
 At the heart of Cyoda's design is the concept of an **Entity**: a
-business object (such as a customer, trade, or claim) that carries not
+business object (such as a customer, product,trade, or claim) that carries not
 just data, but also a **state**. Each entity has a finite set of valid
-states (e.g., `Pending`, `Approved`, `Settled`) and a **workflow** that
-defines how it can transition between them.
+states (e.g., `Pending`, `Approved`, `Settled`, `Cancelled`) and a **workflow** that
+defines how it can transition between them, with rules that govern which transitions 
+between with states are allowed under what conditions.
 
-By embedding this directly into the database platform:
+By embedding this directly into the database platform and the entities themselves:
 
--   **No external orchestration required**: Developers don't need to
+-   **No external orchestration is required**: Developers don't need to
     glue together a database, a message broker, and a workflow engine.
-    The system itself manages the lifecycle.\
+    The system itself manages the lifecycle of each data entity.
 -   **Guaranteed consistency**: Because Cyoda couples state transitions
     with extended ACID semantics and snapshot isolation, workflows can
-    run asynchronously **without breaking transactional guarantees**.\
+    run asynchronously **without breaking transactional guarantees**.
 -   **Audit built in**: Every state change is persisted as an immutable
     event, providing a natural **data lineage**. Instead of custom audit
     tables or external logging, the history is intrinsic to the data
-    model.\
+    model.
 -   **Simplified developer experience**: State transition logic is
     expressed in **Entity Processor classes**, directly associated with
     the data they govern. This eliminates scattered, duplicated workflow
     logic across services.
 
-In other words, workflows are not an afterthought---they are the
+In other words, workflows are not an afterthought, they are the
 **primary abstraction**.
 
 ------------------------------------------------------------------------
@@ -71,14 +72,14 @@ and account creation.
 -   **Traditional Approach**: Developers wire together external workflow
     tools with APIs and custom scripts, hoping everything stays in sync.
     Failures often leave the customer stuck mid-process, requiring
-    manual intervention.\
+    manual intervention.
 -   **Cyoda Approach**: Each customer is modeled as an **entity** with a
     state machine (`New → Verification → Approved → Active`).
     Transitions (e.g., from `Verification` to `Approved`) are tied to
     explicit **criteria** and **processors**. If a step fails, the
     system can retry asynchronously with **idempotent event handling**,
     or roll back gracefully while preserving a complete audit
-    trail【8†files_uploaded_in_conversation】.
+    trail.
 
 ------------------------------------------------------------------------
 
@@ -91,7 +92,7 @@ involve dozens of state transitions.
 -   **Traditional Approach**: Each stage of the claim is managed in
     separate systems, connected by batch jobs or message queues.
     Developers must implement reconciliation logic to handle
-    discrepancies.\
+    discrepancies.
 -   **Cyoda Approach**: The **claim itself is the unit of state**. The
     EDBMS enforces allowed transitions
     (`Filed → Under Review → Approved/Rejected → Paid`) and manages
@@ -110,7 +111,7 @@ reporting.
 
 -   **Traditional Approach**: Developers must orchestrate calls to
     third-party APIs, manage retries, and store logs for
-    regulators---often in separate, disconnected systems.\
+    regulators, often in separate, disconnected systems.
 -   **Cyoda Approach**: KYC checks are modeled as **asynchronous state
     transitions**. External API calls are queued in **durable event
     streams**, with results feeding back into the entity's workflow. If
@@ -126,13 +127,13 @@ reporting.
 For developers, building on Cyoda's entity-centric model simplifies
 system design in three key ways:
 
-1.  **Reduced Glue Code** -- No need to integrate multiple third-party
-    workflow engines and message brokers.\
-2.  **Idempotent by Default** -- Event-context sharding ensures that
+1.  **Reduced Glue Code**  No need to integrate multiple third-party
+    workflow engines and message brokers.
+2.  **Idempotent by Default**  Event-context sharding ensures that
     events for the same entity are processed serially, avoiding race
     conditions and complex conflict
-    resolution【8†files_uploaded_in_conversation】.\
-3.  **Audit Without Extra Work** -- Every state transition is recorded
+    resolution.
+3.  **Audit Without Extra Work**  Every state transition is recorded
     as an event, enabling **full traceability** for debugging,
     compliance, and analytics.
 
@@ -150,9 +151,9 @@ workflows as core infrastructure**.
 
 Cyoda's EDBMS is designed for developers who want:
 
--   **Automation without hidden complexity**\
--   **Resilience built into the data layer**\
--   **Auditability as a first-class concern**\
+-   **Automation without hidden complexity**
+-   **Resilience built into the data layer**
+-   **Auditability as a first-class concern**
 -   **Confidence to build mission-critical applications without
     reinventing orchestration**
 
@@ -160,7 +161,7 @@ Cyoda's EDBMS is designed for developers who want:
 
 ## Conclusion
 
-Workflows are no longer side concerns---they are the backbone of modern
+Workflows are no longer side concerns, they are the backbone of modern
 business systems. By making **state machines and workflows first-class
 citizens**, Cyoda eliminates the need for brittle integrations and
 provides developers with a platform that is **resilient, auditable, and
