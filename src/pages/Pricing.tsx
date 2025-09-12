@@ -13,18 +13,23 @@ const Pricing = () => {
       description: "Perfect for trying out the the platform",
       features: [
         "Cyoda Cloud",
-        "5 data model",
+        "10 data model",
+          "50 fields per model",
+          "100 max fields",
           "AI builder",
-        "Community support",
-        "Restricted CPU",
-        "Restricted storage"
+          "1 client node",
+          "1GB Disk Usage",
+          "300/min API requests",
+          "300/min external calls",
+          "Max Payload 100kb",
+        "Community support"
       ],
       limitations: [
         "Limited deployment options",
         "Basic monitoring"
       ],
       cta: "Get Started Free",
-      popular: false
+      available: true
     },
     {
       name: "Developer",
@@ -32,17 +37,21 @@ const Pricing = () => {
       period: "/month",
       description: "Developers and small teams",
       features: [
-        "Cyoda Cloud",
-        "AI builder",
-        "Best effort support",
-        "Unlimited Data Models",
-        "Usage based pricing of storage",
-        "Usage based pricing of CPU",
-        "User defined upgrades"
+          "Cyoda Cloud",
+          "25 data model",
+          "100 fields per model",
+          "500 max fields",
+          "AI builder",
+          "5 client node",
+          "10GB Disk Usage",
+          "600/min API requests",
+          "600/min external calls",
+          "Max Payload 5Mb",
+          "Community support"
       ],
       limitations: [],
       cta: "Start Free Trial",
-      popular: true
+        available: false
     },
       {
           name: "Professional",
@@ -51,16 +60,20 @@ const Pricing = () => {
           description: "Developers and small teams",
           features: [
               "AWS/GCP/Azure Cloud",
+              "100 data model",
+              "500 fields per model",
+              "2000 max fields",
               "AI builder",
-              "SLA support",
-              "Unlimited Data Models",
-              "Usage based pricing of storage",
-              "Usage based pricing of CPU",
-              "User defined upgrades"
+              "20 client node",
+              "1TB Disk Usage",
+              "600/min API requests",
+              "600/min external calls",
+              "Max Payload 5Mb",
+              "Community support"
           ],
           limitations: [],
           cta: "Start Free Trial",
-          popular: true
+          available: false
       },
     {
       name: "Enterprise",
@@ -68,14 +81,20 @@ const Pricing = () => {
       description: "For organizations with advanced needs",
       features: [
         "Private Cloud",
-        "Unlimited Models",
-        "Unlimited storage",
-        "Usage based pricing of CPU",
+          "Unlimited data model",
+          "Unlimited fields per model",
+          "Unlimited fields",
+          "AI builder",
+          "Unlimited client node",
+          "Unlimited Disk Usage",
+          "Unlimited API requests",
+          "Unlimited external calls",
+          "Unlimited Max Payload",
         "SLA guarantees"
       ],
       limitations: [],
       cta: "Contact Sales",
-      popular: false
+        available: true
     }
   ];
 
@@ -84,10 +103,10 @@ const Pricing = () => {
       question: "Can I change my plan anytime?",
       answer: "Yes, you can upgrade or downgrade your plan at any time. Changes take effect immediately for upgrades, or at the end of your billing cycle for downgrades."
     },
-    {
-      question: "What payment methods do you accept?",
-      answer: "We accept all major credit cards, PayPal, and wire transfers for Enterprise customers. All payments are processed securely through Stripe."
-    },
+      {
+          question: "No plan fits my needs",
+          answer: "Contact our sales team, we'll be happy to help."
+      },
     {
       question: "Is there a free version available?",
       answer: "Yes! You can try Cyoda for free. No credit card required to start."
@@ -129,13 +148,9 @@ const Pricing = () => {
               {plans.map((plan, index) => (
                 <div 
                   key={index}
-                  className={`relative p-8 rounded-xl border transition-all duration-300 ${
-                    plan.popular 
-                      ? 'border-primary bg-card/50 glow-primary scale-105' 
-                      : 'border-border/50 bg-card/30 hover:bg-card/50 glow-hover'
-                  }`}
+                  className={`relative p-8 rounded-xl border transition-all duration-300  border-primary bg-card/50 glow-primary scale-105`}
                 >
-                  {plan.popular && (
+                  {!plan.available && (
                     <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
                       <div className="bg-gradient-primary text-white px-4 py-1 rounded-full text-sm font-medium">
                         Coming Soon
@@ -189,11 +204,7 @@ const Pricing = () => {
                         </Button>
                     ) : (
                         <Button
-                            className={`w-full ${
-                                plan.popular
-                                    ? "bg-gradient-primary text-white glow-primary"
-                                    : "bg-card/20 backdrop-blur border border-primary/30 hover:bg-primary/10 hover:border-primary glow-hover"
-                            }`}
+                            className={`w-full bg-gradient-primary text-white glow-primary`}
                             onClick={() => window.open("https://ai.cyoda.net", "_blank")}
                         >
                             {plan.cta}
