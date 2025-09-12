@@ -1,4 +1,39 @@
 {
+  "A_Technical_Description_of_the_Cyoda_Platform.md": {
+    "slug": "a-technical-description-of-the-cyoda-platform",
+    "title": "A Technical Description of the Cyoda Platform",
+    "author": "Paul Schleger",
+    "date": "2025-05-29",
+    "category": "Platform",
+    "excerpt": "This is a deep-dive technical reference for the Cyoda Platform (see https://cyoda.com), a distributed, transactional data-processing system built to support high-availability business applications. It outlines the architecture and mechanics of the Cyoda Platform Library (CPL), which includes asynchronous transactional workflows, point-in-time querying with snapshot isolation, distributed report execution, and event-context sharding. Designed for developers familiar with distributed systems, the document emphasizes low-level design decisions, like extended ACID semantics, integration with Cassandra and Zookeeper, and client-extensible workflows.",
+    "readTime": "18 min read",
+    "wordCount": 3593,
+    "featured": true,
+    "published": true,
+    "tags": [
+      "platform",
+      "technical"
+    ]
+  },
+  "Entity_Workflows_for_Event-Driven_Architectures.md": {
+    "slug": "entity-workflows-for-event-driven-architectures",
+    "title": "Entity Workflows for Event-Driven Architectures",
+    "author": "Paul Schleger",
+    "date": "2024-05-01",
+    "category": "Platform",
+    "excerpt": "dive into the details of *Entity Workflows* and show how an EDBMS naturally leads to a horizontally scalable event-driven architecture (EDA). The goal being to greatly simplify things, where the applications become “thin clients” of a platform",
+    "readTime": "11 min read",
+    "wordCount": 2048,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "platform",
+      "technical",
+      "database",
+      "entity-centric",
+      "EDBMS"
+    ]
+  },
   "agentic-ai-with-cyoda.md": {
     "slug": "agentic-ai-with-cyoda",
     "title": "Building Agentic AI Applications with Cyoda Online Platform",
@@ -7,7 +42,7 @@
     "category": "AI",
     "excerpt": "Cyoda's online platform enables developers to create agentic AI applications faster, safer, and with greater reliability. By combining entity-centric design, workflows, and transactional consistency, Cyoda provides a powerful alternative to traditional AI development stacks.",
     "readTime": "4 min read",
-    "wordCount": 653,
+    "wordCount": 657,
     "featured": false,
     "published": true,
     "tags": [
@@ -26,7 +61,7 @@
     "category": "Platform",
     "excerpt": "This document compares the Cyoda Service Platform with a range of tools for workflow orchestration, data integration, cloud-native services, and AI-assisted development.",
     "readTime": "5 min read",
-    "wordCount": 908,
+    "wordCount": 936,
     "featured": true,
     "published": true,
     "tags": [
@@ -45,7 +80,7 @@
     "category": "Architecture",
     "excerpt": "Modern applications demand more than traditional databases can deliver. Discover how Entity-Centric Architecture and Cyoda's EDBMS addresses the gaps in relational and document databases for stateful, process-driven applications.",
     "readTime": "4 min read",
-    "wordCount": 606,
+    "wordCount": 618,
     "featured": false,
     "published": true,
     "tags": [
@@ -180,7 +215,7 @@
     "readTime": "1 min read",
     "wordCount": 140,
     "featured": false,
-    "published": true,
+    "published": false,
     "tags": [
       "test",
       "blog",

@@ -10,6 +10,45 @@ interface MarkdownRendererProps {
   className?: string;
 }
 
+// Map markdown-relative image paths to actual Vite-served asset URLs
+const blogAssets = import.meta.glob(
+  '/src/docs/blogs/**/*.{png,jpg,jpeg,webp,svg,gif}',
+  { eager: true, query: '?url', import: 'default' }
+) as Record<string, string>;
+const guideAssets = import.meta.glob(
+  '/src/docs/guides/**/*.{png,jpg,jpeg,webp,svg,gif}',
+  { eager: true, query: '?url', import: 'default' }
+) as Record<string, string>;
+const assetMap: Record<string, string> = { ...blogAssets, ...guideAssets };
+
+function resolveMarkdownImageSrc(src?: string): string | undefined {
+  if (!src) return src;
+  // Leave absolute/http/data URLs as-is
+  if (/^(?:https?:)?\/\//.test(src) || src.startsWith('data:') || src.startsWith('/')) {
+    return src;
+  }
+  // Normalize leading './' or '/'
+  const rel = src.replace(/^\.\/+/, '').replace(/^\//, '');
+  const candidates = [
+    `/src/docs/blogs/${rel}`,
+    `/src/docs/guides/${rel}`,
+  ];
+  for (const key of candidates) {
+    if (assetMap[key]) {
+      const url = assetMap[key];
+      if (import.meta.env.DEV && url !== src) {
+        // Helpful during development to confirm resolution behavior
+        // eslint-disable-next-line no-console
+        console.debug('[MarkdownRenderer] Resolved markdown image', src, '->', url);
+      }
+      return url;
+    }
+  }
+  // Fallback to original src if no match found
+  return src;
+}
+
+
 // Utility functions to detect copyable content patterns
 const detectCopyableContent = (text: string): { isCopyable: boolean; variant: 'prompt' | 'command' | 'code'; extractedText: string } => {
   const cleanText = text.trim();
@@ -104,7 +143,7 @@ const MarkdownRenderer = ({ content, className }: MarkdownRendererProps) => {
               {children}
             </h6>
           ),
-          
+
           // Custom paragraph styling with copyable content detection
           p: ({ children }) => {
             const textContent = extractTextFromChildren(children);
@@ -130,7 +169,7 @@ const MarkdownRenderer = ({ content, className }: MarkdownRendererProps) => {
               </p>
             );
           },
-          
+
           // Custom link styling
           a: ({ href, children }) => (
             <a
@@ -142,7 +181,7 @@ const MarkdownRenderer = ({ content, className }: MarkdownRendererProps) => {
               {children}
             </a>
           ),
-          
+
           // Custom list styling
           ul: ({ children }) => (
             <ul className="list-disc list-inside mb-6 space-y-2 text-foreground">
@@ -157,7 +196,7 @@ const MarkdownRenderer = ({ content, className }: MarkdownRendererProps) => {
           li: ({ children }) => (
             <li className="leading-relaxed text-muted-foreground">{children}</li>
           ),
-          
+
           // Custom blockquote styling with copyable content detection
           blockquote: ({ children }) => {
             const textContent = extractTextFromChildren(children);
@@ -181,7 +220,7 @@ const MarkdownRenderer = ({ content, className }: MarkdownRendererProps) => {
               </blockquote>
             );
           },
-          
+
           // Custom code styling with syntax highlighting, copy functionality, and mermaid support
           code: ({ inline, className, children, ...props }) => {
             const match = /language-(\w+)/.exec(className || '');
@@ -225,7 +264,7 @@ const MarkdownRenderer = ({ content, className }: MarkdownRendererProps) => {
               {children}
             </div>
           ),
-          
+
           // Custom table styling
           table: ({ children }) => (
             <div className="overflow-x-auto mb-6">
@@ -246,27 +285,30 @@ const MarkdownRenderer = ({ content, className }: MarkdownRendererProps) => {
               {children}
             </td>
           ),
-          
-          // Custom image styling
-          img: ({ src, alt }) => (
-            <img
-              src={src}
-              alt={alt}
-              className="rounded-lg shadow-lg max-w-full h-auto my-6"
-              loading="lazy"
-            />
-          ),
-          
+
+          // Custom image styling with asset resolution for relative paths
+          img: ({ src, alt }) => {
+            const resolved = resolveMarkdownImageSrc(src);
+            return (
+              <img
+                src={resolved}
+                alt={alt}
+                className="rounded-lg shadow-lg max-w-full h-auto my-6"
+                loading="lazy"
+              />
+            );
+          },
+
           // Custom horizontal rule
           hr: () => (
             <hr className="border-border my-8" />
           ),
-          
+
           // Custom strong/bold styling
           strong: ({ children }) => (
             <strong className="font-semibold text-foreground">{children}</strong>
           ),
-          
+
           // Custom emphasis/italic styling
           em: ({ children }) => (
             <em className="italic text-muted-foreground">{children}</em>

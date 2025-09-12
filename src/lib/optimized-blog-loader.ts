@@ -57,7 +57,7 @@ async function loadBlogIndex(): Promise<BlogIndex> {
         const filename = path.split('/').pop() || path;
         
         // Parse only frontmatter and first few lines for excerpt
-        const processed = processBlogPost(content, filename);
+        const processed = processBlogPost(filename, content);
         
         index[filename] = {
           slug: processed.slug,
@@ -135,7 +135,7 @@ export async function loadBlogPost(slug: string): Promise<BlogPost | null> {
     const module = await import(`/src/docs/blogs/${filename}?raw`);
     const content = module.default;
     
-    const processed = processBlogPost(content, filename);
+    const processed = processBlogPost(filename, content);
     const blogPost: BlogPost = {
       slug: processed.slug,
       frontmatter: processed.frontmatter,
