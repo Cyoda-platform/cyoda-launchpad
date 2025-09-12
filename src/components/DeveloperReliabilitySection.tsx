@@ -169,38 +169,40 @@ const DeveloperReliabilitySection = () => {
             </div>
           </div>
 
-          {/* RIGHT: Why Cyoda */}
-          <div className="w-full">
-            <div className="bg-card/10 backdrop-blur border border-border/50 rounded-2xl p-6 h-full">
-              <h3 className="text-lg font-semibold text-foreground mb-4">Why Cyoda for Complex Data Models</h3>
-              <ul className="space-y-3 text-sm text-muted-foreground text-left">
-                <li>
-                  <span className="font-medium text-foreground">Entity-first modeling:</span>
-                  &nbsp;capture rich entities, nested attributes & relationships without schema pain.
-                </li>
-                <li>
-                  <span className="font-medium text-foreground">Event-sourced history:</span>
-                  &nbsp;every change is auditable and replayable.
-                </li>
-                <li>
-                  <span className="font-medium text-foreground">Built-in workflow & rules:</span>
-                  &nbsp;encode state machines, approvals and business rules close to data.
-                </li>
-                <li>
-                  <span className="font-medium text-foreground">Query how you think:</span>
-                  &nbsp;flexible filters across current state and historic events.
-                </li>
-                <li>
-                  <span className="font-medium text-foreground">Scale & reliability:</span>
-                  &nbsp;designed for high-volume, high-integrity enterprise data flows.
-                </li>
-                <li>
-                  <span className="font-medium text-foreground">Prototype → production:</span>
-                  &nbsp;move fast without re-platforming when you need to scale.
-                </li>
-              </ul>
+            {/* RIGHT: Why Cyoda */}
+            <div className="w-full">
+                <div className="bg-card/10 backdrop-blur border border-border/50 rounded-2xl p-6 h-full">
+                    <h3 className="text-xl font-semibold text-foreground mb-4">
+                        Why Cyoda for Complex, Structured Data
+                    </h3>
+                    <ul className="space-y-3 text-lg text-muted-foreground text-left">
+                        <li>
+                            <span className="font-medium text-foreground">Entity-first modeling:</span>
+                            &nbsp;capture rich business objects with nested attributes and relationships, without rigid schemas or complex joins.
+                        </li>
+                        <li>
+                            <span className="font-medium text-foreground">Immutable, write-only ledger:</span>
+                            &nbsp;every change is stored as an event, preserving full lineage and audit for compliance and trust.
+                        </li>
+                        <li>
+                            <span className="font-medium text-foreground">Stateful workflows & rules:</span>
+                            &nbsp;bind rules and actions directly to entity state transitions for straight-through processing.
+                        </li>
+                        <li>
+                            <span className="font-medium text-foreground">Snapshot isolation:</span>
+                            &nbsp;query consistent views of data without blocking writes, even under heavy concurrent workloads.
+                        </li>
+                        <li>
+                            <span className="font-medium text-foreground">Historical reporting:</span>
+                            &nbsp;analyze system state as it was at any point in time, supporting compliance and business insight.
+                        </li>
+                        <li>
+                            <span className="font-medium text-foreground">Scale & reliability:</span>
+                            &nbsp;distributed architecture built for high-volume, high-integrity enterprise data flows.
+                        </li>
+                    </ul>
+                </div>
             </div>
-          </div>
         </div>
       </div>
     </section>

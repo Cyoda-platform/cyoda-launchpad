@@ -1,38 +1,38 @@
-import { Database, Cloud, Shield, Zap, Users, BarChart3 } from 'lucide-react';
+import {Database, Cloud, Shield, Zap, Users, BarChart3, GitBranch, Cpu, Activity} from 'lucide-react';
 
 const EcosystemSection = () => {
-  const features = [
-    {
-      icon: Database,
-      title: "Smart Data Models",
-      description: "AI-generated entity relationships with built-in validation and complex business logic"
-    },
-    {
-      icon: Cloud,
-      title: "Cloud Native",
-      description: "Scalable microservices architecture with auto-scaling and load balancing"
-    },
-    {
-      icon: Shield,
-      title: "Enterprise Security",
-      description: "Built-in authentication, authorization, and compliance frameworks"
-    },
-    {
-      icon: Zap,
-      title: "Real-time APIs",
-      description: "GraphQL and REST endpoints with real-time subscriptions and webhooks"
-    },
-    {
-      icon: Users,
-      title: "Team Collaboration",
-      description: "Multi-tenant workspaces with role-based access and version control"
-    },
-    {
-      icon: BarChart3,
-      title: "Analytics Ready",
-      description: "Built-in metrics, logging, and business intelligence integrations"
-    }
-  ];
+    const features = [
+        {
+            icon: Database,
+            title: "Entity-First Data Models",
+            description: "AI-assisted creation of rich structured models with validation, relationships, and business rules."
+        },
+        {
+            icon: Cloud,
+            title: "Event-Driven Architecture",
+            description: "Real-time, scalable, resilient event processing with horizontal scaling and load balancing."
+        },
+        {
+            icon: Zap,
+            title: "Real-Time APIs",
+            description: "Low-latency REST endpoints with subscriptions and webhooks for live data access."
+        },
+        {
+            icon: GitBranch,
+            title: "Workflow & State Machines",
+            description: "Encode approvals, transitions, and complex lifecycle rules directly into your applications."
+        },
+        {
+            icon: BarChart3,
+            title: "Distributed SQL Reporting",
+            description: "Familiar SQL queries on a scalable, distributed store with snapshot isolation for consistent results."
+        },
+        {
+            icon: Cpu,
+            title: "AI-Powered Builder",
+            description: "Go from problem statement to production system with AI-assisted code and configuration."
+        }
+    ];
 
   return (
     <section className="py-24 relative">
