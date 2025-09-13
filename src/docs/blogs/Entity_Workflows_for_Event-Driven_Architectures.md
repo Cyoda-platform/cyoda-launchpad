@@ -45,9 +45,7 @@ In words, we can formulate the requirement as
 
 Visually it’s much easier to grasp:
 
-Press enter or click to view image in full size
-
-![][image3]
+![Image in a subfolder](./images/pay_turnstyle_workflow.webp)
 
 The Simple Turnstile
 
@@ -55,9 +53,8 @@ This entity workflow reflects the state of a turnstile, but with this workflow, 
 
 *All Transitions into the LOCKED State shall send a signal to the device to lock it. All Transitions into the UNLOCKED State shall send a signal to unlock it.*
 
-Press enter or click to view image in full size
 
-![][image4]
+![Image in a subfolder](./images/turnstyle_workflow2.webp)
 
 Add lock/unlock Actions
 
@@ -65,9 +62,8 @@ We have added two *Actions* to the entity workflow: *Lock Turnstile* and *Unlock
 
 Let’s try to make it more interesting. Suppose the device has sensors that detect if it is safe to pass. Let’s specify the expectations directly in workflow:
 
-Press enter or click to view image in full size
 
-![][image5]
+![Image in a subfolder](./images/workflow3.webp)
 
 Check before unlocking. Is it safe to let someone in?
 
@@ -77,7 +73,7 @@ Moving on, suppose we have a turnstile that has status lights we can control, an
 
 Press enter or click to view image in full size
 
-![][image6]
+![Image in a subfolder](./images/workflow4.webp)
 
 A very careful turnstile
 
@@ -130,9 +126,7 @@ We introduce four entities:
 
 Let’s look at the SeedMessage first:
 
-Press enter or click to view image in full size
-
-![][image7]
+![Image in a subfolder](./images/workflow5.webp)
 
 A test data generator via entity workflow
 
@@ -142,9 +136,8 @@ In the workflow, it loops a set number of times until the required number of Int
 
 Next, we define the entity workflow for IncomingMessages
 
-Press enter or click to view image in full size
 
-![][image8]
+![Image in a subfolder](./images/workflow6.webp)
 
 An incoming FpML message that creates or updates Trades
 
@@ -152,9 +145,8 @@ This entity validates the XML payload, parses it into a structured Java object, 
 
 The Trade entities themselves have the following lifecycle:
 
-Press enter or click to view image in full size
 
-![][image9]
+![Image in a subfolder](./images/workflow7.webp)
 
 A simple trade workflow in a reporting system
 
@@ -162,9 +154,8 @@ Validated Trades are used for reporting, and checks are done on creation or upda
 
 Finally, the OutgoingMessage workflow encapsulates the logistics needed for formatting and sending messages out the door, and subsequent handling of acknowledgments from the receiver:
 
-Press enter or click to view image in full size
 
-![][image10]
+![Image in a subfolder](./images/workflow8.webp)
 
 A logistical workflow for outgoing messages
 
@@ -184,10 +175,9 @@ The EDBMS ***externalizes*** the execution of *Actions* and *Predicates* to a cl
 
 This is sort of what it looks like with Cyoda:
 
-Press enter or click to view image in full size
 
-![][image11]
-
+![Image in a subfolder](./images/EDBMS_diagram.webp)
+~~~~
 An application interacting with the Cyoda EDBMS
 
 To the EDBMS, the above “Application” is just a cluster of compute nodes that execute *Actions* and *Predicates*. But in fact, these form part — if not all — of the nodes that compose an entire digital service or application.
