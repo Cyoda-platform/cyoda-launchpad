@@ -6,13 +6,14 @@ category: "Data Management"
 excerpt: "In an era where data-driven decisions are critical, the ability to query the past is more than convenience—it's necessity. Learn how Cyoda's consistency clock and snapshot isolation enable point-in-time queries at scale."
 featured: false
 published: true
+image: "/images/blogs/ledger-like_entity_database.png"
 tags: ["point-in-time", "consistency", "snapshot-isolation", "audit", "data-management"]
 ---
 
 # Querying the Past: Point-in-Time Data Access at Scale
 
 In an era where data-driven decisions are critical, the ability to
-**query the past** is more than a convenience---it's a necessity.
+**query the past** is more than a convenience, it's a necessity.
 Businesses today must not only process massive amounts of data in real
 time but also reconstruct historical states with **absolute accuracy**
 for compliance, auditing, and analytics.
@@ -29,22 +30,22 @@ bolt-ons or costly infrastructure workarounds.
 
 At the heart of Cyoda's architecture lies the **Consistency Clock**.
 This system-wide sub-microsecond timestamp guarantees that **all
-transactions submitted before that time are fully resolved**---either
+transactions submitted before that time are fully resolved**, either
 committed, rolled back, or
-cancelled【8†files_uploaded_in_conversation】.
+cancelled.
 
 Why this matters:
 
 -   **Deterministic Reads** -- Any query executed "as of" a consistency
-    time sees a stable, immutable snapshot.\
+    time sees a stable, immutable snapshot.
 -   **Audit-Ready** -- Regulators, auditors, or business users can
     reconstruct exactly what the system "knew" at any point in the
-    past.\
+    past.
 -   **Failure-Tolerant** -- The consistency clock continues to advance
     even when errored transactions occur, thanks to automated resolution
     mechanisms.
 
-This is not just a timestamp---it's a **guarantee of global
+This is not just a timestamp, it's a **guarantee of global
 consistency** across a distributed system.
 
 ------------------------------------------------------------------------
@@ -56,9 +57,9 @@ isolation (SSI)**, extending ACID semantics to asynchronous, distributed
 workflows.
 
 -   **Transactions are serialized**: The data history becomes a
-    time-ordered log of events.\
+    time-ordered log of events.
 -   **Outdated premises are rejected**: If a transaction depends on
-    stale data, it fails gracefully.\
+    stale data, it fails gracefully.
 -   **Durable and idempotent results**: Once a transaction is
     successfully applied, its effects cannot be lost or duplicated.
 
@@ -75,14 +76,14 @@ querying. How does Cyoda compare?
 ### Snowflake
 
 -   **Strengths**: Allows querying data as of a previous time using
-    cloneable snapshots. Excellent for analytics.\
+    cloneable snapshots. Excellent for analytics.
 -   **Limitations**: Retention windows are limited (typically 1--90
     days). Not designed for transactional, workflow-driven systems.
 
 ### Datomic
 
 -   **Strengths**: Provides immutable data storage with temporal
-    queries, making it easy to reconstruct historical states.\
+    queries, making it easy to reconstruct historical states.
 -   **Limitations**: Built for immutable application data, not for
     **high-volume, distributed, transactional workflows**. Scaling can
     be challenging in enterprise contexts.
@@ -91,10 +92,10 @@ querying. How does Cyoda compare?
 
 -   **Strengths**: Snapshot isolation and point-in-time querying are
     **core to the transactional engine**, not an add-on. Retention is
-    not limited to a few days---it's part of the design. Combined with
+    not limited to a few days, it's part of the design. Combined with
     event-context sharding, Cyoda can maintain **consistency at scale**,
     even under heavy asynchronous
-    processing【8†files_uploaded_in_conversation】.
+    processing.
 
 In short: Snowflake is excellent for analytics, Datomic for
 immutability, but **Cyoda is purpose-built for mission-critical
@@ -108,7 +109,7 @@ historical reconstruction.
 ### 1. **Financial Compliance and Audit**
 
 When regulators ask, "What did your system know about this trade on
-March 2nd at 14:37:05 UTC?"---most systems struggle. Cyoda answers with
+March 2nd at 14:37:05 UTC?", most systems struggle. Cyoda answers with
 a single point-in-time query, reconstructing the exact state with full
 audit trails.
 
@@ -135,9 +136,9 @@ For teams building **auditable, reconstructable systems**, the choice is
 clear:
 
 -   **Consistency and Scale Together** -- Unlike analytic-only systems,
-    Cyoda combines strong guarantees with distributed scalability.\
+    Cyoda combines strong guarantees with distributed scalability.
 -   **Simpler Architecture** -- No need for bolt-on logging or external
-    audit databases.\
+    audit databases.
 -   **Future-Proofing** -- As regulations tighten and workflows
     lengthen, the ability to query the past becomes a strategic
     necessity.

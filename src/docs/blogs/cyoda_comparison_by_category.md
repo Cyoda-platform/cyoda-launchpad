@@ -6,6 +6,7 @@ category: "Platform"
 excerpt: "This document compares the Cyoda Service Platform with a range of tools for workflow orchestration, data integration, cloud-native services, and AI-assisted development."
 featured: true
 published: true
+image: "/images/blogs/comparison_overview.png"
 tags: ["comparison", "platform", "enterprise", "workflow", "cloud-native"]
 ---
 

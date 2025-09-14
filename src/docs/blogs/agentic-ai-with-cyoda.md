@@ -8,6 +8,7 @@ excerpt: "Cyoda's online platform enables developers to create agentic AI
   provides a powerful alternative to traditional AI development stacks."
 featured: false
 published: true
+image: "/images/blogs/ai-assistant.png"
 tags: ["agentic AI","Cyoda","platform","AI builder","workflows"]
 title: "Building Agentic AI Applications with Cyoda Online Platform"
 ---

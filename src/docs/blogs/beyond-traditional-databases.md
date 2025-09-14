@@ -6,6 +6,7 @@ category: "Architecture"
 excerpt: "Modern applications demand more than traditional databases can deliver. Discover how Entity-Centric Architecture and Cyoda's EDBMS addresses the gaps in relational and document databases for stateful, process-driven applications."
 featured: false
 published: true
+image: "/images/blogs/beyond-traditional-databases.png"
 tags: ["architecture", "database", "entity-centric", "EDBMS", "enterprise"]
 ---
 

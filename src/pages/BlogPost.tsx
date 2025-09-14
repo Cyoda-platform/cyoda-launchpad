@@ -122,7 +122,19 @@ const BlogPost = () => {
                       </span>
                     )}
                   </div>
-                  
+
+	                  {post.frontmatter.image && (
+	                    <div className="mb-8">
+	                      <img
+	                        src={post.frontmatter.image}
+	                        alt={post.frontmatter.title}
+	                        className="w-full h-64 md:h-80 object-cover rounded-lg border border-border"
+	                        loading="eager"
+	                      />
+	                    </div>
+	                  )}
+
+
                   <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6 leading-tight">
                     {post.frontmatter.title}
                   </h1>
@@ -156,7 +168,7 @@ const BlogPost = () => {
                     <div className="flex flex-wrap items-center gap-2 mt-6">
                       <Tag className="w-4 h-4 text-muted-foreground" />
                       {post.frontmatter.tags.map((tag, index) => (
-                        <span 
+                        <span
                           key={index}
                           className="bg-secondary text-secondary-foreground dark:bg-card/20 dark:text-muted-foreground backdrop-blur border border-border dark:border-border/50 px-2 py-1 rounded text-xs"
                         >
@@ -210,7 +222,7 @@ const BlogPost = () => {
         {(previousPost || nextPost) && (
           <section className="py-16 bg-gradient-dark relative">
             <div className="absolute inset-0 texture-overlay opacity-20" />
-            
+
             <div className="container mx-auto px-4 relative z-10">
               <div className="max-w-4xl mx-auto">
                 <div className="grid md:grid-cols-2 gap-8">
@@ -232,14 +244,14 @@ const BlogPost = () => {
                       </Button>
                     </div>
                   )}
-                  
+
                   {nextPost && (
                     <div className="bg-card/20 backdrop-blur border border-border/50 rounded-xl p-6 glow-hover">
                       <p className="text-sm text-muted-foreground mb-2">Next Post</p>
                       <h3 className="text-lg font-bold text-foreground mb-3 line-clamp-2">
                         {nextPost.title}
                       </h3>
-                      <Button 
+                      <Button
                         variant="ghost"
                         size="sm"
                         onClick={() => navigate(`/blog/${nextPost.slug}`)}
