@@ -12,17 +12,10 @@ const Pricing = () => {
       price: "Free",
       description: "Perfect for trying out the the platform",
       features: [
-        "Cyoda Cloud",
-        "10 data model",
-          "50 fields per model",
-          "100 max fields",
-          "AI builder",
-          "1 client node",
-          "1GB Disk Usage",
-          "300/min API requests",
-          "300/min external calls",
-          "Max Payload 100kb",
-        "Community support"
+          'Cyoda Cloud access',
+          'AI Assistant included',
+          'Basic usage limits',
+          'Community support'
       ],
       limitations: [
         "Limited deployment options",
@@ -37,17 +30,10 @@ const Pricing = () => {
       period: "/month",
       description: "Developers and small teams",
       features: [
-          "Cyoda Cloud",
-          "25 data model",
-          "100 fields per model",
-          "500 max fields",
-          "AI builder",
-          "5 client node",
-          "10GB Disk Usage",
-          "600/min API requests",
-          "600/min external calls",
-          "Max Payload 5Mb",
-          "Community support"
+          'Expanded Cyoda Cloud resources',
+          'AI Assistant included',
+          'Higher usage quotas',
+          'Community support'
       ],
       limitations: [],
       cta: "Start Free Trial",
@@ -59,17 +45,10 @@ const Pricing = () => {
           period: "/month",
           description: "Developers and small teams",
           features: [
-              "AWS/GCP/Azure Cloud",
-              "100 data model",
-              "500 fields per model",
-              "2000 max fields",
-              "AI builder",
-              "20 client node",
-              "1TB Disk Usage",
-              "600/min API requests",
-              "600/min external calls",
-              "Max Payload 5Mb",
-              "Community support"
+              'Cloud deployment options (AWS/GCP/Azure)',
+              'AI Assistant included',
+              'Increased capacity and performance',
+              'Priority support'
           ],
           limitations: [],
           cta: "Start Free Trial",
@@ -80,17 +59,11 @@ const Pricing = () => {
       price: "Contact us",
       description: "For organizations with advanced needs",
       features: [
-        "Private Cloud",
-          "Unlimited data model",
-          "Unlimited fields per model",
-          "Unlimited fields",
-          "AI builder",
-          "Unlimited client node",
-          "Unlimited Disk Usage",
-          "Unlimited API requests",
-          "Unlimited external calls",
-          "Unlimited Max Payload",
-        "SLA guarantees"
+
+          'Private cloud or on‑prem deployment',
+          'Unlimited scale and usage',
+          'Full compliance and SLA guarantees',
+          'Dedicated support'
       ],
       limitations: [],
       cta: "Contact Sales",
@@ -213,6 +186,12 @@ const Pricing = () => {
                 </div>
               ))}
             </div>
+              <div className="text-center mt-12">
+                  <p className="text-xl md:text-lg font-semibold text-gradient-accent mb-6">
+                      Full details of entitlements and limits are available in our{' '}
+                      <a href="https://docs.cyoda.net/platform/entitlements/" className="underline">documentation</a>.
+                  </p>
+              </div>
           </div>
         </section>
 
