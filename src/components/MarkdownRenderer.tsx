@@ -1,6 +1,6 @@
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { cn } from '@/lib/utils';
+import { cn, resolveAppAssetUrl } from '@/lib/utils';
 import MermaidDiagram from './MermaidDiagram';
 import CopyableCodeBlock from './CopyableCodeBlock';
 import CopyableTextBlock from './CopyableTextBlock';
@@ -23,9 +23,13 @@ const assetMap: Record<string, string> = { ...blogAssets, ...guideAssets };
 
 function resolveMarkdownImageSrc(src?: string): string | undefined {
   if (!src) return src;
-  // Leave absolute/http/data URLs as-is
-  if (/^(?:https?:)?\/\//.test(src) || src.startsWith('data:') || src.startsWith('/')) {
+  // Leave fully-qualified and data URLs as-is
+  if (/^(?:https?:)?\/\//.test(src) || src.startsWith('data:')) {
     return src;
+  }
+  // Prefix app base for root-relative paths like "/images/..."
+  if (src.startsWith('/')) {
+    return resolveAppAssetUrl(src);
   }
   // Normalize leading './' or '/'
   const rel = src.replace(/^\.\/+/, '').replace(/^\//, '');

@@ -14,6 +14,7 @@ import {
   NetworkErrorFallback,
   CorruptedMarkdownFallback
 } from '@/components/BlogFallbacks';
+import { resolveAppAssetUrl } from '@/lib/utils';
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -126,7 +127,7 @@ const BlogPost = () => {
 	                  {post.frontmatter.image && (
 	                    <div className="mb-8">
 	                      <img
-	                        src={post.frontmatter.image}
+	                        src={resolveAppAssetUrl(post.frontmatter.image)}
 	                        alt={post.frontmatter.title}
 	                        className="w-full h-64 md:h-80 object-cover rounded-lg border border-border"
 	                        loading="eager"

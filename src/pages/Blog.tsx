@@ -13,6 +13,7 @@ import {
   SearchNoResultsFallback,
   EmptyBlogFallback
 } from '@/components/BlogFallbacks';
+import { resolveAppAssetUrl } from '@/lib/utils';
 
 // Custom debounce hook
 const useDebounce = (value: string, delay: number) => {
@@ -214,7 +215,7 @@ const Blog = () => {
                     {featuredPost?.image ? (
                       <div className="relative h-56 md:h-full min-h-[240px] overflow-hidden">
                         <img
-                          src={featuredPost.image}
+                          src={resolveAppAssetUrl(featuredPost.image)}
                           alt={featuredPost.title || 'Featured article image'}
                           className="w-full h-full object-cover"
                           loading="lazy"
@@ -342,7 +343,7 @@ const Blog = () => {
                           {post.image && (
                             <div className="relative h-40 md:h-48 overflow-hidden">
                               <img
-                                src={post.image}
+                                src={resolveAppAssetUrl(post.image)}
                                 alt={post.title}
                                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                                 loading="lazy"

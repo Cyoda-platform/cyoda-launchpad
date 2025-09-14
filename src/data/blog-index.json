@@ -34,7 +34,7 @@
       "entity-centric",
       "EDBMS"
     ],
-    "image": "/public/images/blogs/Entity_Workflows_EDA.webp"
+    "image": "/images/blogs/Entity_Workflows_EDA.webp"
   },
   "agentic-ai-with-cyoda.md": {
     "slug": "agentic-ai-with-cyoda",
@@ -53,7 +53,8 @@
       "platform",
       "AI builder",
       "workflows"
-    ]
+    ],
+    "image": "/images/blogs/ai-assistant.png"
   },
   "asynchronous-workflow-automation.md": {
     "slug": "asynchronous-workflow-automation",
@@ -72,7 +73,8 @@
       "enterprise",
       "workflow",
       "cloud-native"
-    ]
+    ],
+    "image": "/images/blogs/Asynchronous_Workflow_Automation.png"
   },
   "beyond-traditional-databases.md": {
     "slug": "beyond-traditional-databases",
@@ -91,7 +93,8 @@
       "entity-centric",
       "EDBMS",
       "enterprise"
-    ]
+    ],
+    "image": "/images/blogs/beyond-traditional-databases.png"
   },
   "cyoda_comparison_by_category.md": {
     "slug": "cyoda-comparison-by-category",
@@ -110,7 +113,8 @@
       "enterprise",
       "workflow",
       "cloud-native"
-    ]
+    ],
+    "image": "/images/blogs/comparison_overview.png"
   },
   "designing-for-high-availability.md": {
     "slug": "designing-for-high-availability",
@@ -120,7 +124,7 @@
     "category": "Infrastructure",
     "excerpt": "Distributed systems power the modern enterprise, but with scale comes complexity. Learn how Cyoda's platform combines Cassandra, Zookeeper, and event-context sharding to deliver fault tolerance at scale.",
     "readTime": "4 min read",
-    "wordCount": 698,
+    "wordCount": 701,
     "featured": false,
     "published": true,
     "tags": [
@@ -129,7 +133,8 @@
       "cassandra",
       "zookeeper",
       "fault-tolerance"
-    ]
+    ],
+    "image": "/images/blogs/high-availability_in_distributed_systems.png"
   },
   "distributed-reporting-without-data-lakes.md": {
     "slug": "distributed-reporting-without-data-lakes",
@@ -148,7 +153,8 @@
       "data-lakes",
       "real-time",
       "distributed"
-    ]
+    ],
+    "image": "/images/blogs/distributed_reporting_without_data_lakes.png"
   },
   "event-context-sharding.md": {
     "slug": "event-context-sharding",
@@ -167,7 +173,8 @@
       "concurrency",
       "distributed-systems",
       "architecture"
-    ]
+    ],
+    "image": "/images/blogs/event_context_sharding.png"
   },
   "from-banking-systems-to-saas.md": {
     "slug": "from-banking-systems-to-saas",
@@ -177,7 +184,7 @@
     "category": "Platform",
     "excerpt": "The modern enterprise landscape is defined by complexity, scale, and constant change. Discover how Cyoda was born from lessons learned in high-stakes investment banking back-office systems and why it matters for mission-critical applications.",
     "readTime": "4 min read",
-    "wordCount": 614,
+    "wordCount": 638,
     "featured": false,
     "published": true,
     "tags": [
@@ -186,7 +193,8 @@
       "platform",
       "mission-critical",
       "saas"
-    ]
+    ],
+    "image": "/images/blogs/banking_to_saas.png"
   },
   "querying-the-past.md": {
     "slug": "querying-the-past",
@@ -196,7 +204,7 @@
     "category": "Data Management",
     "excerpt": "In an era where data-driven decisions are critical, the ability to query the past is more than convenience—it's necessity. Learn how Cyoda's consistency clock and snapshot isolation enable point-in-time queries at scale.",
     "readTime": "4 min read",
-    "wordCount": 714,
+    "wordCount": 719,
     "featured": false,
     "published": true,
     "tags": [
@@ -205,7 +213,8 @@
       "snapshot-isolation",
       "audit",
       "data-management"
-    ]
+    ],
+    "image": "/images/blogs/ledger-like_entity_database.png"
   },
   "test-post.md": {
     "slug": "test-post",
@@ -232,7 +241,7 @@
     "category": "Cloud",
     "excerpt": "Enterprises are shifting from on-premise, code-heavy platforms to cloud-native, configuration-driven systems. Discover how Cyoda Cloud reimagines mission-critical systems with a fully managed Entity Database Management System.",
     "readTime": "4 min read",
-    "wordCount": 669,
+    "wordCount": 662,
     "featured": false,
     "published": true,
     "tags": [
@@ -241,7 +250,8 @@
       "grpc",
       "modernization",
       "saas"
-    ]
+    ],
+    "image": "/images/blogs/the_future_of_cyoda_cloud.png"
   },
   "when-transactions-meet-workflows.md": {
     "slug": "when-transactions-meet-workflows",
@@ -251,7 +261,7 @@
     "category": "Architecture",
     "excerpt": "Most enterprises build reliable systems by stitching together PostgreSQL, Kafka, and workflow engines. Cyoda offers a different vision: a unified platform where transactions, workflows, and queries reduce complexity while improving reliability.",
     "readTime": "4 min read",
-    "wordCount": 707,
+    "wordCount": 704,
     "featured": false,
     "published": true,
     "tags": [
@@ -260,6 +270,7 @@
       "architecture",
       "reliability",
       "integration"
-    ]
+    ],
+    "image": "/images/blogs/when_transactions_meet_workflows.png"
   }
 }
