@@ -2,7 +2,12 @@ import { Link } from 'react-router-dom';
 import { SiGithub, SiLinkedin, SiX, SiYoutube } from "react-icons/si";
 import cyodaLogo from '@/assets/cyoda-logo.png';
 import { HashLink } from "react-router-hash-link";
+import { useState } from 'react';
+import { CookiePreferencesModal } from '@/components/CookiePreferencesModal';
+
 const Footer = () => {
+  const [prefsOpen, setPrefsOpen] = useState(false);
+
   const footerLinks = [
     { name: 'Products', href: '/products' },
     { name: 'Pricing', href: '/pricing' },
@@ -12,27 +17,27 @@ const Footer = () => {
   ];
 
   const socialLinks = [
-    { 
+    {
       icon: SiLinkedin,
-      href: 'https://www.linkedin.com/company/cyoda', 
+      href: 'https://www.linkedin.com/company/cyoda',
       label: 'LinkedIn',
       hoverColor: 'hover:text-blue-400'
     },
-    { 
+    {
       icon: SiX,
-      href: 'https://twitter.com/cyodaops', 
+      href: 'https://twitter.com/cyodaops',
       label: 'X (Twitter)',
       hoverColor: 'hover:text-blue-400'
     },
-    { 
+    {
       icon: SiYoutube,
-      href: 'https://www.youtube.com/@cyoda934', 
+      href: 'https://www.youtube.com/@cyoda934',
       label: 'YouTube',
       hoverColor: 'hover:text-red-400'
     },
-    { 
+    {
       icon: SiGithub,
-      href: 'https://github.com/Cyoda-platform/', 
+      href: 'https://github.com/Cyoda-platform/',
       label: 'GitHub',
       hoverColor: 'hover:text-gray-300'
     },
@@ -49,10 +54,10 @@ const Footer = () => {
                 <img src={cyodaLogo} alt="Cyoda" className="h-6 sm:h-6" />
             </div>
             <p className="text-muted-foreground mb-6 max-w-md">
-              Developer-first application platform with AI builder. 
+              Developer-first application platform with AI builder.
               Turn problems into scalable, enterprise-grade systems in minutes.
             </p>
-            
+
             {/* Social links with neon glow */}
             <div className="flex items-center space-x-4">
               {socialLinks.map((social) => (
@@ -128,6 +133,14 @@ const Footer = () => {
             © 2025 Cyoda. All rights reserved.
           </p>
           <div className="flex items-center space-x-6 mt-4 md:mt-0">
+            <button
+              type="button"
+              onClick={() => setPrefsOpen(true)}
+              className="text-muted-foreground hover:text-primary text-sm transition-colors"
+            >
+              Cookie Preferences
+            </button>
+
             <Link to="/cookie-policy" className="text-muted-foreground hover:text-primary text-sm transition-colors">
               Cookie Policy
             </Link>
@@ -139,6 +152,8 @@ const Footer = () => {
             </Link>
           </div>
         </div>
+        <CookiePreferencesModal open={prefsOpen} onOpenChange={setPrefsOpen} />
+
       </div>
     </footer>
   );

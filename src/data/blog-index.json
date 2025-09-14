@@ -13,7 +13,8 @@
     "tags": [
       "platform",
       "technical"
-    ]
+    ],
+    "image": "/images/blogs/tech_description.png"
   },
   "Entity_Workflows_for_Event-Driven_Architectures.md": {
     "slug": "entity-workflows-for-event-driven-architectures",
@@ -22,8 +23,8 @@
     "date": "2024-05-01",
     "category": "Platform",
     "excerpt": "dive into the details of *Entity Workflows* and show how an EDBMS naturally leads to a horizontally scalable event-driven architecture (EDA). The goal being to greatly simplify things, where the applications become “thin clients” of a platform",
-    "readTime": "11 min read",
-    "wordCount": 2048,
+    "readTime": "10 min read",
+    "wordCount": 1974,
     "featured": false,
     "published": true,
     "tags": [
@@ -32,7 +33,8 @@
       "database",
       "entity-centric",
       "EDBMS"
-    ]
+    ],
+    "image": "/public/images/blogs/Entity_Workflows_EDA.webp"
   },
   "agentic-ai-with-cyoda.md": {
     "slug": "agentic-ai-with-cyoda",
@@ -118,7 +120,7 @@
     "category": "Infrastructure",
     "excerpt": "Distributed systems power the modern enterprise, but with scale comes complexity. Learn how Cyoda's platform combines Cassandra, Zookeeper, and event-context sharding to deliver fault tolerance at scale.",
     "readTime": "4 min read",
-    "wordCount": 667,
+    "wordCount": 698,
     "featured": false,
     "published": true,
     "tags": [
@@ -137,7 +139,7 @@
     "category": "Analytics",
     "excerpt": "For many enterprises, reporting requires extracting data into separate lakes or warehouses. Cyoda takes a different approach by embedding distributed reporting directly into the transactional platform for real-time insights without ETL overhead.",
     "readTime": "4 min read",
-    "wordCount": 722,
+    "wordCount": 753,
     "featured": false,
     "published": true,
     "tags": [
@@ -156,7 +158,7 @@
     "category": "Architecture",
     "excerpt": "Distributed systems live and die by how they manage concurrency. Discover how Cyoda's event-context sharding approach aligns sharding with business entities to avoid conflicts and complexity in event-driven workflows.",
     "readTime": "4 min read",
-    "wordCount": 768,
+    "wordCount": 793,
     "featured": false,
     "published": true,
     "tags": [
