@@ -163,7 +163,7 @@ const Header = () => {
                   <ChevronDown className="w-3.5 h-3.5" />
                 </button>
                 <div className="ml-4 mt-2 space-y-1">
-                  <Link to="/guides" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">Guides</Link>
+                  {/* <Link to="/guides" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">Guides</Link> */}
                   <a href="#" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">Application Documentation</a>
                   <span className="block py-1 text-sm text-muted-foreground">Video Explanations (coming soon)</span>
                 </div>

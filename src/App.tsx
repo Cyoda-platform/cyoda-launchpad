@@ -63,8 +63,8 @@ const App = () => {
                   <Route path="/blog/:slug" element={<BlogPost />} />
                   <Route path="/blog-test" element={<BlogTest />} />
                   <Route path="/blog-system-test" element={<BlogSystemTest />} />
-                  <Route path="/guides" element={<Guides />} />
-                  <Route path="/guides/:slug" element={<Guide />} />
+                  {/* <Route path="/guides" element={<Guides />} />
+                  <Route path="/guides/:slug" element={<Guide />} /> */}
                   <Route path="/guide-system-test" element={<GuideSystemTest />} />
                   <Route path="/cookie-consent-test" element={<CookieConsentTest />} />
                   <Route path="/support" element={<Support />} />

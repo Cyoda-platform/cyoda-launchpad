@@ -89,14 +89,14 @@ const Support = () => {
             link: "https://discord.gg/95rdAyBZr2",
             primary: true
         },
-        {
+        /* {
             icon: BookOpen,
             title: "How to and worked examples",
             description: "Follow worked examples and learn how to build with Cyoda.",
             action: "How to's",
             link: "/guides",
             primary: false
-        },
+        }, */
         {
             icon: FileText,
             title: "Documentation",
