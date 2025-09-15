@@ -1,25 +1,41 @@
 
 import { Button } from "@/components/ui/button";
 import { Bot, Code, Rocket } from "lucide-react";
+import { HashLink } from "react-router-hash-link";
+import { Link } from "react-router-dom";
 
 const ThreeStepSection = () => {
   const steps = [
     {
       icon: Bot,
       title: "1. Let AI build your prototype",
-      description: "Describe your application in natural language. Our AI understands complex business requirements and generates enterprise-grade data models, APIs, and workflows in seconds.",
+      description: "Describe your application in natural language. Our AI understands complex business requirements and generates enterprise-grade data models, APIs, and workflows in minutes.",
       gradient: "bg-gradient-primary"
     },
     {
       icon: Code,
       title: "2. Iterate in your IDE",
-      description: "Export to your favorite development environment. Customize, extend, and refine using familiar tools and workflows. Full control over your codebase.",
+      description: "Clone to your favorite development environment. Customize, extend, and refine using familiar tools and workflows. Full control over your codebase.",
       gradient: "bg-gradient-accent"
     },
     {
       icon: Rocket,
       title: "3. Deploy to production",
-      description: "One-click deployment to scalable infrastructure. Built-in monitoring, security, and compliance features ensure your application is production-ready from day one.",
+      description: (
+        <>
+          One-click deployment to scalable infrastructure
+          <sup>
+            <HashLink
+              to="#footnote-production"
+              className="text-primary hover:text-primary/80 no-underline ml-0.5 text-sm font-semibold"
+              smooth
+            >
+              *
+            </HashLink>
+          </sup>
+          . Built-in monitoring, security, and compliance features ensure your application is production-ready from day one.
+        </>
+      ),
       gradient: "bg-gradient-hero"
     }
   ];
@@ -27,7 +43,7 @@ const ThreeStepSection = () => {
   return (
     <section className="py-16 sm:py-20 md:py-24 bg-gradient-to-br from-background via-card to-secondary/20 relative">
         <div className="absolute inset-0 texture-overlay opacity-30 pointer-events-none" />
-      
+
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-12 sm:mb-16">
           <h2 className="mobile-text-3xl font-bold text-gradient-primary mb-4 sm:mb-6">
@@ -76,6 +92,15 @@ const ThreeStepSection = () => {
                     Try Now
                 </a>
             </Button>
+        </div>
+
+        {/* Footnote */}
+        <div className="mt-8 pt-4 border-t border-border/30 max-w-6xl mx-auto">
+          <p id="footnote-production" className="text-xs text-muted-foreground text-center">
+            <span className="font-semibold text-primary">*</span>
+              Production-grade support with an SLA is currently only available with an enterprise license.
+              See our <Link to="/terms-of-service" className="text-primary hover:text-primary/80 underline underline-offset-2">terms of service</Link> for more details about our subscription plans.
+          </p>
         </div>
     </section>
   );
