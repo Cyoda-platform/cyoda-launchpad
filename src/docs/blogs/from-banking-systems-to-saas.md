@@ -5,7 +5,7 @@ date: "2025-08-24"
 category: "Platform"
 excerpt: "The modern enterprise landscape is defined by complexity, scale, and constant change. Discover how Cyoda was born from lessons learned in high-stakes investment banking back-office systems and why it matters for mission-critical applications."
 featured: false
-published: true
+published: false
 image: "/images/blogs/banking_to_saas.png"
 tags: ["banking", "enterprise", "platform", "mission-critical", "saas"]
 ---

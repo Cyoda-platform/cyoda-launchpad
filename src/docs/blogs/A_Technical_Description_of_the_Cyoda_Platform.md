@@ -4,7 +4,7 @@ author: "Paul Schleger"
 date: "2025-05-29"
 category: "Platform"
 excerpt: "This is a deep-dive technical reference for the Cyoda Platform (see https://cyoda.com), a distributed, transactional data-processing system built to support high-availability business applications. It outlines the architecture and mechanics of the Cyoda Platform Library (CPL), which includes asynchronous transactional workflows, point-in-time querying with snapshot isolation, distributed report execution, and event-context sharding. Designed for developers familiar with distributed systems, the document emphasizes low-level design decisions, like extended ACID semantics, integration with Cassandra and Zookeeper, and client-extensible workflows."
-featured: true
+featured: false
 published: true
 image: "/images/blogs/tech_description.png"
 tags: ["platform", "technical"]

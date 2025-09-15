@@ -5,7 +5,7 @@ date: "2025-09-03"
 category: "Infrastructure"
 excerpt: "Distributed systems power the modern enterprise, but with scale comes complexity. Learn how Cyoda's platform combines Cassandra, Zookeeper, and event-context sharding to deliver fault tolerance at scale."
 featured: false
-published: true
+published: false
 image: "/images/blogs/high-availability_in_distributed_systems.png"
 tags: ["high-availability", "distributed-systems", "cassandra", "zookeeper", "fault-tolerance"]
 ---
