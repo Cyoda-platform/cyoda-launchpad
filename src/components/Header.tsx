@@ -64,12 +64,12 @@ const Header = () => {
               <NavigationMenuContent>
                 <div className="grid w-64 gap-3 p-4">
                   <NavigationMenuLink asChild>
-                    <Link to="https://docs.cyoda.net/" className="text-sm hover:text-primary transition-colors">
+                    <Link to="https://docs.cyoda.net/" target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary transition-colors">
                       Developer Docs
                     </Link>
                   </NavigationMenuLink>
                   <NavigationMenuLink className="text-sm hover:text-primary transition-colors">
-                      <Link to="https://docs.cyoda.net/api-reference/" className="text-sm hover:text-primary transition-colors">
+                      <Link to="https://docs.cyoda.net/api-reference/" target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary transition-colors">
                     API Reference
                       </Link>
                   </NavigationMenuLink>

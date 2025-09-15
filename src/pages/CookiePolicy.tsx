@@ -35,7 +35,7 @@ const CookiePolicy = () => {
         <section className="legal-section-spacing relative">
           <div className="legal-container">
             <div className="legal-content-width legal-document">
-              
+
               <h2>1. Introduction</h2>
               <p>
                 Our website, <a href="https://cyoda.com" className="text-primary hover:underline">https://cyoda.com</a> (hereinafter: "the website") uses cookies and other related technologies (for convenience all technologies are referred to as "cookies"). Cookies are also placed by third parties we have engaged. In the document below we inform you about the use of cookies on our website.
@@ -57,7 +57,7 @@ const CookiePolicy = () => {
               </p>
 
               <h2>5. Cookies</h2>
-              
+
               <h3>5.1 Technical or functional cookies</h3>
               <p>
                 Some cookies ensure that certain parts of the website work properly and that your user preferences remain known. By placing functional cookies, we make it easier for you to visit our website. This way, you do not need to repeatedly enter the same information when visiting our website and, for example, the items remain in your shopping cart until you have paid. We may place these cookies without your consent.
@@ -69,7 +69,7 @@ const CookiePolicy = () => {
               </p>
 
               <h2>6. Placed cookies</h2>
-              
+
               <h3>6.1 Essential cookies</h3>
               <p>These are necessary for the website to function properly. Always On.</p>
 
@@ -89,7 +89,7 @@ const CookiePolicy = () => {
 
               <h3>7.1 Manage your consent settings</h3>
               <p>
-                You can update your cookie settings at any time by clicking on the Preferences button on the left corner.
+                You can update your cookie settings at any time by clicking on the Cookie Preferences in the footer.
               </p>
 
               <h2>8. Enabling/disabling and deleting cookies</h2>
@@ -105,10 +105,10 @@ const CookiePolicy = () => {
               <ul>
                 <li>You have the right to know why your personal data is needed, what will happen to it, and how long it will be retained for.</li>
                 <li><strong>Right of access:</strong> You have the right to access your personal data that is known to us.</li>
-                <li><strong>Right to rectification:</strong> you have the right to supplement, correct, have deleted or blocked your personal data whenever you wish.</li>
+                <li><strong>Right to rectification:</strong> You have the right to supplement, correct, have deleted or blocked your personal data whenever you wish.</li>
                 <li>If you give us your consent to process your data, you have the right to revoke that consent and to have your personal data deleted.</li>
-                <li><strong>Right to transfer your data:</strong> you have the right to request all your personal data from the controller and transfer it in its entirety to another controller.</li>
-                <li><strong>Right to object:</strong> you may object to the processing of your data. We comply with this, unless there are justified grounds for processing.</li>
+                <li><strong>Right to transfer your data:</strong> You have the right to request all your personal data from the controller and transfer it in its entirety to another controller.</li>
+                <li><strong>Right to object:</strong> You may object to the processing of your data. We comply with this, unless there are justified grounds for processing.</li>
               </ul>
               <p>
                 To exercise these rights, please contact us. Please refer to the contact details at the bottom of this Cookie Policy. If you have a complaint about how we handle your data, we would like to hear from you, but you also have the right to submit a complaint to the supervisory authority (the Data Protection Authority).
