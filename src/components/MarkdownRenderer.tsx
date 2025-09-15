@@ -1,5 +1,6 @@
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 import { cn, resolveAppAssetUrl } from '@/lib/utils';
 import MermaidDiagram from './MermaidDiagram';
 import CopyableCodeBlock from './CopyableCodeBlock';
@@ -125,6 +126,7 @@ const MarkdownRenderer = ({ content, className }: MarkdownRendererProps) => {
     <div className={cn('prose prose-slate dark:prose-invert max-w-none', className)}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
+        rehypePlugins={[rehypeRaw]}
         components={{
           // Custom heading components with better styling
           h1: ({ children }) => (
@@ -326,6 +328,19 @@ const MarkdownRenderer = ({ content, className }: MarkdownRendererProps) => {
           // Custom emphasis/italic styling
           em: ({ children }) => (
             <em className="italic text-muted-foreground">{children}</em>
+          ),
+
+          // Custom figure and figcaption styling
+          figure: ({ children, ...props }) => (
+            <figure className="text-center my-8" {...props}>
+              {children}
+            </figure>
+          ),
+
+          figcaption: ({ children, ...props }) => (
+            <figcaption className="italic text-muted-foreground mt-2 text-sm" {...props}>
+              {children}
+            </figcaption>
           ),
         }}
       >

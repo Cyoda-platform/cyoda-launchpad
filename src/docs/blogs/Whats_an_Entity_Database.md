@@ -1,12 +1,12 @@
 ---
-title: "A Technical Description of the Cyoda Platform"
+title: "What’s an Entity Database?"
 author: "Paul Schleger"
 date: "2024-04-24"
 category: "Platform"
 excerpt: "An entity database is not just another way of storing rows and columns. It is designed around the concept of entities—real-world objects like customers, transactions, or devices—capturing their full lifecycle and every event that shapes them. Unlike traditional relational databases, entity databases maintain a complete, auditable history while still enabling real-time queries and complex workflows. This makes them ideal for businesses that need consistency, scalability, and transparency in handling data-intensive applications."
 featured: false
 published: true
-image: "/images/blogs/"
+image: "/images/blogs/Illustration of an Entity Database Management System (EDBMS).webp"
 tags: ["platform", "technical"]
 ---
 # **What’s an Entity Database?**
@@ -14,10 +14,6 @@ tags: ["platform", "technical"]
 Making a case for a better DBMS in environments where data and processes are tightly interlinked.
 
 This article first appeared on [LinkedIn](https://www.linkedin.com/pulse/whats-entity-database-paul-schleger-edzec).
-
-Press enter or click to view image in full size
-
-![Image in a subfolder](./images/workflow_eliments.webp)
 
 There are so many database types and database management systems out there. Why do we need more of them?
 
@@ -35,9 +31,16 @@ And, no, I don’t think the advent of micro-services has made this any easier.
 
 I call this building **fat systems**, analogous to fat clients in software architecture. But I’d like to build **thin systems**.
 
-Press enter or click to view image in full size
-
-![Image in a subfolder](./images/workflow_eliments.webp)
+<div style="display: flex; gap: 20px; align-items: center; justify-content: center;">
+  <div style="text-align: center;">
+    <img src="./images/Fat_System_Architecture.webp" alt="Fat System Architecture" style="max-width: 100%; height: auto;" />
+    <p><em>Fat System</em></p>
+  </div>
+  <div style="text-align: center;">
+    <img src="images/Thin_System_Architecture.webp" alt="Thin System Architecture" style="max-width: 100%; height: auto;" />
+    <p><em>Thin System</em></p>
+  </div>
+</div>
 
 What would you prefer to build and operate, a fat system (left) or a thin system (right)?
 
@@ -75,11 +78,12 @@ Entities are a very convenient way to look at information: An entity represents 
 
 Since in computing all things are discrete, it makes sense to define an entity having a discrete number of possible states; a finite **state machine**. With this view, an instance of an entity is basically a state machine.
 
-Press enter or click to view image in full size
-
-![Image in a subfolder](./images/workflow_eliments.webp)
-
-Example entity workflow: A payment request
+<figure style="text-align: center; margin: 20px 0;">
+  <img src="./images/Payment_Request_Entity_Workflow.png" alt="Payment Request Entity Workflow" style="max-width: 100%; height: auto;" />
+  <figcaption style="font-style: italic; margin-top: 10px; color: #666;">
+    Example entity workflow: A payment request
+  </figcaption>
+</figure>
 
 **The advantages of Entity State Machines**
 
@@ -119,7 +123,14 @@ This makes an EDBMS incredibly valuable in environments where data and processes
 
 An EDBMS simplifies, accelerates and lowers the cost of building and maintaining applications and (micro)services. A scalable **EDBMS as a Service** allows you to consolidate and homogenize the IT architecture, with all the associated benefits.
 
-![Image in a subfolder](./images/workflow_eliments.webp)
+<div style="text-align: center; margin: 20px 0;">
+  <div style="display: inline-block; width: 50%;">
+    <img src="./images/EDBMS_Concept.webp" alt="EDMBS as the foundation of a digital ecosystem" style="width: 100%; height: auto;" />
+  </div>
+  <div style="font-style: italic; margin-top: 10px; color: #666; font-size: 0.9em;">
+    EDMBS as the foundation of a digital ecosystem
+  </div>
+</div>
 
 Simplify, Accelerate, Lower Costs
 
