@@ -6,7 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 // Prefix app base path (Vite BASE_URL) for assets referenced with leading "/"
-// Works locally ("/") and on GitHub Pages ("/cyoda-launchpad/")
+// Works locally ("/") and on custom domain ("/")
 export function resolveAppAssetUrl(src?: string): string | undefined {
   if (!src) return src
   // Leave fully-qualified and data URLs as-is
