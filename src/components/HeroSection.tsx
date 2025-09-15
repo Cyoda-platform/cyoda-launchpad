@@ -200,7 +200,7 @@ const HeroSection = () => {
           {/* Hero headline */}
           <div className="space-y-4">
             <h1 className="mobile-text-4xl font-bold text-gradient-hero leading-tight">
-
+                Problem → Prototype → Production
             </h1>
 
             {/* Subtext */}
