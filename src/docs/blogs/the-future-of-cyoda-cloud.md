@@ -5,7 +5,7 @@ date: "2025-06-12"
 category: "Cloud"
 excerpt: "Enterprises are shifting from on-premise, code-heavy platforms to cloud-native, configuration-driven systems. Discover how Cyoda Cloud reimagines mission-critical systems with a fully managed Entity Database Management System."
 featured: false
-published: true
+published: false
 image: "/images/blogs/the_future_of_cyoda_cloud.png"
 tags: ["cloud-native", "entity-database", "grpc", "modernization", "saas"]
 ---

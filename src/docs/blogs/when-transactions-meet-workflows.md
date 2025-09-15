@@ -5,7 +5,7 @@ date: "2025-08-30"
 category: "Architecture"
 excerpt: "Most enterprises build reliable systems by stitching together PostgreSQL, Kafka, and workflow engines. Cyoda offers a different vision: a unified platform where transactions, workflows, and queries reduce complexity while improving reliability."
 featured: false
-published: true
+published: false
 image: "/images/blogs/when_transactions_meet_workflows.png"
 tags: ["transactions", "workflows", "architecture", "reliability", "integration"]
 ---

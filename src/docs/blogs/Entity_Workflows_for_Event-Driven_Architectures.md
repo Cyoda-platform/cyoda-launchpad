@@ -4,7 +4,7 @@ author: "Paul Schleger"
 date: "2024-05-01"
 category: "Platform"
 excerpt: "dive into the details of *Entity Workflows* and show how an EDBMS naturally leads to a horizontally scalable event-driven architecture (EDA). The goal being to greatly simplify things, where the applications become “thin clients” of a platform"
-featured: false
+featured: true
 published: true
 image: "/images/blogs/Entity_Workflows_EDA.webp"
 tags: ["platform", "technical","database", "entity-centric", "EDBMS"]

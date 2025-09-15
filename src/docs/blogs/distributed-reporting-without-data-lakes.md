@@ -5,7 +5,7 @@ date: "2025-06-03"
 category: "Analytics"
 excerpt: "For many enterprises, reporting requires extracting data into separate lakes or warehouses. Cyoda takes a different approach by embedding distributed reporting directly into the transactional platform for real-time insights without ETL overhead."
 featured: false
-published: true
+published: false
 image: "/images/blogs/distributed_reporting_without_data_lakes.png"
 tags: ["reporting", "analytics", "data-lakes", "real-time", "distributed"]
 ---

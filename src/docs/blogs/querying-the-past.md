@@ -5,7 +5,7 @@ date: "2025-07-29"
 category: "Data Management"
 excerpt: "In an era where data-driven decisions are critical, the ability to query the past is more than convenience—it's necessity. Learn how Cyoda's consistency clock and snapshot isolation enable point-in-time queries at scale."
 featured: false
-published: true
+published: false
 image: "/images/blogs/ledger-like_entity_database.png"
 tags: ["point-in-time", "consistency", "snapshot-isolation", "audit", "data-management"]
 ---

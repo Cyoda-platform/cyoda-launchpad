@@ -5,7 +5,7 @@ date: "2025-09-04"
 category: "Architecture"
 excerpt: "Distributed systems live and die by how they manage concurrency. Discover how Cyoda's event-context sharding approach aligns sharding with business entities to avoid conflicts and complexity in event-driven workflows."
 featured: false
-published: true
+published: false
 image: "/images/blogs/event_context_sharding.png"
 tags: ["sharding", "event-driven", "concurrency", "distributed-systems", "architecture"]
 ---
