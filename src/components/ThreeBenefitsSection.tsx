@@ -33,7 +33,7 @@ const ThreeBenefitsSection = () => {
             <div className="container mx-auto px-4 relative z-10">
                 <div className="text-center mb-12 sm:mb-16">
                     <h2 className="mobile-text-3xl font-bold text-gradient-primary">
-                        Why teams choose Cyoda
+                        Why clients choose Cyoda
                     </h2>
                 </div>
 
