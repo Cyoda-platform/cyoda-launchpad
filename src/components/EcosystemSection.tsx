@@ -1,14 +1,21 @@
-import {Database, Cloud, Shield, Zap, Users, BarChart3, GitBranch, Cpu, Activity} from 'lucide-react';
+import {
+    Database,
+    Table,
+    Zap,
+    GitBranch,
+    RadioTowerIcon,
+    Bot, Shapes
+} from 'lucide-react';
 
 const EcosystemSection = () => {
     const features = [
         {
-            icon: Database,
+            icon: Shapes,
             title: "Entity-First Data Models",
             description: "AI-assisted creation of rich structured models with validation, relationships, and business rules."
         },
         {
-            icon: Cloud,
+            icon: RadioTowerIcon,
             title: "Event-Driven Architecture",
             description: "EDA minus the complexity. Get scalability and decoupling " +
                 "in a unified design that simplifies development and operations."
@@ -24,12 +31,12 @@ const EcosystemSection = () => {
             description: "Encode approvals, transitions, and complex lifecycle rules directly into your applications."
         },
         {
-            icon: BarChart3,
+            icon: Table,
             title: "Distributed SQL Reporting",
             description: "Familiar SQL queries on a scalable, distributed store with snapshot isolation for consistent results."
         },
         {
-            icon: Cpu,
+            icon: Bot,
             title: "AI Co‑Builder",
             description: "Go from problem statement to runnable services with explainable suggestions, " +
                 "enabling faster iteration without “black box” changes"
