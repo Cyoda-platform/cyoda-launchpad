@@ -7,7 +7,7 @@ excerpt: "Cyoda's online platform enables developers to create agentic AI
   entity-centric design, workflows, and transactional consistency, Cyoda
   provides a powerful alternative to traditional AI development stacks."
 featured: false
-published: true
+published: false
 image: "/images/blogs/ai-assistant.png"
 tags: ["agentic AI","Cyoda","platform","AI Assistant","workflows"]
 title: "Building Agentic AI Applications with Cyoda Online Platform"
