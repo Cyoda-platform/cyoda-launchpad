@@ -135,7 +135,7 @@ const Support = () => {
     const faqs = [
         {
             question: "How do I get started with Cyoda?",
-            answer: "The easiest way to get started is to sign up for a free account and try our AI builder. You can also check out our documentation and how-to guides for more information."
+            answer: "The easiest way to get started is to sign up for a free account and try our AI Assistant. You can also check out our documentation and how-to guides for more information."
         },
         {
             question: "What programming languages does Cyoda support?",
@@ -150,8 +150,8 @@ const Support = () => {
             answer: "Cyoda excels at building data-driven applications like order management systems, customer portals, and enterprise workflows. It was orginally designed for financial services, but can be used for any complex, data-driven system."
         },
         {
-            question: "can I run the AI builder locally?",
-            answer: "Yes, it's an open source project, built on Cyoda Cloud, you're welcome to download it, configure your own LLMs, and run it locally."
+            question: "Can I run the AI Assistant locally?",
+            answer: "Yes, it's an open source project that runs on Cyoda Cloud. You're welcome to download it, configure your own LLMs, and run it locally."
         },
         {
             question: "How secure are applications built with Cyoda?",

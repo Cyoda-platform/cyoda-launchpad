@@ -22,7 +22,7 @@ const Products = () => {
         {
             icon: Zap,
             title: "Event-Driven Processing",
-            description: "React to every state change in real time with scalable, event-streamed workflows that keep systems responsive and decoupled."
+            description: "React to every state change in real time with scalable, event-streamed workflows that keep services responsive and decoupled."
         },
         {
             icon: ShieldCheck,
@@ -32,7 +32,7 @@ const Products = () => {
         {
             icon: Boxes,
             title: "Horizontal Scalability",
-            description: "Scale seamlessly across nodes to handle growing data volumes and workloads without costly re-architecture."
+            description: "Scale across nodes to handle growing data volumes and workloads without costly re-architecture."
         },
         {
             icon: Workflow,
@@ -49,9 +49,9 @@ const Products = () => {
   const platforms = [
     {
       icon: Bot,
-      name: "AI Builder",
-      description: "build your prototype in minutes",
-      features: ["Data modeling", "Business logic generation", "API endpoint creation", "Open Source", "Deploy Services"]
+      name: "AI Assistant",
+      description: "Create your prototype in minutes",
+      features: ["Build deterministic or agentic services", "Supports multiple programming languages", "Open Source", "Deploy Services"]
     },
     {
       icon: Anvil,
@@ -74,16 +74,16 @@ const Products = () => {
         {/* Hero Section */}
         <section className="pt-24 pb-16 bg-gradient-to-br from-background via-card to-secondary/20 relative">
           <div className="absolute inset-0 texture-overlay opacity-30" />
-          
+
           <div className="container mx-auto px-4 relative z-10">
             <div className="text-center max-w-4xl mx-auto">
               <h1 className="text-5xl md:text-6xl font-bold text-gradient-hero mb-6">
                   Focus on Solutions,<br/> not Infrastructure
               </h1>
               <p className="text-xl text-muted-foreground mb-8">
-                  A stateful, event-driven platform with an entity database, processing via workflows, horizontally scalable, transactional consistancy and real-time insight without complex infrastructure.
+                  A stateful, event-driven platform with an entity database, processing via workflows, horizontally scalable, transactional consistency and real-time insight without complex infrastructure.
               </p>
-              <Button 
+              <Button
                 size="lg"
                 className="bg-gradient-primary text-white text-lg px-8 py-4 glow-primary"
                 onClick={() => window.open('https://ai.cyoda.net', '_blank')}
@@ -108,21 +108,21 @@ const Products = () => {
 
             <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
               {platforms.map((platform, index) => (
-                <div 
+                <div
                   key={index}
                   className="p-8 rounded-2xl border border-border/50 bg-card/30 backdrop-blur hover:bg-card/50 transition-all duration-300 glow-hover"
                 >
                   <div className="w-16 h-16 rounded-2xl bg-gradient-primary flex items-center justify-center mb-6 glow-primary">
                     <platform.icon className="w-8 h-8 text-white" />
                   </div>
-                  
+
                   <h3 className="text-2xl font-bold mb-4 text-foreground">
                     {platform.name}
                   </h3>
                   <p className="text-muted-foreground mb-6">
                     {platform.description}
                   </p>
-                  
+
                   <ul className="space-y-3">
                     {platform.features.map((feature, idx) => (
                       <li key={idx} className="flex items-center text-sm text-muted-foreground">
@@ -140,7 +140,7 @@ const Products = () => {
         {/* Features Grid */}
         <section className="py-24 bg-gradient-dark relative">
           <div className="absolute inset-0 texture-overlay opacity-20" />
-          
+
           <div className="container mx-auto px-4 relative z-10">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold text-gradient-accent mb-6">
@@ -153,7 +153,7 @@ const Products = () => {
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
               {features.map((feature, index) => (
-                <div 
+                <div
                   key={index}
                   className="group p-6 rounded-xl border border-border/50 bg-card/20 backdrop-blur hover:bg-card/40 transition-all duration-300 glow-hover"
                 >
@@ -187,14 +187,14 @@ const Products = () => {
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
               Start building the future with Cyoda's AI-powered platform.
             </p>
-            <Button 
+            <Button
               size="lg"
               className="bg-gradient-primary text-white text-lg px-8 py-4 glow-primary mr-4"
               onClick={() => window.open('https://ai.cyoda.net', '_blank')}
             >
               Try Now
             </Button>
-            <Button 
+            <Button
               size="lg"
               className="bg-gradient-primary text-white text-lg px-8 py-4 glow-primary mr-4"
               onClick={() => window.open('https://docs.cyoda.net/', '_blank')}

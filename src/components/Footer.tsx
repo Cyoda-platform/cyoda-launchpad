@@ -54,7 +54,7 @@ const Footer = () => {
                 <img src={cyodaLogo} alt="Cyoda" className="h-6 sm:h-6" />
             </div>
             <p className="text-muted-foreground mb-6 max-w-md">
-              Developer-first application platform with AI builder.
+              Developer-first application platform with AI Assistant.
               Turn problems into scalable, enterprise-grade systems in minutes.
             </p>
 

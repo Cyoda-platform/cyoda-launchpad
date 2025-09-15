@@ -127,14 +127,14 @@ const DeveloperReliabilitySection = () => {
   return (
     <section className="py-24 bg-gradient-to-br from-background via-card to-secondary/20 relative">
       <div className="absolute inset-0 texture-overlay opacity-20" />
-      
+
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gradient-accent mb-6">
             Built for Developers Who Demand Reliability
           </h2>
           <p className="text-xl text-muted-foreground max-w-4xl mx-auto">
-            Handle complex entities, relationships, and business logic with confidence. 
+            Handle complex entities, relationships, and business logic with confidence.
             Cyoda excels at modeling intricate data structures that real enterprises depend on.
           </p>
         </div>
@@ -178,27 +178,27 @@ const DeveloperReliabilitySection = () => {
                     <ul className="space-y-3 text-lg text-muted-foreground text-left">
                         <li>
                             <span className="font-medium text-foreground">Entity-first modeling:</span>
-                            &nbsp;capture rich business objects with nested attributes and relationships, without rigid schemas or complex joins.
+                            &nbsp;Capture rich business objects with nested attributes and relationships, without rigid schemas or complex joins.
                         </li>
                         <li>
                             <span className="font-medium text-foreground">Immutable, write-only ledger:</span>
-                            &nbsp;every change is stored as an event, preserving full lineage and audit for compliance and trust.
+                            &nbsp;Every change is stored as an event, preserving full lineage and audit for compliance and trust.
                         </li>
                         <li>
                             <span className="font-medium text-foreground">Stateful workflows & rules:</span>
-                            &nbsp;bind rules and actions directly to entity state transitions for straight-through processing.
+                            &nbsp;Bind rules and actions directly to entity state transitions for straight-through processing.
                         </li>
                         <li>
                             <span className="font-medium text-foreground">Snapshot isolation:</span>
-                            &nbsp;query consistent views of data without blocking writes, even under heavy concurrent workloads.
+                            &nbsp;Query consistent views of data without blocking writes, even under heavy concurrent workloads.
                         </li>
                         <li>
                             <span className="font-medium text-foreground">Historical reporting:</span>
-                            &nbsp;analyze system state as it was at any point in time, supporting compliance and business insight.
+                            &nbsp;Analyze system state as it was at any point in time, supporting compliance and business insight.
                         </li>
                         <li>
                             <span className="font-medium text-foreground">Scale & reliability:</span>
-                            &nbsp;distributed architecture built for high-volume, high-integrity enterprise data flows.
+                            &nbsp;Distributed architecture built for high-volume, high-integrity enterprise data flows.
                         </li>
                     </ul>
                 </div>

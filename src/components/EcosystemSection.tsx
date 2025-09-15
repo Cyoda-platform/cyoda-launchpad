@@ -14,8 +14,8 @@ const EcosystemSection = () => {
         },
         {
             icon: Zap,
-            title: "Real-Time APIs",
-            description: "Low-latency REST endpoints with subscriptions and webhooks for live data access."
+            title: "APIs & gRPC Integration",
+            description: "Unified APIs for model, config, and data with client logic over gRPC."
         },
         {
             icon: GitBranch,
@@ -55,7 +55,7 @@ const EcosystemSection = () => {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {features.map((feature, index) => (
-            <div 
+            <div
               key={index}
               className="group p-6 rounded-xl border border-border/50 bg-card/20 backdrop-blur hover:bg-card/40 transition-all duration-300 glow-hover"
             >

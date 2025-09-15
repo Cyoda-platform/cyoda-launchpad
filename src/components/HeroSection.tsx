@@ -93,25 +93,25 @@ const HeroSection = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background with texture overlay */}
-      <div 
+      <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat texture-overlay"
         style={{ backgroundImage: `url(${heroBackground})` }}
       />
       <div className="absolute inset-0 bg-gradient-dark opacity-70" />
-      
+
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 text-center">
         <div className="max-w-4xl mx-auto space-y-6">
           {/* Hero headline */}
           <div className="space-y-4">
             <h1 className="mobile-text-4xl font-bold text-gradient-hero leading-tight">
-              Problem → Prototype → Production
+
             </h1>
 
             {/* Subtext */}
             <p className="mobile-text-base text-foreground/90 leading-relaxed max-w-2xl mx-auto">
                 Developer-first application platform for event-driven backends. <br />
-                One developer building enterprise systems, not a team.
+                Build enterprise‑grade with smaller teams.
             </p>
           </div>
 

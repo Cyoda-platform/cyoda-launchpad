@@ -38,7 +38,7 @@ Remembers your preferences and provides enhanced features.
 When you visit our website for the first time, we will show you a pop-up with an explanation about cookies. As soon as you click on “Save preferences”, you consent to us using the categories of cookies and plug-ins you selected in the pop-up, as described in this Cookie Policy. You can disable the use of cookies via your browser, but please note that our website may no longer work properly.
 
 7.1 Manage your consent settings
-You can update your cookie settings at any time by clicking on the Preferences button on the left corner.
+You can update your cookie settings at any time by clicking on the Cookie Preferences in the footer.
 
 8. Enabling/disabling and deleting cookies
 You can use your internet browser to automatically or manually delete cookies. You can also specify that certain cookies may not be placed. Another option is to change the settings of your internet browser so that you receive a message each time a cookie is placed. For more information about these options, please refer to the instructions in the Help section of your browser.
@@ -50,10 +50,10 @@ You have the following rights with respect to your personal data:
 
 You have the right to know why your personal data is needed, what will happen to it, and how long it will be retained for.
 Right of access: You have the right to access your personal data that is known to us.
-Right to rectification: you have the right to supplement, correct, have deleted or blocked your personal data whenever you wish.
+Right to rectification: You have the right to supplement, correct, have deleted or blocked your personal data whenever you wish.
 If you give us your consent to process your data, you have the right to revoke that consent and to have your personal data deleted.
-Right to transfer your data: you have the right to request all your personal data from the controller and transfer it in its entirety to another controller.
-Right to object: you may object to the processing of your data. We comply with this, unless there are justified grounds for processing.
+Right to transfer your data: You have the right to request all your personal data from the controller and transfer it in its entirety to another controller.
+Right to object: You may object to the processing of your data. We comply with this, unless there are justified grounds for processing.
 To exercise these rights, please contact us. Please refer to the contact details at the bottom of this Cookie Policy. If you have a complaint about how we handle your data, we would like to hear from you, but you also have the right to submit a complaint to the supervisory authority (the Data Protection Authority).
 
 10. Contact details
