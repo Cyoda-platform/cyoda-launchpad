@@ -8,7 +8,7 @@ excerpt: "Cyoda's online platform enables developers to create agentic AI
   provides a powerful alternative to traditional AI development stacks."
 featured: false
 published: true
-tags: ["agentic AI","Cyoda","platform","AI builder","workflows"]
+tags: ["agentic AI","Cyoda","platform","AI Assistant","workflows"]
 title: "Building Agentic AI Applications with Cyoda Online Platform"
 ---
 
@@ -16,20 +16,20 @@ title: "Building Agentic AI Applications with Cyoda Online Platform"
 
 This guide walks through creating a **demo Order Management System (OMS)** using:
 
-- **Cyoda Online Platform + AI Builder** to generate the **backend**  
+- **Cyoda Online Platform + AI Assistant** to generate the **backend**  
 - **Lovable AI** to generate the **frontend** against the local backend REST APIs  
 
 The OMS demonstrates **products, carts, checkout, dummy payment, orders, and shipment states**, showing how quickly you can build an end-to-end application.
 
 ---
 
-## 1. Backend (Cyoda AI Builder)
+## 1. Backend (Cyoda AI Assistant)
 
-The backend is generated on the **Cyoda Online Platform** using Cyoda’s **AI Builder**. It creates entities, workflows, processors, and an app-hosted REST API layer.
+The backend is generated on the **Cyoda Online Platform** using Cyoda’s **AI Assistant**. It creates entities, workflows, processors, and an app-hosted REST API layer.
 
 ### Backend Prompt (for Cyoda AI)
 
-Copy this entire prompt into Cyoda AI Builder:
+Copy this entire prompt into Cyoda AI Assistant:
 
 ```
 Build a Spring Boot client application that exposes simple REST APIs for a browser UI (no login in the browser).  

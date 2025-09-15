@@ -49,7 +49,7 @@ const Products = () => {
   const platforms = [
     {
       icon: Bot,
-      name: "AI Builder",
+      name: "AI Assistant",
       description: "Create your prototype in minutes",
       features: ["Builds deterministic or agentic services", "Multi-language support", "Open Source", "Deploy Services"]
     },

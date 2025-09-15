@@ -157,7 +157,7 @@ docker rm my-app-container
 
 ## Copyable Text Blocks (Blockquotes)
 
-> Copy this entire prompt into Cyoda AI Builder:
+> Copy this entire prompt into Cyoda AI Assistant:
 > 
 > Generate a React + TypeScript front-end that consumes the local backend at `http://localhost:8080` using the attached OpenAPI (openAPI.json).
 > Do not call Cyoda directly. Do not add browser authentication. All requests go through `/ui/**` endpoints.
