@@ -32,7 +32,7 @@ const Products = () => {
         {
             icon: Boxes,
             title: "Horizontal Scalability",
-            description: "Scale seamlessly across nodes to handle growing data volumes and workloads without costly re-architecture."
+            description: "Scale across nodes to handle growing data volumes and workloads without costly re-architecture."
         },
         {
             icon: Workflow,
@@ -51,7 +51,7 @@ const Products = () => {
       icon: Bot,
       name: "AI Assistant",
       description: "Create your prototype in minutes",
-      features: ["Builds deterministic or agentic services", "Multi-language support", "Open Source", "Deploy Services"]
+      features: ["Build deterministic or agentic services", "Supports multiple programming languages", "Open Source", "Deploy Services"]
     },
     {
       icon: Anvil,

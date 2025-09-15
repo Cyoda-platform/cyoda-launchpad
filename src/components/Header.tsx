@@ -64,13 +64,13 @@ const Header = () => {
               <NavigationMenuContent>
                 <div className="grid w-64 gap-3 p-4">
                   <NavigationMenuLink asChild>
-                    <Link to="https://docs.cyoda.net/getting-started/quickstart/" className="text-sm hover:text-primary transition-colors">
-                      Guides
+                    <Link to="https://docs.cyoda.net/" className="text-sm hover:text-primary transition-colors">
+                      Developer Docs
                     </Link>
                   </NavigationMenuLink>
                   <NavigationMenuLink className="text-sm hover:text-primary transition-colors">
-                      <Link to="https://docs.cyoda.net/" className="text-sm hover:text-primary transition-colors">
-                    Application Documentation
+                      <Link to="https://docs.cyoda.net/api-reference/" className="text-sm hover:text-primary transition-colors">
+                    API Reference
                       </Link>
                   </NavigationMenuLink>
                   <NavigationMenuLink className="text-sm text-muted-foreground">
@@ -171,7 +171,7 @@ const Header = () => {
               <Link to="/blog" className="block py-2 text-foreground hover:text-primary transition-colors">Blog</Link>
               <Link to="/support" className="block py-2 text-foreground hover:text-primary transition-colors">Support</Link>
             </nav>
-            
+
             <div className="flex flex-col space-y-2 pt-4 border-t border-border/40">
               <Button variant="ghost" className="justify-start mobile-btn-text">
                 Contact (Discord)
