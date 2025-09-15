@@ -1,6 +1,6 @@
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { cn } from '@/lib/utils';
+import { cn, resolveAppAssetUrl } from '@/lib/utils';
 import MermaidDiagram from './MermaidDiagram';
 import CopyableCodeBlock from './CopyableCodeBlock';
 import CopyableTextBlock from './CopyableTextBlock';
@@ -23,9 +23,13 @@ const assetMap: Record<string, string> = { ...blogAssets, ...guideAssets };
 
 function resolveMarkdownImageSrc(src?: string): string | undefined {
   if (!src) return src;
-  // Leave absolute/http/data URLs as-is
-  if (/^(?:https?:)?\/\//.test(src) || src.startsWith('data:') || src.startsWith('/')) {
+  // Leave fully-qualified and data URLs as-is
+  if (/^(?:https?:)?\/\//.test(src) || src.startsWith('data:')) {
     return src;
+  }
+  // Prefix app base for root-relative paths like "/images/..."
+  if (src.startsWith('/')) {
+    return resolveAppAssetUrl(src);
   }
   // Normalize leading './' or '/'
   const rel = src.replace(/^\.\/+/, '').replace(/^\//, '');
@@ -43,6 +47,19 @@ function resolveMarkdownImageSrc(src?: string): string | undefined {
       }
       return url;
     }
+  }
+  // Fallback: try suffix match across known assets (helps when markdown omits folder prefix)
+  const suffix = '/' + rel.replace(/^.*\//, ''); // just the filename
+  const blogMatch = Object.keys(assetMap).find(k => k.startsWith('/src/docs/blogs/') && k.endsWith(suffix));
+  const guideMatch = Object.keys(assetMap).find(k => k.startsWith('/src/docs/guides/') && k.endsWith(suffix));
+  const matchKey = blogMatch || guideMatch;
+  if (matchKey) {
+    const url = assetMap[matchKey];
+    if (import.meta.env.DEV && url !== src) {
+      // eslint-disable-next-line no-console
+      console.debug('[MarkdownRenderer] Resolved by suffix', src, '->', url);
+    }
+    return url;
   }
   // Fallback to original src if no match found
   return src;
@@ -90,19 +107,16 @@ const detectCopyableContent = (text: string): { isCopyable: boolean; variant: 'p
   return { isCopyable: false, variant: 'code', extractedText: cleanText };
 };
 
-const extractTextFromChildren = (children: any): string => {
-  if (typeof children === 'string') {
-    return children;
-  }
+function hasPropsWithChildren(node: unknown): node is { props?: { children?: unknown } } {
+  return typeof node === 'object' && node !== null && 'props' in node;
+}
 
-  if (Array.isArray(children)) {
-    return children.map(extractTextFromChildren).join('');
-  }
-
-  if (children?.props?.children) {
+const extractTextFromChildren = (children: unknown): string => {
+  if (typeof children === 'string') return children;
+  if (Array.isArray(children)) return children.map(extractTextFromChildren).join('');
+  if (hasPropsWithChildren(children) && children.props && 'children' in children.props) {
     return extractTextFromChildren(children.props.children);
   }
-
   return '';
 };
 

@@ -6,10 +6,11 @@ category: "Architecture"
 excerpt: "Distributed systems live and die by how they manage concurrency. Discover how Cyoda's event-context sharding approach aligns sharding with business entities to avoid conflicts and complexity in event-driven workflows."
 featured: false
 published: true
+image: "/images/blogs/event_context_sharding.png"
 tags: ["sharding", "event-driven", "concurrency", "distributed-systems", "architecture"]
 ---
 
-# Event-Context Sharding vs. Traditional Sharding
+# Event-Context Sharding vs Traditional Sharding
 
 Distributed systems live and die by how they manage concurrency. At
 scale, **ordering and consistency** become some of the hardest problems
@@ -35,9 +36,9 @@ nodes, typically by a key (e.g., user ID). This improves scalability but
 creates challenges:
 
 -   **Cross-shard transactions** require coordination and can be
-    expensive.\
+    expensive.
 -   **Conflicts still occur** when concurrent writes affect related
-    entities across shards.\
+    entities across shards.
 -   **Application-level complexity** grows, since developers must
     understand and handle sharding logic.
 
@@ -49,9 +50,9 @@ ensuring ordering within that partition. While effective, this model has
 its trade-offs:
 
 -   **Limited by partition count**: Increasing throughput often requires
-    repartitioning, which can be disruptive.\
+    repartitioning, which can be disruptive.
 -   **Global ordering is impossible**: Only per-partition order is
-    guaranteed.\
+    guaranteed.
 -   **Application burden**: Developers must carefully choose
     partitioning keys and handle out-of-order scenarios across
     partitions.
@@ -65,18 +66,18 @@ consistency and conflict resolution onto application developers.
 
 Cyoda's **event-context sharding** is designed with **transactional
 workflows and state machines** in
-mind【8†files_uploaded_in_conversation】. Instead of sharding purely by
+mind. Instead of sharding purely by
 data or by arbitrary keys, sharding is tied to the **context of an
 entity**.
 
 How it works:
 
-1.  **Events are assigned to a context** -- For example, all events
+1.  **Events are assigned to a context** - For example, all events
     related to a specific customer, order, or claim belong to the same
-    context.\
-2.  **Serial ordering within a context** -- Events in the same context
-    are always processed sequentially.\
-3.  **Parallelism across contexts** -- Different contexts (e.g.,
+    context.
+2.  **Serial ordering within a context** - Events in the same context
+    are always processed sequentially.
+3.  **Parallelism across contexts** - Different contexts (e.g.,
     different customers or claims) can be processed concurrently across
     the cluster.
 
@@ -93,46 +94,34 @@ Traditional sharding strategies often force developers to deal with race
 conditions: two updates to the same entity may land on different nodes,
 processed in different orders. This leads to:
 
--   Lost updates\
--   Inconsistent state machines\
+-   Lost updates
+-   Inconsistent state machines
 -   Complex reconciliation jobs
 
 Event-context sharding eliminates these issues by design:
 
 -   **No lost updates** -- Serial ordering ensures every event is
-    applied in sequence.\
--   **No inconsistent states** -- Entity workflows are deterministic,
-    since transitions happen in strict order.\
--   **Simpler error handling** -- Idempotent processing allows safe
+    applied in sequence.
+-   **No inconsistent states** - Entity workflows are deterministic,
+    since transitions happen in strict order.
+-   **Simpler error handling** - Idempotent processing allows safe
     retries if a failure occurs mid-execution.
 
 This approach leverages the **atomicity guarantees of Cassandra** as the
 underlying datastore, while Zookeeper coordinates shard allocation when
-nodes fail【8†files_uploaded_in_conversation】.
+nodes fail.
 
 ------------------------------------------------------------------------
 
 ## Comparison at a Glance
+| Feature                                      | Traditional Database Sharding | Kafka Partitions  |    Event-Context Sharding    |
+|:---------------------------------------------|------------------------------:|:-----------------:|:----------------------------:|
+| **Scalability**                              |             High (adds nodes) | High (partitions) | High (contexts across nodes) |
+| **Ordering Guarantees**                      |  None (must enforce manually) |   Per partition   |         Per context          |
+| **Conflict Resolution**                      |             Application-level | Application-level |      Avoided by design       |
+| **Cross-Entity Consistency**                 |            Complex and costly |  Not guaranteed   |   Guaranteed with context    |
+| **Operational Complexity**                   |                          High |      Medium       |Low (built into platform)
 
-  -------------------------------------------------------------------------------
-  Feature               Traditional Database Kafka Partitions    Event-Context
-                        Sharding                                 Sharding
-  --------------------- -------------------- ------------------- ----------------
-  **Scalability**       High (adds nodes)    High (partitions)   High (contexts
-                                                                 across nodes)
-
-  **Ordering            None (must enforce   Per partition       Per context
-  Guarantees**          manually)                                
-
-  **Conflict            Application-level    Application-level   Avoided by
-  Resolution**                                                   design
-
-  **Cross-Entity        Complex and costly   Not guaranteed      Guaranteed
-  Consistency**                                                  within context
-
-  **Operational         High                 Medium              Low (built into
-  Complexity**                                                   platform)
-  -------------------------------------------------------------------------------
 
 ------------------------------------------------------------------------
 
@@ -146,11 +135,11 @@ avoidance**, freeing developers to focus on business logic.
 
 This matters in domains such as:
 
--   **Finance** -- Ensuring trades and settlements are processed in the
-    right order.\
--   **Insurance** -- Preventing conflicting claim updates across
-    workflows.\
--   **Onboarding/KYC** -- Guaranteeing auditability when documents and
+-   **Finance** - Ensuring trades and settlements are processed in the
+    right order.
+-   **Insurance** - Preventing conflicting claim updates across
+    workflows.
+-   **Onboarding/KYC** - Guaranteeing auditability when documents and
     approvals arrive asynchronously.
 
 By reducing the cognitive and operational load on developers, Cyoda
@@ -162,8 +151,8 @@ systems** without reinventing the wheel.
 ## Conclusion
 
 Sharding is essential for scalability, but the wrong strategy can create
-more problems than it solves. Traditional approaches---whether database
-sharding or Kafka partitions---scale throughput but leave conflict
+more problems than it solves. Traditional approaches (whether database
+sharding or Kafka partitions) scale throughput but leave conflict
 resolution to developers.
 
 Cyoda's **event-context sharding** offers a better path: **serial order

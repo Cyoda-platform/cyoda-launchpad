@@ -36,7 +36,6 @@ const CookieConsentTest = lazy(() => import("./components/CookieConsentTest").th
 const queryClient = new QueryClient();
 // Lazy-load consent preferences UI to optimize initial load
 const LazyCookiePreferencesModal = lazy(() => import("@/components/CookiePreferencesModal"));
-const LazyCookiePreferences = lazy(() => import("@/components/CookiePreferences"));
 
 const App = () => {
   const [prefOpen, setPrefOpen] = useState(false);
@@ -86,11 +85,6 @@ const App = () => {
               <ErrorBoundary>
                 <Suspense fallback={null}>
                   <LazyCookiePreferencesModal open={prefOpen} onOpenChange={setPrefOpen} />
-                </Suspense>
-              </ErrorBoundary>
-              <ErrorBoundary>
-                <Suspense fallback={null}>
-                  <LazyCookiePreferences />
                 </Suspense>
               </ErrorBoundary>
             </BrowserRouter>

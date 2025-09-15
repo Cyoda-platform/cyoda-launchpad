@@ -1,5 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
+import { resolveAppAssetUrl, toAbsoluteUrl } from '@/lib/utils';
 
 interface SEOProps {
   title: string;
@@ -30,7 +31,8 @@ const SEO: React.FC<SEOProps> = ({
 }) => {
   const fullTitle = `${title} | ${siteName}`;
   const currentUrl = url || (typeof window !== 'undefined' ? window.location.href : '');
-  const defaultImage = image || 'https://lovable.dev/opengraph-image-p98pqg.png';
+  const resolvedImage = resolveAppAssetUrl(image);
+  const defaultImage = toAbsoluteUrl(resolvedImage) || 'https://lovable.dev/opengraph-image-p98pqg.png';
 
   return (
     <Helmet>

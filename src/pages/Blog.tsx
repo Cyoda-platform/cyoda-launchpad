@@ -13,6 +13,7 @@ import {
   SearchNoResultsFallback,
   EmptyBlogFallback
 } from '@/components/BlogFallbacks';
+import { resolveAppAssetUrl } from '@/lib/utils';
 
 // Custom debounce hook
 const useDebounce = (value: string, delay: number) => {
@@ -157,7 +158,7 @@ const Blog = () => {
         {/* Hero Section */}
         <section className="pt-24 pb-16 bg-gradient-to-br from-background via-card to-secondary/20 relative">
           <div className="absolute inset-0 texture-overlay opacity-30" />
-          
+
           <div className="container mx-auto px-4 relative z-10">
             <div className="text-center max-w-4xl mx-auto">
               <h1 className="text-5xl md:text-6xl font-bold text-gradient-hero mb-6">
@@ -182,7 +183,7 @@ const Blog = () => {
                         Featured
                       </span>
                     </div>
-                    
+
                     <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
                       {featuredPost?.title || 'No Featured Post Available'}
                     </h2>
@@ -199,7 +200,7 @@ const Blog = () => {
                       <Clock className="w-4 h-4 mr-2" />
                       <span>{featuredPost?.readTime || '0 min read'}</span>
                     </div>
-                    
+
                     <Button
                       className="bg-gradient-primary text-white glow-primary"
                       onClick={() => featuredPost?.slug && navigate(`/blog/${featuredPost.slug}`)}
@@ -209,14 +210,27 @@ const Blog = () => {
                       Read Article <ArrowRight className="w-4 h-4 ml-2" />
                     </Button>
                   </div>
-                  
-                  <div className="bg-gradient-primary/10 flex items-center justify-center p-8">
-                    <div className="text-center">
-                      <div className="w-32 h-32 rounded-2xl bg-gradient-primary/20 flex items-center justify-center mb-4">
-                        <div className="text-4xl">📝</div>
+
+                  <div className="bg-gradient-primary/10 p-0 md:p-0">
+                    {featuredPost?.image ? (
+                      <div className="relative h-56 md:h-full min-h-[240px] overflow-hidden">
+                        <img
+                          src={resolveAppAssetUrl(featuredPost.image)}
+                          alt={featuredPost.title || 'Featured article image'}
+                          className="w-full h-full object-cover"
+                          loading="lazy"
+                        />
                       </div>
-                      <p className="text-muted-foreground">Featured Article</p>
-                    </div>
+                    ) : (
+                      <div className="flex items-center justify-center p-8 h-full">
+                        <div className="text-center">
+                          <div className="w-32 h-32 rounded-2xl bg-gradient-primary/20 flex items-center justify-center mb-4">
+                            <div className="text-4xl">📝</div>
+                          </div>
+                          <p className="text-muted-foreground">Featured Article</p>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -326,6 +340,17 @@ const Blog = () => {
                       key={post.slug || index}
                       className="group bg-card border-2 dark:bg-card/20 dark:border backdrop-blur border-border dark:border-border/50 rounded-xl overflow-hidden hover:bg-card/90 dark:hover:bg-card/40 transition-all duration-300 glow-hover shadow-sm dark:shadow-none"
                     >
+                          {post.image && (
+                            <div className="relative h-40 md:h-48 overflow-hidden">
+                              <img
+                                src={resolveAppAssetUrl(post.image)}
+                                alt={post.title}
+                                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                loading="lazy"
+                              />
+                            </div>
+                          )}
+
                       <div className="p-6">
                         <div className="mb-4">
                           <span className="inline-block bg-primary text-primary-foreground dark:bg-primary/20 dark:text-primary px-2 py-1 rounded text-xs font-medium dark:border dark:border-primary/30">
@@ -412,7 +437,7 @@ const Blog = () => {
               <p className="text-xl text-muted-foreground mb-8">
                 Contact us, join our Discord, we are are backend devs and here to help.
               </p>
-              
+
               <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
 
                        <Button className="bg-gradient-primary text-white glow-primary"
@@ -422,7 +447,7 @@ const Blog = () => {
                       </Button>
 
               </div>
-              
+
               <p className="text-sm text-muted-foreground mt-4">
 
               </p>

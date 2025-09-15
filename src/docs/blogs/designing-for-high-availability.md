@@ -6,6 +6,7 @@ category: "Infrastructure"
 excerpt: "Distributed systems power the modern enterprise, but with scale comes complexity. Learn how Cyoda's platform combines Cassandra, Zookeeper, and event-context sharding to deliver fault tolerance at scale."
 featured: false
 published: true
+image: "/images/blogs/high-availability_in_distributed_systems.png"
 tags: ["high-availability", "distributed-systems", "cassandra", "zookeeper", "fault-tolerance"]
 ---
 
@@ -13,7 +14,7 @@ tags: ["high-availability", "distributed-systems", "cassandra", "zookeeper", "fa
 
 Distributed systems power the modern enterprise, but with scale comes
 complexity. Ensuring **high availability (HA)** is not just about
-redundancy---it's about designing systems that anticipate failure and
+redundancy, it's about designing systems that anticipate failure and
 recover gracefully. Cyoda's platform embodies this philosophy, combining
 **Cassandra, Zookeeper, and event-context sharding** to deliver fault
 tolerance at scale.
@@ -30,16 +31,14 @@ leaders can learn when building resilient systems.
 Cyoda relies on **Apache Cassandra** as its distributed storage
 backbone. Cassandra was chosen for:
 
--   **Write-once durability**: Every state change is persisted
-    immutably.\
--   **Automatic replication**: Data is spread across multiple nodes and
-    datacenters.\
--   **No single point of failure**: Nodes can fail without taking down
-    the cluster.
+-   **Write-once durability**: Every state change is persisted immutably.
+-   **Automatic replication**: Data is spread across multiple nodes and datacenters.
+-   **No single point of failure**: Nodes can fail without taking down the cluster.
+-   **High IO**: Data can be written and read at high throughput.
+-   **Scalable IO**: Data can be written and read at a scalable throughput.
 
-By storing entity histories as immutable events, Cyoda ensures that data
-is not only durable but also reconstructable in the face of partial
-failures.
+By storing entity histories as immutable events(a ledger of changes), Cyoda ensures that data
+is not only durable but also reconstructable in the face of partial failures.
 
 ------------------------------------------------------------------------
 
@@ -49,9 +48,9 @@ While Cassandra provides durable storage, Cyoda uses **Apache
 Zookeeper** for **cluster coordination**. Zookeeper ensures:
 
 -   **Consensus on shard ownership**: Which Cyoda Processing Manager
-    (CPM) node owns which shard.\
+    (CPM) node owns which shard.
 -   **Leader election** for critical services like the consistency clock
-    controller.\
+    controller.
 -   **Automatic failover**: If a node disappears, responsibilities are
     reassigned seamlessly.
 
@@ -67,9 +66,9 @@ resolution. Cyoda introduces **event-context sharding** to avoid this
 problem.
 
 -   Events for the same **entity or context** are always processed
-    serially.\
--   Events for **different contexts** are processed in parallel.\
--   Conflicts are prevented by design---no need for costly retries or
+    serially.
+-   Events for **different contexts** are processed in parallel.
+-   Conflicts are prevented by design, so there's no need for costly retries or
     rollbacks.
 
 This is similar in spirit to Kafka partitions, but applied at the level
@@ -82,7 +81,7 @@ of **transactional workflows and state machines**. The result is both
 
 ### Scenario 1: Node Outage
 
--   **Failure**: A CPM node hosting several shards goes offline.\
+-   **Failure**: A CPM node hosting several shards goes offline.
 -   **Recovery**: Zookeeper detects the outage and reallocates shard
     ownership. Cassandra ensures data durability, and in-flight events
     are safely resumed on surviving nodes.
@@ -91,7 +90,7 @@ of **transactional workflows and state machines**. The result is both
 
 ### Scenario 2: Network Partition
 
--   **Failure**: Half the cluster loses connectivity.\
+-   **Failure**: Half the cluster loses connectivity.
 -   **Recovery**: The consistency clock controller ensures that
     transactions are only committed where quorum is reached. Once
     partitions heal, state reconciliation proceeds without manual
@@ -101,7 +100,7 @@ of **transactional workflows and state machines**. The result is both
 
 ### Scenario 3: Transaction Conflicts
 
--   **Failure**: Two transactions depend on the same entity state.\
+-   **Failure**: Two transactions depend on the same entity state.
 -   **Recovery**: Event-context sharding guarantees serial ordering for
     that entity, preventing conflicting updates from executing in
     parallel. One transaction may fail, but the system remains
@@ -112,13 +111,13 @@ of **transactional workflows and state machines**. The result is both
 ## Lessons for Engineering Leaders
 
 1.  **Design for failure, not uptime**: Hardware, networks, and nodes
-    will fail. The goal is graceful recovery, not prevention.\
+    will fail. The goal is graceful recovery, not prevention.
 2.  **Separate storage from coordination**: Using Cassandra for data and
-    Zookeeper for coordination avoids single points of weakness.\
+    Zookeeper for coordination avoids single points of weakness.
 3.  **Bake consistency into the architecture**: Event-context sharding
-    avoids the need for expensive conflict resolution strategies.\
+    avoids the need for expensive conflict resolution strategies.
 4.  **Automate recovery**: Manual intervention is a liability in HA
-    systems. Automatic failover and reallocation reduce downtime.\
+    systems. Automatic failover and reallocation reduce downtime.
 5.  **Auditability is resilience**: Immutable histories allow systems to
     replay and rebuild, turning catastrophic errors into recoverable
     events.
@@ -128,7 +127,7 @@ of **transactional workflows and state machines**. The result is both
 ## Why This Matters for Leaders Concerned with Uptime
 
 For CTOs and engineering leaders, high availability is more than a
-checkbox---it's a **business imperative**. Outages cost revenue,
+checkbox, it's a **business imperative**. Outages cost revenue,
 reputation, and trust.
 
 Cyoda's architecture provides a blueprint for how to **combine proven
@@ -144,7 +143,7 @@ trustworthy under stress**.
 
 ## Conclusion
 
-High availability isn't an afterthought---it's the core design principle
+High availability isn't an afterthought, it's the core design principle
 of resilient systems.
 
 Cyoda demonstrates how **careful architecture, automated recovery, and

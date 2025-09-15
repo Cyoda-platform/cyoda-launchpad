@@ -147,7 +147,7 @@ const Products = () => {
                 Enterprise-Grade Features
               </h2>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                Everything you need to build, deploy, and scale applications with confidence
+                  Build, deploy, and scale on a <b>single unified platform</b>. <br/> Cut complexity and achieve more with less.
               </p>
             </div>
 
