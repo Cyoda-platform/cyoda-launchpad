@@ -10,12 +10,13 @@ const EcosystemSection = () => {
         {
             icon: Cloud,
             title: "Event-Driven Architecture",
-            description: "Real-time, scalable, resilient event processing with horizontal scaling and load balancing."
+            description: "EDA minus the complexity. Get scalability and decoupling " +
+                "in a unified design that simplifies development and operations."
         },
         {
             icon: Zap,
-            title: "APIs & gRPC Integration",
-            description: "Unified APIs for model, config, and data with client logic over gRPC."
+            title: "Open APIs & gRPC",
+            description: "Unified APIs for models, config, and data. Strongly‑typed interactions over gRPC for reliability and realtime integration."
         },
         {
             icon: GitBranch,
@@ -29,8 +30,9 @@ const EcosystemSection = () => {
         },
         {
             icon: Cpu,
-            title: "AI-Powered Builder",
-            description: "Go from problem statement to production system with AI-assisted code and configuration."
+            title: "AI Co‑Builder",
+            description: "Go from problem statement to runnable services with explainable suggestions, " +
+                "enabling faster iteration without “black box” changes"
         }
     ];
 
