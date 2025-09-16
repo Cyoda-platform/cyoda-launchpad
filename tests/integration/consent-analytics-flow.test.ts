@@ -15,6 +15,7 @@ vi.mock('@/lib/analytics', () => ({
     disableAnalytics: vi.fn(),
     isEnabled: vi.fn(() => false),
     trackEvent: vi.fn(),
+    trackPageView: vi.fn(),
     getMeasurementId: vi.fn(() => 'G-TEST123456')
   }
 }));

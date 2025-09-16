@@ -22,7 +22,12 @@ export function AnalyticsManager() {
     };
 
     if (canTrackAnalytics) {
-      analyticsService.enableAnalytics(cfg).catch(() => {});
+      analyticsService.enableAnalytics(cfg).then(() => {
+        // Send initial page view when analytics is first enabled
+        const path = window.location.pathname + window.location.search;
+        const title = document.title;
+        analyticsService.trackPageView(path, title);
+      }).catch(() => {});
     } else {
       // If consent withdrawn, disable and cleanup
       analyticsService.disableAnalytics();

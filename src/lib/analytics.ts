@@ -96,6 +96,7 @@ function injectScript(measurementId: string, onLoad: () => void, onError: () => 
   (window as { gtag?: (...args: unknown[]) => void }).gtag?.('js', new Date());
   (window as { gtag?: (...args: unknown[]) => void }).gtag?.('config', measurementId, {
     anonymize_ip: currentConfig.anonymizeIp !== false,
+    send_page_view: true, // Enable automatic page view tracking
   });
 
   const script = document.createElement('script');
@@ -222,6 +223,22 @@ export const analyticsService: AnalyticsServiceAPI = {
       (window as { gtag?: (...args: unknown[]) => void }).gtag?.('event', name, params || {});
     } catch (e) {
       logDebug('trackEvent error', e);
+    }
+  },
+
+  trackPageView(path?: string, title?: string) {
+    if (!isBrowser()) return;
+    if (!loaded) return;
+
+    try {
+      const params: Record<string, unknown> = {};
+      if (path) params.page_location = path;
+      if (title) params.page_title = title;
+
+      (window as { gtag?: (...args: unknown[]) => void }).gtag?.('event', 'page_view', params);
+      logDebug('Page view tracked', params);
+    } catch (e) {
+      logDebug('trackPageView error', e);
     }
   },
 

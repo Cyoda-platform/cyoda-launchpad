@@ -30,6 +30,7 @@ export interface AnalyticsServiceAPI {
   disableAnalytics: () => void;
   isEnabled: () => boolean;
   trackEvent: (name: string, params?: Record<string, unknown>) => void;
+  trackPageView: (path?: string, title?: string) => void;
   getMeasurementId: () => string | null;
 }
 

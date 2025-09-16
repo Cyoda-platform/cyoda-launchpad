@@ -8,6 +8,7 @@ import { CookieConsentProvider } from "@/components/CookieConsentProvider";
 import { CookieConsentBanner } from "@/components/CookieConsentBanner";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { AnalyticsManager } from "@/components/AnalyticsManager";
+import { useAnalyticsTracking } from "@/hooks/use-analytics-tracking";
 
 import { HelmetProvider } from "react-helmet-async";
 import { Suspense, lazy, useState } from "react";
@@ -39,6 +40,10 @@ const LazyCookiePreferencesModal = lazy(() => import("@/components/CookiePrefere
 
 const App = () => {
   const [prefOpen, setPrefOpen] = useState(false);
+
+  // Track page views automatically on route changes
+  useAnalyticsTracking();
+
   return (
   <HelmetProvider>
     <QueryClientProvider client={queryClient}>
