@@ -336,6 +336,7 @@ const Support = () => {
                 {/* Contact form */}
                 <section id={"contact"} className="py-24 relative">
                     <div className="mt-10 max-w-2xl mx-auto">
+                        <h2 className="text-3xl font-bold mb-6">Contact Sales</h2>
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <input
@@ -379,6 +380,14 @@ const Support = () => {
                                 Send
                             </Button>
                         </form>
+                        <div className="text-muted-foreground text-sm transition-colors mt-4 ">
+
+                            This site is protected by reCAPTCHA and the Google{" "}
+                            <a href="https://policies.google.com/privacy">Privacy Policy</a>{" "}
+                            and{" "}
+                            <a href="https://policies.google.com/terms">Terms of Service</a>{" "}
+                            apply.
+                        </div>
                     </div>
                 </section>
             </main>

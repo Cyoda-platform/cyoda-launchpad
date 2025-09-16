@@ -269,7 +269,10 @@
   .mobile-text-5xl {
     @apply text-4xl sm:text-5xl md:text-6xl;
   }
-
+    /* Hide reCAPTCHA badge */
+    .grecaptcha-badge {
+        visibility: hidden;
+    }
   /* Mobile button text sizing */
   .mobile-btn-text {
     @apply text-sm sm:text-base;
