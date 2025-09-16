@@ -119,7 +119,7 @@ const Support = () => {
             icon: Zap,
             title: "How-To Guides",
             description: "Step-by-step tutorials for common use cases",
-            link: "/guides",
+            link: "https://docs.cyoda.net/guides/cyoda-design-principles/",
             openInNewTab: false
         },
         {
