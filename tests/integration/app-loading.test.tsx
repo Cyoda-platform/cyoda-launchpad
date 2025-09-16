@@ -3,16 +3,22 @@ import { render, screen, waitFor } from '@testing-library/react';
 import App from '@/App';
 
 // Mock analytics service
-vi.mock('@/lib/analytics', () => ({
-  default: {
-    enableAnalytics: vi.fn(() => Promise.resolve()),
-    disableAnalytics: vi.fn(),
-    isEnabled: vi.fn(() => false),
+vi.mock('@/lib/analytics', () => {
+  const mockAnalyticsService = {
+    initialize: vi.fn(),
+    isInitialized: vi.fn(() => false),
     trackEvent: vi.fn(),
     trackPageView: vi.fn(),
+    setConsent: vi.fn(),
+    disable: vi.fn(),
     getMeasurementId: vi.fn(() => 'G-TEST123456')
-  }
-}));
+  };
+
+  return {
+    analyticsService: mockAnalyticsService,
+    default: mockAnalyticsService
+  };
+});
 
 // Mock cookie consent hooks
 vi.mock('@/hooks/use-cookie-consent', () => ({

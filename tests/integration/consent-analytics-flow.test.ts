@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import analyticsService from '@/lib/analytics';
+import { analyticsService } from '@/lib/analytics';
 import {
   saveConsentState,
   loadConsentState,
@@ -9,16 +9,22 @@ import {
 import { CookieCategory } from '@/types/cookie-consent';
 
 // Mock analytics service
-vi.mock('@/lib/analytics', () => ({
-  default: {
-    enableAnalytics: vi.fn(() => Promise.resolve()),
-    disableAnalytics: vi.fn(),
-    isEnabled: vi.fn(() => false),
+vi.mock('@/lib/analytics', () => {
+  const mockAnalyticsService = {
+    initialize: vi.fn(),
+    isInitialized: vi.fn(() => false),
     trackEvent: vi.fn(),
     trackPageView: vi.fn(),
+    setConsent: vi.fn(),
+    disable: vi.fn(),
     getMeasurementId: vi.fn(() => 'G-TEST123456')
-  }
-}));
+  };
+
+  return {
+    analyticsService: mockAnalyticsService,
+    default: mockAnalyticsService
+  };
+});
 
 // Mock localStorage
 const mockLocalStorage = {
@@ -34,6 +40,8 @@ Object.defineProperty(global, 'localStorage', {
 });
 
 describe('Consent → Analytics Flow Integration', () => {
+  const mockAnalyticsService = vi.mocked(analyticsService);
+
   beforeEach(() => {
     vi.clearAllMocks();
     mockLocalStorage.getItem.mockReturnValue(null);
@@ -68,24 +76,22 @@ describe('Consent → Analytics Flow Integration', () => {
       expect(loadedState!.preferences[CookieCategory.ANALYTICS].granted).toBe(true);
       expect(loadedState!.hasConsented).toBe(true);
 
-      // 5. Simulate AnalyticsManager enabling analytics based on consent
+      // 5. Simulate AnalyticsManager initializing and setting consent
+      mockAnalyticsService.isInitialized.mockReturnValue(true);
+
       if (loadedState!.preferences[CookieCategory.ANALYTICS].granted) {
-        await analyticsService.enableAnalytics({
+        analyticsService.initialize({
           measurementId: 'G-TEST123456',
-          consentDefaults: {
-            ad_storage: 'denied',
-            analytics_storage: 'granted'
-          }
+          debug: false
         });
+        analyticsService.setConsent(true);
       }
 
-      expect(analyticsService.enableAnalytics).toHaveBeenCalledWith({
+      expect(mockAnalyticsService.initialize).toHaveBeenCalledWith({
         measurementId: 'G-TEST123456',
-        consentDefaults: {
-          ad_storage: 'denied',
-          analytics_storage: 'granted'
-        }
+        debug: false
       });
+      expect(mockAnalyticsService.setConsent).toHaveBeenCalledWith(true);
     });
 
     it('should persist consent across sessions', () => {
@@ -107,11 +113,11 @@ describe('Consent → Analytics Flow Integration', () => {
     });
 
     it('should handle consent with specific timestamp', () => {
-      const now = Date.now();
+      const now = new Date();
       const consentState = createDefaultConsentState();
       consentState.preferences[CookieCategory.ANALYTICS].granted = true;
       consentState.hasConsented = true;
-      consentState.timestamp = now;
+      consentState.consentDate = now;
 
       saveConsentState(consentState);
 
@@ -146,13 +152,16 @@ describe('Consent → Analytics Flow Integration', () => {
 
       expect(loadedState!.preferences[CookieCategory.ANALYTICS].granted).toBe(false);
 
-      // 5. Simulate AnalyticsManager disabling analytics based on consent
+      // 5. Simulate AnalyticsManager setting consent and disabling analytics
+      mockAnalyticsService.isInitialized.mockReturnValue(true);
+
       if (!loadedState!.preferences[CookieCategory.ANALYTICS].granted) {
-        analyticsService.disableAnalytics();
+        analyticsService.setConsent(false);
+        analyticsService.disable();
       }
 
-      expect(analyticsService.disableAnalytics).toHaveBeenCalled();
-      expect(analyticsService.enableAnalytics).not.toHaveBeenCalled();
+      expect(mockAnalyticsService.setConsent).toHaveBeenCalledWith(false);
+      expect(mockAnalyticsService.disable).toHaveBeenCalled();
     });
 
     it('should disable analytics when consent is revoked after being granted', async () => {
@@ -165,15 +174,19 @@ describe('Consent → Analytics Flow Integration', () => {
 
       // Simulate analytics being enabled
       mockLocalStorage.getItem.mockReturnValue(JSON.stringify(grantedState));
+      mockAnalyticsService.isInitialized.mockReturnValue(true);
+
       const initialState = loadConsentState();
       if (initialState!.preferences[CookieCategory.ANALYTICS].granted) {
-        await analyticsService.enableAnalytics({
+        analyticsService.initialize({
           measurementId: 'G-TEST123456',
-          consentDefaults: { ad_storage: 'denied', analytics_storage: 'granted' }
+          debug: false
         });
+        analyticsService.setConsent(true);
       }
 
-      expect(analyticsService.enableAnalytics).toHaveBeenCalled();
+      expect(mockAnalyticsService.initialize).toHaveBeenCalled();
+      expect(mockAnalyticsService.setConsent).toHaveBeenCalledWith(true);
       vi.clearAllMocks();
 
       // 2. Revoke consent
@@ -186,11 +199,12 @@ describe('Consent → Analytics Flow Integration', () => {
       mockLocalStorage.getItem.mockReturnValue(JSON.stringify(revokedState));
       const updatedState = loadConsentState();
       if (!updatedState!.preferences[CookieCategory.ANALYTICS].granted) {
-        analyticsService.disableAnalytics();
+        analyticsService.setConsent(false);
+        analyticsService.disable();
       }
 
-      expect(analyticsService.disableAnalytics).toHaveBeenCalled();
-      expect(analyticsService.enableAnalytics).not.toHaveBeenCalled();
+      expect(mockAnalyticsService.setConsent).toHaveBeenCalledWith(false);
+      expect(mockAnalyticsService.disable).toHaveBeenCalled();
     });
 
     it('should handle expired consent by clearing storage and disabling analytics', () => {
@@ -204,12 +218,14 @@ describe('Consent → Analytics Flow Integration', () => {
       // 3. When consent is expired, application should clear storage and disable analytics
       if (isExpired) {
         clearConsentState();
-        analyticsService.disableAnalytics();
+        analyticsService.setConsent(false);
+        analyticsService.disable();
       }
 
       // 4. Verify the expected actions were taken
       expect(mockLocalStorage.removeItem).toHaveBeenCalledWith('cyoda-cookie-consent');
-      expect(analyticsService.disableAnalytics).toHaveBeenCalled();
+      expect(mockAnalyticsService.setConsent).toHaveBeenCalledWith(false);
+      expect(mockAnalyticsService.disable).toHaveBeenCalled();
     });
 
     it('should clear all consent data when user requests deletion', () => {
@@ -228,15 +244,17 @@ describe('Consent → Analytics Flow Integration', () => {
       expect(mockLocalStorage.removeItem).toHaveBeenCalledWith('cyoda-cookie-consent');
 
       // 4. Verify analytics is disabled
-      analyticsService.disableAnalytics();
-      expect(analyticsService.disableAnalytics).toHaveBeenCalled();
+      analyticsService.setConsent(false);
+      analyticsService.disable();
+      expect(mockAnalyticsService.setConsent).toHaveBeenCalledWith(false);
+      expect(mockAnalyticsService.disable).toHaveBeenCalled();
     });
   });
 
   describe('Consent State Transitions', () => {
     it('should handle multiple consent state changes correctly', async () => {
       // 1. Initial state - no consent
-      let currentState = createDefaultConsentState();
+      const currentState = createDefaultConsentState();
       expect(currentState.preferences[CookieCategory.ANALYTICS].granted).toBe(false);
 
       // 2. Grant consent
@@ -249,11 +267,14 @@ describe('Consent → Analytics Flow Integration', () => {
       expect(loadedState!.preferences[CookieCategory.ANALYTICS].granted).toBe(true);
 
       // Analytics should be enabled
-      await analyticsService.enableAnalytics({
+      mockAnalyticsService.isInitialized.mockReturnValue(true);
+      analyticsService.initialize({
         measurementId: 'G-TEST123456',
-        consentDefaults: { ad_storage: 'denied', analytics_storage: 'granted' }
+        debug: false
       });
-      expect(analyticsService.enableAnalytics).toHaveBeenCalled();
+      analyticsService.setConsent(true);
+      expect(mockAnalyticsService.initialize).toHaveBeenCalled();
+      expect(mockAnalyticsService.setConsent).toHaveBeenCalledWith(true);
 
       vi.clearAllMocks();
 
@@ -266,9 +287,10 @@ describe('Consent → Analytics Flow Integration', () => {
       expect(loadedState!.preferences[CookieCategory.ANALYTICS].granted).toBe(false);
 
       // Analytics should be disabled
-      analyticsService.disableAnalytics();
-      expect(analyticsService.disableAnalytics).toHaveBeenCalled();
-      expect(analyticsService.enableAnalytics).not.toHaveBeenCalled();
+      analyticsService.setConsent(false);
+      analyticsService.disable();
+      expect(mockAnalyticsService.setConsent).toHaveBeenCalledWith(false);
+      expect(mockAnalyticsService.disable).toHaveBeenCalled();
 
       vi.clearAllMocks();
 
@@ -281,11 +303,13 @@ describe('Consent → Analytics Flow Integration', () => {
       expect(loadedState!.preferences[CookieCategory.ANALYTICS].granted).toBe(true);
 
       // Analytics should be enabled again
-      await analyticsService.enableAnalytics({
+      analyticsService.initialize({
         measurementId: 'G-TEST123456',
-        consentDefaults: { ad_storage: 'denied', analytics_storage: 'granted' }
+        debug: false
       });
-      expect(analyticsService.enableAnalytics).toHaveBeenCalled();
+      analyticsService.setConsent(true);
+      expect(mockAnalyticsService.initialize).toHaveBeenCalled();
+      expect(mockAnalyticsService.setConsent).toHaveBeenCalledWith(true);
     });
   });
 
@@ -300,8 +324,10 @@ describe('Consent → Analytics Flow Integration', () => {
       expect(loadedState).toBeNull();
 
       // Should disable analytics when no valid consent
-      analyticsService.disableAnalytics();
-      expect(analyticsService.disableAnalytics).toHaveBeenCalled();
+      analyticsService.setConsent(false);
+      analyticsService.disable();
+      expect(mockAnalyticsService.setConsent).toHaveBeenCalledWith(false);
+      expect(mockAnalyticsService.disable).toHaveBeenCalled();
     });
 
     it('should handle missing localStorage gracefully', () => {
@@ -311,8 +337,10 @@ describe('Consent → Analytics Flow Integration', () => {
       expect(loadedState).toBeNull();
 
       // Should disable analytics when no consent data
-      analyticsService.disableAnalytics();
-      expect(analyticsService.disableAnalytics).toHaveBeenCalled();
+      analyticsService.setConsent(false);
+      analyticsService.disable();
+      expect(mockAnalyticsService.setConsent).toHaveBeenCalledWith(false);
+      expect(mockAnalyticsService.disable).toHaveBeenCalled();
     });
   });
 });

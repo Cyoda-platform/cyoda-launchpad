@@ -1,11 +1,19 @@
 import { test, expect } from '@playwright/test';
 
+// Type declarations for Google Analytics globals
+declare global {
+  interface Window {
+    gtag: (...args: unknown[]) => void;
+    dataLayer: unknown[];
+  }
+}
+
 test.describe('Google Analytics Basic Functionality', () => {
   test('should load Google Analytics script and track events when consent is granted', async ({ page }) => {
     // Start listening for network requests
-    const analyticsRequests: any[] = [];
+    const analyticsRequests: Array<{ url: string; method: string }> = [];
     page.on('request', request => {
-      if (request.url().includes('google-analytics.com/g/collect') || 
+      if (request.url().includes('google-analytics.com/g/collect') ||
           request.url().includes('googletagmanager.com/gtag')) {
         analyticsRequests.push({
           url: request.url(),
