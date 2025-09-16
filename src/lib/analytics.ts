@@ -1,229 +1,204 @@
-/* Google Analytics Integration Service
- * - Loads GA4 script only when analytics consent is granted
- * - Provides enable/disable/isEnabled/trackEvent APIs
- * - Cleans GA cookies/localStorage on disable
+/**
+ * Google Analytics 4 Integration using react-ga4
+ * - Integrates with cookie consent system
+ * - Respects granted/denied/revoked consent states
+ * - Provides clean API for tracking events and page views
  */
-import type { AnalyticsConfig, AnalyticsServiceAPI, AnalyticsConsent } from '@/types/analytics';
 
-const DEFAULTS: Required<Pick<AnalyticsConfig, 'anonymizeIp' | 'dataLayerName' | 'scriptId' | 'debug'>> &
-  Pick<AnalyticsConfig, 'consentDefaults'> = {
-  anonymizeIp: true,
-  dataLayerName: 'dataLayer',
-  scriptId: 'ga4-script',
-  debug: false,
-  consentDefaults: undefined,
-};
+import ReactGA from 'react-ga4';
 
-// Internal state
-let loaded = false;
-let currentConfig: AnalyticsConfig = {};
-
-// Guard for browser context
-function isBrowser() {
-  return typeof window !== 'undefined' && typeof document !== 'undefined';
+export interface AnalyticsConfig {
+  /** GA4 measurement ID (e.g., G-XXXXXXX) */
+  measurementId: string;
+  /** Enable debug mode */
+  debug?: boolean;
+  /** Additional gtag config options */
+  gtagOptions?: Record<string, unknown>;
 }
 
-function getMeasurementId(config?: Partial<AnalyticsConfig>): string | null {
-  return (
-    config?.measurementId ||
-    currentConfig.measurementId ||
-    (import.meta as { env?: { VITE_GA_MEASUREMENT_ID?: string } })?.env?.VITE_GA_MEASUREMENT_ID ||
-    null
-  );
+export interface AnalyticsService {
+  /** Initialize analytics with given config */
+  initialize: (config: AnalyticsConfig) => void;
+  /** Check if analytics is initialized */
+  isInitialized: () => boolean;
+  /** Track a page view */
+  trackPageView: (path?: string, title?: string) => void;
+  /** Track a custom event */
+  trackEvent: (eventName: string, parameters?: Record<string, unknown>) => void;
+  /** Set user consent for analytics */
+  setConsent: (granted: boolean) => void;
+  /** Disable analytics and clear data */
+  disable: () => void;
+  /** Get current measurement ID */
+  getMeasurementId: () => string | null;
 }
 
-function logDebug(msg: string, ...args: unknown[]) {
-  if (currentConfig.debug) {
-    console.debug(`[analytics] ${msg}`, ...args);
-  }
-}
+class AnalyticsServiceImpl implements AnalyticsService {
+  private initialized = false;
+  private measurementId: string | null = null;
+  private consentGranted = false;
+  private debug = false;
 
-function setGtagStub(dataLayerName: string) {
-  const w = window as Record<string, unknown> & {
-    gtag?: (...args: unknown[]) => void;
-  };
-  if (!w[dataLayerName]) w[dataLayerName] = [];
-  if (!w.gtag) {
-    w.gtag = function (...args: unknown[]) {
-      (w[dataLayerName] as unknown[]).push(args);
-    };
-  }
-}
+  initialize(config: AnalyticsConfig): void {
+    if (this.initialized) {
+      if (this.debug) {
+        console.debug('[analytics] Already initialized');
+      }
+      return;
+    }
 
-function applyConsent(consent?: AnalyticsConsent) {
-  if (!consent) return;
-  try {
-    (window as { gtag?: (...args: unknown[]) => void }).gtag?.('consent', 'default', consent);
-  } catch {
-    // Ignore consent application errors
-  }
-}
+    // Check if measurement ID is valid (not a placeholder)
+    if (!config.measurementId ||
+        config.measurementId === 'undefined' ||
+        config.measurementId.includes('REPLACE_ME') ||
+        !config.measurementId.match(/^G-[A-Z0-9]+$/)) {
+      if (this.debug) {
+        console.debug('[analytics] Invalid or placeholder measurement ID, skipping initialization:', config.measurementId);
+      }
+      return;
+    }
 
-function initConfig(provided?: Partial<AnalyticsConfig>) {
-  currentConfig = {
-    ...DEFAULTS,
-    ...currentConfig,
-    ...provided,
-  } as AnalyticsConfig;
-  if (!currentConfig.consentDefaults) {
-    // Default to denied until explicitly granted by our consent system
-    currentConfig.consentDefaults = {
-      ad_storage: 'denied',
-      analytics_storage: 'denied',
-    };
-  }
-}
+    this.measurementId = config.measurementId;
+    this.debug = config.debug || false;
 
-function injectScript(measurementId: string, onLoad: () => void, onError: () => void) {
-  if (!isBrowser()) return;
-
-  // Do not inject twice
-  if (document.getElementById(currentConfig.scriptId!)) {
-    onLoad();
-    return;
-  }
-
-  // Ensure gtag stub and initial events are queued before external script loads
-  setGtagStub(currentConfig.dataLayerName!);
-
-  // Queue consent defaults first
-  applyConsent(currentConfig.consentDefaults);
-
-  // Queue GA init and config
-  (window as { gtag?: (...args: unknown[]) => void }).gtag?.('js', new Date());
-  (window as { gtag?: (...args: unknown[]) => void }).gtag?.('config', measurementId, {
-    anonymize_ip: currentConfig.anonymizeIp !== false,
-  });
-
-  const script = document.createElement('script');
-  script.async = true;
-  script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(measurementId)}`;
-  script.id = currentConfig.scriptId!;
-  script.onload = onLoad;
-  script.onerror = onError;
-
-  document.head.appendChild(script);
-}
-
-function removeScript() {
-  if (!isBrowser()) return;
-  const el = document.getElementById(currentConfig.scriptId!);
-  if (el && el.parentNode) el.parentNode.removeChild(el);
-}
-
-// Attempt to clear GA cookies created by this domain
-function clearGaCookies() {
-  if (!isBrowser()) return;
-  const cookieNames = (document.cookie || '')
-    .split(';')
-    .map((c) => c.trim().split('=')[0])
-    .filter((name) => name && (name === '_gid' || name === '_ga' || name.startsWith('_ga_')));
-
-  const domains = [undefined, window.location.hostname, `.${window.location.hostname}`];
-  const paths = [undefined, '/', import.meta?.env?.BASE_URL || '/'];
-
-  cookieNames.forEach((name) => {
-    domains.forEach((domain) => {
-      paths.forEach((path) => {
-        try {
-          document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; ${
-            path ? `path=${path}; ` : ''
-          }${domain ? `domain=${domain}; ` : ''}SameSite=Lax`;
-        } catch {
-          // Ignore cookie deletion errors
-        }
+    try {
+      // Initialize react-ga4
+      ReactGA.initialize(config.measurementId, {
+        testMode: false, // Always load the real script, even in debug mode
+        gtagOptions: config.gtagOptions,
       });
-    });
-  });
-}
 
-function clearGaStorage() {
-  if (!isBrowser()) return;
-  try {
-    // Some sites use flags like ga-disable-<ID>
-    const id = getMeasurementId() || '';
-    if (id) {
-      localStorage.removeItem(`ga-disable-${id}`);
-      (window as Record<string, unknown>)[`ga-disable-${id}`] = true; // prevent accidental firing
+      // Set initial consent to denied
+      ReactGA.gtag('consent', 'default', {
+        ad_storage: 'denied',
+        analytics_storage: 'denied',
+      });
+
+      this.initialized = true;
+
+      if (this.debug) {
+        console.debug('[analytics] Initialized with measurement ID:', config.measurementId);
+      }
+    } catch (error) {
+      console.error('[analytics] Failed to initialize:', error);
     }
-  } catch {
-    // Ignore storage cleanup errors
+  }
+
+  isInitialized(): boolean {
+    return this.initialized;
+  }
+
+  setConsent(granted: boolean): void {
+    if (!this.initialized) {
+      if (this.debug) {
+        console.debug('[analytics] Cannot set consent - not initialized');
+      }
+      return;
+    }
+
+    this.consentGranted = granted;
+
+    try {
+      // Update consent using react-ga4's gtag wrapper
+      ReactGA.gtag('consent', 'update', {
+        analytics_storage: granted ? 'granted' : 'denied',
+        ad_storage: granted ? 'granted' : 'denied',
+      });
+
+      if (this.debug) {
+        console.debug('[analytics] Consent updated:', granted ? 'granted' : 'denied');
+      }
+
+      // If consent is granted and we haven't sent initial page view, send it now
+      if (granted) {
+        // Give a small delay to ensure gtag is available
+        setTimeout(() => {
+          this.trackPageView();
+        }, 100);
+      }
+    } catch (error) {
+      console.error('[analytics] Failed to update consent:', error);
+    }
+  }
+
+  trackPageView(path?: string, title?: string): void {
+    if (!this.initialized || !this.consentGranted) {
+      if (this.debug) {
+        console.debug('[analytics] Cannot track page view - not initialized or consent not granted');
+      }
+      return;
+    }
+
+    try {
+      const options: Record<string, unknown> = {};
+      
+      if (path) {
+        options.page_location = path;
+      }
+      
+      if (title) {
+        options.page_title = title;
+      }
+
+      ReactGA.send({ hitType: 'pageview', ...options });
+
+      if (this.debug) {
+        console.debug('[analytics] Page view tracked:', { path, title });
+      }
+    } catch (error) {
+      console.error('[analytics] Failed to track page view:', error);
+    }
+  }
+
+  trackEvent(eventName: string, parameters?: Record<string, unknown>): void {
+    if (!this.initialized || !this.consentGranted) {
+      if (this.debug) {
+        console.debug('[analytics] Cannot track event - not initialized or consent not granted');
+      }
+      return;
+    }
+
+    try {
+      ReactGA.event(eventName, parameters);
+
+      if (this.debug) {
+        console.debug('[analytics] Event tracked:', eventName, parameters);
+      }
+    } catch (error) {
+      console.error('[analytics] Failed to track event:', error);
+    }
+  }
+
+  disable(): void {
+    if (!this.initialized) {
+      return;
+    }
+
+    try {
+      // Revoke consent
+      ReactGA.gtag('consent', 'update', {
+        analytics_storage: 'denied',
+        ad_storage: 'denied',
+      });
+
+      // Reset internal state
+      this.consentGranted = false;
+
+      if (this.debug) {
+        console.debug('[analytics] Analytics disabled');
+      }
+    } catch (error) {
+      console.error('[analytics] Failed to disable analytics:', error);
+    }
+  }
+
+  getMeasurementId(): string | null {
+    return this.measurementId;
   }
 }
 
-export const analyticsService: AnalyticsServiceAPI = {
-  async enableAnalytics(config?: Partial<AnalyticsConfig>) {
-    if (!isBrowser()) return;
+// Export singleton instance
+export const analyticsService = new AnalyticsServiceImpl();
 
-    initConfig(config);
-    const measurementId = getMeasurementId(config);
-    if (!measurementId) {
-      logDebug('No measurementId provided; skipping GA init');
-      return;
-    }
-
-    if (loaded) {
-      logDebug('Analytics already enabled');
-      return;
-    }
-
-    await new Promise<void>((resolve) => {
-      injectScript(
-        measurementId,
-        () => {
-          loaded = true;
-          logDebug('GA script loaded');
-          resolve();
-        },
-        () => {
-          loaded = false;
-          logDebug('Failed to load GA script');
-          resolve();
-        }
-      );
-    });
-  },
-
-  disableAnalytics() {
-    if (!isBrowser()) return;
-
-    // Remove script and try to cleanup cookies/storage
-    removeScript();
-    clearGaCookies();
-    clearGaStorage();
-
-    // Remove gtag reference and datalayer to prevent future usage until re-enabled
-    try {
-      const w = window as Record<string, unknown>;
-      if (w.gtag) delete w.gtag;
-      if (w[currentConfig.dataLayerName!]) delete w[currentConfig.dataLayerName!];
-    } catch {
-      // Ignore cleanup errors
-    }
-
-    loaded = false;
-    logDebug('Analytics disabled and cleaned up');
-  },
-
-  isEnabled() {
-    return loaded;
-  },
-
-  trackEvent(name: string, params?: Record<string, unknown>) {
-    if (!isBrowser()) return;
-    if (!loaded) return; // respect consent and loading state
-
-    try {
-      (window as { gtag?: (...args: unknown[]) => void }).gtag?.('event', name, params || {});
-    } catch (e) {
-      logDebug('trackEvent error', e);
-    }
-  },
-
-  getMeasurementId() {
-    return getMeasurementId();
-  },
-};
-
+// Export default for backward compatibility
 export default analyticsService;
-

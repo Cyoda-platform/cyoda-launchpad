@@ -1,12 +1,14 @@
-import { 
-  parseMarkdown, 
-  extractExcerpt, 
-  calculateReadTime, 
-  countWords, 
-  extractImages, 
-  createSlug, 
-  processBlogPost 
-} from '../markdown';
+import { describe, it, expect } from 'vitest';
+import {
+  parseMarkdown,
+  extractExcerpt,
+  calculateReadTime,
+  countWords,
+  extractImages,
+  createSlug,
+  processBlogPost
+} from '@/lib/markdown';
+import { BlogPostFrontmatter } from '@/types/blog';
 
 describe('Markdown Processing', () => {
   const sampleMarkdown = `---
@@ -103,7 +105,7 @@ Content here.`;
 
   describe('countWords', () => {
     it('should count words correctly', () => {
-      const content = 'This is a test with five words.';
+      const content = 'This is a test with seven words.';
       expect(countWords(content)).toBe(7);
     });
 
@@ -116,10 +118,16 @@ Content here.`;
   describe('extractImages', () => {
     it('should extract images from content and frontmatter', () => {
       const content = 'Here is an image: ![Alt](/image1.jpg) and another ![Alt2](/image2.png)';
-      const frontmatter = { image: '/frontmatter-image.jpg' } as Record<string, unknown>;
-      
+      const frontmatter: BlogPostFrontmatter = {
+        title: 'Test Post',
+        author: 'Test Author',
+        date: '2025-01-15',
+        category: 'Test',
+        image: '/frontmatter-image.jpg'
+      };
+
       const images = extractImages(content, frontmatter);
-      
+
       expect(images).toContain('/frontmatter-image.jpg');
       expect(images).toContain('/image1.jpg');
       expect(images).toContain('/image2.png');
@@ -128,10 +136,15 @@ Content here.`;
 
     it('should not duplicate images', () => {
       const content = 'Image: ![Alt](/image.jpg) and again ![Alt](/image.jpg)';
-      const frontmatter = {} as Record<string, unknown>;
-      
+      const frontmatter: BlogPostFrontmatter = {
+        title: 'Test Post',
+        author: 'Test Author',
+        date: '2025-01-15',
+        category: 'Test'
+      };
+
       const images = extractImages(content, frontmatter);
-      
+
       expect(images).toEqual(['/image.jpg']);
     });
   });
@@ -158,6 +171,3 @@ Content here.`;
     });
   });
 });
-
-// Note: These tests would need a testing framework like Jest to run
-// For now, they serve as documentation of expected behavior

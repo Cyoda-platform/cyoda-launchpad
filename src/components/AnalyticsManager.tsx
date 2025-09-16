@@ -1,31 +1,50 @@
-import { useEffect } from 'react';
-import { useTrackingPermissions } from '@/hooks/use-cookie-consent';
-import analyticsService from '@/lib/analytics';
-import type { AnalyticsConfig } from '@/types/analytics';
+/**
+ * Analytics Manager using react-ga4
+ * - Integrates with cookie consent system
+ * - Initializes Google Analytics when component mounts
+ * - Updates consent when user preferences change
+ */
 
-// Reads GA id from env; can be overridden by passing config to enableAnalytics
-const ENV_GA_ID = (import.meta as { env?: { VITE_GA_MEASUREMENT_ID?: string } })?.env?.VITE_GA_MEASUREMENT_ID;
+import { useEffect, useRef } from 'react';
+import { useTrackingPermissions } from '@/hooks/use-cookie-consent';
+import { analyticsService } from '@/lib/analytics';
+
+// Get GA measurement ID from environment
+const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID;
 
 export function AnalyticsManager() {
   const { canTrackAnalytics } = useTrackingPermissions();
+  const initializedRef = useRef(false);
 
+  // Initialize analytics on mount
   useEffect(() => {
-    const cfg: Partial<AnalyticsConfig> = {
-      measurementId: ENV_GA_ID,
-      anonymizeIp: true,
-      debug: false,
-      consentDefaults: {
-        // Start with denied by default; real consent is reflected by rendering this component effect
-        ad_storage: 'denied',
-        analytics_storage: canTrackAnalytics ? 'granted' : 'denied',
-      },
-    };
+    if (!GA_MEASUREMENT_ID || GA_MEASUREMENT_ID === 'undefined') {
+      console.warn('[AnalyticsManager] No GA measurement ID found in environment');
+      return;
+    }
 
-    if (canTrackAnalytics) {
-      analyticsService.enableAnalytics(cfg).catch(() => {});
-    } else {
-      // If consent withdrawn, disable and cleanup
-      analyticsService.disableAnalytics();
+    if (!initializedRef.current) {
+      analyticsService.initialize({
+        measurementId: GA_MEASUREMENT_ID,
+        debug: import.meta.env.MODE === 'development' || import.meta.env.MODE === 'test',
+        gtagOptions: {
+          // Additional gtag configuration can be added here
+          anonymize_ip: true,
+        },
+      });
+      initializedRef.current = true;
+    }
+  }, []);
+
+  // Update consent when tracking permissions change
+  useEffect(() => {
+    if (analyticsService.isInitialized()) {
+      analyticsService.setConsent(canTrackAnalytics);
+      
+      // If consent was revoked, disable analytics
+      if (!canTrackAnalytics) {
+        analyticsService.disable();
+      }
     }
   }, [canTrackAnalytics]);
 
@@ -33,4 +52,3 @@ export function AnalyticsManager() {
 }
 
 export default AnalyticsManager;
-

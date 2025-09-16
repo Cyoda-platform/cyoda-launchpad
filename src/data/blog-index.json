@@ -8,7 +8,7 @@
     "excerpt": "This is a deep-dive technical reference for the Cyoda Platform (see https://cyoda.com), a distributed, transactional data-processing system built to support high-availability business applications. It outlines the architecture and mechanics of the Cyoda Platform Library (CPL), which includes asynchronous transactional workflows, point-in-time querying with snapshot isolation, distributed report execution, and event-context sharding. Designed for developers familiar with distributed systems, the document emphasizes low-level design decisions, like extended ACID semantics, integration with Cassandra and Zookeeper, and client-extensible workflows.",
     "readTime": "18 min read",
     "wordCount": 3593,
-    "featured": true,
+    "featured": false,
     "published": true,
     "tags": [
       "platform",
@@ -25,7 +25,7 @@
     "excerpt": "dive into the details of *Entity Workflows* and show how an EDBMS naturally leads to a horizontally scalable event-driven architecture (EDA). The goal being to greatly simplify things, where the applications become “thin clients” of a platform",
     "readTime": "10 min read",
     "wordCount": 1974,
-    "featured": false,
+    "featured": true,
     "published": true,
     "tags": [
       "platform",
@@ -35,6 +35,23 @@
       "EDBMS"
     ],
     "image": "/images/blogs/Entity_Workflows_EDA.webp"
+  },
+  "Whats_an_Entity_Database.md": {
+    "slug": "whats-an-entity-database",
+    "title": "What’s an Entity Database?",
+    "author": "Paul Schleger",
+    "date": "2024-04-24",
+    "category": "Platform",
+    "excerpt": "An entity database is not just another way of storing rows and columns. It is designed around the concept of entities—real-world objects like customers, transactions, or devices—capturing their full lifecycle and every event that shapes them. Unlike traditional relational databases, entity databases maintain a complete, auditable history while still enabling real-time queries and complex workflows. This makes them ideal for businesses that need consistency, scalability, and transparency in handling data-intensive applications.",
+    "readTime": "10 min read",
+    "wordCount": 1944,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "platform",
+      "technical"
+    ],
+    "image": "/images/blogs/Illustration of an Entity Database Management System (EDBMS).webp"
   },
   "agentic-ai-with-cyoda.md": {
     "slug": "agentic-ai-with-cyoda",
@@ -46,7 +63,7 @@
     "readTime": "4 min read",
     "wordCount": 657,
     "featured": false,
-    "published": true,
+    "published": false,
     "tags": [
       "agentic AI",
       "Cyoda",
@@ -65,8 +82,8 @@
     "excerpt": "This document compares the Cyoda Service Platform with a range of tools for workflow orchestration, data integration, cloud-native services, and AI-assisted development.",
     "readTime": "5 min read",
     "wordCount": 936,
-    "featured": true,
-    "published": true,
+    "featured": false,
+    "published": false,
     "tags": [
       "comparison",
       "platform",
@@ -86,7 +103,7 @@
     "readTime": "4 min read",
     "wordCount": 618,
     "featured": false,
-    "published": true,
+    "published": false,
     "tags": [
       "architecture",
       "database",
@@ -105,7 +122,7 @@
     "excerpt": "This document compares the Cyoda Service Platform with a range of tools for workflow orchestration, data integration, cloud-native services, and AI-assisted development.",
     "readTime": "6 min read",
     "wordCount": 1053,
-    "featured": true,
+    "featured": false,
     "published": true,
     "tags": [
       "comparison",
@@ -126,7 +143,7 @@
     "readTime": "4 min read",
     "wordCount": 701,
     "featured": false,
-    "published": true,
+    "published": false,
     "tags": [
       "high-availability",
       "distributed-systems",
@@ -146,7 +163,7 @@
     "readTime": "4 min read",
     "wordCount": 753,
     "featured": false,
-    "published": true,
+    "published": false,
     "tags": [
       "reporting",
       "analytics",
@@ -166,7 +183,7 @@
     "readTime": "4 min read",
     "wordCount": 793,
     "featured": false,
-    "published": true,
+    "published": false,
     "tags": [
       "sharding",
       "event-driven",
@@ -186,7 +203,7 @@
     "readTime": "4 min read",
     "wordCount": 638,
     "featured": false,
-    "published": true,
+    "published": false,
     "tags": [
       "banking",
       "enterprise",
@@ -206,7 +223,7 @@
     "readTime": "4 min read",
     "wordCount": 719,
     "featured": false,
-    "published": true,
+    "published": false,
     "tags": [
       "point-in-time",
       "consistency",
@@ -243,7 +260,7 @@
     "readTime": "4 min read",
     "wordCount": 662,
     "featured": false,
-    "published": true,
+    "published": false,
     "tags": [
       "cloud-native",
       "entity-database",
@@ -263,7 +280,7 @@
     "readTime": "4 min read",
     "wordCount": 704,
     "featured": false,
-    "published": true,
+    "published": false,
     "tags": [
       "transactions",
       "workflows",

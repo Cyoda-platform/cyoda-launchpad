@@ -8,6 +8,7 @@ import { CookieConsentProvider } from "@/components/CookieConsentProvider";
 import { CookieConsentBanner } from "@/components/CookieConsentBanner";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { AnalyticsManager } from "@/components/AnalyticsManager";
+import { useAnalyticsTracking } from "@/hooks/use-analytics-tracking";
 
 import { HelmetProvider } from "react-helmet-async";
 import { Suspense, lazy, useState } from "react";
@@ -37,8 +38,15 @@ const queryClient = new QueryClient();
 // Lazy-load consent preferences UI to optimize initial load
 const LazyCookiePreferencesModal = lazy(() => import("@/components/CookiePreferencesModal"));
 
+// Component to handle analytics tracking inside Router context
+const AnalyticsTracker = () => {
+  useAnalyticsTracking();
+  return null;
+};
+
 const App = () => {
   const [prefOpen, setPrefOpen] = useState(false);
+
   return (
   <HelmetProvider>
     <QueryClientProvider client={queryClient}>
@@ -54,6 +62,7 @@ const App = () => {
             <Toaster />
             <Sonner />
             <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+              <AnalyticsTracker />
               <Suspense fallback={<LoadingSpinner text="Loading page..." />}>
                 <Routes>
                   <Route path="/" element={<Index />} />
@@ -63,8 +72,8 @@ const App = () => {
                   <Route path="/blog/:slug" element={<BlogPost />} />
                   <Route path="/blog-test" element={<BlogTest />} />
                   <Route path="/blog-system-test" element={<BlogSystemTest />} />
-                  <Route path="/guides" element={<Guides />} />
-                  <Route path="/guides/:slug" element={<Guide />} />
+                  {/* <Route path="/guides" element={<Guides />} />
+                  <Route path="/guides/:slug" element={<Guide />} /> */}
                   <Route path="/guide-system-test" element={<GuideSystemTest />} />
                   <Route path="/cookie-consent-test" element={<CookieConsentTest />} />
                   <Route path="/support" element={<Support />} />

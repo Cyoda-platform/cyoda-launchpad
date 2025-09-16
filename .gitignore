@@ -23,3 +23,11 @@ dist-ssr
 *.sln
 *.sw?
 /ai/
+
+# Test artifacts
+test-results/
+playwright-report/
+*.png
+
+# Environment files (keep .env.test for testing)
+.env.test
