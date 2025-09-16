@@ -38,11 +38,14 @@ const queryClient = new QueryClient();
 // Lazy-load consent preferences UI to optimize initial load
 const LazyCookiePreferencesModal = lazy(() => import("@/components/CookiePreferencesModal"));
 
+// Component to handle analytics tracking inside Router context
+const AnalyticsTracker = () => {
+  useAnalyticsTracking();
+  return null;
+};
+
 const App = () => {
   const [prefOpen, setPrefOpen] = useState(false);
-
-  // Track page views automatically on route changes
-  useAnalyticsTracking();
 
   return (
   <HelmetProvider>
@@ -59,6 +62,7 @@ const App = () => {
             <Toaster />
             <Sonner />
             <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+              <AnalyticsTracker />
               <Suspense fallback={<LoadingSpinner text="Loading page..." />}>
                 <Routes>
                   <Route path="/" element={<Index />} />
