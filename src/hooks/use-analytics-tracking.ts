@@ -1,6 +1,13 @@
+/**
+ * Analytics tracking hooks using react-ga4
+ * - Automatically tracks page views on route changes
+ * - Provides event tracking utilities
+ * - Respects cookie consent
+ */
+
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import analyticsService from '@/lib/analytics';
+import { analyticsService } from '@/lib/analytics';
 
 /**
  * Hook to automatically track page views on route changes
@@ -11,7 +18,7 @@ export function useAnalyticsTracking() {
 
   useEffect(() => {
     // Track page view when route changes
-    if (analyticsService.isEnabled()) {
+    if (analyticsService.isInitialized()) {
       const path = location.pathname + location.search;
       const title = document.title;
       
@@ -36,6 +43,6 @@ export function useAnalyticsEvents() {
   return {
     trackEvent,
     trackPageView,
-    isEnabled: analyticsService.isEnabled(),
+    isEnabled: analyticsService.isInitialized(),
   };
 }
