@@ -4,7 +4,7 @@ import analyticsService from '@/lib/analytics';
 import type { AnalyticsConfig } from '@/types/analytics';
 
 // Reads GA id from env; can be overridden by passing config to enableAnalytics
-const ENV_GA_ID = (import.meta as { env?: { VITE_GA_MEASUREMENT_ID?: string } })?.env?.VITE_GA_MEASUREMENT_ID;
+const ENV_GA_ID = import.meta.env.VITE_GA_MEASUREMENT_ID;
 
 export function AnalyticsManager() {
   const { canTrackAnalytics } = useTrackingPermissions();
@@ -13,7 +13,7 @@ export function AnalyticsManager() {
     const cfg: Partial<AnalyticsConfig> = {
       measurementId: ENV_GA_ID,
       anonymizeIp: true,
-      debug: false,
+      debug: import.meta.env.MODE === 'test' || import.meta.env.MODE === 'development',
       consentDefaults: {
         // Start with denied by default; real consent is reflected by rendering this component effect
         ad_storage: 'denied',

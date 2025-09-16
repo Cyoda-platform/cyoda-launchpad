@@ -24,10 +24,11 @@ function isBrowser() {
 }
 
 function getMeasurementId(config?: Partial<AnalyticsConfig>): string | null {
+  const envId = import.meta.env.VITE_GA_MEASUREMENT_ID;
   return (
     config?.measurementId ||
     currentConfig.measurementId ||
-    (import.meta as { env?: { VITE_GA_MEASUREMENT_ID?: string } })?.env?.VITE_GA_MEASUREMENT_ID ||
+    (envId && envId !== 'undefined' ? envId : null) ||
     null
   );
 }
@@ -60,18 +61,20 @@ function applyConsent(consent?: AnalyticsConsent) {
 }
 
 function initConfig(provided?: Partial<AnalyticsConfig>) {
+  // Set defaults first, then apply provided config
+  const defaults: Partial<AnalyticsConfig> = {
+    consentDefaults: {
+      ad_storage: 'denied',
+      analytics_storage: 'denied',
+    }
+  };
+
   currentConfig = {
     ...DEFAULTS,
     ...currentConfig,
-    ...provided,
+    ...defaults,
+    ...provided, // This will override defaults if provided
   } as AnalyticsConfig;
-  if (!currentConfig.consentDefaults) {
-    // Default to denied until explicitly granted by our consent system
-    currentConfig.consentDefaults = {
-      ad_storage: 'denied',
-      analytics_storage: 'denied',
-    };
-  }
 }
 
 function injectScript(measurementId: string, onLoad: () => void, onError: () => void) {
@@ -201,7 +204,9 @@ export const analyticsService: AnalyticsServiceAPI = {
       // Ignore cleanup errors
     }
 
+    // Reset internal state
     loaded = false;
+    currentConfig = {};
     logDebug('Analytics disabled and cleaned up');
   },
 
