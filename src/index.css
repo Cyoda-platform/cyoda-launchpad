@@ -269,10 +269,7 @@
   .mobile-text-5xl {
     @apply text-4xl sm:text-5xl md:text-6xl;
   }
-    /* Hide reCAPTCHA badge */
-    .grecaptcha-badge {
-        visibility: hidden;
-    }
+
   /* Mobile button text sizing */
   .mobile-btn-text {
     @apply text-sm sm:text-base;
@@ -285,6 +282,21 @@
   .mobile-btn-text-lg {
     @apply text-base sm:text-lg;
   }
+
+    /* Hide reCAPTCHA badge */
+    .grecaptcha-badge {
+        visibility: hidden !important;
+        opacity: 0 !important;
+        display: none !important;
+    }
+    .grecaptcha-badge,
+    div[class*="grecaptcha-badge"] {
+        visibility: hidden !important;
+        opacity: 0 !important;
+        display: none !important;
+        position: absolute !important;
+        left: -9999px !important;
+    }
 }
 
 /* Print styles for legal documents */
