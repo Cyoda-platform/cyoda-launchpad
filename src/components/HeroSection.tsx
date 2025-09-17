@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, FormEvent } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { useTheme } from 'next-themes';
@@ -122,10 +122,13 @@ const HeroSection = () => {
   const [isUserTyping, setIsUserTyping] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
+
+  const fixedPrefix = 'Build a ';
+
   // Typewriter hook with configuration - using very slow speeds for testing
   const [typewriterState, typewriterControls] = useTypewriter(
     heroPhrases,
-    'Build a ',
+    fixedPrefix,
     {
       typeSpeed: 80,
       deleteSpeed: 30,
@@ -185,6 +188,17 @@ const HeroSection = () => {
     window.open(`https://ai.cyoda.net/?name=${encodedPrompt}`, '_blank');
   };
 
+	  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+	    e.preventDefault();
+	    const isTypewriterActive = typewriterState.isAnimating && !isUserTyping;
+	    const valueToSubmit = isTypewriterActive
+	      ? `${fixedPrefix}${heroPhrases[typewriterState.currentPhraseIndex] || ''}`
+	      : (textareaRef.current?.value ?? displayValue);
+	    const encoded = encodeURIComponent(valueToSubmit);
+	    window.open(`https://ai.cyoda.net/?name=${encoded}`, '_blank');
+	  };
+
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background with texture overlay */}
@@ -212,7 +226,7 @@ const HeroSection = () => {
 
           {/* Input section */}
           <div className="max-w-2xl mx-auto space-y-6">
-            <form action="https://ai.cyoda.net" method="GET" target="_blank" id="start-form" className="relative">
+            <form action="https://ai.cyoda.net" method="GET" target="_blank" id="start-form" className="relative" onSubmit={handleSubmit}>
               <Textarea
                 ref={textareaRef}
                 name="name"
