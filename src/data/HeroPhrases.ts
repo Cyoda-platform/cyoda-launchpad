@@ -6,7 +6,6 @@
  */
 export const heroPhrases = [
   "DTCC trade reporting system...",
-    "perpetual KYC service...",
     "real-time fraud detection engine...",
     "customer onboarding workflow...",
     "trade settlement service...",
