@@ -124,7 +124,7 @@ const Header = () => {
 
           {/* Action Buttons */}
           <div className="hidden md:flex items-center space-x-2">
-            <Button variant="ghost" className="glow-hover mobile-btn-text"
+            <Button variant="outline" className="glow-hover mobile-btn-text"
                     onClick={() => window.open('https://discord.gg/uW9XaUR9', '_blank')}
             >
               Contact (Discord)
@@ -139,7 +139,7 @@ const Header = () => {
 
           {/* Mobile Menu Toggle */}
           <Button
-            variant="ghost"
+            variant="outline"
             size="sm"
             className="lg:hidden glow-hover min-h-[44px] min-w-[44px] p-2"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -173,7 +173,7 @@ const Header = () => {
             </nav>
 
             <div className="flex flex-col space-y-2 pt-4 border-t border-border/40">
-              <Button variant="ghost" className="justify-start mobile-btn-text">
+              <Button variant="outline" className="justify-start mobile-btn-text">
                 Contact (Discord)
               </Button>
               <Button

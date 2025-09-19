@@ -4,88 +4,64 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Cyoda Design System - Gaming UI with Brand Colors */
+/* Cyoda Design System - Enterprise UI tuned for financial services */
 
 @layer base {
-  :root {
-    /* Cyoda Brand Colors */
-    --cyoda-teal: 175 67% 52%;          /* #4FB8B0 */
-    --cyoda-orange: 32 95% 59%;         /* #FD9E29 */
-    --cyoda-purple: 258 74% 37%;        /* #5A18AC */
-    --cyoda-green: 106 44% 60%;         /* #6BB45A */
-    
-    /* Light mode base */
-    --background: 0 0% 100%;
-    --foreground: 210 20% 10%;;
-    --card: 0 0% 98%;
-    --card-foreground: 258 74% 37%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 258 74% 37%;
-    --primary: 175 67% 42%;  /* Darker teal for better contrast in light mode */
-    --primary-foreground: 0 0% 100%;
-    --secondary: 220 13% 91%;
-    --secondary-foreground: 258 74% 37%;
-    --muted: 220 13% 91%;
-    --muted-foreground: 215 15% 35%;
-    --accent: 32 95% 50%;  /* Slightly darker orange for better contrast */
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 220 13% 85%;  /* Slightly darker border for better visibility */
-    --input: 220 13% 91%;
-    --ring: 175 67% 42%;
-    --radius: 0.75rem;
+    :root {
+        /* Brand anchors */
+        --cyoda-teal: 175 67% 52%;    /* #4FB8B0 */
+        --cyoda-orange: 32 95% 59%;   /* #FD9E29 */
+        --cyoda-purple: 258 74% 37%;  /* #5A18AC */
+        --cyoda-green: 106 44% 60%;   /* #6BB45A */
 
+        /* Enterprise surface + text (Light mode) */
+        --background: 0 0% 100%;            /* white */
+        --foreground: 222 47% 11%;          /* near-black text */
+        --card: 0 0% 100%;                  /* white card */
+        --card-foreground: 222 47% 11%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 222 47% 11%;
+        --border: 214 32% 91%;              /* light gray border */
+        --input: 214 32% 91%;
 
-      --link: 215 20% 30%;         /* dark slate for light mode (good contrast) */
-      --link-hover: 175 67% 40%;   /* darker teal for hover on light */
-    
-    /* Gaming UI Effects */
-    --glow-primary: 175 67% 52%;
-    --glow-accent: 32 95% 59%;
-    --glow-purple: 258 74% 37%;
-    --surface-dark: 240 10% 3.9%;
-    --surface-medium: 240 6% 10%;
-    --surface-light: 240 5% 15%;
-    
-    /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(var(--cyoda-teal)), hsl(var(--cyoda-orange)));
-    --gradient-hero: linear-gradient(135deg, hsl(var(--cyoda-purple)), hsl(var(--cyoda-teal)));
-    --gradient-accent: linear-gradient(135deg, hsl(var(--cyoda-orange)), hsl(var(--cyoda-green)));
-    --gradient-dark: linear-gradient(135deg, hsl(220 13% 91%), hsl(0 0% 98%));
-    
-    /* Animations */
-    --transition-glow: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --transition-smooth: all 0.2s ease-in-out;
-  }
+        /* Actions */
+        --primary: var(--cyoda-teal);
+        --primary-foreground: 0 0% 100%;    /* white text on teal */
+        --secondary: 210 40% 96%;           /* subtle gray */
+        --secondary-foreground: 222 47% 11%;
+        --muted: 210 40% 96%;
+        --muted-foreground: 215 16% 47%;    /* gray-600 */
+        --accent: 175 40% 40%;
+        --accent-foreground: 0 0% 100%;
+        --destructive: 0 84% 60%;
+        --destructive-foreground: 0 0% 100%;
+        --ring: 175 40% 40%;
 
-  .dark {
-    /* Dark mode - default for gaming aesthetic */
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 240 6% 10%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 6% 10%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 175 67% 52%;
-    --primary-foreground: 240 10% 3.9%;
-    --secondary: 240 5% 15%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 5% 15%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 32 95% 59%;
-    --accent-foreground: 240 10% 3.9%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 240 5% 15%;
-    --input: 240 5% 15%;
-    --ring: 175 67% 52%;
-      --link: 210 40% 96%;         /* near-white for dark mode */
-      --link-hover: 175 67% 60%;   /* brighter teal on dark */
-
-    /* Dark mode gradients */
-    --gradient-dark: linear-gradient(135deg, hsl(240 10% 3.9%), hsl(240 6% 10%));
-  }
+        /* Geometry */
+        --radius: 6px;
+    }
+    .dark {
+        --background: 220 14% 8%;
+        --foreground: 220 20% 96%;
+        --card: 220 14% 10%;
+        --card-foreground: 220 20% 96%;
+        --popover: 220 14% 10%;
+        --popover-foreground: 220 20% 96%;
+        --border: 220 10% 22%;
+        --input: 220 10% 22%;
+        --primary: var(--cyoda-teal);
+        --primary-foreground: 0 0% 0%;
+        --secondary: 220 10% 18%;
+        --secondary-foreground: 220 20% 96%;
+        --muted: 220 10% 16%;
+        --muted-foreground: 220 10% 70%;
+        --accent: 175 40% 40%;
+        --accent-foreground: 0 0% 100%;
+        --destructive: 0 84% 60%;
+        --destructive-foreground: 0 0% 100%;
+        --ring: 175 40% 40%;
+        --radius: 6px;
+    }
   
   * {
     @apply border-border;
@@ -105,57 +81,8 @@
     opacity: 1;
   }
 
-  /* Gaming UI Utilities */
-  .glow-primary {
-    box-shadow: 0 0 20px hsl(var(--glow-primary) / 0.3), 0 0 40px hsl(var(--glow-primary) / 0.1);
-  }
-  
-  .glow-accent {
-    box-shadow: 0 0 20px hsl(var(--glow-accent) / 0.3), 0 0 40px hsl(var(--glow-accent) / 0.1);
-  }
-  
-  .glow-purple {
-    box-shadow: 0 0 20px hsl(var(--glow-purple) / 0.3), 0 0 40px hsl(var(--glow-purple) / 0.1);
-  }
-  
-  .glow-hover {
-    transition: var(--transition-glow);
-  }
-  
-  .glow-hover:hover {
-    box-shadow: 0 0 30px hsl(var(--glow-primary) / 0.4), 0 0 60px hsl(var(--glow-primary) / 0.2);
-    transform: translateY(-2px);
-  }
-  
-  .text-gradient-primary {
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  
-  .text-gradient-hero {
-    background: var(--gradient-hero);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  
-  .bg-gradient-primary {
-    background: var(--gradient-primary);
-  }
-  
-  .bg-gradient-hero {
-    background: var(--gradient-hero);
-  }
-  
-  .bg-gradient-accent {
-    background: var(--gradient-accent);
-  }
-  
-  .bg-gradient-dark {
-    background: var(--gradient-dark);
-  }
+
+
   
   /* Texture overlay for gaming feel */
   .texture-overlay::before {
@@ -387,4 +314,9 @@
   body {
     @apply bg-background text-foreground;
   }
+    /* enterprise helpers */
+    .link { @apply text-cyoda-teal hover:opacity-90 underline underline-offset-4; }
+    .card { @apply bg-card border border-border rounded-md shadow-sm; }
+    .sober-hover { @apply transition-opacity hover:opacity-90; }
+    .reduce-motion * { @apply motion-reduce:transition-none motion-reduce:animate-none; }
 }

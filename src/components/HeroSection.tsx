@@ -4,7 +4,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { useTheme } from 'next-themes';
 import { useTypewriter } from '@/hooks/use-typewriter';
 import { heroPhrases } from '@/data/HeroPhrases';
-import { Sparkles } from 'lucide-react';
 import heroBackgroundDark from '@/assets/hero-bg.jpg';
 import heroBackgroundLight from '@/assets/hero-bg-lm.png';
 
@@ -200,20 +199,20 @@ const HeroSection = () => {
 
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden py-20">
       {/* Background with texture overlay */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat texture-overlay"
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-60"
         style={{ backgroundImage: `url(${heroBackground})` }}
       />
-      <div className="absolute inset-0 bg-gradient-dark opacity-70" />
+      <div className="absolute inset-0 bg-background/70" />
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 text-center">
         <div className="max-w-4xl mx-auto space-y-6">
           {/* Hero headline */}
           <div className="space-y-4">
-            <h1 className="mobile-text-4xl font-bold text-gradient-hero leading-tight">
+            <h1 className="mobile-text-4xl font-bold leading-tight text-foreground">
                 Problem → Prototype → Production
             </h1>
 
@@ -240,16 +239,16 @@ const HeroSection = () => {
                 onBlur={handleBlur}
                 aria-label="Describe what you want to build..."
                 placeholder={isUserTyping ? "Describe your application idea..." : ""}
-                className="min-h-[120px] mobile-text-base bg-background/10 backdrop-blur border-2 border-primary/30 focus:border-primary glow-primary placeholder:text-foreground/60 pr-24 sm:pr-32"
+                className="min-h-[120px] mobile-text-base bg-background/10 backdrop-blur border-2 border-primary/30 focus:border-primary placeholder:text-foreground/60 pr-24 sm:pr-32"
               />
-              <Button
-                type="submit"
-                id="start-btn"
-                size="mobile-sm"
-                className="absolute right-2 bottom-2 bg-gradient-primary text-white glow-primary min-h-[44px] min-w-[44px]"
-              >
-                <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 sm:mr-2" />
-              </Button>
+                <Button
+                    type="submit"
+                    id="start-btn"
+                    size="icon"
+                    className="absolute right-2 bottom-2 text-white bg-primary hover:bg-primary/90 h-12 w-12"
+                >
+                    <ArrowBigRightIcon className="w-8 h-8" />
+                </Button>
             </form>
 
             {/* Pre-baked examples */}
@@ -262,7 +261,7 @@ const HeroSection = () => {
                     variant="outline"
                     size="mobile-sm"
                     onClick={() => handleExampleClick(example)}
-                    className="bg-card/20 backdrop-blur border-primary/30 hover:bg-primary/10 hover:border-primary glow-hover mobile-btn-text-sm min-h-[44px]"
+                    className="bg-card/20 backdrop-blur border-primary/30 hover:bg-primary/10 hover:border-primary mobile-btn-text-sm min-h-[44px]"
                   >
                     {example.name}
                   </Button>
@@ -275,10 +274,7 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Floating elements for visual interest */}
-      <div className="absolute top-20 left-10 w-20 h-20 rounded-full bg-gradient-primary opacity-20 blur-xl animate-pulse" />
-      <div className="absolute bottom-20 right-10 w-32 h-32 rounded-full bg-gradient-accent opacity-15 blur-2xl animate-pulse delay-1000" />
-      <div className="absolute top-1/2 left-20 w-16 h-16 rounded-full bg-cyoda-purple opacity-25 blur-lg animate-pulse delay-500" />
+
     </section>
   );
 };
