@@ -6,6 +6,7 @@ import { useTypewriter } from '@/hooks/use-typewriter';
 import { heroPhrases } from '@/data/HeroPhrases';
 import heroBackgroundDark from '@/assets/hero-bg.jpg';
 import heroBackgroundLight from '@/assets/hero-bg-lm.png';
+import {ArrowBigRightIcon} from "lucide-react";
 
 const HeroSection = () => {
   const { theme } = useTheme();

@@ -160,7 +160,7 @@ const Guides = () => {
           
           <div className="container mx-auto px-4 relative z-10">
             <div className="text-center max-w-4xl mx-auto">
-              <h1 className="text-5xl md:text-6xl font-bold text-gradient-hero mb-6">
+              <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6">
                 Developer Guides & Tutorials
               </h1>
               <p className="text-xl text-muted-foreground mb-8">
@@ -174,11 +174,11 @@ const Guides = () => {
         <section className="py-16 relative">
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
-              <div className="bg-card/30 backdrop-blur border border-border/50 rounded-2xl overflow-hidden glow-hover">
+              <div className="bg-card/30 backdrop-blur border border-border/50 rounded-2xl overflow-hidden">
                 <div className="grid lg:grid-cols-2 gap-8">
                   <div className="p-8">
                     <div className="mb-4">
-                      <span className="inline-block bg-gradient-primary text-white px-3 py-1 rounded-full text-sm font-medium mb-4">
+                      <span className="inline-block bg-primary text-primary-foreground px-3 py-1 rounded-full text-sm font-medium mb-4">
                         Featured Guide
                       </span>
                     </div>
@@ -201,7 +201,7 @@ const Guides = () => {
                     </div>
                     
                     <Button
-                      className="bg-gradient-primary text-white glow-primary"
+                      className="bg-primary text-primary-foreground"
                       onClick={() => featuredGuide?.slug && navigate(`/guides/${featuredGuide.slug}`)}
                       disabled={!featuredGuide?.slug}
                       aria-label={`Read featured guide: ${featuredGuide?.title || 'No featured guide available'}`}
@@ -210,9 +210,9 @@ const Guides = () => {
                     </Button>
                   </div>
                   
-                  <div className="bg-gradient-primary/10 flex items-center justify-center p-8">
+                  <div className="bg-card/10 flex items-center justify-center p-8">
                     <div className="text-center">
-                      <div className="w-32 h-32 rounded-2xl bg-gradient-primary/20 flex items-center justify-center mb-4">
+                      <div className="w-32 h-32 rounded-2xl bg-card/20 flex items-center justify-center mb-4">
                         <div className="text-4xl">📚</div>
                       </div>
                       <p className="text-muted-foreground">Featured Guide</p>
@@ -236,7 +236,7 @@ const Guides = () => {
                     placeholder="Search guides..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-10 pr-10 h-12 bg-card/20 backdrop-blur border-primary/30 focus:border-primary glow-hover"
+                    className="pl-10 pr-10 h-12 bg-card/20 backdrop-blur border-primary/30 focus:border-primary"
                     aria-label="Search guides"
                     role="searchbox"
                   />
@@ -296,7 +296,7 @@ const Guides = () => {
                     variant="outline"
                     size="sm"
                     onClick={() => setSelectedCategory(category)}
-                    className={`bg-secondary text-secondary-foreground dark:bg-card/20 dark:text-foreground backdrop-blur border border-border dark:border-primary/30 hover:bg-primary hover:text-primary-foreground dark:hover:bg-primary/10 dark:hover:text-primary hover:border-primary glow-hover ${
+                    className={`bg-secondary text-secondary-foreground dark:bg-card/20 dark:text-foreground backdrop-blur border border-border dark:border-primary/30 hover:bg-primary hover:text-primary-foreground dark:hover:bg-primary/10 dark:hover:text-primary hover:border-primary ${
                       selectedCategory === category ? 'bg-primary text-primary-foreground dark:bg-primary/20 dark:text-primary border-primary' : ''
                     }`}
                     aria-pressed={selectedCategory === category}
@@ -311,7 +311,7 @@ const Guides = () => {
         </section>
 
         {/* Guides Grid */}
-        <section className="py-16 bg-gradient-dark relative">
+        <section className="py-16 bg-gradient-to-br from-background via-card to-secondary/20 relative">
           <div className="absolute inset-0 texture-overlay opacity-20" />
 
           <div className="container mx-auto px-4 relative z-10">
@@ -377,7 +377,7 @@ const Guides = () => {
                     // Category filter with no results
                     <div className="text-center py-16">
                       <div className="max-w-md mx-auto">
-                        <div className="w-24 h-24 rounded-2xl bg-gradient-primary/20 flex items-center justify-center mx-auto mb-6">
+                        <div className="w-24 h-24 rounded-2xl bg-card/20 flex items-center justify-center mx-auto mb-6">
                           <div className="text-4xl">📂</div>
                         </div>
                         <h3 className="text-2xl font-bold text-foreground mb-4">
@@ -406,7 +406,7 @@ const Guides = () => {
         <section className="py-24 relative">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-4xl md:text-5xl font-bold text-gradient-accent mb-6">
+              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
                 Stay Updated
               </h2>
               <p className="text-xl text-muted-foreground mb-8">
@@ -419,7 +419,7 @@ const Guides = () => {
                   placeholder="Enter your email"
                   className="flex-1 h-12 px-4 rounded-lg border border-border/50 bg-background/50 backdrop-blur focus:border-primary focus:ring-1 focus:ring-primary"
                 />
-                <Button className="bg-gradient-primary text-white glow-primary">
+                <Button className="bg-primary text-primary-foreground">
                   Subscribe
                 </Button>
               </div>

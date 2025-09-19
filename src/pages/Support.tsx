@@ -165,12 +165,12 @@ const Support = () => {
             <Header/>
             <main>
                 {/* Hero Section */}
-                <section className="pt-24 pb-16 bg-gradient-dark relative">
+                <section className="pt-24 pb-16 bg-gradient-to-br from-background via-card to-secondary/20 relative">
                     <div className="absolute inset-0 texture-overlay opacity-30"/>
 
                     <div className="container mx-auto px-4 relative z-10">
                         <div className="text-center max-w-4xl mx-auto">
-                            <h1 className="text-5xl md:text-6xl font-bold text-gradient-hero mb-6">
+                            <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6">
                                 How Can We Help?
                             </h1>
                             <p className="text-xl text-muted-foreground mb-8">
@@ -186,7 +186,7 @@ const Support = () => {
                 <section className="py-24 relative">
                     <div className="container mx-auto px-4">
                         <div className="text-center mb-16">
-                            <h2 className="text-4xl md:text-5xl font-bold text-gradient-primary mb-6">
+                            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
                                 Get Support
                             </h2>
                             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -200,12 +200,12 @@ const Support = () => {
                                     key={index}
                                     className={`p-8 rounded-2xl border transition-all duration-300 ${
                                         channel.primary
-                                            ? 'border-primary bg-card/50 glow-primary scale-105'
-                                            : 'border-border/50 bg-card/30 hover:bg-card/50 glow-hover'
+                                            ? 'border-primary bg-card/50 scale-105'
+                                            : 'border-border/50 bg-card/30 hover:bg-card/50'
                                     }`}
                                 >
                                     <div
-                                        className="w-16 h-16 rounded-2xl bg-gradient-primary flex items-center justify-center mb-6 glow-primary">
+                                        className="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center mb-6">
                                         <channel.icon className="w-8 h-8 text-white"/>
                                     </div>
 
@@ -219,8 +219,8 @@ const Support = () => {
                                     <Button
                                         className={`w-full ${
                                             channel.primary
-                                                ? 'bg-gradient-primary text-white glow-primary'
-                                                : 'bg-card/20 text-white backdrop-blur border border-primary/30 hover:bg-primary/10 hover:border-primary glow-hover'
+                                                ? 'bg-primary text-primary-foreground'
+                                                : 'bg-card/20 text-white backdrop-blur border border-primary/30 hover:bg-primary/10 hover:border-primary'
                                         }`}
                                         onClick={() => window.open(channel.link, '_blank')}
                                     >
@@ -233,12 +233,12 @@ const Support = () => {
                 </section>
 
                 {/* Resources */}
-                <section className="py-24 bg-gradient-dark relative">
+                <section className="py-24 bg-gradient-to-br from-background via-card to-secondary/20 relative">
                     <div className="absolute inset-0 texture-overlay opacity-20"/>
 
                     <div className="container mx-auto px-4 relative z-10">
                         <div className="text-center mb-16">
-                            <h2 className="text-4xl md:text-5xl font-bold text-gradient-accent mb-6">
+                            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
                                 Learning Resources
                             </h2>
                             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -250,12 +250,12 @@ const Support = () => {
                             {resources.map((resource, index) => (
                                 <div
                                     key={index}
-                                    className="group p-6 rounded-xl border border-border/50 bg-card/20 backdrop-blur hover:bg-card/40 transition-all duration-300 glow-hover"
+                                    className="group p-6 rounded-xl border border-border/50 bg-card/20 backdrop-blur hover:bg-card/40 transition-all duration-300"
                                 >
                                     <div className="flex items-start space-x-4">
                                         <div className="flex-shrink-0">
                                             <div
-                                                className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center glow-primary">
+                                                className="w-12 h-12 rounded-lg bg-primary flex items-center justify-center">
                                                 <resource.icon className="w-6 h-6 text-white"/>
                                             </div>
                                         </div>
@@ -303,7 +303,7 @@ const Support = () => {
                 <section className="py-24 relative">
                     <div className="container mx-auto px-4">
                         <div className="text-center mb-16">
-                            <h2 className="text-4xl md:text-5xl font-bold text-gradient-hero mb-6">
+                            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
                                 Frequently Asked Questions
                             </h2>
                             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -375,7 +375,7 @@ const Support = () => {
 
                             <Button
                                 type="submit"
-                                className="bg-gradient-primary text-white glow-primary px-8 py-4 btn-text-lg min-h-[44px] w-full sm:w-auto"
+                                className="bg-primary text-primary-foreground px-8 py-4 btn-text-lg min-h-[44px] w-full sm:w-auto"
                             >
                                 Send
                             </Button>

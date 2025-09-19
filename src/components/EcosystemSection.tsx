@@ -47,14 +47,14 @@ const EcosystemSection = () => {
     <section className="py-24 relative">
       {/* Abstract background shapes */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 left-10 w-96 h-96 rounded-full bg-gradient-primary opacity-5 blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-80 h-80 rounded-full bg-gradient-accent opacity-10 blur-2xl" />
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full bg-cyoda-purple opacity-5 blur-2xl" />
+        <div className="absolute top-20 left-10 w-96 h-96 rounded-full bg-card opacity-5 blur-3xl" />
+        <div className="absolute bottom-20 right-10 w-80 h-80 rounded-full bg-card opacity-10 blur-2xl" />
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full bg-card opacity-5 blur-2xl" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-gradient-hero mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
             Discover the Cyoda Ecosystem
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -66,11 +66,11 @@ const EcosystemSection = () => {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="group p-6 rounded-xl border border-border/50 bg-card/20 backdrop-blur hover:bg-card/40 transition-all duration-300 glow-hover"
+              className="group p-6 rounded-xl border border-border/50 bg-card/20 backdrop-blur hover:bg-card/40 transition-all duration-300"
             >
               <div className="flex items-start space-x-4">
                 <div className="flex-shrink-0">
-                  <div className="w-12 h-12 rounded-lg bg-gradient-primary flex items-center justify-center glow-primary">
+                  <div className="w-12 h-12 rounded-lg bg-primary flex items-center justify-center">
                     <feature.icon className="w-6 h-6 text-white" />
                   </div>
                 </div>

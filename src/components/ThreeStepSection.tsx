@@ -10,13 +10,13 @@ const ThreeStepSection = () => {
       icon: Bot,
       title: "1. Let AI build your prototype",
       description: "Describe your application in natural language. Our AI understands complex business requirements and generates enterprise-grade data models, APIs, and workflows in minutes.",
-      gradient: "bg-gradient-primary"
+      gradient: "bg-primary"
     },
     {
       icon: Code,
       title: "2. Iterate in your IDE",
       description: "Clone to your favorite development environment. Customize, extend, and refine using familiar tools and workflows. Full control over your codebase.",
-      gradient: "bg-gradient-accent"
+      gradient: "bg-secondary"
     },
     {
       icon: Rocket,
@@ -36,7 +36,7 @@ const ThreeStepSection = () => {
           . Built-in monitoring, security, and compliance features ensure your application is production-ready from day one.
         </>
       ),
-      gradient: "bg-gradient-hero"
+      gradient: "bg-secondary"
     }
   ];
 
@@ -46,7 +46,7 @@ const ThreeStepSection = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-12 sm:mb-16">
-          <h2 className="mobile-text-3xl font-bold text-gradient-primary mb-4 sm:mb-6">
+          <h2 className="mobile-text-3xl font-bold text-foreground mb-4 sm:mb-6">
             Focus on the solution, not infrastructure
           </h2>
           <p className="mobile-text-lg text-muted-foreground max-w-3xl mx-auto">
@@ -58,12 +58,12 @@ const ThreeStepSection = () => {
           {steps.map((step, index) => (
             <div
               key={index}
-              className="group relative p-6 sm:p-7 md:p-8 rounded-2xl border border-border/50 bg-card/30 backdrop-blur hover:bg-card/50 transition-all duration-300 glow-hover"
+              className="group relative p-6 sm:p-7 md:p-8 rounded-2xl border border-border/50 bg-card/30 backdrop-blur hover:bg-card/50 transition-all duration-300"
             >
 
 
               {/* Icon */}
-              <div className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-2xl ${step.gradient} flex items-center justify-center mb-6 glow-primary`}>
+              <div className={`w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 rounded-2xl ${step.gradient} flex items-center justify-center mb-6`}>
                 <step.icon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 text-white" />
               </div>
 
@@ -86,7 +86,7 @@ const ThreeStepSection = () => {
             <Button
                 asChild
                 size="mobile-lg"
-                className="bg-gradient-primary text-white mobile-btn-text-lg px-6 py-3 sm:px-8 sm:py-4 glow-primary min-h-[44px]"
+                className="bg-primary text-primary-foreground mobile-btn-text-lg px-6 py-3 sm:px-8 sm:py-4 min-h-[44px]"
             >
                 <a href="https://ai.cyoda.net" target="_blank" rel="noopener noreferrer">
                     Try Now

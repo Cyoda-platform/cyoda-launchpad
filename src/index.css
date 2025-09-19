@@ -62,16 +62,16 @@
         --ring: 175 40% 40%;
         --radius: 6px;
     }
-  
+
   * {
     @apply border-border;
   }
-  
+
   body {
     @apply bg-background text-foreground font-montserrat antialiased;
     font-family: 'Montserrat', sans-serif;
   }
-  
+
   /* Copy functionality styles */
   .copy-button-visible {
     opacity: 1 !important;
@@ -83,7 +83,7 @@
 
 
 
-  
+
   /* Texture overlay for gaming feel */
   .texture-overlay::before {
     content: '';
@@ -98,7 +98,7 @@
     pointer-events: none;
     opacity: 0.3;
   }
-  
+
   /* Code syntax highlighting */
   .code-block {
     background: hsl(var(--card));
@@ -110,7 +110,7 @@
     line-height: 1.5;
     overflow-x: auto;
   }
-  
+
   .code-block .string { color: hsl(var(--cyoda-green)); }
   .code-block .number { color: hsl(var(--cyoda-orange)); }
   .code-block .boolean { color: hsl(var(--cyoda-purple)); }
@@ -134,7 +134,7 @@
 
   /* Responsive typography for legal documents */
   .legal-hero-title {
-    @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gradient-hero;
+    @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground;
   }
 
   .legal-hero-subtitle {

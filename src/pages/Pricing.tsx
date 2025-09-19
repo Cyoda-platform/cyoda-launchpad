@@ -104,7 +104,7 @@ const Pricing = () => {
 
           <div className="container mx-auto px-4 relative z-10">
             <div className="text-center max-w-4xl mx-auto">
-              <h1 className="text-5xl md:text-6xl font-bold text-gradient-hero mb-6">
+              <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6">
                 Get Building for Free
               </h1>
               <p className="text-xl text-muted-foreground mb-8">
@@ -121,11 +121,11 @@ const Pricing = () => {
               {plans.map((plan, index) => (
                 <div
                   key={index}
-                  className={`relative p-8 rounded-xl border transition-all duration-300  border-primary bg-card/50 glow-primary scale-105`}
+                  className={`relative p-8 rounded-xl border transition-all duration-300  border-primary bg-card/50 scale-105`}
                 >
                   {!plan.available && (
                     <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                      <div className="bg-gradient-primary text-white px-4 py-1 rounded-full text-sm font-medium">
+                      <div className="bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-medium">
                         Coming Soon
                       </div>
                     </div>
@@ -136,7 +136,7 @@ const Pricing = () => {
                       {plan.name}
                     </h3>
                     <div className="flex items-baseline justify-center mb-2">
-                      <span className="text-2xl font-bold text-gradient-primary">
+                      <span className="text-2xl font-bold text-foreground">
                         {plan.price}
                       </span>
                       {plan.period && (
@@ -177,7 +177,7 @@ const Pricing = () => {
                         </Button>
                     ) : (
                         <Button
-                            className={`w-full bg-gradient-primary text-white glow-primary`}
+                            className={`w-full bg-primary text-primary-foreground`}
                             onClick={() => window.open("https://ai.cyoda.net", "_blank")}
                         >
                             {plan.cta}
@@ -187,7 +187,7 @@ const Pricing = () => {
               ))}
             </div>
               <div className="text-center mt-12">
-                  <p className="text-xl md:text-lg font-semibold text-gradient-accent mb-6">
+                  <p className="text-xl md:text-lg font-semibold text-foreground mb-6">
                       Full details of entitlements and limits are available in our{' '}
                       <a href="https://docs.cyoda.net/platform/entitlements/" className="underline">documentation</a>.
                   </p>
@@ -196,12 +196,12 @@ const Pricing = () => {
         </section>
 
         {/* FAQ Section */}
-        <section className="py-24 bg-gradient-dark relative">
+        <section className="py-24 bg-gradient-to-br from-background via-card to-secondary/20 relative">
           <div className="absolute inset-0 texture-overlay opacity-20" />
 
           <div className="container mx-auto px-4 relative z-10">
             <div className="text-center mb-16">
-              <h2 className="text-4xl md:text-5xl font-bold text-gradient-accent mb-6">
+              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
                 Frequently Asked Questions
               </h2>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -230,7 +230,7 @@ const Pricing = () => {
         {/* CTA Section */}
         <section className="py-24 relative">
           <div className="container mx-auto px-4 text-center">
-            <h2 className="text-4xl md:text-5xl font-bold text-gradient-hero mb-6">
+            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
               Ready to Get Started?
             </h2>
             <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
@@ -238,7 +238,7 @@ const Pricing = () => {
             </p>
             <Button
               size="lg"
-              className="bg-gradient-primary text-white text-lg px-8 py-4 glow-primary"
+              className="bg-primary text-primary-foreground text-lg px-8 py-4"
               onClick={() => window.open('https://ai.cyoda.net', '_blank')}
             >
               Start Free Trial
