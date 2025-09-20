@@ -205,7 +205,7 @@ const Support = () => {
                                     }`}
                                 >
                                     <div
-                                        className="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center mb-6">
+                                        className="w-16 h-16 rounded-2xl bg-icon flex items-center justify-center mb-6">
                                         <channel.icon className="w-8 h-8 text-white"/>
                                     </div>
 
@@ -219,7 +219,7 @@ const Support = () => {
                                     <Button
                                         className={`w-full ${
                                             channel.primary
-                                                ? 'bg-primary text-primary-foreground'
+                                                ? 'bg-button text-primary-foreground'
                                                 : 'bg-card/20 text-white backdrop-blur border border-primary/30 hover:bg-primary/10 hover:border-primary'
                                         }`}
                                         onClick={() => window.open(channel.link, '_blank')}
@@ -255,7 +255,7 @@ const Support = () => {
                                     <div className="flex items-start space-x-4">
                                         <div className="flex-shrink-0">
                                             <div
-                                                className="w-12 h-12 rounded-lg bg-primary flex items-center justify-center">
+                                                className="w-12 h-12 rounded-lg bg-icon flex items-center justify-center">
                                                 <resource.icon className="w-6 h-6 text-white"/>
                                             </div>
                                         </div>
@@ -375,7 +375,7 @@ const Support = () => {
 
                             <Button
                                 type="submit"
-                                className="bg-primary text-primary-foreground px-8 py-4 btn-text-lg min-h-[44px] w-full sm:w-auto"
+                                className="bg-button text-primary-foreground px-8 py-4 btn-text-lg min-h-[44px] w-full sm:w-auto"
                             >
                                 Send
                             </Button>

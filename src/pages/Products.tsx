@@ -85,7 +85,7 @@ const Products = () => {
               </p>
               <Button
                 size="lg"
-                className="bg-primary text-primary-foreground text-lg px-8 py-4"
+                className="bg-button text-primary-foreground text-lg px-8 py-4"
                 onClick={() => window.open('https://ai.cyoda.net', '_blank')}
               >
                 Start Building Today
@@ -112,7 +112,7 @@ const Products = () => {
                   key={index}
                   className="p-8 rounded-2xl border border-border/50 bg-card/30 backdrop-blur hover:bg-card/50 transition-all duration-300"
                 >
-                  <div className="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center mb-6">
+                  <div className="w-16 h-16 rounded-2xl bg-icon flex items-center justify-center mb-6">
                     <platform.icon className="w-8 h-8 text-white" />
                   </div>
 
@@ -159,7 +159,7 @@ const Products = () => {
                 >
                   <div className="flex items-start space-x-4">
                     <div className="flex-shrink-0">
-                      <div className="w-12 h-12 rounded-lg bg-primary flex items-center justify-center">
+                      <div className="w-12 h-12 rounded-lg bg-icon flex items-center justify-center">
                         <feature.icon className="w-6 h-6 text-white" />
                       </div>
                     </div>
@@ -189,14 +189,14 @@ const Products = () => {
             </p>
             <Button
               size="lg"
-              className="bg-primary text-primary-foreground text-lg px-8 py-4 mr-4"
+              className="bg-button text-primary-foreground text-lg px-8 py-4 mr-4"
               onClick={() => window.open('https://ai.cyoda.net', '_blank')}
             >
               Try Now
             </Button>
             <Button
               size="lg"
-              className="bg-primary text-primary-foreground text-lg px-8 py-4 mr-4"
+              className="bg-button text-primary-foreground text-lg px-8 py-4 mr-4"
               onClick={() => window.open('https://docs.cyoda.net/', '_blank')}
             >
               View Docs

@@ -25,7 +25,14 @@
         --input: 214 32% 91%;
 
         /* Actions */
-        --primary: var(--cyoda-teal);
+        --button-bg: var(--cyoda-teal);
+        --button-fg: 0 0% 100%;
+        /* buttons */
+        --button-hover: 175 67% 36%;  /* teal darker */
+        /* Icons */
+        --icon-bg: var(--cyoda-purple);
+        --icon-fg: 0 0% 100%;
+
         --primary-foreground: 0 0% 100%;    /* white text on teal */
         --secondary: 210 40% 96%;           /* subtle gray */
         --secondary-foreground: 222 47% 11%;
@@ -51,6 +58,11 @@
         --input: 220 10% 22%;
         --primary: var(--cyoda-teal);
         --primary-foreground: 0 0% 0%;
+        --button-bg: var(--cyoda-teal);       /* teal */
+        --button-fg: 240 10% 3.9%;
+
+        --icon-bg: var(--cyoda-purple);         /* purple */
+        --icon-fg: 0 0% 100%;
         --secondary: 220 10% 18%;
         --secondary-foreground: 220 20% 96%;
         --muted: 220 10% 16%;

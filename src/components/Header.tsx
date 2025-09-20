@@ -124,13 +124,16 @@ const Header = () => {
 
           {/* Action Buttons */}
           <div className="hidden md:flex items-center space-x-2">
-            <Button variant="outline" className="glow-hover mobile-btn-text"
-                    onClick={() => window.open('https://discord.gg/uW9XaUR9', '_blank')}
-            >
-              Contact (Discord)
-            </Button>
+              <Button
+                  asChild
+                  variant="outline"
+                  className="glow-hover mobile-btn-text"
+              >
+                  <Link to="/support#contact">Contact</Link>
+              </Button>
             <Button
-              className="bg-gradient-primary text-white glow-primary mobile-btn-text"
+                variant="outline"
+                className="glow-hover mobile-btn-text"
               onClick={() => window.open('https://ai.cyoda.net', '_blank')}
             >
               Try Now

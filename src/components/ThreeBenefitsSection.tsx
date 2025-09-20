@@ -8,21 +8,21 @@ const ThreeBenefitsSection = () => {
             title: "1. Innovate Heavyweight Systems at AI Speed",
             description:
                 "Go beyond simple apps. Our unified platform lets you build and flex stateful, event-driven systems with transactional consistency, security, and horizontal scalability for mission-critical workloads.",
-            gradient: "bg-primary",
+            gradient: "bg-icon",
         },
         {
             icon: Layers3,
             title: "2. Smaller Teams, Fewer Skills, Faster Delivery",
             description:
                 "Eliminate diverse platform engineering stacks. A single architecture streamlines the whole path from design to deployment, so small teams deliver complex systems with unprecedented speed.",
-            gradient: "bg-secondary",
+            gradient: "bg-icon",
         },
         {
             icon: ShieldCheck,
             title: "3. Built-In Compliance and Audit",
             description:
                 "Every action is an immutable event with full data lineage. Reporting and compliance come as standard, making audit readiness a feature instead of a costly afterthought.",
-            gradient: "bg-secondary",
+            gradient: "bg-icon",
         },
     ];
 

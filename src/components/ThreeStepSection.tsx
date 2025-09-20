@@ -10,13 +10,13 @@ const ThreeStepSection = () => {
       icon: Bot,
       title: "1. Let AI build your prototype",
       description: "Describe your application in natural language. Our AI understands complex business requirements and generates enterprise-grade data models, APIs, and workflows in minutes.",
-      gradient: "bg-primary"
+      gradient: "bg-icon"
     },
     {
       icon: Code,
       title: "2. Iterate in your IDE",
       description: "Clone to your favorite development environment. Customize, extend, and refine using familiar tools and workflows. Full control over your codebase.",
-      gradient: "bg-secondary"
+      gradient: "bg-icon"
     },
     {
       icon: Rocket,
@@ -36,7 +36,7 @@ const ThreeStepSection = () => {
           . Built-in monitoring, security, and compliance features ensure your application is production-ready from day one.
         </>
       ),
-      gradient: "bg-secondary"
+      gradient: "bg-icon"
     }
   ];
 

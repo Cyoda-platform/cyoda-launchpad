@@ -2,7 +2,6 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { CheckCircle, X } from 'lucide-react';
-import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 
 const Pricing = () => {
@@ -125,7 +124,7 @@ const Pricing = () => {
                 >
                   {!plan.available && (
                     <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                      <div className="bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-medium">
+                      <div className="bg-icon text-primary-foreground px-4 py-1 rounded-full text-sm font-medium">
                         Coming Soon
                       </div>
                     </div>
@@ -167,7 +166,7 @@ const Pricing = () => {
 
                     {plan.name === "Enterprise" ? (
                         <Button
-                            className={`w-full bg-gradient-primary text-white glow-primary"}`}
+                            className={`w-full bg-button text-primary-foreground`}
                             asChild
                         >
                             <HashLink smooth to="/support#contact">
@@ -177,7 +176,7 @@ const Pricing = () => {
                         </Button>
                     ) : (
                         <Button
-                            className={`w-full bg-primary text-primary-foreground`}
+                            className={`w-full bg-button text-primary-foreground`}
                             onClick={() => window.open("https://ai.cyoda.net", "_blank")}
                         >
                             {plan.cta}
@@ -238,7 +237,7 @@ const Pricing = () => {
             </p>
             <Button
               size="lg"
-              className="bg-primary text-primary-foreground text-lg px-8 py-4"
+              className="bg-button text-primary-foreground text-lg px-8 py-4"
               onClick={() => window.open('https://ai.cyoda.net', '_blank')}
             >
               Start Free Trial

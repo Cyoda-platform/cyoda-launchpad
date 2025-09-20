@@ -27,6 +27,14 @@ export default {
 				'cyoda-orange': 'hsl(var(--cyoda-orange))',
 				'cyoda-purple': 'hsl(var(--cyoda-purple))',
 				'cyoda-green': 'hsl(var(--cyoda-green))',
+                button: {
+                    DEFAULT: 'hsl(var(--button-bg))',
+                    foreground: 'hsl(var(--button-fg))',
+                },
+                icon: {
+                    DEFAULT: 'hsl(var(--icon-bg))',
+                    foreground: 'hsl(var(--icon-fg))',
+                },
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
