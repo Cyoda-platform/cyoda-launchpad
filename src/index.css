@@ -30,7 +30,7 @@
         /* buttons */
         --button-hover: 175 67% 36%;  /* teal darker */
         /* Icons */
-        --icon-bg: var(--cyoda-purple);
+        --icon-bg: var(--cyoda-orange);
         --icon-fg: 0 0% 100%;
 
         --primary-foreground: 0 0% 100%;    /* white text on teal */
@@ -61,7 +61,7 @@
         --button-bg: var(--cyoda-teal);       /* teal */
         --button-fg: 240 10% 3.9%;
 
-        --icon-bg: var(--cyoda-purple);         /* purple */
+        --icon-bg: var(--cyoda-orange);         /* orange */
         --icon-fg: 0 0% 100%;
         --secondary: 220 10% 18%;
         --secondary-foreground: 220 20% 96%;

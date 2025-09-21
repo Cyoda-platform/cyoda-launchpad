@@ -220,7 +220,7 @@ const HeroSection = () => {
             {/* Subtext */}
             <p className="mobile-text-base text-foreground/90 leading-relaxed max-w-2xl mx-auto">
                 Developer-first application platform for event-driven backends. <br />
-                One developer. Enterprise outcomes.
+                Build the mission-critical systems that other platforms can't.
             </p>
           </div>
 

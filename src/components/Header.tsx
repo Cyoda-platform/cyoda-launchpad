@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { SiGithub, SiLinkedin, SiX, SiYoutube, } from "react-icons/si";
 import { Menu,    X,    ChevronDown} from 'lucide-react';
+import { HashLink } from 'react-router-hash-link'
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -124,13 +125,10 @@ const Header = () => {
 
           {/* Action Buttons */}
           <div className="hidden md:flex items-center space-x-2">
-              <Button
-                  asChild
-                  variant="outline"
-                  className="glow-hover mobile-btn-text"
-              >
-                  <Link to="/support#contact">Contact</Link>
+              <Button asChild variant="outline" className="glow-hover mobile-btn-text">
+                  <HashLink smooth to="/support#contact">Contact</HashLink>
               </Button>
+
             <Button
                 variant="outline"
                 className="glow-hover mobile-btn-text"
