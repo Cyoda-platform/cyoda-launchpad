@@ -27,15 +27,23 @@ const ThreeBenefitsSection = () => {
     ];
 
     return (
-        <section className="py-16 sm:py-20 md:py-24 relative">
+        <section className="py-16 sm:py-20 md:py-24 relative ">
+
+            {/* Hero text wrapper */}
+            <div className="max-w-3xl mx-auto text-center">
+                <h1 className="text-4xl md:text-5xl font-semibold tracking-tight">
+                    Financial-Grade Systems For Every Enterprise Backend
+                </h1>
+
+                <p className="mt-4 mb-8 text-muted-foreground">
+                    Event-Driven Developer-first application platform <br />
+                    Build the mission-critical systems that other platforms can’t.
+                </p>
+            </div>
             <div className="absolute inset-0 texture-overlay opacity-30" />
 
             <div className="container mx-auto px-4 relative z-10">
-                <div className="text-center mb-12 sm:mb-16">
-                    <h2 className="mobile-text-3xl font-bold text-foreground">
-                        Why clients choose Cyoda
-                    </h2>
-                </div>
+
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
                     {benefits.map((b, i) => (

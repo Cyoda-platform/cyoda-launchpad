@@ -200,7 +200,7 @@ const HeroSection = () => {
 
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden py-20">
+    <section className="relative max-h-screen flex items-center justify-center overflow-hidden py-20">
       {/* Background with texture overlay */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-60"
@@ -212,15 +212,10 @@ const HeroSection = () => {
       <div className="relative z-10 container mx-auto px-4 text-center">
         <div className="max-w-4xl mx-auto space-y-6">
           {/* Hero headline */}
-          <div className="space-y-4">
-            <h1 className="mobile-text-4xl font-bold leading-tight text-foreground">
-                Problem → Prototype → Production
-            </h1>
-
+          <div className="space-y-2">
             {/* Subtext */}
             <p className="mobile-text-base text-foreground/90 leading-relaxed max-w-2xl mx-auto">
-                Developer-first application platform for event-driven backends. <br />
-                Build the mission-critical systems that other platforms can't.
+               Build your prototype in minutes
             </p>
           </div>
 
