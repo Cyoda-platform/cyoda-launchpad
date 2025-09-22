@@ -32,7 +32,7 @@ const ThreeBenefitsSection = () => {
             {/* Hero text wrapper */}
             <div className="max-w-3xl mx-auto text-center">
                 <h1 className="text-4xl md:text-5xl font-semibold tracking-tight">
-                    Financial-Grade Systems For Enterprise Backend
+                    Financial-Grade Systems For Enterprise Backends
                 </h1>
 
                 <p className="mt-4 mb-8 text-muted-foreground">
