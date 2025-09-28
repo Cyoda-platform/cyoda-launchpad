@@ -11,15 +11,11 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       <Header />
       <main>
-          <ThreeBenefitsSection
-              renderHeadings={true}
-              h1="Financial-Grade Systems For Enterprise Backends"
-              h2="Event-Driven Developer-first application platform"
-              h3="Build the mission-critical systems that other platforms can’t."
-          />
-          <HeroSection />
-        <ThreeStepSection />
-        <EcosystemSection />
+          <HeroSection renderHeadings={true} h1="Build scalable event-driven applications" h2="As easy as talking to an AI assistant" h3="Build the mission-critical systems that other platforms can’t.">
+          </HeroSection>
+          <ThreeStepSection />
+          <EcosystemSection />
+          <ThreeBenefitsSection renderHeadings={false} />
         <DeveloperReliabilitySection />
       </main>
       <Footer />

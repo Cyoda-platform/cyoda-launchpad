@@ -16,6 +16,8 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 
 // Lazy load components for better performance
 const Index = lazy(() => import("./pages/Index"));
+const Dev = lazy(() => import("./pages/Dev"));
+const Cto = lazy(() => import("./pages/Cto"));
 const Products = lazy(() => import("./pages/Products"));
 const Pricing = lazy(() => import("./pages/Pricing"));
 const Blog = lazy(() => import("./pages/Blog"));
@@ -80,7 +82,9 @@ const App = () => {
                   <Route path="/cookie-policy" element={<CookiePolicy />} />
                   <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                   <Route path="/terms-of-service" element={<TermsOfService />} />
-                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                    <Route path="/dev" element={<Dev />} />
+                    <Route path="/cto" element={<Cto />} />
+                    {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </Suspense>

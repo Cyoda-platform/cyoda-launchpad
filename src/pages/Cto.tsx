@@ -15,8 +15,7 @@ const Index = () => {
               renderHeadings={true}
               h1="Financial-Grade Systems For Enterprise Backends"
               h2="Event-Driven Developer-first application platform"
-              h3="Build the mission-critical systems that other platforms can’t."
-          />
+              h3="Build the mission-critical systems that other platforms can’t."/>
           <HeroSection />
         <ThreeStepSection />
         <EcosystemSection />

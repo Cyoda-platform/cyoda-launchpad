@@ -1,7 +1,22 @@
 // src/components/ThreeBenefitsSection.tsx
+import * as React from "react";
 import { GaugeCircle, Layers3, ShieldCheck } from "lucide-react";
 
-const ThreeBenefitsSection = () => {
+type BenefitsProps = {
+    renderHeadings?: boolean; // CTO/Index: true, Dev: false
+    h1?: string;
+    h2?: string;
+    h3?: string;
+    className?: string;
+};
+
+const ThreeBenefitsSection: React.FC<BenefitsProps> = ({
+                                                           renderHeadings = false,
+                                                           h1,
+                                                           h2,
+                                                           h3,
+                                                           className = "",
+                                                       }) => {
     const benefits = [
         {
             icon: GaugeCircle,
@@ -27,24 +42,28 @@ const ThreeBenefitsSection = () => {
     ];
 
     return (
-        <section className="py-16 sm:py-20 md:py-24 relative ">
+        <section className={`py-16 sm:py-20 md:py-24 relative ${className}`}>
+            {/* Optional headings for CTO/Index only */}
 
-            {/* Hero text wrapper */}
-            <div className="max-w-3xl mx-auto text-center">
-                <h1 className="text-4xl md:text-5xl font-semibold tracking-tight">
-                    Financial-Grade Systems For Enterprise Backends
-                </h1>
+            {renderHeadings && (
+                <div className="max-w-3xl mx-auto text-center">
+                    {h1 && (
+                        <h1 className="text-4xl md:text-5xl font-semibold tracking-tight">
+                            {h1}
+                        </h1>
+                    )}
+                    {(h2 || h3) && (
+                        <div className="mt-4 mb-8 text-muted-foreground space-y-1">
+                            {h2 && <p className="text-base md:text-lg">{h2}</p>}
+                            {h3 && <p className="text-sm md:text-base">{h3}</p>}
+                        </div>
+                    )}
+                </div>
+            )}
 
-                <p className="mt-4 mb-8 text-muted-foreground">
-                    Event-Driven Developer-first application platform <br />
-                    Build the mission-critical systems that other platforms can’t.
-                </p>
-            </div>
             <div className="absolute inset-0 texture-overlay opacity-30" />
 
             <div className="container mx-auto px-4 relative z-10">
-
-
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
                     {benefits.map((b, i) => (
                         <div

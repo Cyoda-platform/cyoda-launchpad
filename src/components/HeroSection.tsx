@@ -7,10 +7,24 @@ import { heroPhrases } from '@/data/HeroPhrases';
 import heroBackgroundDark from '@/assets/hero-bg.jpg';
 import heroBackgroundLight from '@/assets/hero-bg-lm.png';
 import {ArrowBigRightIcon} from "lucide-react";
-
-const HeroSection = () => {
-  const { theme } = useTheme();
-  const prebakedExamples = [
+import * as React from "react";
+// HeroSection.tsx
+type HeroProps = {
+    renderHeadings?: boolean;   // default false
+    h1?: string;
+    h2?: string;
+    h3?: string;
+    className?: string;
+    // ...existing props
+};
+const HeroSection: React.FC<HeroProps> = ({
+                                 renderHeadings = false,
+                                 h1,
+                                 h2,
+                                 h3,
+                                          }) => {
+    const { theme } = useTheme();
+    const prebakedExamples = [
     {
       name: "Order & Inventory Tracking",
       prompt: "Build an order and inventory tracking service for a multi-channel retailer. Capture structured orders, track product stock levels, manage fulfilment, and provide audit and reporting.\n" +
@@ -198,7 +212,6 @@ const HeroSection = () => {
 	    window.open(`https://ai.cyoda.net/?name=${encoded}`, '_blank');
 	  };
 
-
   return (
     <section className="relative max-h-screen flex items-center justify-center overflow-hidden py-20">
       {/* Background with texture overlay */}
@@ -211,7 +224,22 @@ const HeroSection = () => {
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 text-center">
         <div className="max-w-4xl mx-auto space-y-6">
-          {/* Hero headline */}
+          {/* Hero headline here */}
+            {renderHeadings && (
+                <div className="max-w-3xl mx-auto text-center">
+                    {h1 && (
+                        <h1 className="text-4xl md:text-5xl font-semibold tracking-tight">
+                            {h1}
+                        </h1>
+                    )}
+                    {(h2 || h3) && (
+                        <div className="mt-4 mb-8 text-muted-foreground space-y-1">
+                            {h2 && <p className="text-base md:text-lg">{h2}</p>}
+                            {h3 && <p className="text-sm md:text-base">{h3}</p>}
+                        </div>
+                    )}
+                </div>
+            )}
           <div className="space-y-2">
             {/* Subtext */}
             <p className="mobile-text-base text-foreground/90 leading-relaxed max-w-2xl mx-auto">
