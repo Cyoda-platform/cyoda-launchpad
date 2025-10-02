@@ -11,8 +11,29 @@ import {
     ShieldCheck, Boxes, Workflow
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { trackCtaConversion } from '@/utils/analytics';
 
 const Products = () => {
+    const handleStartBuildingClick = () => {
+      trackCtaConversion({
+        location: "hero",
+        page_variant: "products",
+        cta: "start_building",
+        url: "https://ai.cyoda.net"
+      });
+      window.open('https://ai.cyoda.net', '_blank');
+    };
+
+    const handleTryNowClick = () => {
+      trackCtaConversion({
+        location: "cta_section",
+        page_variant: "products",
+        cta: "try_now",
+        url: "https://ai.cyoda.net"
+      });
+      window.open('https://ai.cyoda.net', '_blank');
+    };
+
     const features = [
         {
             icon: Database,
@@ -86,7 +107,7 @@ const Products = () => {
               <Button
                 size="lg"
                 className="bg-button text-primary-foreground text-lg px-8 py-4"
-                onClick={() => window.open('https://ai.cyoda.net', '_blank')}
+                onClick={handleStartBuildingClick}
               >
                 Start Building Today
               </Button>
@@ -190,7 +211,7 @@ const Products = () => {
             <Button
               size="lg"
               className="bg-button text-primary-foreground text-lg px-8 py-4 mr-4"
-              onClick={() => window.open('https://ai.cyoda.net', '_blank')}
+              onClick={handleTryNowClick}
             >
               Try Now
             </Button>

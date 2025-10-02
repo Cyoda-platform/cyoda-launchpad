@@ -3,7 +3,8 @@ import { render, waitFor } from '@testing-library/react';
 import { AnalyticsManager } from '@/components/AnalyticsManager';
 
 // Get the actual measurement ID from the test environment
-const testMeasurementId = process.env.VITE_GA_MEASUREMENT_ID || 'G-FALLBACK';
+// This is set in tests/setup.ts via vi.stubGlobal
+const testMeasurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
 
 // Mock the analytics service
 vi.mock('@/lib/analytics', () => {
@@ -27,13 +28,6 @@ vi.mock('@/lib/analytics', () => {
 const mockUseTrackingPermissions = vi.fn();
 vi.mock('@/hooks/use-cookie-consent', () => ({
   useTrackingPermissions: () => mockUseTrackingPermissions()
-}));
-
-// Mock import.meta.env
-vi.mock('import.meta', () => ({
-  env: {
-    VITE_GA_MEASUREMENT_ID: testMeasurementId
-  }
 }));
 
 // Import the mocked analytics service for type checking

@@ -60,6 +60,29 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
+## Features
+
+### UTM Tracking and Conversion Analytics
+
+The application includes a comprehensive UTM tracking and conversion system that enables campaign attribution and ROI analysis:
+
+- **Automatic UTM Parameter Capture**: Captures marketing campaign parameters from URLs
+- **Session Persistence**: Maintains attribution data throughout the user's session
+- **Conversion Tracking**: Tracks conversions with complete attribution data and time-to-conversion metrics
+- **Cookie Consent Compliance**: Respects user privacy preferences and GDPR requirements
+
+For detailed usage instructions, see the [UTM Tracking Guide](./docs/utm_tracking_guide.md).
+
+### Cookie Consent System
+
+EU/GDPR-compliant cookie consent management with granular category controls:
+
+- Essential, Analytics, Marketing, and Personalization categories
+- Persistent consent preferences with 12-month expiration
+- Audit logging for compliance reporting
+
+For compliance guidelines, see the [Cookie Compliance Guide](./docs/cookie_compliance_guide.md).
+
 ## How can I deploy this project?
 
 Simply open [Lovable](https://lovable.dev/projects/bdd693b9-9f12-4fb0-9c5c-e97e71bee1a6) and click on Share -> Publish.

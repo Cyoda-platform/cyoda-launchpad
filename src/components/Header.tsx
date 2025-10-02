@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { SiGithub, SiLinkedin, SiX, SiYoutube, } from "react-icons/si";
@@ -14,9 +14,31 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import cyodaLogo from '@/assets/cyoda-logo.png';
+import { trackCtaConversion } from '@/utils/analytics';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+
+  // Determine page variant based on current route
+  const getPageVariant = (): "home" | "dev" | "cto" | "products" | "pricing" => {
+    const path = location.pathname;
+    if (path === '/dev') return 'dev';
+    if (path === '/cto') return 'cto';
+    if (path === '/products') return 'products';
+    if (path === '/pricing') return 'pricing';
+    return 'home';
+  };
+
+  const handleTryNowClick = (locationId: "header" | "header_mobile") => {
+    trackCtaConversion({
+      location: locationId,
+      page_variant: getPageVariant(),
+      cta: "try_now",
+      url: "https://ai.cyoda.net"
+    });
+    window.open('https://ai.cyoda.net', '_blank');
+  };
 
   const socialLinks = [
     { icon: SiLinkedin, href: 'https://www.linkedin.com/company/cyoda', label: 'LinkedIn' },
@@ -132,7 +154,7 @@ const Header = () => {
             <Button
                 variant="outline"
                 className="glow-hover mobile-btn-text"
-              onClick={() => window.open('https://ai.cyoda.net', '_blank')}
+              onClick={() => handleTryNowClick("header")}
             >
               Try Now
             </Button>
@@ -174,12 +196,12 @@ const Header = () => {
             </nav>
 
             <div className="flex flex-col space-y-2 pt-4 border-t border-border/40">
-              <Button variant="outline" className="justify-start mobile-btn-text">
-                Contact (Discord)
+              <Button asChild variant="outline" className="justify-start mobile-btn-text">
+                <HashLink smooth to="/support#contact">Contact</HashLink>
               </Button>
               <Button
                 className="bg-gradient-primary text-white justify-start mobile-btn-text"
-                onClick={() => window.open('https://ai.cyoda.net', '_blank')}
+                onClick={() => handleTryNowClick("header_mobile")}
               >
                 Try Now
               </Button>

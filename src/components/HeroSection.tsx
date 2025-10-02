@@ -1,4 +1,5 @@
 import { useState, useRef, FormEvent } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { useTheme } from 'next-themes';
@@ -8,6 +9,7 @@ import heroBackgroundDark from '@/assets/hero-bg.jpg';
 import heroBackgroundLight from '@/assets/hero-bg-lm.png';
 import {ArrowBigRightIcon} from "lucide-react";
 import * as React from "react";
+import { trackCtaConversion } from '@/utils/analytics';
 // HeroSection.tsx
 type HeroProps = {
     renderHeadings?: boolean;   // default false
@@ -24,6 +26,18 @@ const HeroSection: React.FC<HeroProps> = ({
                                  h3,
                                           }) => {
     const { theme } = useTheme();
+    const location = useLocation();
+
+    // Determine page variant based on current route
+    const getPageVariant = (): "home" | "dev" | "cto" | "products" | "pricing" => {
+      const path = location.pathname;
+      if (path === '/dev') return 'dev';
+      if (path === '/cto') return 'cto';
+      if (path === '/products') return 'products';
+      if (path === '/pricing') return 'pricing';
+      return 'home';
+    };
+
     const prebakedExamples = [
     {
       name: "Order & Inventory Tracking",
@@ -199,7 +213,17 @@ const HeroSection: React.FC<HeroProps> = ({
   // Handle example button clicks
   const handleExampleClick = (example: { name: string; prompt: string }) => {
     const encodedPrompt = encodeURIComponent(example.prompt);
-    window.open(`https://ai.cyoda.net/?name=${encodedPrompt}`, '_blank');
+    const url = `https://ai.cyoda.net/?name=${encodedPrompt}`;
+
+    trackCtaConversion({
+      location: "hero",
+      page_variant: getPageVariant(),
+      cta: "example_click",
+      label: example.name,
+      url: url
+    });
+
+    window.open(url, '_blank');
   };
 
 	  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -209,7 +233,16 @@ const HeroSection: React.FC<HeroProps> = ({
 	      ? `${fixedPrefix}${heroPhrases[typewriterState.currentPhraseIndex] || ''}`
 	      : (textareaRef.current?.value ?? displayValue);
 	    const encoded = encodeURIComponent(valueToSubmit);
-	    window.open(`https://ai.cyoda.net/?name=${encoded}`, '_blank');
+	    const url = `https://ai.cyoda.net/?name=${encoded}`;
+
+	    trackCtaConversion({
+	      location: "hero",
+	      page_variant: getPageVariant(),
+	      cta: "hero_submit",
+	      url: url
+	    });
+
+	    window.open(url, '_blank');
 	  };
 
   return (

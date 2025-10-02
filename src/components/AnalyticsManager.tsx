@@ -9,15 +9,15 @@ import { useEffect, useRef } from 'react';
 import { useTrackingPermissions } from '@/hooks/use-cookie-consent';
 import { analyticsService } from '@/lib/analytics';
 
-// Get GA measurement ID from environment
-const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID;
-
 export function AnalyticsManager() {
   const { canTrackAnalytics } = useTrackingPermissions();
   const initializedRef = useRef(false);
 
   // Initialize analytics on mount
   useEffect(() => {
+    // Get GA measurement ID from environment
+    const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID;
+
     if (!GA_MEASUREMENT_ID || GA_MEASUREMENT_ID === 'undefined') {
       console.warn('[AnalyticsManager] No GA measurement ID found in environment');
       return;

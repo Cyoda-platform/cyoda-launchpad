@@ -9,6 +9,7 @@ import { CookieConsentBanner } from "@/components/CookieConsentBanner";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { AnalyticsManager } from "@/components/AnalyticsManager";
 import { useAnalyticsTracking } from "@/hooks/use-analytics-tracking";
+import { useUtmTracking } from "@/hooks/use-utm-tracking";
 
 import { HelmetProvider } from "react-helmet-async";
 import { Suspense, lazy, useState } from "react";
@@ -43,6 +44,7 @@ const LazyCookiePreferencesModal = lazy(() => import("@/components/CookiePrefere
 // Component to handle analytics tracking inside Router context
 const AnalyticsTracker = () => {
   useAnalyticsTracking();
+  useUtmTracking(); // Capture UTM parameters on app load
   return null;
 };
 

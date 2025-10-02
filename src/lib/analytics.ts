@@ -3,9 +3,11 @@
  * - Integrates with cookie consent system
  * - Respects granted/denied/revoked consent states
  * - Provides clean API for tracking events and page views
+ * - Automatically includes UTM parameters with all events
  */
 
 import ReactGA from 'react-ga4';
+import { getUtmParameters, type UtmParameters } from '@/utils/utm-tracking';
 
 export interface AnalyticsConfig {
   /** GA4 measurement ID (e.g., G-XXXXXXX) */
@@ -25,6 +27,10 @@ export interface AnalyticsService {
   trackPageView: (path?: string, title?: string) => void;
   /** Track a custom event */
   trackEvent: (eventName: string, parameters?: Record<string, unknown>) => void;
+  /** Track a conversion event with UTM parameters */
+  trackConversion: (conversionType: string, destination: string, additionalParams?: Record<string, unknown>) => void;
+  /** Track a landing page view with UTM parameters */
+  trackLandingPageView: (path?: string, title?: string) => void;
   /** Set user consent for analytics */
   setConsent: (granted: boolean) => void;
   /** Disable analytics and clear data */
@@ -131,19 +137,28 @@ class AnalyticsServiceImpl implements AnalyticsService {
 
     try {
       const options: Record<string, unknown> = {};
-      
+
       if (path) {
         options.page_location = path;
       }
-      
+
       if (title) {
         options.page_title = title;
+      }
+
+      // Include UTM parameters if available
+      const utmParams = getUtmParameters();
+      if (utmParams) {
+        Object.assign(options, utmParams);
+        if (this.debug) {
+          console.debug('[analytics] Including UTM parameters in page view:', utmParams);
+        }
       }
 
       ReactGA.send({ hitType: 'pageview', ...options });
 
       if (this.debug) {
-        console.debug('[analytics] Page view tracked:', { path, title });
+        console.debug('[analytics] Page view tracked:', { path, title, utmParams });
       }
     } catch (error) {
       console.error('[analytics] Failed to track page view:', error);
@@ -159,13 +174,120 @@ class AnalyticsServiceImpl implements AnalyticsService {
     }
 
     try {
-      ReactGA.event(eventName, parameters);
+      // Merge UTM parameters with provided parameters
+      // This ensures all events include campaign attribution data when available.
+      //
+      // Merging strategy:
+      // 1. Start with UTM parameters from sessionStorage (if available)
+      // 2. Overlay with explicitly provided parameters
+      // 3. Explicit parameters take precedence (allows override of stored UTM data)
+      //
+      // Example:
+      // - Stored UTM: { utm_source: "google", utm_medium: "cpc" }
+      // - Provided params: { utm_source: "linkedin", location: "hero" }
+      // - Result: { utm_source: "linkedin", utm_medium: "cpc", location: "hero" }
+      const utmParams = getUtmParameters();
+      const mergedParams = utmParams
+        ? { ...utmParams, ...parameters }
+        : parameters;
+
+      if (utmParams && this.debug) {
+        console.debug('[analytics] Including UTM parameters in event:', utmParams);
+      }
+
+      ReactGA.event(eventName, mergedParams);
 
       if (this.debug) {
-        console.debug('[analytics] Event tracked:', eventName, parameters);
+        console.debug('[analytics] Event tracked:', eventName, mergedParams);
       }
     } catch (error) {
       console.error('[analytics] Failed to track event:', error);
+    }
+  }
+
+  trackConversion(conversionType: string, destination: string, additionalParams?: Record<string, unknown>): void {
+    if (!this.initialized || !this.consentGranted) {
+      if (this.debug) {
+        console.debug('[analytics] Cannot track conversion - not initialized or consent not granted');
+      }
+      return;
+    }
+
+    try {
+      // Build conversion parameters
+      const conversionParams: Record<string, unknown> = {
+        conversion_type: conversionType,
+        destination,
+        timestamp: new Date().toISOString(),
+        page_location: window.location.href,
+        page_path: window.location.pathname,
+        ...additionalParams,
+      };
+
+      // Merge UTM parameters (provided params take precedence)
+      const utmParams = getUtmParameters();
+      const mergedParams = utmParams
+        ? { ...utmParams, ...conversionParams }
+        : conversionParams;
+
+      if (utmParams && this.debug) {
+        console.debug('[analytics] Including UTM parameters in conversion:', utmParams);
+      }
+
+      // Track as a specialized conversion event
+      ReactGA.event('conversion', mergedParams);
+
+      if (this.debug) {
+        console.debug('[analytics] Conversion tracked:', { conversionType, destination, params: mergedParams });
+      }
+    } catch (error) {
+      console.error('[analytics] Failed to track conversion:', error);
+    }
+  }
+
+  trackLandingPageView(path?: string, title?: string): void {
+    if (!this.initialized || !this.consentGranted) {
+      if (this.debug) {
+        console.debug('[analytics] Cannot track landing page view - not initialized or consent not granted');
+      }
+      return;
+    }
+
+    try {
+      const options: Record<string, unknown> = {};
+
+      if (path) {
+        options.page_location = path;
+      }
+
+      if (title) {
+        options.page_title = title;
+      }
+
+      // Include referrer information
+      if (document.referrer) {
+        options.referrer = document.referrer;
+      }
+
+      // Include UTM parameters if available
+      const utmParams = getUtmParameters();
+      if (utmParams) {
+        Object.assign(options, utmParams);
+        options.is_landing_page = true;
+
+        if (this.debug) {
+          console.debug('[analytics] Including UTM parameters in landing page view:', utmParams);
+        }
+      }
+
+      // Send as page view with landing page marker
+      ReactGA.send({ hitType: 'pageview', ...options });
+
+      if (this.debug) {
+        console.debug('[analytics] Landing page view tracked:', { path, title, utmParams, referrer: document.referrer });
+      }
+    } catch (error) {
+      console.error('[analytics] Failed to track landing page view:', error);
     }
   }
 

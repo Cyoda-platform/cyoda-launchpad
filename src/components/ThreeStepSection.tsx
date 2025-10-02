@@ -2,9 +2,32 @@
 import { Button } from "@/components/ui/button";
 import { Bot, Code, Rocket } from "lucide-react";
 import { HashLink } from "react-router-hash-link";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { trackCtaConversion } from '@/utils/analytics';
 
 const ThreeStepSection = () => {
+  const location = useLocation();
+
+  // Determine page variant based on current route
+  const getPageVariant = (): "home" | "dev" | "cto" | "products" | "pricing" => {
+    const path = location.pathname;
+    if (path === '/dev') return 'dev';
+    if (path === '/cto') return 'cto';
+    if (path === '/products') return 'products';
+    if (path === '/pricing') return 'pricing';
+    return 'home';
+  };
+
+  const handleTryNowClick = () => {
+    trackCtaConversion({
+      location: "cta_section",
+      page_variant: getPageVariant(),
+      cta: "try_now",
+      url: "https://ai.cyoda.net"
+    });
+    window.open('https://ai.cyoda.net', '_blank');
+  };
+
   const steps = [
     {
       icon: Bot,
@@ -84,13 +107,11 @@ const ThreeStepSection = () => {
         {/* Call to action */}
         <div className="pt-8 flex justify-center">
             <Button
-                asChild
                 size="mobile-lg"
                 className="bg-primary text-primary-foreground mobile-btn-text-lg px-6 py-3 sm:px-8 sm:py-4 min-h-[44px]"
+                onClick={handleTryNowClick}
             >
-                <a href="https://ai.cyoda.net" target="_blank" rel="noopener noreferrer">
-                    Try Now
-                </a>
+                Try Now
             </Button>
         </div>
 

@@ -3,8 +3,30 @@ import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { CheckCircle, X } from 'lucide-react';
 import { HashLink } from "react-router-hash-link";
+import { trackCtaConversion } from '@/utils/analytics';
 
 const Pricing = () => {
+  const handlePricingCardClick = (planName: string) => {
+    trackCtaConversion({
+      location: "pricing_card",
+      page_variant: "pricing",
+      cta: "start_free_trial",
+      label: planName,
+      url: "https://ai.cyoda.net"
+    });
+    window.open('https://ai.cyoda.net', '_blank');
+  };
+
+  const handleCtaSectionClick = () => {
+    trackCtaConversion({
+      location: "cta_section",
+      page_variant: "pricing",
+      cta: "start_free_trial",
+      url: "https://ai.cyoda.net"
+    });
+    window.open('https://ai.cyoda.net', '_blank');
+  };
+
   const plans = [
     {
       name: "Trial",
@@ -177,7 +199,7 @@ const Pricing = () => {
                     ) : (
                         <Button
                             className={`w-full bg-button text-primary-foreground`}
-                            onClick={() => window.open("https://ai.cyoda.net", "_blank")}
+                            onClick={() => handlePricingCardClick(plan.name)}
                         >
                             {plan.cta}
                         </Button>
@@ -238,7 +260,7 @@ const Pricing = () => {
             <Button
               size="lg"
               className="bg-button text-primary-foreground text-lg px-8 py-4"
-              onClick={() => window.open('https://ai.cyoda.net', '_blank')}
+              onClick={handleCtaSectionClick}
             >
               Start Free Trial
             </Button>

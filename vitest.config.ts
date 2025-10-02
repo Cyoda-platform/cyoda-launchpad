@@ -16,6 +16,14 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  define: {
+    'import.meta.env.VITE_GA_MEASUREMENT_ID': JSON.stringify('G-TEST123456'),
+    'import.meta.env.MODE': JSON.stringify('test'),
+    'import.meta.env.BASE_URL': JSON.stringify('/'),
+    'import.meta.env.DEV': false,
+    'import.meta.env.PROD': false,
+    'import.meta.env.SSR': false,
+  },
   esbuild: {
     jsx: 'automatic',
   },
