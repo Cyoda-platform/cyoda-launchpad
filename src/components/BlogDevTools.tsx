@@ -193,7 +193,8 @@ function BlogDevToolsContent() {
 
         {/* Instructions */}
         <div className="text-xs text-muted-foreground space-y-1">
-          <p>• Add new .md files to src/docs/blogs/ directory</p>
+          <p>• Add new .md files to public/docs/blogs/ directory</p>
+          <p>• Update public/docs/blogs/manifest.json with new filenames</p>
           <p>• Use "Refresh All" after adding/modifying blog files</p>
           <p>• Auto-refresh helps during active development</p>
           <p>• This component only appears in development mode</p>

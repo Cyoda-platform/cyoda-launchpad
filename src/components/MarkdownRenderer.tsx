@@ -13,11 +13,11 @@ interface MarkdownRendererProps {
 
 // Map markdown-relative image paths to actual Vite-served asset URLs
 const blogAssets = import.meta.glob(
-  '/src/docs/blogs/**/*.{png,jpg,jpeg,webp,svg,gif}',
+  '/public/docs/blogs/**/*.{png,jpg,jpeg,webp,svg,gif}',
   { eager: true, query: '?url', import: 'default' }
 ) as Record<string, string>;
 const guideAssets = import.meta.glob(
-  '/src/docs/guides/**/*.{png,jpg,jpeg,webp,svg,gif}',
+  '/public/docs/guides/**/*.{png,jpg,jpeg,webp,svg,gif}',
   { eager: true, query: '?url', import: 'default' }
 ) as Record<string, string>;
 const assetMap: Record<string, string> = { ...blogAssets, ...guideAssets };
@@ -35,8 +35,8 @@ function resolveMarkdownImageSrc(src?: string): string | undefined {
   // Normalize leading './' or '/'
   const rel = src.replace(/^\.\/+/, '').replace(/^\//, '');
   const candidates = [
-    `/src/docs/blogs/${rel}`,
-    `/src/docs/guides/${rel}`,
+    `/public/docs/blogs/${rel}`,
+    `/public/docs/guides/${rel}`,
   ];
   for (const key of candidates) {
     if (assetMap[key]) {
@@ -51,8 +51,8 @@ function resolveMarkdownImageSrc(src?: string): string | undefined {
   }
   // Fallback: try suffix match across known assets (helps when markdown omits folder prefix)
   const suffix = '/' + rel.replace(/^.*\//, ''); // just the filename
-  const blogMatch = Object.keys(assetMap).find(k => k.startsWith('/src/docs/blogs/') && k.endsWith(suffix));
-  const guideMatch = Object.keys(assetMap).find(k => k.startsWith('/src/docs/guides/') && k.endsWith(suffix));
+  const blogMatch = Object.keys(assetMap).find(k => k.startsWith('/public/docs/blogs/') && k.endsWith(suffix));
+  const guideMatch = Object.keys(assetMap).find(k => k.startsWith('/public/docs/guides/') && k.endsWith(suffix));
   const matchKey = blogMatch || guideMatch;
   if (matchKey) {
     const url = assetMap[matchKey];

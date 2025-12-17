@@ -64,7 +64,7 @@ function validateTags(tags) {
 }
 
 async function generateBlogIndex() {
-  const blogsDir = path.join(__dirname, '../src/docs/blogs');
+  const blogsDir = path.join(__dirname, '../public/docs/blogs');
   const outputPath = path.join(__dirname, '../src/data/blog-index.json');
   
   console.log('🔍 Scanning for blog posts...');

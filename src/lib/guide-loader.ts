@@ -17,8 +17,8 @@ let cacheTimestamp: number = 0;
 const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes in development
 
 /**
- * Load all markdown files from the guides directory using Vite's glob import
- * This approach works in both development and production builds
+ * Load all markdown files from the public/docs/guides directory via HTTP
+ * Files are fetched from /docs/guides/ which maps to public/docs/guides/
  */
 async function loadMarkdownFiles(): Promise<Record<string, string>> {
   try {
@@ -30,22 +30,26 @@ async function loadMarkdownFiles(): Promise<Record<string, string>> {
 
     const files: Record<string, string> = {};
 
-    // Use Vite's glob import to dynamically load all markdown files
-    // This works in both development and production builds
-    const modules = import.meta.glob('/src/docs/guides/*.md', {
-      query: '?raw',
-      import: 'default',
-      eager: false
-    });
+    // Fetch the manifest file to get the list of available guides
+    const manifestResponse = await fetch('/docs/guides/manifest.json');
+    if (!manifestResponse.ok) {
+      throw new Error(`Failed to fetch manifest: ${manifestResponse.statusText}`);
+    }
 
-    // Load all markdown files
-    const loadPromises = Object.entries(modules).map(async ([path, importFn]) => {
+    const filenames: string[] = await manifestResponse.json();
+
+    // Fetch all markdown files in parallel
+    const loadPromises = filenames.map(async (filename) => {
       try {
-        const content = await importFn();
-        const filename = path.split('/').pop() || path;
-        files[filename] = content as string;
+        const response = await fetch(`/docs/guides/${filename}`);
+        if (!response.ok) {
+          console.error(`Error loading markdown file ${filename}: ${response.statusText}`);
+          return;
+        }
+        const content = await response.text();
+        files[filename] = content;
       } catch (error) {
-        console.error(`Error loading markdown file ${path}:`, error);
+        console.error(`Error loading markdown file ${filename}:`, error);
         // Continue loading other files even if one fails
       }
     });
@@ -60,28 +64,21 @@ async function loadMarkdownFiles(): Promise<Record<string, string>> {
   } catch (error) {
     console.error('Error loading markdown files:', error);
 
-    // Fallback: try to load the known files directly
+    // Fallback: try to load a known file directly
     try {
-      const [helloWorldGuide, omsGuide] = await Promise.all([
-        import('/src/docs/guides/building_hello_world_app.md?raw').catch(() => null),
-        import('/src/docs/guides/cyoda_oms_guide.md?raw').catch(() => null)
-      ]);
-
-      const fallbackFiles: Record<string, string> = {};
-      if (helloWorldGuide) {
-        fallbackFiles['building_hello_world_app.md'] = helloWorldGuide.default;
+      const response = await fetch('/docs/guides/building_hello_world_app.md');
+      if (response.ok) {
+        const content = await response.text();
+        return {
+          'building_hello_world_app.md': content
+        };
       }
-      if (omsGuide) {
-        fallbackFiles['cyoda_oms_guide.md'] = omsGuide.default;
-      }
-
-      return fallbackFiles;
     } catch (fallbackError) {
       console.error('Fallback loading also failed:', fallbackError);
-
-      // Last resort: return empty object
-      return {};
     }
+
+    // Last resort: return empty object
+    return {};
   }
 }
 
@@ -96,7 +93,7 @@ export async function loadGuides(): Promise<Guide[]> {
     const markdownFiles = await loadMarkdownFiles();
 
     if (Object.keys(markdownFiles).length === 0) {
-      console.warn('No markdown files found in src/docs/guides directory');
+      console.warn('No markdown files found in /docs/guides directory');
       return [];
     }
 

@@ -253,7 +253,7 @@ export function getBlogCacheStatus(): { cached: boolean; age: number; fileCount:
 import fs from 'fs';
 import path from 'path';
 
-const BLOGS_DIRECTORY = path.join(process.cwd(), 'src/docs/blogs');
+const BLOGS_DIRECTORY = path.join(process.cwd(), 'public/docs/blogs');
 
 export async function loadBlogPostsFromFiles(): Promise<BlogPost[]> {
   const posts: BlogPost[] = [];

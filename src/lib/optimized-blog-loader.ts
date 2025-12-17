@@ -40,25 +40,28 @@ async function loadBlogIndex(): Promise<BlogIndex> {
   }
 
   try {
-    // In a real implementation, this would load a pre-generated JSON index
-    // For now, we'll generate it on-demand but cache it
-    const modules = import.meta.glob('/src/docs/blogs/*.md', {
-      query: '?raw',
-      import: 'default',
-      eager: false
-    });
+    // Fetch the manifest file to get the list of available blog posts
+    const manifestResponse = await fetch('/docs/blogs/manifest.json');
+    if (!manifestResponse.ok) {
+      throw new Error(`Failed to fetch manifest: ${manifestResponse.statusText}`);
+    }
 
+    const filenames: string[] = await manifestResponse.json();
     const index: BlogIndex = {};
-    
+
     // Load only frontmatter for index generation
-    const indexPromises = Object.entries(modules).map(async ([path, importFn]) => {
+    const indexPromises = filenames.map(async (filename) => {
       try {
-        const content = await importFn() as string;
-        const filename = path.split('/').pop() || path;
-        
+        const response = await fetch(`/docs/blogs/${filename}`);
+        if (!response.ok) {
+          console.error(`Error loading markdown file ${filename}: ${response.statusText}`);
+          return;
+        }
+        const content = await response.text();
+
         // Parse only frontmatter and first few lines for excerpt
         const processed = processBlogPost(filename, content);
-        
+
         index[filename] = {
           slug: processed.slug,
           title: processed.frontmatter.title,
@@ -74,7 +77,7 @@ async function loadBlogIndex(): Promise<BlogIndex> {
           image: processed.frontmatter.image,
         };
       } catch (error) {
-        console.error(`Error processing ${path} for index:`, error);
+        console.error(`Error processing ${filename} for index:`, error);
       }
     });
 
@@ -130,10 +133,13 @@ export async function loadBlogPost(slug: string): Promise<BlogPost | null> {
     }
 
     const [filename] = entry;
-    
+
     // Load the specific file
-    const module = await import(`/src/docs/blogs/${filename}?raw`);
-    const content = module.default;
+    const response = await fetch(`/docs/blogs/${filename}`);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch ${filename}: ${response.statusText}`);
+    }
+    const content = await response.text();
     
     const processed = processBlogPost(filename, content);
     const blogPost: BlogPost = {
