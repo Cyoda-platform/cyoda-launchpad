@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <title>Cyoda | LLM Readable Overview</title>
+  <meta name="description" content="Cyoda is a developer-first, event-driven application platform built around an entity database and state-machine workflows, with an AI assistant for faster delivery." />
+  <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
+
+  <!-- Canonical -->
+  <link rel="canonical" href="https://cyoda.com/llm" />
+
+  <!-- Helpful discovery for tools that support it -->
+  <link rel="alternate" type="text/plain" href="https://cyoda.com/llms.txt" title="LLM Context (llms.txt)" />
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="https://cyoda.com/sitemap.xml" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Cyoda | LLM Readable Overview" />
+  <meta property="og:description" content="Developer-first event-driven platform with entity database, state-machine workflows, and an AI assistant." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://cyoda.com/llm" />
+
+  <style>
+    :root { color-scheme: light dark; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif; line-height: 1.55; margin: 0; }
+    main { max-width: 980px; margin: 0 auto; padding: 32px 20px 64px; }
+    header { margin-bottom: 18px; }
+    h1 { font-size: 2rem; margin: 0 0 6px; }
+    p, li { font-size: 1rem; }
+    .meta { opacity: 0.8; font-size: 0.95rem; }
+    .card { border: 1px solid rgba(127,127,127,0.25); border-radius: 14px; padding: 16px 16px; margin: 14px 0; }
+    .grid { display: grid; gap: 14px; grid-template-columns: 1fr; }
+    @media (min-width: 860px) { .grid { grid-template-columns: 1fr 1fr; } }
+    code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    a { text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .pill { display: inline-block; padding: 3px 10px; border-radius: 999px; border: 1px solid rgba(127,127,127,0.25); margin: 4px 6px 0 0; font-size: 0.9rem; }
+    .small { font-size: 0.95rem; opacity: 0.9; }
+    footer { margin-top: 34px; opacity: 0.85; }
+  </style>
+
+  <!-- Lightweight structured data -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"SoftwareApplication",
+    "name":"Cyoda",
+    "applicationCategory":"DeveloperApplication",
+    "operatingSystem":"Cloud",
+    "description":"Developer-first event-driven application platform with an entity database, state-machine workflows, and an AI assistant to accelerate delivery of scalable systems.",
+    "url":"https://cyoda.com",
+    "sameAs":["https://docs.cyoda.net/"]
+  }
+  </script>
+</head>
+
+<body>
+<main>
+  <header>
+    <h1>Cyoda Platform</h1>
+    <div class="meta">
+      LLM-readable overview page (static HTML). For the machine-readable index, see
+      <a href="https://cyoda.com/llms.txt">llms.txt</a>.
+    </div>
+  </header>
+
+  <section class="card">
+    <h2>What Cyoda is</h2>
+    <p>
+      Cyoda is a <strong>developer-first, event-driven application platform</strong> built around an
+      <strong>entity database</strong> and <strong>state-machine workflows</strong>, designed to help teams build
+      reliable, scalable systems without assembling excessive “glue code” across databases, queues, and workflow engines.
+      Cyoda also includes an <strong>AI assistant</strong> to speed up solution design, implementation, and iteration.
+    </p>
+    <div class="small">
+      Primary references: <a href="https://cyoda.com">cyoda.com</a> · <a href="https://docs.cyoda.net">docs.cyoda.net</a> · <a href="https://cyoda.com/llms.txt">llms.txt</a>
+    </div>
+  </section>
+
+  <section class="grid">
+    <div class="card">
+      <h2>Core ideas</h2>
+      <ul>
+        <li><strong>Event-driven by default:</strong> architecture oriented around events and state transitions.</li>
+        <li><strong>Entity database:</strong> entity-centric modeling that keeps state + lifecycle central.</li>
+        <li><strong>Workflows as first-class:</strong> state machines for long-running orchestration and automation.</li>
+        <li><strong>Reliability:</strong> strong emphasis on correctness, availability, and operational simplicity.</li>
+        <li><strong>AI assistance:</strong> accelerate building, iterating, and operating systems.</li>
+      </ul>
+      <div>
+        <span class="pill">Event-driven</span>
+        <span class="pill">Entity database</span>
+        <span class="pill">State machines</span>
+        <span class="pill">Workflows</span>
+        <span class="pill">AI assistant</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Who it’s for</h2>
+      <ul>
+        <li>Backend engineers and architects building complex, distributed systems</li>
+        <li>Teams modernizing legacy “workflow + integration + database” stacks</li>
+        <li>Organizations that want faster delivery without losing enterprise-grade reliability</li>
+        <li>Builders exploring agentic/AI-driven applications with strong state + auditability</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Best starting points</h2>
+    <ul>
+      <li><a href="https://docs.cyoda.net">Documentation</a> (APIs, guides, onboarding)</li>
+      <li><a href="https://cyoda.com/llms.txt">llms.txt</a> (curated technical deep dives, raw markdown)</li>
+      <li><a href="https://cyoda.com/sitemap.xml">sitemap.xml</a> (crawlable discovery)</li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Technical deep dives (raw markdown)</h2>
+
+    <h3>Platform overview</h3>
+    <ul>
+      <li><a href="https://cyoda.com/docs/blogs/A_Technical_Description_of_the_Cyoda_Platform.md">A Technical Description of the Cyoda Platform</a></li>
+      <li><a href="https://cyoda.com/docs/blogs/from-banking-systems-to-saas.md">From Banking Systems to SaaS: Why Cyoda Exists</a></li>
+      <li><a href="https://cyoda.com/docs/blogs/cyoda_comparison_by_category.md">Cyoda Platform Comparison Overview</a></li>
+      <li><a href="https://cyoda.com/docs/blogs/the-future-of-cyoda-cloud.md">The Future of Cyoda: Cloud-Native Entity Databases</a></li>
+    </ul>
+
+    <h3>Core concepts</h3>
+    <ul>
+      <li><a href="https://cyoda.com/docs/blogs/Whats_an_Entity_Database.md">What’s an Entity Database?</a></li>
+      <li><a href="https://cyoda.com/docs/blogs/beyond-traditional-databases.md">Beyond Traditional Databases: Why Entity-Centric Architecture Matters</a></li>
+      <li><a href="https://cyoda.com/docs/blogs/Entity_Workflows_for_Event-Driven_Architectures.md">Entity Workflows for Event-Driven Architectures</a></li>
+    </ul>
+
+    <h3>Architecture &amp; design</h3>
+    <ul>
+      <li><a href="https://cyoda.com/docs/blogs/event-context-sharding.md">Event-Context Sharding vs. Traditional Sharding</a></li>
+      <li><a href="https://cyoda.com/docs/blogs/designing-for-high-availability.md">Designing for High-Availability in Distributed Systems</a></li>
+      <li><a href="https://cyoda.com/docs/blogs/when-transactions-meet-workflows.md">When Transactions Meet Workflows: Building Reliable Systems Without Glue Code</a></li>
+      <li><a href="https://cyoda.com/docs/blogs/asynchronous-workflow-automation.md">Asynchronous Workflow Automation: State Machines as First-Class Citizens</a></li>
+    </ul>
+
+    <h3>Data &amp; querying</h3>
+    <ul>
+      <li><a href="https://cyoda.com/docs/blogs/querying-the-past.md">Querying the Past: Point-in-Time Data Access at Scale</a></li>
+      <li><a href="https://cyoda.com/docs/blogs/distributed-reporting-without-data-lakes.md">Distributed Reporting Without Data Lakes</a></li>
+    </ul>
+
+    <h3>AI &amp; applications</h3>
+    <ul>
+      <li><a href="https://cyoda.com/docs/blogs/agentic-ai-with-cyoda.md">Building Agentic AI Applications with Cyoda Online Platform</a></li>
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Short positioning copy (safe, non-hypey)</h2>
+    <p>
+      Cyoda helps teams build event-driven systems by making entities and their workflows first-class, so state,
+      orchestration, and reliability live in one coherent model. The platform is designed to reduce integration
+      complexity across data, workflows, and distributed processing, and it provides AI assistance to accelerate
+      prototyping and delivery while preserving operational discipline.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>Notes for crawlers and LLMs</h2>
+    <ul>
+      <li>This page is intentionally static and contains the primary readable summary in the HTML body.</li>
+      <li>The main marketing site at <a href="https://cyoda.com">/</a> may render content client-side; if you do not execute JavaScript, use this page and <a href="https://cyoda.com/llms.txt">llms.txt</a>.</li>
+      <li>Raw markdown posts are listed above for direct ingestion.</li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>
+      © Cyoda — <a href="https://cyoda.com">Main site</a> · <a href="https://docs.cyoda.net">Docs</a> · <a href="https://cyoda.com/llms.txt">llms.txt</a>
+    </p>
+  </footer>
+</main>
+</body>
+</html>
