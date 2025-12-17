@@ -1,6 +1,5 @@
 import { BlogPost, BlogPostPreview } from '@/types/blog';
 import { processBlogPost, createBlogPostPreview } from './markdown';
-import { logBlogPostsLoad, logMarkdownProcessing, logCacheOperation } from '@/lib/logger';
 
 // Since we're in a browser environment, we'll need to handle file loading differently
 // For now, we'll create a system that can be easily extended to work with a build-time
