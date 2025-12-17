@@ -5,7 +5,8 @@ import { HashLink } from "react-router-hash-link";
 import { Link, useLocation } from "react-router-dom";
 import { trackCtaConversion } from '@/utils/analytics';
 
-const ThreeStepSection = () => {
+const
+    ThreeStepSection = () => {
   const location = useLocation();
 
   // Determine page variant based on current route
