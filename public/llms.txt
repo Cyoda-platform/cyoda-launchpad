@@ -1,0 +1,32 @@
+# Cyoda Platform
+
+> Cyoda is a Scalable Event-Driven Architecture with Entity Database & AI Assistant.
+
+- [Main Website](https://cyoda.com)
+- [Documentation](https://docs.cyoda.net)
+
+## Technical Deep Dives (Raw Markdown)
+
+### Platform Overview
+- [A Technical Description of the Cyoda Platform](https://cyoda.com/docs/blogs/A_Technical_Description_of_the_Cyoda_Platform.md)
+- [From Banking Systems to SaaS: Why Cyoda Exists](https://cyoda.com/docs/blogs/from-banking-systems-to-saas.md)
+- [Cyoda Platform Comparison Overview](https://cyoda.com/docs/blogs/cyoda_comparison_by_category.md)
+- [The Future of Cyoda: Cloud-Native Entity Databases](https://cyoda.com/docs/blogs/the-future-of-cyoda-cloud.md)
+
+### Core Concepts
+- [What's an Entity Database?](https://cyoda.com/docs/blogs/Whats_an_Entity_Database.md)
+- [Beyond Traditional Databases: Why Entity-Centric Architecture Matters](https://cyoda.com/docs/blogs/beyond-traditional-databases.md)
+- [Entity Workflows for Event-Driven Architectures](https://cyoda.com/docs/blogs/Entity_Workflows_for_Event-Driven_Architectures.md)
+
+### Architecture & Design
+- [Event-Context Sharding vs. Traditional Sharding](https://cyoda.com/docs/blogs/event-context-sharding.md)
+- [Designing for High-Availability in Distributed Systems: Lessons from Cyoda](https://cyoda.com/docs/blogs/designing-for-high-availability.md)
+- [When Transactions Meet Workflows: Building Reliable Systems Without Glue Code](https://cyoda.com/docs/blogs/when-transactions-meet-workflows.md)
+- [Asynchronous Workflow Automation: State Machines as First-Class Citizens](https://cyoda.com/docs/blogs/asynchronous-workflow-automation.md)
+
+### Data & Querying
+- [Querying the Past: Point-in-Time Data Access at Scale](https://cyoda.com/docs/blogs/querying-the-past.md)
+- [Distributed Reporting Without Data Lakes](https://cyoda.com/docs/blogs/distributed-reporting-without-data-lakes.md)
+
+### AI & Applications
+- [Building Agentic AI Applications with Cyoda Online Platform](https://cyoda.com/docs/blogs/agentic-ai-with-cyoda.md)
