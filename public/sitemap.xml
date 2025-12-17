@@ -14,9 +14,16 @@
     <lastmod>2025-12-17</lastmod>
   </url>
     <url>
-        <loc>https://cyoda.com/llm</loc>
+        <loc>https://cyoda.com/llm/</loc>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
+        <lastmod>2025-12-17</lastmod>
+    </url>
+    <!-- LLM Discovery -->
+    <url>
+        <loc>https://cyoda.com/llms.txt</loc>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
         <lastmod>2025-12-17</lastmod>
     </url>
   <url>
@@ -283,12 +290,6 @@
     <lastmod>2025-12-17</lastmod>
   </url>
 
-  <!-- LLM Discovery -->
-  <url>
-    <loc>https://cyoda.com/llms.txt</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <lastmod>2025-12-17</lastmod>
-  </url>
+
 
 </urlset>
