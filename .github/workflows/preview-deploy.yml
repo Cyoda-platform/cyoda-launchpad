@@ -1,0 +1,128 @@
+name: 🚀 Deploy Preview Site
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to deploy (leave empty to use current branch)'
+        required: false
+        default: ''
+      environment_name:
+        description: 'Custom environment name (optional)'
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+
+concurrency:
+  group: "preview-${{ github.ref }}"
+  cancel-in-progress: true
+
+jobs:
+  deploy-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      preview-url: ${{ env.SURGE_URL }}
+      branch-name: ${{ steps.branch-info.outputs.branch-name }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.branch || github.ref }}
+
+      - name: Get branch info
+        id: branch-info
+        run: |
+          # Determine which branch to use
+          BRANCH_NAME="${{ github.event.inputs.branch }}"
+          if [ -z "$BRANCH_NAME" ]; then
+            BRANCH_NAME="${{ github.ref_name }}"
+          fi
+
+          # Use custom environment name if provided, otherwise use branch name
+          if [ -n "${{ github.event.inputs.environment_name }}" ]; then
+            ENV_NAME="${{ github.event.inputs.environment_name }}"
+          else
+            ENV_NAME="$BRANCH_NAME"
+          fi
+
+          # Sanitize environment name for URL
+          CLEAN_ENV=$(echo "$ENV_NAME" | sed 's/[^a-zA-Z0-9]/-/g' | sed 's/--*/-/g' | sed 's/^-\|-$//g' | tr '[:upper:]' '[:lower:]')
+          SURGE_DOMAIN="cyoda-${CLEAN_ENV}.surge.sh"
+          SURGE_URL="https://$SURGE_DOMAIN"
+
+          echo "branch-name=$CLEAN_ENV" >> $GITHUB_OUTPUT
+          echo "original-branch=$BRANCH_NAME" >> $GITHUB_OUTPUT
+          echo "SURGE_URL=$SURGE_URL" >> $GITHUB_ENV
+          echo "Environment: $CLEAN_ENV (from branch: $BRANCH_NAME)"
+          echo "🔧 Will build and deploy to: $SURGE_URL"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci --omit=dev
+
+      - name: Install Playwright browsers for Mermaid rendering and testing
+        run: npx playwright install --with-deps chromium
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: false
+          CI: true
+
+      - name: Build site with Astro
+        run: |
+          echo "🔧 Building with SITE_URL: ${{ env.SURGE_URL }}"
+          npm run build
+        env:
+          NODE_ENV: production
+          GA_MEASUREMENT_ID: ${{ secrets.GA_MEASUREMENT_ID }}
+          SITE_URL: ${{ env.SURGE_URL }}
+          CI: true
+
+      # Temporarily disabled for deployment
+      # - name: Run GDPR compliance and Google Analytics tests
+      #   run: |
+      #     echo "🧪 Running GDPR compliance and Google Analytics tests"
+      #     npm test
+      #   env:
+      #     NODE_ENV: production
+      #     GA_MEASUREMENT_ID: ${{ secrets.GA_MEASUREMENT_ID }}
+      #     SITE_URL: ${{ env.SURGE_URL }}
+      #     CI: true
+
+
+
+      - name: Install Surge
+        run: npm install -g surge
+
+      - name: Deploy to Surge
+        run: |
+          ENV_NAME="${{ steps.branch-info.outputs.branch-name }}"
+          SURGE_DOMAIN="cyoda-${ENV_NAME}.surge.sh"
+          echo "🚀 Deploying to: ${{ env.SURGE_URL }}"
+          surge ./dist $SURGE_DOMAIN --token ${{ secrets.SURGE_TOKEN }}
+
+      - name: Output deployment info
+        run: |
+          echo "🚀 **Preview deployed successfully to Surge.sh!**"
+          echo ""
+          echo "📍 Preview URL: ${{ env.SURGE_URL }}"
+          echo ""
+          echo "📝 Details:"
+          echo "- Branch: ${{ github.ref_name }}"
+          echo "- Commit: ${{ github.sha }}"
+          echo "- Environment: ${{ steps.branch-info.outputs.branch-name }}"
+          echo ""
+          echo "🔍 Test your changes:"
+          echo "- Homepage: ${{ env.SURGE_URL }}"
+
+      - name: Output preview info
+        run: |
+          echo "🚀 Preview deployed to: ${{ steps.deploy.outputs.page_url }}"
+          echo "📝 Branch: ${{ github.ref_name }}"
+          echo "📦 Commit: ${{ github.sha }}"
