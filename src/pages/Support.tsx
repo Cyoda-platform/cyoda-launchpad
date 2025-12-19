@@ -336,7 +336,7 @@ const Support = () => {
                 {/* Contact form */}
                 <section id={"contact"} className="py-24 relative">
                     <div className="mt-10 max-w-2xl mx-auto">
-                        <h2 className="text-3xl font-bold mb-6">Contact Sales</h2>
+                        <h2 className="text-3xl font-bold mb-6">Contact Us</h2>
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <input

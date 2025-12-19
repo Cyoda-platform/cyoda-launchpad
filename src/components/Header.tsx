@@ -122,6 +122,16 @@ const Header = () => {
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild>
+                <Link
+                  to="/investors"
+                  className="text-foreground hover:text-primary transition-colors font-medium"
+                >
+                  Investors
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
 
@@ -193,6 +203,7 @@ const Header = () => {
               </div>
               <Link to="/blog" className="block py-2 text-foreground hover:text-primary transition-colors">Blog</Link>
               <Link to="/support" className="block py-2 text-foreground hover:text-primary transition-colors">Support</Link>
+              <Link to="/investors" className="block py-2 text-foreground hover:text-primary transition-colors">Investors</Link>
             </nav>
 
             <div className="flex flex-col space-y-2 pt-4 border-t border-border/40">

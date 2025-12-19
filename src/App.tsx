@@ -19,14 +19,13 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 const Index = lazy(() => import("./pages/Index"));
 const Dev = lazy(() => import("./pages/Dev"));
 const Cto = lazy(() => import("./pages/Cto"));
+const Investors = lazy(() => import("./pages/Investors"));
 const Products = lazy(() => import("./pages/Products"));
 const Pricing = lazy(() => import("./pages/Pricing"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 const BlogTest = lazy(() => import("./pages/BlogTest"));
 const BlogSystemTest = lazy(() => import("./pages/BlogSystemTest"));
-const Guides = lazy(() => import("./pages/Guides"));
-const Guide = lazy(() => import("./pages/Guide"));
 const GuideSystemTest = lazy(() => import("./pages/GuideSystemTest"));
 const Support = lazy(() => import("./pages/Support"));
 const CookiePolicy = lazy(() => import("./pages/CookiePolicy"));
@@ -86,6 +85,7 @@ const App = () => {
                   <Route path="/terms-of-service" element={<TermsOfService />} />
                     <Route path="/dev" element={<Dev />} />
                     <Route path="/cto" element={<Cto />} />
+                    <Route path="/investors" element={<Investors />} />
                     {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>

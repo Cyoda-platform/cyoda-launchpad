@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyoda - Investor Overview | AI-Operable Application Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cyoda-teal: #4ECDC4;
+            --cyoda-dark: #0A0E27;
+            --cyoda-midnight: #2a2a2aff;
+            --cyoda-slate: #2D3348;
+            --cyoda-accent: #FF6B6B;
+            --cyoda-glow: rgba(78, 205, 196, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--cyoda-dark);
+            color: #E8E8E8;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated background grid */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                    linear-gradient(rgba(78, 205, 196, 0.08) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(78, 205, 196, 0.08) 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 1;
+            z-index: 0;
+            animation: gridPulse 8s ease-in-out infinite;
+        }
+
+        @keyframes gridPulse {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 0.4; }
+        }
+
+        /* Hero section */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, var(--cyoda-glow) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+        }
+
+        .logo {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(4rem, 12vw, 8rem);
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            color: var(--cyoda-teal);
+            margin-bottom: 2rem;
+            text-shadow: 0 0 40px var(--cyoda-glow);
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .tagline {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.5rem, 3vw, 2.5rem);
+            font-weight: 600;
+            max-width: 900px;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .subtitle {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            max-width: 800px;
+            margin-bottom: 3rem;
+            color: #B8B8B8;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: linear-gradient(135deg, var(--cyoda-teal), #3BA39B);
+            color: var(--cyoda-dark);
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 1s ease-out 0.6s both;
+            box-shadow: 0 10px 40px rgba(78, 205, 196, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(78, 205, 196, 0.5);
+        }
+
+        /* Content sections */
+        .section {
+            position: relative;
+            z-index: 1;
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 3rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--cyoda-teal), #3BA39B);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Problem section */
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .problem-card {
+            background: linear-gradient(135deg, var(--cyoda-midnight), var(--cyoda-slate));
+            padding: 2.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(78, 205, 196, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--cyoda-teal);
+            box-shadow: 0 10px 40px rgba(78, 205, 196, 0.2);
+        }
+
+        .problem-number {
+            font-family: 'Syne', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--cyoda-teal);
+            margin-bottom: 1rem;
+        }
+
+        .problem-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--cyoda-teal);
+        }
+
+        .problem-text {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #C8C8C8;
+        }
+
+        .highlight {
+            color: var(--cyoda-teal);
+            font-weight: 500;
+        }
+
+        /* Solution section */
+        .solution-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .solution-card {
+            background: var(--cyoda-midnight);
+            padding: 3rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--cyoda-teal);
+            position: relative;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .solution-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(79, 184, 176, 0.2), 0 0 40px rgba(79, 184, 176, 0.15);
+        }
+
+        .solution-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .solution-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .solution-description {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: #C8C8C8;
+        }
+
+        /* Technology section */
+        .tech-highlight {
+            background: linear-gradient(135deg, var(--cyoda-midnight), var(--cyoda-slate));
+            padding: 4rem;
+            border-radius: 16px;
+            border: 2px solid var(--cyoda-teal);
+            margin: 3rem 0;
+            box-shadow: 0 0 60px rgba(78, 205, 196, 0.2);
+        }
+
+        .tech-subtitle {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--cyoda-teal);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .tech-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .tech-feature {
+            padding: 1.5rem;
+            background: rgba(78, 205, 196, 0.05);
+            border-radius: 8px;
+            border: 1px solid rgba(78, 205, 196, 0.2);
+        }
+
+        .tech-feature-title {
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+            color: var(--cyoda-teal);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Market opportunity */
+        .market-tiers {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .market-tier {
+            background: var(--cyoda-midnight);
+            padding: 2.5rem;
+            border-radius: 12px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .market-tier:nth-child(1) { border-color: rgba(78, 205, 196, 0.3); }
+        .market-tier:nth-child(2) { border-color: rgba(78, 205, 196, 0.6); }
+        .market-tier:nth-child(3) { border-color: var(--cyoda-teal); }
+
+        .market-tier:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(78, 205, 196, 0.3);
+        }
+
+        .market-tier-name {
+            font-family: 'Syne', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--cyoda-teal);
+            margin-bottom: 1.5rem;
+        }
+
+        .market-tier-description {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #C8C8C8;
+            margin-bottom: 1rem;
+        }
+
+        /* Team section */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .team-member {
+            background: var(--cyoda-midnight);
+            padding: 3rem;
+            border-radius: 12px;
+            border: 1px solid rgba(78, 205, 196, 0.3);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .team-member:hover {
+            border-color: var(--cyoda-teal);
+            box-shadow: 0 10px 40px rgba(78, 205, 196, 0.2);
+        }
+
+        .team-name {
+            font-family: 'Syne', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .team-role {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.3rem;
+            color: var(--cyoda-teal);
+            margin-bottom: 1.5rem;
+        }
+
+        .team-bio {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #C8C8C8;
+            text-align: left;
+        }
+
+        /* Traction section */
+        .traction-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, var(--cyoda-midnight), var(--cyoda-slate));
+            padding: 2.5rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid rgba(78, 205, 196, 0.3);
+        }
+
+        .stat-number {
+            font-family: 'Syne', sans-serif;
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--cyoda-teal);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: #C8C8C8;
+        }
+
+        /* Competition section */
+        .competition-chart {
+            background: var(--cyoda-midnight);
+            padding: 3rem;
+            border-radius: 16px;
+            margin-top: 3rem;
+            border: 2px solid rgba(78, 205, 196, 0.2);
+        }
+
+        .quadrant-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--cyoda-teal);
+        }
+
+        .competitive-advantages {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .advantage-item {
+            padding: 1.5rem;
+            background: rgba(78, 205, 196, 0.05);
+            border-radius: 8px;
+            border-left: 3px solid var(--cyoda-teal);
+        }
+
+        .advantage-title {
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Contact section */
+        .contact-section {
+            background: linear-gradient(135deg, var(--cyoda-midnight), var(--cyoda-slate));
+            padding: 6rem 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .contact-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-text {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            color: #C8C8C8;
+        }
+
+        .contact-info {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-email {
+            color: var(--cyoda-teal);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .contact-email:hover {
+            text-decoration: underline;
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            z-index: 1;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        .scroll-arrow {
+            width: 30px;
+            height: 30px;
+            border-left: 3px solid var(--cyoda-teal);
+            border-bottom: 3px solid var(--cyoda-teal);
+            transform: rotate(-45deg);
+        }
+
+        @media (max-width: 768px) {
+            .section {
+                padding: 4rem 1.5rem;
+            }
+
+            .problem-grid,
+            .solution-grid,
+            .team-grid,
+            .market-tiers,
+            .traction-stats,
+            .competitive-advantages {
+                grid-template-columns: 1fr;
+            }
+
+            .tech-highlight {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="bg-grid"></div>
+
+<!-- Hero Section -->
+<section class="hero">
+    <img src="public/images/cyoda-logo.png" alt="CYODA" class="logo" width="64%">
+    <h1 class="tagline">Removing the Technical Barrier to Innovation</h1>
+    <p class="subtitle">AI Operable Application Platform and AI Studio for building and running mission-critical financial systems</p>
+    <a href="#contact" class="cta-button">Get in Touch</a>
+    <div class="scroll-indicator">
+        <div class="scroll-arrow"></div>
+    </div>
+</section>
+
+<!-- Problem Section -->
+<section class="section">
+    <h2 class="section-title">The Problem</h2>
+    <p style="text-align: center; font-size: 1.3rem; margin-bottom: 3rem; max-width: 900px; margin-left: auto; margin-right: auto;">
+        When requirements outgrow prototype tools, technical challenges multiply and innovation grinds to a halt.
+    </p>
+
+    <div class="problem-grid">
+        <div class="problem-card">
+            <div class="problem-number">01</div>
+            <div class="problem-title">The Brittle MVP</div>
+            <p class="problem-text">
+                Founders build prototypes with simple tools (BaaS, low-code) to find product-market fit.
+                These tools are <span class="highlight">not built for production</span> and have
+                <span class="highlight">no path to scale</span>.
+            </p>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-number">02</div>
+            <div class="problem-title">"The Wall"</div>
+            <p class="problem-text">
+                They hit a hard wall of <span class="highlight">scale, complexity, and compliance</span>.
+                An enterprise client demands a SOC 2 audit, but the prototype tools can't provide the
+                required auditable logs.
+            </p>
+        </div>
+
+        <div class="problem-card">
+            <div class="problem-number">03</div>
+            <div class="problem-title">The Painful Rebuild</div>
+            <p class="problem-text">
+                This forces a complete re-platform, burning cash and halting innovation. AI and developers
+                are hampered by this complex, fragmented architecture.
+                <span class="highlight">A £1M, 10-Month Trap.</span>
+            </p>
+        </div>
+    </div>
+
+    <p style="text-align: center; font-size: 1.4rem; margin-top: 3rem; color: var(--cyoda-teal);">
+        Technology shouldn't be a barrier to innovation.
+    </p>
+</section>
+
+<!-- Solution Section -->
+<section class="section">
+    <h2 class="section-title">Our Solution</h2>
+    <p style="text-align: center; font-size: 1.3rem; margin-bottom: 3rem; max-width: 1000px; margin-left: auto; margin-right: auto;">
+        Build scalable financial-grade systems in <span class="highlight">days, not months</span>,
+        with <span class="highlight">one developer, not a team</span>, remove the £1M, 10-month rebuild
+    </p>
+
+    <div class="solution-grid">
+        <div class="solution-card">
+            <div class="solution-icon"><img src="public/images/AI-Bot.png" alt="AI Bot" style="width: 3rem; height: 3rem;"></div>
+            <h3 class="solution-title">1. AI Builds Systems</h3>
+            <p class="solution-description">
+                Turn specs into deployable systems in minutes running on our platform. What Lovable does for
+                the front-end, we do for the <span class="highlight">mission-critical back-end</span>.
+            </p>
+        </div>
+
+        <div class="solution-card">
+            <div class="solution-icon"><img src="public/images/System.png" alt="AI Bot" style="width: 3rem; height: 3rem;"></div>
+            <h3 class="solution-title">2. Cyoda Runs the System</h3>
+            <p class="solution-description">
+                An <span class="highlight">AI-Operable</span> unified platform built on an auditable EDBMS.
+                Go from prototype to production with scale, security, and compliance from day one.
+            </p>
+        </div>
+
+        <div class="solution-card">
+            <div class="solution-icon"><img src="public/images/safe.png" alt="AI Bot" style="width: 3rem; height: 3rem;"></div>
+            <h3 class="solution-title">3. Pay for Usage</h3>
+            <p class="solution-description">
+                Our unified architecture is <span class="highlight">operationally proven</span> (£4.5M+ in contracts),
+                difficult to replicate, and the only platform AI can use to build demanding systems.
+            </p>
+        </div>
+    </div>
+
+    <div class="tech-highlight">
+        <h3 class="tech-subtitle">Our Breakthrough: The AI-Operable EDBMS</h3>
+        <p style="text-align: center; font-size: 1.2rem; margin-bottom: 2rem;">
+            A system AI can reason about and enterprises can trust
+        </p>
+
+        <div class="tech-features">
+            <div class="tech-feature">
+                <div class="tech-feature-title">✓ Always Consistent</div>
+                <p>Business rules and data never drift, even at scale.</p>
+            </div>
+            <div class="tech-feature">
+                <div class="tech-feature-title">✓ Fault-Tolerant by Design</div>
+                <p>No single points of failure. Systems keep running through node and process failures.</p>
+            </div>
+            <div class="tech-feature">
+                <div class="tech-feature-title">✓ Fully Auditable from Day One</div>
+                <p>Every change is recorded permanently. Compliance, lineage, and history are intrinsic, not bolted on.</p>
+            </div>
+        </div>
+
+        <p style="text-align: center; font-size: 1.1rem; margin-top: 2rem; color: #C8C8C8;">
+            These outcomes are guaranteed by the platform architecture, not by developer discipline.
+        </p>
+    </div>
+
+    <p style="text-align: center; font-size: 1.4rem; margin-top: 3rem; color: var(--cyoda-teal); font-family: 'Syne', sans-serif; font-weight: 600;">
+        Long-Term Recurring Revenue: AI creates services that run on the Cyoda platform
+    </p>
+</section>
+
+<!-- Demo/Pitch Video Section -->
+<section class="section" style="background: var(--cyoda-midnight);">
+    <h2 class="section-title">See Cyoda in Action</h2>
+    <p style="text-align: center; font-size: 1.3rem; margin-bottom: 3rem; color: #C8C8C8;">
+        Watch our platform demo and discover how we're revolutionizing mission-critical system development
+    </p>
+
+    <div style="max-width: 900px; margin: 0 auto; position: relative; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(78, 205, 196, 0.3);">
+        <div style="position: relative; padding-bottom: 56.25%; height: 0;">
+            <iframe
+                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+                src="https://www.youtube.com/embed/OrmWpF3j7TM"
+                title="Cyoda Platform Demo"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+            </iframe>
+        </div>
+    </div>
+
+    <p style="text-align: center; font-size: 1.1rem; margin-top: 2rem; color: var(--cyoda-teal); font-style: italic;">
+        See how AI builds and deploys systems in minutes on our platform
+    </p>
+</section>
+
+<!-- Why Now Section -->
+<section class="section">
+    <h2 class="section-title">Why Now</h2>
+
+    <div class="solution-grid">
+        <div class="solution-card">
+            <h3 class="solution-title">AI is the Enabler</h3>
+            <p class="solution-description">
+                AI adoption is the new technological wave, just like mobile was for Uber or cloud streaming
+                was for Netflix.
+            </p>
+        </div>
+
+        <div class="solution-card">
+            <h3 class="solution-title">AI Needs Cyoda</h3>
+            <p class="solution-description">
+                Cyoda unlocks the AI wave. Our unified platform allows AI to move beyond simple prototypes
+                to build complex, scalable, mission-critical systems.
+            </p>
+        </div>
+
+        <div class="solution-card">
+            <h3 class="solution-title">We Are the First Mover</h3>
+            <p class="solution-description">
+                This combination creates a new "blue ocean" market by commoditizing high-end system development.
+                We are the first and only mover positioned to capture this new category.
+            </p>
+        </div>
+    </div>
+
+    <p style="text-align: center; font-size: 1.5rem; margin-top: 4rem; color: var(--cyoda-teal); font-family: 'Syne', sans-serif; font-weight: 700;">
+        We are the first to enable AI to build and scale mission-critical systems.
+    </p>
+    <p style="text-align: center; font-size: 1.2rem; margin-top: 1rem; max-width: 900px; margin-left: auto; margin-right: auto;">
+        AI needs a coherent, auditable architecture to move beyond toy prototypes
+    </p>
+</section>
+
+<!-- Market Opportunity Section -->
+<section class="section">
+    <h2 class="section-title">Market Opportunity</h2>
+    <p style="text-align: center; font-size: 1.3rem; margin-bottom: 3rem; max-width: 900px; margin-left: auto; margin-right: auto;">
+        Cyoda is going from Beachhead to Global Scale
+    </p>
+
+    <div class="market-tiers">
+        <div class="market-tier">
+            <div class="market-tier-name">SAM0</div>
+            <div class="market-tier-description">
+                <strong style="color: var(--cyoda-teal);">£40M Entry Market</strong><br>
+                600 identified UK early stage to growth Fintechs. Replace £250k+ in dev salaries & licenses.
+            </div>
+        </div>
+
+        <div class="market-tier">
+            <div class="market-tier-name">SAM1</div>
+            <div class="market-tier-description">
+                <strong style="color: var(--cyoda-teal);">£1B Expansion Market</strong><br>
+                ~14,250 UK, EU, US, Canada "Series A" Fintechs & Tech Consultancies. Use SAM0 case studies to penetrate this larger, established market.
+            </div>
+        </div>
+
+        <div class="market-tier">
+            <div class="market-tier-name">SAM2</div>
+            <div class="market-tier-description">
+                <strong style="color: var(--cyoda-teal);">£100B+ Global Vision</strong><br>
+                The global market for Digital Transformation. Become the foundational platform for this spend, replacing the costly, slow, and inefficient "build-it-yourself" model.
+            </div>
+        </div>
+    </div>
+
+    <p style="text-align: center; font-size: 1.2rem; margin-top: 3rem; color: #C8C8C8;">
+        We first win our £40M SAM0 Entry Market, use those case studies to expand into our £1B SAM1 Market,
+        and then scale into the SAM2 £100B global vision.
+    </p>
+</section>
+
+<!-- Traction Section -->
+<section class="section">
+    <h2 class="section-title">Proven Technology. Validated Pivot.</h2>
+
+
+    <div class="tech-highlight" style="margin-top: 4rem;">
+        <h3 style="font-family: 'Syne', sans-serif; font-size: 1.8rem; margin-bottom: 1.5rem; text-align: center;">
+            Enterprise-Proven Technology
+        </h3>
+        <p style="font-size: 1.1rem; line-height: 1.8; text-align: center; margin-bottom: 2rem;">
+            Our legacy licensed Java-lib proved our core platform's power and stability in mission-critical environments.
+            Syndicated Corporate Lending systems used by 20 European banks and >1400 investors.
+            Global data integration processing hundreds of sources at scale.
+        </p>
+        <p style="text-align: center; font-size: 1.2rem; color: var(--cyoda-teal); font-weight: 600;">
+            The tech is proven
+        </p>
+    </div>
+
+    <div class="tech-highlight" style="margin-top: 3rem;">
+        <h3 style="font-family: 'Syne', sans-serif; font-size: 1.8rem; margin-bottom: 1.5rem; text-align: center;">
+            The Present: Live AI Studio & Platform as a Service
+        </h3>
+        <p style="font-size: 1.1rem; line-height: 1.8; text-align: center; margin-bottom: 2rem;">
+            The market needed a cloud-native, AI-operable platform for demanding mission-critical applications. We built it.
+            <br><br>
+            <strong>Freemium Tier: LIVE</strong> - Our new platform is available for self-service sign-up<br>
+        </p>
+        <p style="text-align: center; font-size: 1.2rem; color: var(--cyoda-teal); font-weight: 600;">
+            Market pull is there
+        </p>
+    </div>
+
+    <p style="text-align: center; font-size: 1.3rem; margin-top: 3rem; font-style: italic;">
+        "By collaborating with Cyoda we developed the solution in a fraction of the time normally
+        associated with such a large scale project."
+    </p>
+    <p style="text-align: center; font-size: 1.1rem; margin-top: 1rem; color: var(--cyoda-teal);">
+        Tobias Zöller — Co-founder, Syndicated Lending Platform
+    </p>
+</section>
+
+<!-- Competition Section -->
+<section class="section">
+    <h2 class="section-title">The Unserved High-Value Quadrant</h2>
+
+    <div class="competition-chart">
+        <div class="quadrant-title">Cyoda is unique: we start where other AI builders stop</div>
+        <p style="text-align: center; font-size: 1.1rem; margin-bottom: 2rem;">
+            We are in a class of our own: The only platform that delivers both AI speed and enterprise-grade complexity.
+        </p>
+
+        <div class="competitive-advantages">
+            <div class="advantage-item">
+                <div class="advantage-title">vs. AI Builders (Lovable, Replit)</div>
+                <p>Great for simple apps, but cannot handle financial-grade complexity.</p>
+            </div>
+
+            <div class="advantage-item">
+                <div class="advantage-title">vs. Platform Engineering</div>
+                <p>Component architectures can handle complexity, but are slow, costly, and incompatible with AI.</p>
+            </div>
+
+            <div class="advantage-item">
+                <div class="advantage-title">vs. App Platforms</div>
+                <p>Cyoda fundamentally differs from BaaS offerings and serves a different market.</p>
+            </div>
+
+            <div class="advantage-item">
+                <div class="advantage-title">vs. Low-Code Platforms</div>
+                <p>Low technical barriers, but limited capabilities. High maintenance and change cost for complex setups.</p>
+            </div>
+        </div>
+    </div>
+
+    <p style="text-align: center; font-size: 1.4rem; margin-top: 3rem; color: var(--cyoda-teal); font-family: 'Syne', sans-serif; font-weight: 700;">
+        Cyoda's Main Competition is Platform Engineering
+    </p>
+</section>
+
+<!-- Team Section -->
+<section class="section">
+    <h2 class="section-title">Decades of Domain & Deep Tech Expertise</h2>
+
+    <div class="team-grid">
+        <div class="team-member">
+            <div class="team-name">Patrick Stanton</div>
+            <div class="team-role">CEO</div>
+            <div class="team-bio">
+                <p><strong>Deep Domain Expertise</strong></p>
+                <p>Tech enthusiast and visionary with 20+ years in banking with deep domain expertise in
+                    financial operations and complex systems.</p>
+            </div>
+        </div>
+
+        <div class="team-member">
+            <div class="team-name">Paul Schleger, PhD</div>
+            <div class="team-role">CTO</div>
+            <div class="team-bio">
+                <p><strong>Deep Technical Expertise</strong></p>
+                <p>Expert in solving "intractable technical challenges." 20+ years in FS technology;
+                    architect of Cyoda's unified platform; former research physicist.</p>
+            </div>
+        </div>
+    </div>
+
+    <p style="text-align: center; font-size: 1.2rem; margin-top: 3rem; color: #C8C8C8;">
+        Backed by a high-caliber development team with proven experience including senior software developers
+        with deep financial domain expertise, dedicated AI engineers specializing in generative AI, experienced
+        testers versed in AI data learning, and qualified sysadmins and engineers with deep knowledge of AWS
+        and Kubernetes cloud architecture.
+    </p>
+
+    <p style="text-align: center; font-size: 1.4rem; margin-top: 2rem; color: var(--cyoda-teal); font-family: 'Syne', sans-serif; font-weight: 700;">
+        20+ years of front-line expertise building the core systems that run tier 1 & Tier 2 Global Investment Banks, now encoded into our platform.
+    </p>
+</section>
+
+<!-- Contact Section -->
+<section class="contact-section" id="contact">
+    <h2 class="contact-title">Let's Remove the Technical Barrier to Innovation</h2>
+    <p class="contact-text">
+        Ready to learn more about how Cyoda is revolutionizing mission-critical system development?
+        We're seeking investors who share our vision of unleashing a huge market.
+    </p>
+    <div style="display: flex; gap: 2rem; justify-content: center; align-items: center; flex-wrap: wrap; margin-top: 2rem;">
+        <a href="/support#contact" class="cta-button" style="text-decoration: none; cursor: pointer;">
+            Contact Us
+        </a>
+        <a href="https://www.linkedin.com/in/patrick-cyoda/" target="_blank" rel="noopener noreferrer" class="cta-button" style="text-decoration: none; cursor: pointer; background: #0077B5;">
+            Connect on LinkedIn
+        </a>
+    </div>
+    <p style="text-align: center; margin-top: 2rem; font-size: 1.1rem; color: #C8C8C8;">
+        Patrick Stanton - Founder & CEO
+    </p>
+</section>
+
+<script>
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Intersection Observer for fade-in animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    // Observe all section elements
+    document.querySelectorAll('.section').forEach(section => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(30px)';
+        section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+        observer.observe(section);
+    });
+</script>
+</body>
+</html>
