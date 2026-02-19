@@ -1,11 +1,11 @@
 ---
 title: "When Transactions Meet Workflows: Building Reliable Systems With Much Less Glue Code"
-author: "Paul Schleger"
+author: "Patrick Stanton"
 date: "2026-02-19"
 category: "Architecture"
 excerpt: "Most enterprises build reliable systems by stitching together databases, message brokers, and workflow engines. Cyoda offers a unified core where transactions, entity lifecycles, and point-in-time querying share one consistency model — so teams write less integration code and spend less time reconciling state across tools."
 featured: false
-published: false
+published: true
 image: "/images/blogs/when_transactions_meet_workflows.png"
 tags: ["transactions", "workflows", "architecture", "reliability", "integration", "EDBMS"]
 ---
