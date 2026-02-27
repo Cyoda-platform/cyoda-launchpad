@@ -1,5 +1,5 @@
 ---
-title: "A Technical Description of the Cyoda Platform"
+title: "AI can get you quickly to a demo system, but at least in Fintech the next steps are challenging."
 author: "Patrick Stanton"
 date: "2026-02-27"
 category: "Informative"
