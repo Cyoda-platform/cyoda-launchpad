@@ -32,6 +32,14 @@ const Support = lazy(() => import("./pages/Support"));
 const CookiePolicy = lazy(() => import("./pages/CookiePolicy"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const TermsOfService = lazy(() => import("./pages/TermsOfService"));
+const About = lazy(() => import("./pages/About"));
+const UseCases = lazy(() => import("./pages/UseCases"));
+const UseCaseLoanLifecycle = lazy(() => import("./pages/UseCaseLoanLifecycle"));
+const UseCaseTradeSettlement = lazy(() => import("./pages/UseCaseTradeSettlement"));
+const UseCaseKycOnboarding = lazy(() => import("./pages/UseCaseKycOnboarding"));
+const UseCaseAgenticAi = lazy(() => import("./pages/UseCaseAgenticAi"));
+const Contact = lazy(() => import("./pages/Contact"));
+const Comparison = lazy(() => import("./pages/Comparison"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 // Cookie consent test component
@@ -86,6 +94,14 @@ const App = () => {
                   <Route path="/terms-of-service" element={<TermsOfService />} />
                     <Route path="/dev" element={<Dev />} />
                     <Route path="/cto" element={<Cto />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/use-cases" element={<UseCases />} />
+                    <Route path="/use-cases/loan-lifecycle" element={<UseCaseLoanLifecycle />} />
+                    <Route path="/use-cases/trade-settlement" element={<UseCaseTradeSettlement />} />
+                    <Route path="/use-cases/kyc-onboarding" element={<UseCaseKycOnboarding />} />
+                    <Route path="/use-cases/agentic-ai" element={<UseCaseAgenticAi />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="/comparison" element={<Comparison />} />
                     {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>

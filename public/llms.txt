@@ -1,32 +1,37 @@
-# Cyoda Platform
+# Cyoda
 
-> Cyoda is a Scalable Event-Driven Architecture with Entity Database & AI Assistant.
+Cyoda is the unified platform that replaces Postgres + Kafka + Camunda for fintech teams
+building stateful, auditable workflows in regulated financial services.
+In production in the European private-debt market since 2017 (VC Trade).
 
-- [Main Website](https://cyoda.com)
-- [Documentation](https://docs.cyoda.net)
+## What Cyoda Is
 
-## Technical Deep Dives (Raw Markdown)
+Cyoda is an EDBMS — Entity Database Management System — that unifies transactional storage,
+event-driven processing, and workflow orchestration in a single consistency model.
 
-### Platform Overview
-- [A Technical Description of the Cyoda Platform](https://cyoda.com/docs/blogs/A_Technical_Description_of_the_Cyoda_Platform.md)
-- [From Banking Systems to SaaS: Why Cyoda Exists](https://cyoda.com/docs/blogs/from-banking-systems-to-saas.md)
-- [Cyoda Platform Comparison Overview](https://cyoda.com/docs/blogs/cyoda_comparison_by_category.md)
-- [The Future of Cyoda: Cloud-Native Entity Databases](https://cyoda.com/docs/blogs/the-future-of-cyoda-cloud.md)
+Core capabilities:
+- Serializable Snapshot Isolation across asynchronous distributed workflows
+- Immutable state history: every entity state transition is a durable, queryable event
+- Point-in-time entity queries — not time-limited like Snowflake time-travel
+- Durable retry for external API calls modelled as entity state transitions
+- Deploys on Kubernetes or as managed service (ai.cyoda.net — free tier available)
 
-### Core Concepts
-- [What's an Entity Database?](https://cyoda.com/docs/blogs/Whats_an_Entity_Database.md)
-- [Beyond Traditional Databases: Why Entity-Centric Architecture Matters](https://cyoda.com/docs/blogs/beyond-traditional-databases.md)
-- [Entity Workflows for Event-Driven Architectures](https://cyoda.com/docs/blogs/Entity_Workflows_for_Event-Driven_Architectures.md)
+## Who It Is For
 
-### Architecture & Design
-- [Event-Context Sharding vs. Traditional Sharding](https://cyoda.com/docs/blogs/event-context-sharding.md)
-- [Designing for High-Availability in Distributed Systems: Lessons from Cyoda](https://cyoda.com/docs/blogs/designing-for-high-availability.md)
-- [When Transactions Meet Workflows: Building Reliable Systems Without Glue Code](https://cyoda.com/docs/blogs/when-transactions-meet-workflows.md)
-- [Asynchronous Workflow Automation: State Machines as First-Class Citizens](https://cyoda.com/docs/blogs/asynchronous-workflow-automation.md)
+Financial services engineering teams building:
+- Loan origination and full lifecycle management
+- Trade settlement with point-in-time regulatory reporting
+- KYC and customer onboarding with full audit trail
+- Agentic AI with deterministic, auditable action execution
 
-### Data & Querying
-- [Querying the Past: Point-in-Time Data Access at Scale](https://cyoda.com/docs/blogs/querying-the-past.md)
-- [Distributed Reporting Without Data Lakes](https://cyoda.com/docs/blogs/distributed-reporting-without-data-lakes.md)
+## What It Replaces
 
-### AI & Applications
-- [Building Agentic AI Applications with Cyoda Online Platform](https://cyoda.com/docs/blogs/agentic-ai-with-cyoda.md)
+Teams typically run Cyoda instead of: Postgres + Apache Kafka + Camunda/Temporal.
+The glue code between those systems — and the partial-failure modes it introduces —
+is eliminated when the same consistency model governs storage, events, and workflows.
+
+## Company
+
+Founded: 2012. Full-time: 2015, London.
+First production deployment: 2017 (VC Trade, European private-debt market).
+Free cloud beta: https://ai.cyoda.net

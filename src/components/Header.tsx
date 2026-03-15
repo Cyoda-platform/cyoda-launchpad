@@ -73,6 +73,26 @@ const Header = () => {
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
                 <Link
+                  to="/use-cases"
+                  className="text-foreground hover:text-primary transition-colors font-medium"
+                >
+                  Use Cases
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild>
+                <Link
+                  to="/comparison"
+                  className="text-foreground hover:text-primary transition-colors font-medium"
+                >
+                  Compare
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild>
+                <Link
                   to="/pricing"
                   className="text-foreground hover:text-primary transition-colors font-medium"
                 >
@@ -109,6 +129,16 @@ const Header = () => {
                   className="text-foreground hover:text-primary transition-colors font-medium"
                 >
                   Blog
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild>
+                <Link
+                  to="/about"
+                  className="text-foreground hover:text-primary transition-colors font-medium"
+                >
+                  About
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
@@ -179,6 +209,8 @@ const Header = () => {
           <div className="container py-4 space-y-4">
             <nav className="space-y-2">
               <Link to="/products" className="block py-2 text-foreground hover:text-primary transition-colors">Products</Link>
+              <Link to="/use-cases" className="block py-2 text-foreground hover:text-primary transition-colors">Use Cases</Link>
+              <Link to="/comparison" className="block py-2 text-foreground hover:text-primary transition-colors">Compare</Link>
               <Link to="/pricing" className="block py-2 text-foreground hover:text-primary transition-colors">Pricing</Link>
               <div className="py-2">
                 <button className="flex items-center space-x-1 text-foreground hover:text-primary transition-colors min-h-[44px]">
@@ -192,6 +224,7 @@ const Header = () => {
                 </div>
               </div>
               <Link to="/blog" className="block py-2 text-foreground hover:text-primary transition-colors">Blog</Link>
+              <Link to="/about" className="block py-2 text-foreground hover:text-primary transition-colors">About</Link>
               <Link to="/support" className="block py-2 text-foreground hover:text-primary transition-colors">Support</Link>
             </nav>
 

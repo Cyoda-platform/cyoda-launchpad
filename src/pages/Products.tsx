@@ -1,5 +1,7 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import SEO from '@/components/SEO';
+import { organizationSchema } from '@/data/schemas';
 import {
     Database,
     Cloud,
@@ -90,6 +92,13 @@ const Products = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Products | Cyoda"
+        description="A stateful, event-driven platform with entity database, workflows, and built-in audit — without complex infrastructure."
+        url="https://cyoda.com/products"
+        type="website"
+        jsonLd={organizationSchema}
+      />
       <Header />
       <main>
         {/* Hero Section */}
@@ -120,10 +129,13 @@ const Products = () => {
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-                  Built for Financial Services Operations. <br/>Available to all
+                  Built for Financial Services Operations
               </h2>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
                 Freeing developers to focus on building business value, not infrastructure.
+              </p>
+              <p className="text-lg text-muted-foreground max-w-3xl mx-auto mt-4">
+                The Cyoda EDBMS (Entity Database Management System) unifies transactional storage, event-driven processing, and workflow orchestration in a single consistency model.
               </p>
             </div>
 

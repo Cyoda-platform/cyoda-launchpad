@@ -115,13 +115,13 @@
   },
   "cyoda_comparison_by_category.md": {
     "slug": "cyoda-comparison-by-category",
-    "title": "Cyoda Platform Comparison Overview",
+    "title": "Cyoda vs. the Alternatives: A Platform Comparison for Technical Decision-Makers",
     "author": "Cyoda Team",
-    "date": "2025-01-15",
+    "date": "2026-02-18",
     "category": "Platform",
-    "excerpt": "This document compares the Cyoda Service Platform with a range of tools for workflow orchestration, data integration, cloud-native services, and AI-assisted development.",
-    "readTime": "6 min read",
-    "wordCount": 1053,
+    "excerpt": "How Cyoda compares to workflow engines, databases, cloud-native orchestrators, data platforms, and AI developer tools — and where it fits in your stack.",
+    "readTime": "8 min read",
+    "wordCount": 1550,
     "featured": false,
     "published": true,
     "tags": [
@@ -129,9 +129,28 @@
       "platform",
       "enterprise",
       "workflow",
-      "cloud-native"
+      "cloud-native",
+      "database",
+      "EDBMS"
     ],
     "image": "/images/blogs/comparison_overview.png"
+  },
+  "demo_to_PoC_in_fintech.md": {
+    "slug": "demo-to-poc-in-fintech",
+    "title": "LLM’s Can Get You to a Demo Fast. In Fintech, After That It Gets Hard.",
+    "author": "Patrick Stanton",
+    "date": "2026-03-05",
+    "category": "Informative",
+    "excerpt": "Vibe Coding can get you to a working MVP in a few weeks. But in fintech , the real test begins after the demo. This article explores why fast AI-generated builds often hit a wall when faced with real-world iteration, compliance, and due diligence and what semi-technical and non-technical founders need to put in place early to avoid painful rewrites later.",
+    "readTime": "7 min read",
+    "wordCount": 1238,
+    "featured": false,
+    "published": true,
+    "tags": [
+      "informative",
+      "nonTechnical"
+    ],
+    "image": "/images/blogs/vibing-to-the-wall.png"
   },
   "designing-for-high-availability.md": {
     "slug": "designing-for-high-availability",
@@ -272,21 +291,22 @@
   },
   "when-transactions-meet-workflows.md": {
     "slug": "when-transactions-meet-workflows",
-    "title": "When Transactions Meet Workflows: Building Reliable Systems Without Glue Code",
-    "author": "Paul Schleger",
-    "date": "2025-08-30",
+    "title": "When Transactions Meet Workflows: Building Reliable Systems With Much Less Glue Code",
+    "author": "Patrick Stanton",
+    "date": "2026-02-19",
     "category": "Architecture",
-    "excerpt": "Most enterprises build reliable systems by stitching together PostgreSQL, Kafka, and workflow engines. Cyoda offers a different vision: a unified platform where transactions, workflows, and queries reduce complexity while improving reliability.",
-    "readTime": "4 min read",
-    "wordCount": 704,
+    "excerpt": "Most enterprises build reliable systems by stitching together databases, message brokers, and workflow engines. Cyoda offers a unified core where transactions, entity lifecycles, and point-in-time querying share one consistency model — so teams write less integration code and spend less time reconciling state across tools.",
+    "readTime": "6 min read",
+    "wordCount": 1085,
     "featured": false,
-    "published": false,
+    "published": true,
     "tags": [
       "transactions",
       "workflows",
       "architecture",
       "reliability",
-      "integration"
+      "integration",
+      "EDBMS"
     ],
     "image": "/images/blogs/when_transactions_meet_workflows.png"
   }

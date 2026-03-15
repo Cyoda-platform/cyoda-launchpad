@@ -1,19 +1,24 @@
 import { Link } from 'react-router-dom';
 import { SiGithub, SiLinkedin, SiX, SiYoutube } from "react-icons/si";
 import cyodaLogo from '@/assets/cyoda-logo.png';
-import { HashLink } from "react-router-hash-link";
 import { useState } from 'react';
 import { CookiePreferencesModal } from '@/components/CookiePreferencesModal';
 
 const Footer = () => {
   const [prefsOpen, setPrefsOpen] = useState(false);
 
-  const footerLinks = [
+  const platformLinks = [
     { name: 'Products', href: '/products' },
+    { name: 'Use Cases', href: '/use-cases' },
     { name: 'Pricing', href: '/pricing' },
-    { name: 'Docs', href: '#' },
+    { name: 'Docs', href: 'https://docs.cyoda.net/', external: true },
     { name: 'Blog', href: '/blog' },
+  ];
+
+  const companyLinks = [
+    { name: 'About', href: '/about' },
     { name: 'Support', href: '/support' },
+    { name: 'Contact', href: '/contact' },
   ];
 
   const socialLinks = [
@@ -54,8 +59,8 @@ const Footer = () => {
                 <img src={cyodaLogo} alt="Cyoda" className="h-6 sm:h-6" />
             </div>
             <p className="text-muted-foreground mb-6 max-w-md">
-              Developer-first application platform with AI Assistant.
-              Turn problems into scalable, enterprise-grade systems in minutes.
+              The unified platform for stateful, auditable workflows in financial services.
+              In production in European private-debt markets since 2017.
             </p>
 
             {/* Social links with neon glow */}
@@ -75,15 +80,17 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Navigation links */}
+          {/* Platform links */}
           <div>
             <h3 className="font-semibold mb-4 text-foreground">Platform</h3>
             <nav className="space-y-3">
-              {footerLinks.map((link) => (
-                link.href.startsWith('#') ? (
+              {platformLinks.map((link) => (
+                link.external ? (
                   <a
                     key={link.name}
                     href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="block text-muted-foreground hover:text-primary transition-colors"
                   >
                     {link.name}
@@ -101,29 +108,20 @@ const Footer = () => {
             </nav>
           </div>
 
-          {/* Contact */}
+          {/* Company links */}
           <div>
-            <h3 className="font-semibold mb-4 text-foreground">Get In Touch</h3>
-            <div className="space-y-3">
-              <p className="text-muted-foreground">
-                Join our community on Discord for support and discussions.
-              </p>
-              <a
-                href="#"
-                className="inline-flex items-center text-primary hover:text-primary/80 transition-colors font-medium"
-              >
-                Contact via Discord
-              </a>
-<p/>
-            </div>
-              <div className="space-y-3">
-                  <p className="text-muted-foreground">
-                      Send us a message
-                  </p>
-                  <HashLink smooth to="/support#contact" className="inline-flex items-center text-primary hover:text-primary/80 transition-colors font-medium">
-                      Contact Form
-                  </HashLink>
-              </div>
+            <h3 className="font-semibold mb-4 text-foreground">Company</h3>
+            <nav className="space-y-3">
+              {companyLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  to={link.href}
+                  className="block text-muted-foreground hover:text-primary transition-colors"
+                >
+                  {link.name}
+                </Link>
+              ))}
+            </nav>
           </div>
         </div>
 

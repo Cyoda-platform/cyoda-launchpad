@@ -1,5 +1,7 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import SEO from '@/components/SEO';
+import { organizationSchema } from '@/data/schemas';
 // at top
 import {useEffect} from 'react';
 
@@ -162,6 +164,13 @@ const Support = () => {
 
     return (
         <div className="min-h-screen bg-background">
+            <SEO
+                title="Support | Cyoda"
+                description="Get help with Cyoda — documentation, Discord community, and direct support for developers building stateful financial systems."
+                url="https://cyoda.com/support"
+                type="website"
+                jsonLd={organizationSchema}
+            />
             <Header/>
             <main>
                 {/* Hero Section */}

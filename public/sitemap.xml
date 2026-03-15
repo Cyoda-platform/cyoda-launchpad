@@ -55,6 +55,45 @@
     <lastmod>2025-12-17</lastmod>
   </url>
 
+  <!-- Use Cases -->
+  <url>
+    <loc>https://cyoda.com/use-cases</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://cyoda.com/use-cases/loan-lifecycle</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cyoda.com/use-cases/trade-settlement</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cyoda.com/use-cases/kyc-onboarding</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://cyoda.com/use-cases/agentic-ai</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Company Pages -->
+  <url>
+    <loc>https://cyoda.com/about</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://cyoda.com/contact</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
   <!-- Blog Section -->
   <url>
     <loc>https://cyoda.com/blog</loc>

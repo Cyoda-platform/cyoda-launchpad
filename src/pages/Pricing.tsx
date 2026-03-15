@@ -1,8 +1,11 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import SEO from '@/components/SEO';
+import { organizationSchema, faqSchema } from '@/data/schemas';
 import { Button } from '@/components/ui/button';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { CheckCircle, X } from 'lucide-react';
-import { HashLink } from "react-router-hash-link";
+import { Link } from 'react-router-dom';
 import { trackCtaConversion } from '@/utils/analytics';
 
 const Pricing = () => {
@@ -47,8 +50,7 @@ const Pricing = () => {
     },
     {
       name: "Developer",
-      price: "TBD",
-      period: "/month",
+      price: "Contact Us",
       description: "Developers and small teams",
       features: [
           'Expanded Cyoda Cloud resources',
@@ -57,13 +59,12 @@ const Pricing = () => {
           'Community support'
       ],
       limitations: [],
-      cta: "Start Free Trial",
+      cta: "Join the Waitlist",
         available: false
     },
       {
           name: "Professional",
-          price: "TBD",
-          period: "/month",
+          price: "Contact Us",
           description: "Developers and small teams",
           features: [
               'Cloud deployment options (AWS/GCP/Azure)',
@@ -72,7 +73,7 @@ const Pricing = () => {
               'Priority support'
           ],
           limitations: [],
-          cta: "Start Free Trial",
+          cta: "Join the Waitlist",
           available: false
       },
     {
@@ -94,29 +95,32 @@ const Pricing = () => {
 
   const faqs = [
     {
-      question: "Can I change my plan anytime?",
-      answer: "Yes, you can upgrade or downgrade your plan at any time. Changes take effect immediately for upgrades, or at the end of your billing cycle for downgrades."
-    },
-      {
-          question: "No plan fits my needs",
-          answer: "Contact our sales team, we'll be happy to help."
-      },
-    {
-      question: "Is there a free version available?",
-      answer: "Yes! You can try Cyoda for free. No credit card required to start."
+      question: "Is there a free tier?",
+      answer: "Yes. The Trial plan is free with no time limit. Start at ai.cyoda.net — no credit card required."
     },
     {
-      question: "What happens to my data if I cancel?",
-      answer: "Your data remains accessible for 30 days after cancellation. You can export all your applications and data during this period."
+      question: "Can I deploy on my own infrastructure?",
+      answer: "Yes. The Enterprise plan supports private cloud and on-premises Kubernetes deployment."
     },
     {
-      question: "Do you offer discounts for students or nonprofits?",
-      answer: " Contact our support team for more information."
+      question: "What is the SLA for the Enterprise plan?",
+      answer: "Full compliance and SLA guarantees are included with Enterprise. Contact sales for details."
+    },
+    {
+      question: "How do I migrate from my existing Postgres + Kafka stack?",
+      answer: "Contact the team for a migration assessment. Most teams prototype on Cyoda Cloud in under a week."
     }
   ];
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Pricing | Cyoda"
+        description="Start your evaluation for free. Scale to enterprise when you need it. No time limits on the free tier."
+        url="https://cyoda.com/pricing"
+        type="website"
+        jsonLd={[organizationSchema, faqSchema]}
+      />
       <Header />
       <main>
         {/* Hero Section */}
@@ -126,7 +130,7 @@ const Pricing = () => {
           <div className="container mx-auto px-4 relative z-10">
             <div className="text-center max-w-4xl mx-auto">
               <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6">
-                Get Building for Free
+                Start Your Evaluation for Free
               </h1>
               <p className="text-xl text-muted-foreground mb-8">
                 All plans include our open source AI Assistant.
@@ -144,14 +148,6 @@ const Pricing = () => {
                   key={index}
                   className={`relative p-8 rounded-xl border transition-all duration-300  border-primary bg-card/50 scale-105`}
                 >
-                  {!plan.available && (
-                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                      <div className="bg-icon text-primary-foreground px-4 py-1 rounded-full text-sm font-medium">
-                        Coming Soon
-                      </div>
-                    </div>
-                  )}
-
                   <div className="text-center mb-8">
                     <h3 className="text-2xl font-bold text-foreground mb-2">
                       {plan.name}
@@ -160,11 +156,6 @@ const Pricing = () => {
                       <span className="text-2xl font-bold text-foreground">
                         {plan.price}
                       </span>
-                      {plan.period && (
-                        <span className="text-muted-foreground ml-1">
-                          {plan.period}
-                        </span>
-                      )}
                     </div>
                     <p className="text-muted-foreground">
                       {plan.description}
@@ -186,22 +177,19 @@ const Pricing = () => {
                     ))}
                   </div>
 
-                    {plan.name === "Enterprise" ? (
-                        <Button
-                            className={`w-full bg-button text-primary-foreground`}
-                            asChild
-                        >
-                            <HashLink smooth to="/support#contact">
-                                {plan.cta}
-                            </HashLink>
-
-                        </Button>
-                    ) : (
+                    {plan.name === "Trial" ? (
                         <Button
                             className={`w-full bg-button text-primary-foreground`}
                             onClick={() => handlePricingCardClick(plan.name)}
                         >
                             {plan.cta}
+                        </Button>
+                    ) : (
+                        <Button
+                            className={`w-full bg-button text-primary-foreground`}
+                            asChild
+                        >
+                            <Link to="/contact">{plan.cta}</Link>
                         </Button>
                     )}
                 </div>
@@ -230,21 +218,18 @@ const Pricing = () => {
               </p>
             </div>
 
-            <div className="max-w-4xl mx-auto space-y-8">
+            <Accordion type="single" collapsible className="max-w-4xl mx-auto">
               {faqs.map((faq, index) => (
-                <div
-                  key={index}
-                  className="p-6 rounded-xl border border-border/50 bg-card/20 backdrop-blur"
-                >
-                  <h3 className="text-lg font-semibold text-foreground mb-3">
+                <AccordionItem key={index} value={`item-${index}`} className="border-border/50">
+                  <AccordionTrigger className="text-left text-lg font-semibold text-foreground hover:no-underline">
                     {faq.question}
-                  </h3>
-                  <p className="text-muted-foreground leading-relaxed">
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground leading-relaxed">
                     {faq.answer}
-                  </p>
-                </div>
+                  </AccordionContent>
+                </AccordionItem>
               ))}
-            </div>
+            </Accordion>
           </div>
         </section>
 

@@ -46,6 +46,13 @@
 
         /* Geometry */
         --radius: 6px;
+
+        /* Enterprise refinements */
+        --proof-bar-bg: 175 30% 96%;
+        --proof-bar-border: 175 30% 88%;
+        --section-alt-bg: 210 40% 97%;
+        --state-node-bg: 175 67% 95%;
+        --state-node-border: 175 67% 70%;
     }
     .dark {
         --background: 220 14% 8%;
@@ -73,6 +80,13 @@
         --destructive-foreground: 0 0% 100%;
         --ring: 175 40% 40%;
         --radius: 6px;
+
+        /* Enterprise refinements */
+        --proof-bar-bg: 220 14% 12%;
+        --proof-bar-border: 220 10% 20%;
+        --section-alt-bg: 220 14% 10%;
+        --state-node-bg: 175 20% 15%;
+        --state-node-border: 175 40% 30%;
     }
 
   * {

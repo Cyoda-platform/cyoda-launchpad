@@ -69,8 +69,8 @@ const EcosystemSection = () => {
             >
               <div className="flex items-start space-x-4">
                 <div className="flex-shrink-0">
-                  <div className="w-12 h-12 rounded-lg bg-icon flex items-center justify-center">
-                    <feature.icon className="w-6 h-6 text-white" />
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <feature.icon className="w-6 h-6 text-primary" />
                   </div>
                 </div>
                 <div className="flex-1">

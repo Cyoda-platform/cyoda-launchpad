@@ -5,11 +5,11 @@
  * the types of applications that can be built with the platform.
  */
 export const heroPhrases = [
-  "DTCC trade reporting system...",
-    "real-time fraud detection engine...",
-    "customer onboarding workflow...",
-    "trade settlement service...",
-    "regulatory compliance service...",
-    "payment processing system...",
-    "risk management platform..."
+  "Loan Origination Lifecycle...",
+  "KYC Onboarding with Audit Trail...",
+  "Trade Settlement Reporting...",
+  "Secondary Loan Transfer Workflow...",
+  "Regulatory Capital Workflow...",
+  "real-time fraud detection engine...",
+  "risk management platform..."
 ];

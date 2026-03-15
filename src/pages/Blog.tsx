@@ -1,5 +1,7 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import SEO from '@/components/SEO';
+import { organizationSchema } from '@/data/schemas';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Calendar, User, ArrowRight, Clock, Search, X, Loader2 } from 'lucide-react';
@@ -153,6 +155,13 @@ const Blog = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO
+        title="Blog | Cyoda"
+        description="Technical articles on stateful systems, entity databases, and financial workflow engineering from the Cyoda team."
+        url="https://cyoda.com/blog"
+        type="website"
+        jsonLd={organizationSchema}
+      />
       <Header />
       <main>
         {/* Hero Section */}
