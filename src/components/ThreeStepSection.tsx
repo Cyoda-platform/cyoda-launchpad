@@ -33,13 +33,13 @@ const
     {
       icon: Bot,
       title: "1. Let AI build your prototype",
-      description: "Describe your application in natural language. Our AI understands complex business requirements and generates enterprise-grade data models, APIs, and workflows in minutes.",
+      description: "Describe your application requirements in natural language at ai.cyoda.net. The AI generates entity models, state machine configurations, and API scaffolding. You get a running prototype with full workflow state from the first session.",
       gradient: "bg-icon"
     },
     {
       icon: Code,
       title: "2. Iterate in your IDE",
-      description: "Clone to your favorite development environment. Customize, extend, and refine using familiar tools and workflows. Full control over your codebase.",
+      description: "Clone the generated project into your IDE. Business logic runs in your code, in your language, via gRPC. The platform handles the rest: transactions, sharding, workflow orchestration, audit history.",
       gradient: "bg-icon"
     },
     {
@@ -47,7 +47,7 @@ const
       title: "3. Deploy to production",
       description: (
         <>
-          One-click deployment to scalable infrastructure
+          Deploy to Cyoda Cloud or your own Kubernetes cluster. Horizontal scalability, point-in-time queryable audit history, and serializable snapshot isolation are platform features. Not things you build before your first enterprise client asks for them.
           <sup>
             <HashLink
               to="#footnote-production"
@@ -57,7 +57,6 @@ const
               *
             </HashLink>
           </sup>
-          . Built-in monitoring, security, and compliance features ensure your application is production-ready from day one.
         </>
       ),
       gradient: "bg-icon"
@@ -71,10 +70,10 @@ const
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-12 sm:mb-16">
           <h2 className="mobile-text-3xl font-bold text-foreground mb-4 sm:mb-6">
-            Focus on the solution, not infrastructure
+            From prototype to production without a platform team
           </h2>
           <p className="mobile-text-lg text-muted-foreground max-w-3xl mx-auto">
-            Transform your ideas into scalable applications with our AI-powered development platform
+            Describe your application. Cyoda generates the data model, workflow configuration, and API. The platform handles consistency, audit, and state. Your code handles the business logic.
           </p>
         </div>
 

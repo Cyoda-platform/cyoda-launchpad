@@ -20,16 +20,16 @@ const ThreeBenefitsSection: React.FC<BenefitsProps> = ({
     const benefits = [
         {
             icon: GaugeCircle,
-            title: "1. Innovate Heavyweight Systems at AI Speed",
+            title: "1. Build and ship stateful systems at AI speed",
             description:
-                "Go beyond simple apps. Our unified platform lets you build and flex stateful, event-driven systems with transactional consistency, security, and horizontal scalability for mission-critical workloads.",
+                "Cyoda gives AI agents a consistent, auditable foundation to work from. Complex data models, workflow state, and transactional guarantees are platform-level. Not things the AI has to generate and maintain in application code.",
             gradient: "bg-icon",
         },
         {
             icon: Layers3,
-            title: "2. Smaller Teams, Fewer Skills, Faster Delivery",
+            title: "2. Smaller teams, fewer moving parts",
             description:
-                "Eliminate diverse platform engineering stacks. A single architecture streamlines the whole path from design to deployment, so small teams deliver complex systems with unprecedented speed.",
+                "Eliminate the platform engineering overhead of assembling and operating a heterogeneous stack. The Kafka specialist, the Temporal specialist, the audit pipeline engineer: those are hires you do not need to make. One architecture handles what would otherwise require three separate engineering specialisms.",
             gradient: "bg-icon",
         },
         {
@@ -64,6 +64,11 @@ const ThreeBenefitsSection: React.FC<BenefitsProps> = ({
             <div className="absolute inset-0 texture-overlay opacity-30" />
 
             <div className="container mx-auto px-4 relative z-10">
+                {!renderHeadings && (
+                    <p className="text-xs font-semibold text-primary uppercase tracking-widest mb-8 text-center">
+                        Why teams building on Cyoda ship faster and stay lean
+                    </p>
+                )}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
                     {benefits.map((b, i) => (
                         <div

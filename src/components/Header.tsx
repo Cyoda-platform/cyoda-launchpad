@@ -1,10 +1,8 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { ThemeToggle } from '@/components/ThemeToggle';
-import { SiGithub, SiLinkedin, SiX, SiYoutube, } from "react-icons/si";
-import { Menu,    X,    ChevronDown} from 'lucide-react';
-import { HashLink } from 'react-router-hash-link'
+import { Menu, X } from 'lucide-react';
+import { HashLink } from 'react-router-hash-link';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -20,7 +18,6 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
 
-  // Determine page variant based on current route
   const getPageVariant = (): "home" | "dev" | "cto" | "products" | "pricing" => {
     const path = location.pathname;
     if (path === '/dev') return 'dev';
@@ -40,13 +37,6 @@ const Header = () => {
     window.open('https://ai.cyoda.net', '_blank');
   };
 
-  const socialLinks = [
-    { icon: SiLinkedin, href: 'https://www.linkedin.com/company/cyoda', label: 'LinkedIn' },
-    { icon: SiX, href: 'https://twitter.com/cyodaops', label: 'X (Twitter)' },
-    { icon: SiYoutube, href: 'https://www.youtube.com/@cyoda934', label: 'YouTube' },
-    { icon: SiGithub, href: 'https://github.com/Cyoda-platform/', label: 'GitHub' },
-  ];
-
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 max-w-screen-2xl items-center justify-between">
@@ -60,36 +50,111 @@ const Header = () => {
         {/* Desktop Navigation */}
         <NavigationMenu className="hidden lg:flex">
           <NavigationMenuList className="gap-6">
+
+            {/* Platform Dropdown */}
             <NavigationMenuItem>
-              <NavigationMenuLink asChild>
-                <Link
-                  to="/products"
-                  className="text-foreground hover:text-primary transition-colors font-medium"
-                >
-                  Products
-                </Link>
-              </NavigationMenuLink>
+              <NavigationMenuTrigger className="text-foreground hover:text-primary transition-colors font-medium">
+                Platform
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <div className="grid grid-cols-2 w-[540px] gap-6 p-6">
+                  <div>
+                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-3">Product</p>
+                    <div className="space-y-4">
+                      {[
+                        { label: 'EDBMS Platform', sub: 'Unified data + workflow + audit', to: '/products' },
+                        { label: 'AI Assistant', sub: 'Prototype in natural language', to: '/products#ai-assistant' },
+                        { label: 'Cyoda Cloud', sub: 'Managed cloud service, free tier', to: '/products#cyoda-cloud' },
+                        { label: 'On-Premise (CPL)', sub: 'Self-hosted on Kubernetes', to: '/products#on-premise' },
+                      ].map((item) => (
+                        <NavigationMenuLink key={item.label} asChild>
+                          <Link to={item.to} className="block group">
+                            <div className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">{item.label}</div>
+                            <div className="text-xs text-muted-foreground mt-0.5">{item.sub}</div>
+                          </Link>
+                        </NavigationMenuLink>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-3">Learn</p>
+                    <div className="space-y-4">
+                      <NavigationMenuLink asChild>
+                        <HashLink smooth to="/#how-it-works" className="block group">
+                          <div className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">Architecture</div>
+                          <div className="text-xs text-muted-foreground mt-0.5">How the EDBMS works</div>
+                        </HashLink>
+                      </NavigationMenuLink>
+                      <NavigationMenuLink asChild>
+                        <Link to="/comparison" className="block group">
+                          <div className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">Compare vs. alternatives</div>
+                          <div className="text-xs text-muted-foreground mt-0.5">Temporal, Camunda, Kafka, XTDB</div>
+                        </Link>
+                      </NavigationMenuLink>
+                      <NavigationMenuLink asChild>
+                        <a href="https://docs.cyoda.net" target="_blank" rel="noopener noreferrer" className="block group">
+                          <div className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">Documentation</div>
+                          <div className="text-xs text-muted-foreground mt-0.5">Full docs at docs.cyoda.net</div>
+                        </a>
+                      </NavigationMenuLink>
+                      <NavigationMenuLink asChild>
+                        <a href="https://ai.cyoda.net" target="_blank" rel="noopener noreferrer" className="block group">
+                          <div className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">Quickstart</div>
+                          <div className="text-xs text-muted-foreground mt-0.5">Start at ai.cyoda.net</div>
+                        </a>
+                      </NavigationMenuLink>
+                    </div>
+                  </div>
+                </div>
+              </NavigationMenuContent>
             </NavigationMenuItem>
+
+            {/* Solutions Dropdown */}
             <NavigationMenuItem>
-              <NavigationMenuLink asChild>
-                <Link
-                  to="/use-cases"
-                  className="text-foreground hover:text-primary transition-colors font-medium"
-                >
-                  Use Cases
-                </Link>
-              </NavigationMenuLink>
+              <NavigationMenuTrigger className="text-foreground hover:text-primary transition-colors font-medium">
+                Solutions
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <div className="grid grid-cols-2 w-[520px] gap-6 p-6">
+                  <div>
+                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-3">By Use Case</p>
+                    <div className="space-y-4">
+                      {[
+                        { label: 'Loan Origination & Lifecycle', sub: 'State machine from application to settlement', to: '/use-cases/loan-lifecycle' },
+                        { label: 'Trade Settlement & Reporting', sub: 'Point-in-time queryable trade states', to: '/use-cases/trade-settlement' },
+                        { label: 'KYC & Customer Onboarding', sub: 'Durable retry with full audit', to: '/use-cases/kyc-onboarding' },
+                        { label: 'Agentic AI for Regulated Industries', sub: 'Transactional, auditable agent actions', to: '/use-cases/agentic-ai' },
+                      ].map((item) => (
+                        <NavigationMenuLink key={item.label} asChild>
+                          <Link to={item.to} className="block group">
+                            <div className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">{item.label}</div>
+                            <div className="text-xs text-muted-foreground mt-0.5">{item.sub}</div>
+                          </Link>
+                        </NavigationMenuLink>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-3">By Role</p>
+                    <div className="space-y-4">
+                      {[
+                        { label: 'For Engineering Leaders', sub: 'Architecture, team size, compliance', to: '/cto' },
+                        { label: 'For Developers', sub: 'Build, integrate, deploy', to: '/dev' },
+                      ].map((item) => (
+                        <NavigationMenuLink key={item.label} asChild>
+                          <Link to={item.to} className="block group">
+                            <div className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">{item.label}</div>
+                            <div className="text-xs text-muted-foreground mt-0.5">{item.sub}</div>
+                          </Link>
+                        </NavigationMenuLink>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </NavigationMenuContent>
             </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink asChild>
-                <Link
-                  to="/comparison"
-                  className="text-foreground hover:text-primary transition-colors font-medium"
-                >
-                  Compare
-                </Link>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
+
+            {/* Pricing */}
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
                 <Link
@@ -100,6 +165,8 @@ const Header = () => {
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
+
+            {/* Docs Dropdown — unchanged */}
             <NavigationMenuItem>
               <NavigationMenuTrigger className="text-foreground hover:text-primary transition-colors font-medium">
                 Docs
@@ -112,9 +179,9 @@ const Header = () => {
                     </Link>
                   </NavigationMenuLink>
                   <NavigationMenuLink className="text-sm hover:text-primary transition-colors">
-                      <Link to="https://docs.cyoda.net/api-reference/" target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary transition-colors">
-                    API Reference
-                      </Link>
+                    <Link to="https://docs.cyoda.net/api-reference/" target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary transition-colors">
+                      API Reference
+                    </Link>
                   </NavigationMenuLink>
                   <NavigationMenuLink className="text-sm text-muted-foreground">
                     Video Explanations (coming soon)
@@ -122,6 +189,8 @@ const Header = () => {
                 </div>
               </NavigationMenuContent>
             </NavigationMenuItem>
+
+            {/* Blog */}
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
                 <Link
@@ -132,58 +201,19 @@ const Header = () => {
                 </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink asChild>
-                <Link
-                  to="/about"
-                  className="text-foreground hover:text-primary transition-colors font-medium"
-                >
-                  About
-                </Link>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuLink asChild>
-                <Link
-                  to="/support"
-                  className="text-foreground hover:text-primary transition-colors font-medium"
-                >
-                  Support
-                </Link>
-              </NavigationMenuLink>
-            </NavigationMenuItem>
+
           </NavigationMenuList>
         </NavigationMenu>
 
         {/* Right Side Actions */}
-        <div className="flex items-center space-x-4">
-          {/* Social Links - Desktop */}
+        <div className="flex items-center space-x-2">
           <div className="hidden md:flex items-center space-x-2">
-            {socialLinks.map((social) => (
-              <a
-                key={social.label}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-lg hover:bg-secondary glow-hover transition-all min-h-[44px] min-w-[44px] flex items-center justify-center"
-                aria-label={social.label}
-              >
-                <social.icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              </a>
-            ))}
-          </div>
-
-          <ThemeToggle />
-
-          {/* Action Buttons */}
-          <div className="hidden md:flex items-center space-x-2">
-              <Button asChild variant="outline" className="glow-hover mobile-btn-text">
-                  <HashLink smooth to="/support#contact">Contact</HashLink>
-              </Button>
-
+            <Button asChild variant="outline" className="glow-hover mobile-btn-text">
+              <HashLink smooth to="/support#contact">Contact</HashLink>
+            </Button>
             <Button
-                variant="outline"
-                className="glow-hover mobile-btn-text"
+              variant="outline"
+              className="glow-hover mobile-btn-text"
               onClick={() => handleTryNowClick("header")}
             >
               Try Now
@@ -207,25 +237,29 @@ const Header = () => {
       {isMenuOpen && (
         <div className="lg:hidden border-t border-border/40 bg-background/95 backdrop-blur">
           <div className="container py-4 space-y-4">
-            <nav className="space-y-2">
-              <Link to="/products" className="block py-2 text-foreground hover:text-primary transition-colors">Products</Link>
-              <Link to="/use-cases" className="block py-2 text-foreground hover:text-primary transition-colors">Use Cases</Link>
-              <Link to="/comparison" className="block py-2 text-foreground hover:text-primary transition-colors">Compare</Link>
-              <Link to="/pricing" className="block py-2 text-foreground hover:text-primary transition-colors">Pricing</Link>
-              <div className="py-2">
-                <button className="flex items-center space-x-1 text-foreground hover:text-primary transition-colors min-h-[44px]">
-                  <span>Docs</span>
-                  <ChevronDown className="w-3.5 h-3.5" />
-                </button>
-                <div className="ml-4 mt-2 space-y-1">
-                  {/* <Link to="/guides" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">Guides</Link> */}
-                  <a href="#" className="block py-1 text-sm text-muted-foreground hover:text-primary transition-colors">Application Documentation</a>
-                  <span className="block py-1 text-sm text-muted-foreground">Video Explanations (coming soon)</span>
-                </div>
-              </div>
-              <Link to="/blog" className="block py-2 text-foreground hover:text-primary transition-colors">Blog</Link>
-              <Link to="/about" className="block py-2 text-foreground hover:text-primary transition-colors">About</Link>
-              <Link to="/support" className="block py-2 text-foreground hover:text-primary transition-colors">Support</Link>
+            <nav className="space-y-1">
+              <p className="py-1 text-xs font-semibold text-muted-foreground uppercase tracking-widest">Platform</p>
+              <Link to="/products" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">EDBMS Platform</Link>
+              <Link to="/products#ai-assistant" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">AI Assistant</Link>
+              <Link to="/products#cyoda-cloud" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">Cyoda Cloud</Link>
+              <Link to="/comparison" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">Compare vs. alternatives</Link>
+
+              <p className="py-1 text-xs font-semibold text-muted-foreground uppercase tracking-widest mt-3">Solutions</p>
+              <Link to="/use-cases/loan-lifecycle" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">Loan Origination &amp; Lifecycle</Link>
+              <Link to="/use-cases/trade-settlement" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">Trade Settlement &amp; Reporting</Link>
+              <Link to="/use-cases/kyc-onboarding" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">KYC &amp; Customer Onboarding</Link>
+              <Link to="/use-cases/agentic-ai" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">Agentic AI</Link>
+              <Link to="/cto" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">For Engineering Leaders</Link>
+              <Link to="/dev" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">For Developers</Link>
+
+              <Link to="/pricing" className="block py-2 text-foreground hover:text-primary transition-colors font-medium">Pricing</Link>
+
+              <p className="py-1 text-xs font-semibold text-muted-foreground uppercase tracking-widest mt-3">Docs</p>
+              <a href="https://docs.cyoda.net/" target="_blank" rel="noopener noreferrer" className="block py-1.5 pl-3 text-sm text-muted-foreground hover:text-primary transition-colors">Developer Docs</a>
+              <a href="https://docs.cyoda.net/api-reference/" target="_blank" rel="noopener noreferrer" className="block py-1.5 pl-3 text-sm text-muted-foreground hover:text-primary transition-colors">API Reference</a>
+              <span className="block py-1.5 pl-3 text-sm text-muted-foreground">Video Explanations (coming soon)</span>
+
+              <Link to="/blog" className="block py-2 text-foreground hover:text-primary transition-colors font-medium">Blog</Link>
             </nav>
 
             <div className="flex flex-col space-y-2 pt-4 border-t border-border/40">
@@ -238,21 +272,6 @@ const Header = () => {
               >
                 Try Now
               </Button>
-            </div>
-
-            <div className="flex items-center space-x-2 pt-2">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-3 rounded-lg hover:bg-secondary glow-hover transition-all min-h-[44px] min-w-[44px] flex items-center justify-center"
-                  aria-label={social.label}
-                >
-                  <social.icon className="w-4 h-4" />
-                </a>
-              ))}
             </div>
           </div>
         </div>

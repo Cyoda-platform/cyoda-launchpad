@@ -49,11 +49,25 @@ const DeveloperReliabilitySection = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gradient-accent mb-6">
-            Built for Developers Who Demand Correctness
+            How the platform models a business entity
           </h2>
           <p className="text-xl text-muted-foreground max-w-4xl mx-auto">
             Handle complex entities, relationships, and business logic with confidence.
             Cyoda excels at modeling intricate data structures that real enterprises depend on.
+          </p>
+        </div>
+
+        {/* Non-technical intro block */}
+        <div className="max-w-3xl mx-auto mb-10 bg-card/30 border border-border/30 rounded-xl p-6">
+          <h3 className="text-lg font-semibold text-foreground mb-3">
+            Evaluating Cyoda without an engineer in the room?
+          </h3>
+          <p className="text-muted-foreground mb-3">
+            The short version: Cyoda replaces several years of platform engineering work with configuration. Every business entity (a loan, a trade, a KYC record) is modeled with its own lifecycle, its own history, and its own transition rules. Your team defines the business logic. Cyoda handles consistency, audit, and scale.
+          </p>
+          <p className="text-muted-foreground">
+            For the technical detail, the architecture is below. For a working prototype, go to{' '}
+            <a href="https://ai.cyoda.net" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80 underline underline-offset-2">ai.cyoda.net</a>.
           </p>
         </div>
 

@@ -11,13 +11,12 @@ const EcosystemSection = () => {
         {
             icon: Shapes,
             title: "Entity-First Data Models",
-            description: "AI-assisted creation of rich structured models with validation, relationships, and business rules."
+            description: "Every business object in the platform has a data model, a lifecycle, and an immutable history. You configure the schema in JSON. The platform enforces it."
         },
         {
             icon: RadioTowerIcon,
             title: "Event-Driven Architecture",
-            description: "EDA minus the complexity. Get scalability and decoupling " +
-                "in a unified design that simplifies development and operations."
+            description: "Events drive state transitions. State transitions are transactional. No application-level event deduplication, no compensating transactions, no out-of-order processing to handle."
         },
         {
             icon: Zap,
@@ -37,8 +36,7 @@ const EcosystemSection = () => {
         {
             icon: Bot,
             title: "AI Co‑Builder",
-            description: "Go from problem statement to runnable services with explainable suggestions, " +
-                "enabling faster iteration without “black box” changes"
+            description: "Describe your application at ai.cyoda.net. The AI generates entity models, workflow configurations, and gRPC processor scaffolding. You get a working prototype, not a skeleton."
         }
     ];
 
@@ -54,10 +52,10 @@ const EcosystemSection = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-            Discover the Cyoda Ecosystem
+            What's in the platform
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            A  platform designed for modern application development
+            Nine capabilities. One consistency model. No glue code between them.
           </p>
         </div>
 

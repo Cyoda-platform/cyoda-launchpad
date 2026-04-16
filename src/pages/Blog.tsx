@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Calendar, User, ArrowRight, Clock, Search, X, Loader2 } from 'lucide-react';
 import { useBlogPostPreviews, useFeaturedBlogPosts, useBlogCategories, useSearchBlogPosts } from '@/hooks/use-blog';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { BlogListingSkeleton, SearchResultsSkeleton } from '@/components/BlogSkeletons';
 import {
@@ -34,15 +34,21 @@ const useDebounce = (value: string, delay: number) => {
   return debouncedValue;
 };
 
+const ESCAPE_REGEXP = /[.*+?^${}()|[\]\\]/g;
+
 // Utility function to highlight search terms
+// Note: avoids reusing a global-flag regex with .test() in a map — that advances
+// lastIndex and produces incorrect alternating results.
 const highlightSearchTerm = (text: string, searchTerm: string) => {
   if (!searchTerm.trim()) return text;
 
-  const regex = new RegExp(`(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+  const escaped = searchTerm.replace(ESCAPE_REGEXP, '\\$&');
+  const regex = new RegExp(`(${escaped})`, 'gi');
   const parts = text.split(regex);
+  const lowerSearch = searchTerm.toLowerCase();
 
   return parts.map((part, index) =>
-    regex.test(part) ? (
+    part.toLowerCase() === lowerSearch ? (
       <mark key={index} className="bg-primary/20 text-primary px-1 rounded">
         {part}
       </mark>
@@ -106,17 +112,24 @@ const Blog = () => {
 
   const filteredPosts = getDisplayPosts();
 
-  // Clear search function
+  // Clear search function — clearSearch from the hook is stable, empty deps is safe
   const handleClearSearch = useCallback(() => {
     setSearchQuery('');
     clearSearch();
-  }, [clearSearch]);
+  }, []);
+
+  // Use refs so handleRetry always reads the latest error state without
+  // depending on it — avoids recreating the callback on every error change.
+  const postsErrorRef = useRef(postsError);
+  const featuredErrorRef = useRef(featuredError);
+  postsErrorRef.current = postsError;
+  featuredErrorRef.current = featuredError;
 
   // Retry function for errors
   const handleRetry = useCallback(() => {
-    if (postsError) refetchPosts();
-    if (featuredError) refetchFeatured();
-  }, [postsError, featuredError, refetchPosts, refetchFeatured]);
+    if (postsErrorRef.current) refetchPosts();
+    if (featuredErrorRef.current) refetchFeatured();
+  }, [refetchPosts, refetchFeatured]);
 
   // Loading state - show skeleton
   if (postsLoading || featuredLoading || categoriesLoading) {

@@ -14,6 +14,8 @@ const ProofBar = () => {
       <span>In production in the European private-debt market since 2017</span>
       <span aria-hidden="true">·</span>
       <span className="font-semibold text-foreground">VC Trade</span>
+      <span aria-hidden="true">·</span>
+      <span>Used by a global KYC platform for 4+ years prior to launch</span>
     </div>
   );
 };

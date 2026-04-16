@@ -108,13 +108,12 @@ const HeroSection: React.FC<HeroProps> = ({
             React.createElement(
               defaultHeadingAs,
               { className: 'text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground' },
-              'Financial-Grade Systems For Enterprise Backends'
+              'Build Enterprise-Grade Systems at AI Speed'
             )
           )}
 
           <p className="text-lg md:text-xl text-foreground/90 leading-relaxed max-w-2xl mx-auto">
-            The unified platform that replaces Postgres + Kafka + Camunda for teams
-            building stateful, auditable workflows in regulated financial services.
+            Cyoda gives agentic AI the platform-level consistency, audit history, and workflow state it needs to build production systems in regulated industries. Without a platform team.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
@@ -132,7 +131,7 @@ const HeroSection: React.FC<HeroProps> = ({
               asChild
             >
               <HashLink smooth to="/#how-it-works">
-                See How It Works
+                See the Architecture
               </HashLink>
             </Button>
           </div>

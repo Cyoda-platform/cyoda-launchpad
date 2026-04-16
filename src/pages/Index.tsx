@@ -4,7 +4,8 @@ import ProofBar from '@/components/ProofBar';
 import ArchitectureDiagram from '@/components/ArchitectureDiagram';
 import UseCaseCard from '@/components/UseCaseCard';
 import ThreeStepSection from '@/components/ThreeStepSection';
-import ThreeBenefitsSection from '@/components/ThreeBenefitsSection';
+import PersonaSwitcher from '@/components/PersonaSwitcher';
+import AINativeSection from '@/components/AINativeSection';
 import EcosystemSection from '@/components/EcosystemSection';
 import DeveloperReliabilitySection from '@/components/DeveloperReliabilitySection';
 import Footer from '@/components/Footer';
@@ -14,10 +15,11 @@ import { AlertCircle, Building2, BarChart3, UserCheck, Bot } from 'lucide-react'
 import { Link } from 'react-router-dom';
 
 const painPoints = [
-  'Most of the engineering effort goes into keeping nine components consistent, not into the product',
-  'Partial progress failure modes at every seam: the DB commits, the event fails to publish, the workflow advances on stale data',
-  'When a regulator asks for entity state from three months ago, the answer comes from log archaeology across disparate systems',
-  'Adding a new workflow state requires coordinated changes across the database schema, the event schema, and the workflow engine',
+  'Most of the engineering effort goes into keeping components consistent, not into the product',
+  'Partial progress failure modes at every seam: one system commits, another fails mid-transaction, and now you are reconciling across logs',
+  'When a regulator asks for entity state from three months ago, reconstructing it from disparate audit logs takes days, not seconds',
+  'Adding a new workflow state requires coordinated changes across multiple systems, and something always breaks',
+  'AI coding agents cannot reason coherently across a heterogeneous stack. Inconsistencies at component boundaries compound',
 ];
 
 const Index = () => {
@@ -34,6 +36,7 @@ const Index = () => {
       <main>
         <HeroSection />
         <ProofBar />
+        <PersonaSwitcher />
 
         {/* Problem / Architecture section */}
         <section
@@ -50,7 +53,10 @@ const Index = () => {
                 You're Not Assembling Three Systems. You're Assembling Nine.
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                  Every team building stateful financial backends eventually hits the same wall. Postgres for consistency, Kafka for events, Temporal for workflows (that's the shortlist). The full list is nine components, each individually correct, held together by glue code that only works until one of them fails mid-transaction. The hardest problem isn't picking the tools. It's making them consistent across the database-to-workflow boundary and most teams never fully solve it. It's hard for developers to build on and opaque to AI coding tools.
+                Every team building stateful financial backends hits the same wall. A transactional database, a message broker, a workflow engine, a reporting layer, an audit mechanism — each individually correct, assembled by hand, held together by glue code that does not survive a partial failure. The full list of components is closer to nine than three. The hardest problem is not picking the tools. It is keeping them consistent across every seam, and that problem grows every time you add a state.
+              </p>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto mt-4">
+                The other thing nobody mentions: that architecture is opaque to AI coding agents. The more heterogeneous the stack, the harder it is for AI to reason across it without introducing inconsistencies at the boundaries.
               </p>
             </div>
 
@@ -69,12 +75,12 @@ const Index = () => {
 
             {/* EDBMS definition */}
             <p className="text-center text-muted-foreground mt-10 max-w-3xl mx-auto">
-              The Cyoda EDBMS (Entity Database Management System) ships all nine capabilities in a single consistency model. Transactions, workflows, and point-in-time queries share one source of truth. The audit trail is not a log added on top — it is the storage mechanism itself.
+              The Cyoda EDBMS ships all nine capabilities in a single consistency model. Transactions, workflows, and point-in-time queries share one source of truth. The audit trail is the storage mechanism: write-only, immutable, available for regulatory reconstruction at any point in time.
             </p>
           </div>
         </section>
 
-        <ThreeBenefitsSection renderHeadings={false} />
+        <AINativeSection />
         <ThreeStepSection />
         <EcosystemSection />
 
@@ -100,7 +106,7 @@ const Index = () => {
                 USE CASES
               </p>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Built for Problems That Other Platforms Can't Solve
+                Where Cyoda fits
               </h2>
             </div>
 
@@ -126,7 +132,7 @@ const Index = () => {
               <UseCaseCard
                 icon={Bot}
                 title="Agentic AI for Regulated Industries"
-                description="Platform-level consistency for AI agent actions — deterministic, auditable, and recoverable."
+                description="AI agents that take actions on behalf of businesses need more than model inference. Cyoda provides the transactional consistency, ordered state transitions, and audit history that make agent actions recoverable when something goes wrong."
                 href="/use-cases/agentic-ai"
               />
             </div>

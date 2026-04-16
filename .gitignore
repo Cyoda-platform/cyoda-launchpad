@@ -31,3 +31,11 @@ playwright-report/
 
 # Environment files (keep .env.test for testing)
 .env.test
+
+# AI files
+.claude/
+docs/lint-and-validate-issues.md
+docs/react-best-practices-changes.md
+docs/website-improvement-audit.md
+github
+github.pub
