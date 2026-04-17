@@ -27,11 +27,11 @@ const Header = () => {
     return 'home';
   };
 
-  const handleTryNowClick = (locationId: "header" | "header_mobile") => {
+  const handleCloudClick = (locationId: "header" | "header_mobile") => {
     trackCtaConversion({
       location: locationId,
       page_variant: getPageVariant(),
-      cta: "try_now",
+      cta: "cyoda_cloud",
       url: "https://ai.cyoda.net"
     });
     window.open('https://ai.cyoda.net', '_blank');
@@ -63,34 +63,28 @@ const Header = () => {
                     <div className="space-y-4">
                       {[
                         { label: 'EDBMS Platform', sub: 'Unified data + workflow + audit', to: '/products' },
-                        { label: 'AI Assistant', sub: 'Prototype in natural language', to: '/products#ai-assistant' },
-                        { label: 'Cyoda Cloud', sub: 'Managed cloud service, free tier', to: '/products#cyoda-cloud' },
-                        { label: 'On-Premise (CPL)', sub: 'Self-hosted on Kubernetes', to: '/products#on-premise' },
+                        { label: 'Architecture', sub: 'How the EDBMS works', to: '/#how-it-works', hash: true },
+                        { label: 'Compare vs. alternatives', sub: 'Temporal, Camunda, Kafka, XTDB', to: '/comparison' },
                       ].map((item) => (
                         <NavigationMenuLink key={item.label} asChild>
-                          <Link to={item.to} className="block group">
-                            <div className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">{item.label}</div>
-                            <div className="text-xs text-muted-foreground mt-0.5">{item.sub}</div>
-                          </Link>
+                          {item.hash ? (
+                            <HashLink smooth to={item.to} className="block group">
+                              <div className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">{item.label}</div>
+                              <div className="text-xs text-muted-foreground mt-0.5">{item.sub}</div>
+                            </HashLink>
+                          ) : (
+                            <Link to={item.to} className="block group">
+                              <div className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">{item.label}</div>
+                              <div className="text-xs text-muted-foreground mt-0.5">{item.sub}</div>
+                            </Link>
+                          )}
                         </NavigationMenuLink>
                       ))}
                     </div>
                   </div>
                   <div>
-                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-3">Learn</p>
+                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-3">Resources</p>
                     <div className="space-y-4">
-                      <NavigationMenuLink asChild>
-                        <HashLink smooth to="/#how-it-works" className="block group">
-                          <div className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">Architecture</div>
-                          <div className="text-xs text-muted-foreground mt-0.5">How the EDBMS works</div>
-                        </HashLink>
-                      </NavigationMenuLink>
-                      <NavigationMenuLink asChild>
-                        <Link to="/comparison" className="block group">
-                          <div className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">Compare vs. alternatives</div>
-                          <div className="text-xs text-muted-foreground mt-0.5">Temporal, Camunda, Kafka, XTDB</div>
-                        </Link>
-                      </NavigationMenuLink>
                       <NavigationMenuLink asChild>
                         <a href="https://docs.cyoda.net" target="_blank" rel="noopener noreferrer" className="block group">
                           <div className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">Documentation</div>
@@ -98,10 +92,16 @@ const Header = () => {
                         </a>
                       </NavigationMenuLink>
                       <NavigationMenuLink asChild>
-                        <a href="https://ai.cyoda.net" target="_blank" rel="noopener noreferrer" className="block group">
-                          <div className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">Quickstart</div>
-                          <div className="text-xs text-muted-foreground mt-0.5">Start at ai.cyoda.net</div>
+                        <a href="https://docs.cyoda.net/api-reference/" target="_blank" rel="noopener noreferrer" className="block group">
+                          <div className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">API Reference</div>
+                          <div className="text-xs text-muted-foreground mt-0.5">gRPC and REST API docs</div>
                         </a>
+                      </NavigationMenuLink>
+                      <NavigationMenuLink asChild>
+                        <Link to="/blog" className="block group">
+                          <div className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">Blog</div>
+                          <div className="text-xs text-muted-foreground mt-0.5">Engineering and product articles</div>
+                        </Link>
                       </NavigationMenuLink>
                     </div>
                   </div>
@@ -154,51 +154,45 @@ const Header = () => {
               </NavigationMenuContent>
             </NavigationMenuItem>
 
-            {/* Pricing */}
+            {/* Cyoda Cloud — external top-level link */}
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
-                <Link
-                  to="/pricing"
-                  className="text-foreground hover:text-primary transition-colors font-medium"
+                <a
+                  href="https://ai.cyoda.net/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-foreground hover:text-primary transition-colors font-medium text-sm"
                 >
-                  Pricing
-                </Link>
+                  Cyoda Cloud
+                </a>
               </NavigationMenuLink>
             </NavigationMenuItem>
 
-            {/* Docs Dropdown — unchanged */}
-            <NavigationMenuItem>
-              <NavigationMenuTrigger className="text-foreground hover:text-primary transition-colors font-medium">
-                Docs
-              </NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <div className="grid w-64 gap-3 p-4">
-                  <NavigationMenuLink asChild>
-                    <Link to="https://docs.cyoda.net/" target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary transition-colors">
-                      Developer Docs
-                    </Link>
-                  </NavigationMenuLink>
-                  <NavigationMenuLink className="text-sm hover:text-primary transition-colors">
-                    <Link to="https://docs.cyoda.net/api-reference/" target="_blank" rel="noopener noreferrer" className="text-sm hover:text-primary transition-colors">
-                      API Reference
-                    </Link>
-                  </NavigationMenuLink>
-                  <NavigationMenuLink className="text-sm text-muted-foreground">
-                    Video Explanations (coming soon)
-                  </NavigationMenuLink>
-                </div>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-
-            {/* Blog */}
+            {/* Open Source — external top-level link */}
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
-                <Link
-                  to="/blog"
-                  className="text-foreground hover:text-primary transition-colors font-medium"
+                <a
+                  href="https://cyoda.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-foreground hover:text-primary transition-colors font-medium text-sm"
                 >
-                  Blog
-                </Link>
+                  Open Source
+                </a>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+
+            {/* Docs — single external link */}
+            <NavigationMenuItem>
+              <NavigationMenuLink asChild>
+                <a
+                  href="https://docs.cyoda.net"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-foreground hover:text-primary transition-colors font-medium text-sm"
+                >
+                  Docs
+                </a>
               </NavigationMenuLink>
             </NavigationMenuItem>
 
@@ -209,14 +203,14 @@ const Header = () => {
         <div className="flex items-center space-x-2">
           <div className="hidden md:flex items-center space-x-2">
             <Button asChild variant="outline" className="glow-hover mobile-btn-text">
-              <HashLink smooth to="/support#contact">Contact</HashLink>
+              <Link to="/contact">Contact</Link>
             </Button>
             <Button
               variant="outline"
               className="glow-hover mobile-btn-text"
-              onClick={() => handleTryNowClick("header")}
+              onClick={() => handleCloudClick("header")}
             >
-              Try Now
+              Cyoda Cloud
             </Button>
           </div>
 
@@ -240,8 +234,6 @@ const Header = () => {
             <nav className="space-y-1">
               <p className="py-1 text-xs font-semibold text-muted-foreground uppercase tracking-widest">Platform</p>
               <Link to="/products" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">EDBMS Platform</Link>
-              <Link to="/products#ai-assistant" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">AI Assistant</Link>
-              <Link to="/products#cyoda-cloud" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">Cyoda Cloud</Link>
               <Link to="/comparison" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">Compare vs. alternatives</Link>
 
               <p className="py-1 text-xs font-semibold text-muted-foreground uppercase tracking-widest mt-3">Solutions</p>
@@ -252,25 +244,24 @@ const Header = () => {
               <Link to="/cto" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">For Engineering Leaders</Link>
               <Link to="/dev" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">For Developers</Link>
 
-              <Link to="/pricing" className="block py-2 text-foreground hover:text-primary transition-colors font-medium">Pricing</Link>
-
-              <p className="py-1 text-xs font-semibold text-muted-foreground uppercase tracking-widest mt-3">Docs</p>
-              <a href="https://docs.cyoda.net/" target="_blank" rel="noopener noreferrer" className="block py-1.5 pl-3 text-sm text-muted-foreground hover:text-primary transition-colors">Developer Docs</a>
-              <a href="https://docs.cyoda.net/api-reference/" target="_blank" rel="noopener noreferrer" className="block py-1.5 pl-3 text-sm text-muted-foreground hover:text-primary transition-colors">API Reference</a>
-              <span className="block py-1.5 pl-3 text-sm text-muted-foreground">Video Explanations (coming soon)</span>
+              <p className="py-1 text-xs font-semibold text-muted-foreground uppercase tracking-widest mt-3">Cyoda Web</p>
+              <a href="https://ai.cyoda.net/" target="_blank" rel="noopener noreferrer" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">Cyoda Cloud ↗</a>
+              <a href="https://cyoda.org" target="_blank" rel="noopener noreferrer" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">Open Source ↗</a>
+              <a href="https://docs.cyoda.net/" target="_blank" rel="noopener noreferrer" className="block py-1.5 pl-3 text-sm text-muted-foreground hover:text-primary transition-colors">Docs ↗</a>
+              <a href="https://docs.cyoda.net/api-reference/" target="_blank" rel="noopener noreferrer" className="block py-1.5 pl-3 text-sm text-muted-foreground hover:text-primary transition-colors">API Reference ↗</a>
 
               <Link to="/blog" className="block py-2 text-foreground hover:text-primary transition-colors font-medium">Blog</Link>
             </nav>
 
             <div className="flex flex-col space-y-2 pt-4 border-t border-border/40">
               <Button asChild variant="outline" className="justify-start mobile-btn-text">
-                <HashLink smooth to="/support#contact">Contact</HashLink>
+                <Link to="/contact">Contact</Link>
               </Button>
               <Button
                 className="bg-gradient-primary text-white justify-start mobile-btn-text"
-                onClick={() => handleTryNowClick("header_mobile")}
+                onClick={() => handleCloudClick("header_mobile")}
               >
-                Try Now
+                Cyoda Cloud
               </Button>
             </div>
           </div>

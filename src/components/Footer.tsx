@@ -21,6 +21,13 @@ const Footer = () => {
     { name: 'Contact', href: '/contact' },
   ];
 
+  const cyodaWebLinks = [
+    { name: 'Enterprise Cyoda', href: '/' },
+    { name: 'Cyoda Cloud', href: 'https://ai.cyoda.net/', external: true },
+    { name: 'Open Source', href: 'https://cyoda.org', external: true },
+    { name: 'Docs', href: 'https://docs.cyoda.net', external: true },
+  ];
+
   const socialLinks = [
     {
       icon: SiLinkedin,
@@ -51,7 +58,7 @@ const Footer = () => {
   return (
     <footer className="border-t border-border/40 bg-background/95 backdrop-blur">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           {/* Logo and description */}
           <div className="md:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
@@ -59,7 +66,7 @@ const Footer = () => {
                 <img src={cyodaLogo} alt="Cyoda" className="h-6 sm:h-6" />
             </div>
             <p className="text-muted-foreground mb-6 max-w-md">
-              The unified platform for stateful, auditable workflows in financial services.
+              Enterprise Cyoda — commercially supported EDBMS for stateful, auditable, workflow-driven systems.
               In production in European private-debt markets since 2017.
             </p>
 
@@ -120,6 +127,34 @@ const Footer = () => {
                 >
                   {link.name}
                 </Link>
+              ))}
+            </nav>
+          </div>
+
+          {/* Cyoda web estate links */}
+          <div>
+            <h3 className="font-semibold mb-4 text-foreground">Cyoda</h3>
+            <nav className="space-y-3">
+              {cyodaWebLinks.map((link) => (
+                link.external ? (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    {link.name}
+                  </a>
+                ) : (
+                  <Link
+                    key={link.name}
+                    to={link.href}
+                    className="block text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    {link.name}
+                  </Link>
+                )
               ))}
             </nav>
           </div>

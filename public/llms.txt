@@ -1,8 +1,8 @@
 # Cyoda
 
-Cyoda is the unified platform that replaces Postgres + Kafka + Camunda for fintech teams
-building stateful, auditable workflows in regulated financial services.
-In production in the European private-debt market since 2017 (VC Trade).
+cyoda.com is the enterprise/commercial site for Cyoda.
+It describes Enterprise Cyoda: commercially supported, scalable deployment of the Cyoda EDBMS
+for regulated, mission-critical, and operationally complex environments.
 
 ## What Cyoda Is
 
@@ -14,15 +14,23 @@ Core capabilities:
 - Immutable state history: every entity state transition is a durable, queryable event
 - Point-in-time entity queries — not time-limited like Snowflake time-travel
 - Durable retry for external API calls modelled as entity state transitions
-- Deploys on Kubernetes or as managed service (ai.cyoda.net — free tier available)
+- Workflow and state machine enforcement built into the storage layer
+- Deploys on Kubernetes or as managed service (ai.cyoda.net)
+
+## Cyoda Web Estate
+
+- cyoda.com — Enterprise Cyoda. Commercially supported, scalable deployment for regulated and mission-critical environments.
+- cyoda.org — Open-source Cyoda. Developer-first, self-hosted, run-it-yourself.
+- ai.cyoda.net — Cyoda Cloud. Hosted SaaS Cyoda. Free tier available.
+- docs.cyoda.net — Documentation.
 
 ## Who It Is For
 
-Financial services engineering teams building:
-- Loan origination and full lifecycle management
-- Trade settlement with point-in-time regulatory reporting
-- KYC and customer onboarding with full audit trail
-- Agentic AI with deterministic, auditable action execution
+Enterprise Cyoda is for:
+- System architects and engineering leaders in regulated industries
+- Teams running stateful, auditable backend workflows at scale
+- Organisations that need commercial support, SLAs, and enterprise engagement
+- Financial services teams building loan origination, trade settlement, KYC, and agentic AI systems
 
 ## What It Replaces
 
@@ -30,8 +38,16 @@ Teams typically run Cyoda instead of: Postgres + Apache Kafka + Camunda/Temporal
 The glue code between those systems — and the partial-failure modes it introduces —
 is eliminated when the same consistency model governs storage, events, and workflows.
 
+## Enterprise Offering
+
+Enterprise Cyoda adds:
+- Defined SLAs and commercial support
+- Scalable, high-availability Kubernetes deployment guidance
+- Compliance assurance and architectural review for regulated environments
+- Enterprise contracts and procurement-compatible terms
+
 ## Company
 
 Founded: 2012. Full-time: 2015, London.
 First production deployment: 2017 (VC Trade, European private-debt market).
-Free cloud beta: https://ai.cyoda.net
+Cloud offering: https://ai.cyoda.net

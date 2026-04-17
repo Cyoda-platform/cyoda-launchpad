@@ -32,14 +32,14 @@ const HeroSection: React.FC<HeroProps> = ({
     return 'home';
   };
 
-  const handleStartEvaluating = () => {
+  const handleContactSales = () => {
     trackCtaConversion({
       location: 'hero',
       page_variant: getPageVariant(),
-      cta: 'start_evaluating',
-      url: 'https://ai.cyoda.net',
+      cta: 'contact_enterprise_sales',
+      url: '/contact',
     });
-    window.open('https://ai.cyoda.net', '_blank');
+    window.location.href = '/contact';
   };
 
   return (
@@ -108,21 +108,21 @@ const HeroSection: React.FC<HeroProps> = ({
             React.createElement(
               defaultHeadingAs,
               { className: 'text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-foreground' },
-              'Build Enterprise-Grade Systems at AI Speed'
+              'Enterprise Cyoda'
             )
           )}
 
           <p className="text-lg md:text-xl text-foreground/90 leading-relaxed max-w-2xl mx-auto">
-            Cyoda gives agentic AI the platform-level consistency, audit history, and workflow state it needs to build production systems in regulated industries. Without a platform team.
+            The EDBMS for stateful, auditable, workflow-driven backend systems. Commercially supported for regulated and mission-critical environments.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
             <Button
               size="lg"
               className="bg-primary text-primary-foreground px-8 text-base font-semibold focus-visible:ring-2 focus-visible:ring-primary"
-              onClick={handleStartEvaluating}
+              onClick={handleContactSales}
             >
-              Start Evaluating for Free
+              Contact Enterprise Sales
             </Button>
             <Button
               size="lg"

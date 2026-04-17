@@ -1,33 +1,45 @@
 import Header from '@/components/Header';
 import HeroSection from '@/components/HeroSection';
 import ProofBar from '@/components/ProofBar';
-import ArchitectureDiagram from '@/components/ArchitectureDiagram';
+import CyodaPathsSection from '@/components/CyodaPathsSection';
+import CyodaModelDiagram from '@/components/CyodaModelDiagram';
 import UseCaseCard from '@/components/UseCaseCard';
-import ThreeStepSection from '@/components/ThreeStepSection';
-import PersonaSwitcher from '@/components/PersonaSwitcher';
-import AINativeSection from '@/components/AINativeSection';
 import EcosystemSection from '@/components/EcosystemSection';
-import DeveloperReliabilitySection from '@/components/DeveloperReliabilitySection';
 import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
 import { organizationSchema } from '@/data/schemas';
-import { AlertCircle, Building2, BarChart3, UserCheck, Bot } from 'lucide-react';
+import { Bot, ShieldCheck, Layers, TrendingUp, Building2, BarChart3, UserCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const painPoints = [
-  'Most of the engineering effort goes into keeping components consistent, not into the product',
-  'Partial progress failure modes at every seam: one system commits, another fails mid-transaction, and now you are reconciling across logs',
-  'When a regulator asks for entity state from three months ago, reconstructing it from disparate audit logs takes days, not seconds',
-  'Adding a new workflow state requires coordinated changes across multiple systems, and something always breaks',
-  'AI coding agents cannot reason coherently across a heterogeneous stack. Inconsistencies at component boundaries compound',
+const integratedArchCards = [
+  {
+    icon: Bot,
+    title: 'Higher AI fidelity',
+    description: 'Less hidden integration logic, more explicit structure.',
+  },
+  {
+    icon: Layers,
+    title: 'Comprehensible systems',
+    description: 'State, workflow, and history stay visible and coherent.',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Built for compliance',
+    description: 'Auditability and temporal history are part of the model.',
+  },
+  {
+    icon: TrendingUp,
+    title: 'No re-engineering wall',
+    description: "Start small and grow through Cyoda's operational modes.",
+  },
 ];
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Cyoda | Unified Platform for Stateful Workflows in Financial Services"
-        description="Transactions, workflows, state machines, and immutable audit in one consistency model. For fintech teams done wiring nine components together."
+        title="Enterprise Cyoda | EDBMS for Regulated Backend Systems"
+        description="Enterprise Cyoda provides commercially supported, scalable deployment of the EDBMS platform for stateful, auditable, workflow-driven systems in regulated and mission-critical environments."
         url="https://cyoda.com/"
         type="website"
         jsonLd={organizationSchema}
@@ -36,65 +48,118 @@ const Index = () => {
       <main>
         <HeroSection />
         <ProofBar />
-        <PersonaSwitcher />
+        <CyodaPathsSection />
 
-        {/* Problem / Architecture section */}
+        {/* Integrated architecture section */}
         <section
           id="how-it-works"
           className="py-16 md:py-24 bg-[hsl(var(--section-alt-bg))]"
         >
-          <div className="container mx-auto px-4 max-w-6xl">
+          <div className="container mx-auto px-4 max-w-5xl">
             {/* Section header */}
-            <div className="text-center mb-12">
+            <div className="text-center mb-10">
               <p className="text-xs font-semibold text-primary uppercase tracking-widest mb-3">
-                THE PROBLEM
+                ARCHITECTURE
               </p>
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-                You're Not Assembling Three Systems. You're Assembling Nine.
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-5">
+                Build on an integrated architecture
               </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Every team building stateful financial backends hits the same wall. A transactional database, a message broker, a workflow engine, a reporting layer, an audit mechanism — each individually correct, assembled by hand, held together by glue code that does not survive a partial failure. The full list of components is closer to nine than three. The hardest problem is not picking the tools. It is keeping them consistent across every seam, and that problem grows every time you add a state.
-              </p>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto mt-4">
-                The other thing nobody mentions: that architecture is opaque to AI coding agents. The more heterogeneous the stack, the harder it is for AI to reason across it without introducing inconsistencies at the boundaries.
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+                Cyoda combines entity state, workflows, transactions, events, and history in one model. That makes backend systems easier to understand, easier to evolve, more audit-friendly, and far easier for AI to work with effectively.
               </p>
             </div>
 
-            {/* Pain points */}
-            <div className="max-w-2xl mx-auto space-y-4 mb-12">
-              {painPoints.map((point) => (
-                <div key={point} className="flex items-start gap-3">
-                  <AlertCircle className="h-5 w-5 text-destructive mt-0.5 shrink-0" />
-                  <p className="text-muted-foreground">{point}</p>
-                </div>
-              ))}
+            {/* Model diagram */}
+            <div className="mb-12">
+              <CyodaModelDiagram />
             </div>
 
-            {/* Architecture diagram */}
-            <ArchitectureDiagram />
+            {/* Value card grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-3xl mx-auto mb-10">
+              {integratedArchCards.map((card) => {
+                const Icon = card.icon;
+                return (
+                  <div
+                    key={card.title}
+                    className="p-6 rounded-xl border border-border/50 bg-card/20 backdrop-blur flex gap-4 items-start"
+                  >
+                    <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
+                      <Icon className="w-4.5 h-4.5 text-primary w-5 h-5" />
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-semibold text-foreground mb-1">{card.title}</h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{card.description}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
 
-            {/* EDBMS definition */}
-            <p className="text-center text-muted-foreground mt-10 max-w-3xl mx-auto">
-              The Cyoda EDBMS ships all nine capabilities in a single consistency model. Transactions, workflows, and point-in-time queries share one source of truth. The audit trail is the storage mechanism: write-only, immutable, available for regulatory reconstruction at any point in time.
+            {/* Closing line */}
+            <p className="text-center text-sm text-muted-foreground font-medium">
+              One model for state, workflow, and history — from early build to enterprise scale.
             </p>
           </div>
         </section>
 
-        <AINativeSection />
-        <ThreeStepSection />
         <EcosystemSection />
 
-        {/* Mission quote */}
+        {/* Enterprise value section */}
         <section className="py-16 md:py-24 bg-[hsl(var(--section-alt-bg))]">
-          <div className="container mx-auto px-4 max-w-3xl text-center">
-            <blockquote className="text-xl md:text-2xl font-medium text-foreground leading-relaxed mb-6">
-              "We built Cyoda because we were tired of rebuilding the same infrastructure at every bank
-              we worked at. The problem was always the same: state management, audit, consistency under
-              failure and the solution was duct tape. Cyoda is the solution we would have paid for."
-            </blockquote>
-            <p className="text-sm text-muted-foreground font-medium uppercase tracking-widest">
-              Patrick Stanton &amp; Paul Schleger PhD, Co-Founders
-            </p>
+          <div className="container mx-auto px-4 max-w-5xl">
+            <div className="text-center mb-12">
+              <p className="text-xs font-semibold text-primary uppercase tracking-widest mb-3">
+                ENTERPRISE CYODA
+              </p>
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                What the enterprise offering adds
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Open-source Cyoda is the foundation. Enterprise Cyoda wraps it with the operational guarantees, commercial support, and deployment assistance that organisations running regulated workloads require.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
+              {[
+                {
+                  title: 'Commercial support',
+                  description:
+                    'Defined SLAs, direct engineering access, and escalation paths for production issues.',
+                },
+                {
+                  title: 'Scalable deployment',
+                  description:
+                    'Guidance and assistance for high-throughput, multi-region, and high-availability Kubernetes deployments.',
+                },
+                {
+                  title: 'Compliance assurance',
+                  description:
+                    'Architectural reviews, audit-trail validation, and documented controls for regulated environments.',
+                },
+                {
+                  title: 'Enterprise engagement',
+                  description:
+                    'Commercial contracts, procurement-compatible terms, and dedicated implementation support.',
+                },
+              ].map((item) => (
+                <div
+                  key={item.title}
+                  className="p-6 rounded-xl border border-border/50 bg-card/20 backdrop-blur"
+                >
+                  <h3 className="text-base font-semibold text-foreground mb-2">{item.title}</h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{item.description}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="text-center mt-10">
+              <Link
+                to="/contact"
+                className="text-primary font-medium hover:underline focus-visible:ring-2 focus-visible:ring-primary rounded"
+              >
+                Talk to the enterprise team →
+              </Link>
+            </div>
           </div>
         </section>
 
@@ -148,7 +213,19 @@ const Index = () => {
           </div>
         </section>
 
-        <DeveloperReliabilitySection />
+        {/* Mission quote */}
+        <section className="py-16 md:py-24 bg-[hsl(var(--section-alt-bg))]">
+          <div className="container mx-auto px-4 max-w-3xl text-center">
+            <blockquote className="text-xl md:text-2xl font-medium text-foreground leading-relaxed mb-6">
+              "We built Cyoda because we were tired of rebuilding the same infrastructure at every bank
+              we worked at. The problem was always the same: state management, audit, consistency under
+              failure and the solution was duct tape. Cyoda is the solution we would have paid for."
+            </blockquote>
+            <p className="text-sm text-muted-foreground font-medium uppercase tracking-widest">
+              Patrick Stanton &amp; Paul Schleger PhD, Co-Founders
+            </p>
+          </div>
+        </section>
       </main>
       <Footer />
     </div>

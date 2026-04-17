@@ -36,7 +36,7 @@ const EcosystemSection = () => {
         {
             icon: Bot,
             title: "AI Co‑Builder",
-            description: "Describe your application at ai.cyoda.net. The AI generates entity models, workflow configurations, and gRPC processor scaffolding. You get a working prototype, not a skeleton."
+            description: "Accelerate enterprise model and workflow design using the AI Co-Builder at ai.cyoda.net. Generate entity schemas, workflow configurations, and processor scaffolding from a structured description of your business domain."
         }
     ];
 
