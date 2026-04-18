@@ -1,6 +1,5 @@
 import Header from '@/components/Header';
 import HeroSection from '@/components/HeroSection';
-import ProofBar from '@/components/ProofBar';
 import CyodaPathsSection from '@/components/CyodaPathsSection';
 import CyodaModelDiagram from '@/components/CyodaModelDiagram';
 import UseCaseCard from '@/components/UseCaseCard';
@@ -47,7 +46,28 @@ const Index = () => {
       <Header />
       <main>
         <HeroSection />
-        <ProofBar />
+
+        {/* Hero separator bar — no text, visual accent */}
+        <div
+          className="relative w-full overflow-hidden"
+          style={{ height: '29px', background: 'hsl(175,40%,87%)' }}
+          aria-hidden="true"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="absolute inset-0 w-full h-full"
+            preserveAspectRatio="xMidYMid slice"
+            aria-hidden="true"
+          >
+            <defs>
+              <pattern id="bar-dots" x="0" y="0" width="24" height="14" patternUnits="userSpaceOnUse">
+                <circle cx="12" cy="7" r="1.5" fill="hsl(175,55%,32%)" opacity="0.22" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#bar-dots)" />
+          </svg>
+        </div>
+
         <CyodaPathsSection />
 
         {/* Integrated architecture section */}
