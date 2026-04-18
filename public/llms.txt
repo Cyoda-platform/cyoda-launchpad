@@ -9,20 +9,23 @@ for regulated, mission-critical, and operationally complex environments.
 Cyoda is an EDBMS — Entity Database Management System — that unifies transactional storage,
 event-driven processing, and workflow orchestration in a single consistency model.
 
+State, workflow, transactions, events, history, and business logic are unified in one model.
+No separate orchestration layer. No separate audit service. No consistency seams to manage.
+
 Core capabilities:
 - Serializable Snapshot Isolation across asynchronous distributed workflows
 - Immutable state history: every entity state transition is a durable, queryable event
 - Point-in-time entity queries — not time-limited like Snowflake time-travel
 - Durable retry for external API calls modelled as entity state transitions
 - Workflow and state machine enforcement built into the storage layer
-- Deploys on Kubernetes or as managed service (ai.cyoda.net)
+- Deploys on PostgreSQL (default), Cassandra (scale-out), or as managed service (ai.cyoda.net)
 
 ## Cyoda Web Estate
 
 - cyoda.com — Enterprise Cyoda. Commercially supported, scalable deployment for regulated and mission-critical environments.
 - cyoda.org — Open-source Cyoda. Developer-first, self-hosted, run-it-yourself.
 - ai.cyoda.net — Cyoda Cloud. Hosted SaaS Cyoda. Free tier available.
-- docs.cyoda.net — Documentation.
+- docs.cyoda.net — Documentation and API reference.
 
 ## Who It Is For
 
@@ -41,13 +44,18 @@ is eliminated when the same consistency model governs storage, events, and workf
 ## Enterprise Offering
 
 Enterprise Cyoda adds:
-- Defined SLAs and commercial support
-- Scalable, high-availability Kubernetes deployment guidance
-- Compliance assurance and architectural review for regulated environments
-- Enterprise contracts and procurement-compatible terms
+- Support for audit-driven deployments: SLAs on workflow integrity, audit-trail validation,
+  and temporal-history review
+- Scalable operational modes: PostgreSQL and Cassandra, including migration between them
+  without changing your entity model
+- Regulated procurement and rollout: procurement paperwork, security questionnaires,
+  implementation, and rollout support for regulated industries
+- Long-term engineering engagement: roadmap access, co-engineering on high-consequence
+  workflows, and direct contact with the Cyoda core team
 
 ## Company
 
 Founded: 2012. Full-time: 2015, London.
 First production deployment: 2017 (VC Trade, European private-debt market).
+Previously deployed at a global KYC platform for four years.
 Cloud offering: https://ai.cyoda.net

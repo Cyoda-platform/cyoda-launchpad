@@ -1,96 +1,83 @@
-# Welcome to your Lovable project
+# cyoda.com — Enterprise Cyoda website
 
-## Project info
+Marketing and product site for Enterprise Cyoda (cyoda.com), the commercially supported
+deployment of the Cyoda EDBMS for regulated and mission-critical production environments.
 
-**URL**: https://lovable.dev/projects/bdd693b9-9f12-4fb0-9c5c-e97e71bee1a6
+## Cyoda web estate
 
-## How can I edit this code?
+| Site | Purpose |
+|------|---------|
+| cyoda.com | Enterprise Cyoda — this repo |
+| cyoda.org | Open-source Cyoda — self-hosted, run-it-yourself |
+| ai.cyoda.net | Cyoda Cloud — hosted SaaS, free evaluation tier |
+| docs.cyoda.net | Documentation and API reference |
 
-There are several ways of editing your application.
+## Stack
 
-**Use Lovable**
+- **Framework**: Vite + React 18 + TypeScript
+- **Routing**: react-router-dom v6 (`src/App.tsx`)
+- **Styling**: Tailwind CSS v3 + shadcn/ui
+- **Theme**: light mode default; dark mode toggle via `next-themes`
+- **Design tokens**: CSS custom properties in `src/index.css`
+- **Font**: Montserrat (Google Fonts)
+- **SEO**: `react-helmet-async` via `src/components/SEO.tsx`
+- **Analytics**: GA4 via `src/components/AnalyticsManager.tsx`
+- **Blog**: Markdown files in `src/content/`, indexed by `scripts/generate-blog-index.js`
+- **Components**: shadcn/ui in `src/components/ui/`
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/bdd693b9-9f12-4fb0-9c5c-e97e71bee1a6) and start prompting.
+## Build commands
 
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```bash
+npm install       # Install dependencies
+npm run dev       # Dev server on port 8080
+npm run build     # Production build
+npm run lint      # ESLint
+npm run typecheck # npx tsc --noEmit
 ```
 
-**Edit a file directly in GitHub**
+Run `npm run build && npm run typecheck` after every change.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Routes
 
-**Use GitHub Codespaces**
+| Path | Page |
+|------|------|
+| `/` | Homepage (Enterprise Cyoda) |
+| `/products` | EDBMS Platform |
+| `/pricing` | Pricing |
+| `/comparison` | Compare vs. alternatives |
+| `/use-cases` | Use cases hub |
+| `/use-cases/loan-lifecycle` | Loan origination |
+| `/use-cases/trade-settlement` | Trade settlement |
+| `/use-cases/kyc-onboarding` | KYC onboarding |
+| `/use-cases/agentic-ai` | Agentic AI |
+| `/dev` | For developers |
+| `/cto` | For engineering leaders |
+| `/about` | About |
+| `/contact` | Contact |
+| `/blog` | Blog |
+| `/blog/:slug` | Blog post |
+| `/support` | Support |
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Key constraints
 
-## What technologies are used for this project?
+- Do NOT use orange (`--cyoda-orange`) in enterprise sections
+- Do NOT put "Available to all" in any copy
+- Do NOT invent customer names or metrics — use only verified proof points
+- Do NOT remove the dark mode toggle, analytics, or cookie consent
+- External links to cyoda.org and ai.cyoda.net open in the same tab from CTAs;
+  `target="_blank"` is for nav links only
 
-This project is built with:
+## Adding a new page
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+1. Create the file in `src/pages/`
+2. Import it in `src/App.tsx`
+3. Add `<Route path="..." element={<Component />} />` above the `*` catch-all
+4. Add `<SEO title="..." description="..." url="..." />` at the top of the page
+5. Add the URL to `public/sitemap.xml`
 
-## Features
+## Project docs
 
-### UTM Tracking and Conversion Analytics
-
-The application includes a comprehensive UTM tracking and conversion system that enables campaign attribution and ROI analysis:
-
-- **Automatic UTM Parameter Capture**: Captures marketing campaign parameters from URLs
-- **Session Persistence**: Maintains attribution data throughout the user's session
-- **Conversion Tracking**: Tracks conversions with complete attribution data and time-to-conversion metrics
-- **Cookie Consent Compliance**: Respects user privacy preferences and GDPR requirements
-
-For detailed usage instructions, see the [UTM Tracking Guide](./docs/utm_tracking_guide.md).
-
-### Cookie Consent System
-
-EU/GDPR-compliant cookie consent management with granular category controls:
-
-- Essential, Analytics, Marketing, and Personalization categories
-- Persistent consent preferences with 12-month expiration
-- Audit logging for compliance reporting
-
-For compliance guidelines, see the [Cookie Compliance Guide](./docs/cookie_compliance_guide.md).
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/bdd693b9-9f12-4fb0-9c5c-e97e71bee1a6) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+- `docs/DESIGN.md` — visual specs, design tokens
+- `docs/REQUIREMENTS.md` — SEO values, copy, and structured data per page
+- `docs/TASKS.md` — task list with acceptance criteria
+- `CLAUDE.md` — instructions for Claude Code sessions

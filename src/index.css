@@ -9,50 +9,53 @@
 @layer base {
     :root {
         /* Brand anchors */
-        --cyoda-teal: 175 67% 52%;    /* #4FB8B0 */
+        --cyoda-teal: 175 67% 52%;    /* #4FB8B0 brand teal */
         --cyoda-orange: 32 95% 59%;   /* #FD9E29 */
         --cyoda-purple: 258 74% 37%;  /* #5A18AC */
         --cyoda-green: 106 44% 60%;   /* #6BB45A */
 
-        /* Enterprise surface + text (Light mode) */
+        /* Enterprise surface + text (light mode) */
         --background: 0 0% 100%;            /* white */
-        --foreground: 222 47% 11%;          /* near-black text */
+        --foreground: 222 47% 11%;          /* near-black */
         --card: 0 0% 100%;                  /* white card */
         --card-foreground: 222 47% 11%;
         --popover: 0 0% 100%;
         --popover-foreground: 222 47% 11%;
-        --border: 214 32% 91%;              /* light gray border */
-        --input: 214 32% 91%;
+        --border: 214 24% 88%;              /* clear but not heavy */
+        --input: 214 24% 88%;
+
+        /* Primary — darker teal for text/link contrast on white (≈5:1 vs white) */
+        --primary: 175 65% 32%;
+        --primary-foreground: 0 0% 100%;
 
         /* Actions */
-        --button-bg: var(--cyoda-teal);
+        --button-bg: 175 65% 36%;     /* teal button fill */
         --button-fg: 0 0% 100%;
-        /* buttons */
-        --button-hover: 175 67% 36%;  /* teal darker */
+        --button-hover: 175 65% 28%;
+
         /* Icons */
         --icon-bg: var(--cyoda-orange);
         --icon-fg: 0 0% 100%;
 
-        --primary-foreground: 0 0% 100%;    /* white text on teal */
-        --secondary: 210 40% 96%;           /* subtle gray */
+        --secondary: 210 30% 96%;           /* very light warm-cool gray */
         --secondary-foreground: 222 47% 11%;
-        --muted: 210 40% 96%;
-        --muted-foreground: 215 16% 47%;    /* gray-600 */
-        --accent: 175 40% 40%;
-        --accent-foreground: 0 0% 100%;
+        --muted: 210 30% 96%;
+        --muted-foreground: 215 20% 42%;    /* readable medium gray */
+        --accent: 175 40% 92%;              /* very light teal for hover surfaces */
+        --accent-foreground: 175 65% 25%;   /* dark teal text on light teal surface */
         --destructive: 0 84% 60%;
         --destructive-foreground: 0 0% 100%;
-        --ring: 175 40% 40%;
+        --ring: 175 65% 32%;
 
         /* Geometry */
-        --radius: 6px;
+        --radius: 8px;
 
         /* Enterprise refinements */
-        --proof-bar-bg: 175 30% 96%;
-        --proof-bar-border: 175 30% 88%;
-        --section-alt-bg: 210 40% 97%;
-        --state-node-bg: 175 67% 95%;
-        --state-node-border: 175 67% 70%;
+        --proof-bar-bg: 175 45% 96%;
+        --proof-bar-border: 175 35% 85%;
+        --section-alt-bg: 210 25% 97%;      /* barely-there cool gray */
+        --state-node-bg: 175 60% 94%;
+        --state-node-border: 175 55% 60%;
     }
     .dark {
         --background: 220 14% 8%;
@@ -341,8 +344,12 @@
     @apply bg-background text-foreground;
   }
     /* enterprise helpers */
-    .link { @apply text-cyoda-teal hover:opacity-90 underline underline-offset-4; }
+    .link { @apply text-primary hover:opacity-90 underline underline-offset-4; }
     .card { @apply bg-card border border-border rounded-md shadow-sm; }
     .sober-hover { @apply transition-opacity hover:opacity-90; }
     .reduce-motion * { @apply motion-reduce:transition-none motion-reduce:animate-none; }
+    /* gradient button — used in mobile menu */
+    .bg-gradient-primary { background-color: hsl(var(--primary)); color: hsl(var(--primary-foreground)); }
+    /* subtle focus ring for light mode */
+    .glow-hover:hover { box-shadow: 0 0 0 3px hsl(var(--primary) / 0.12); }
 }

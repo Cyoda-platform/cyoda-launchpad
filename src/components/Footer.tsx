@@ -56,7 +56,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="border-t border-border/40 bg-background/95 backdrop-blur">
+    <footer className="border-t border-border bg-[hsl(var(--section-alt-bg))]">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
           {/* Logo and description */}
@@ -78,7 +78,7 @@ const Footer = () => {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`p-3 rounded-lg bg-card/20 border border-border/50 ${social.hoverColor} glow-hover transition-all duration-300 group`}
+                  className={`p-3 rounded-lg bg-secondary border border-border ${social.hoverColor} hover:border-border/80 transition-all duration-200 group`}
                   aria-label={social.label}
                 >
                   <social.icon className="w-5 h-5 group-hover:scale-110 transition-transform" />

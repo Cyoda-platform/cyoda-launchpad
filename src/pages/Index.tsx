@@ -15,22 +15,22 @@ const integratedArchCards = [
   {
     icon: Bot,
     title: 'Higher AI fidelity',
-    description: 'Less hidden integration logic, more explicit structure.',
+    description: 'Explicit structure means AI agents reason over your workflows accurately. No hidden integration seams to misread.',
   },
   {
     icon: Layers,
-    title: 'Comprehensible systems',
-    description: 'State, workflow, and history stay visible and coherent.',
+    title: 'Throw away the glue',
+    description: 'One model replaces the stack of separate components that glue code usually connects.',
   },
   {
     icon: ShieldCheck,
     title: 'Built for compliance',
-    description: 'Auditability and temporal history are part of the model.',
+    description: 'Audit trails are not added on top — they are how data is stored. Temporal history is first-class.',
   },
   {
     icon: TrendingUp,
     title: 'No re-engineering wall',
-    description: "Start small and grow through Cyoda's operational modes.",
+    description: 'Start on PostgreSQL, scale to Cassandra without changing your entity model.',
   },
 ];
 
@@ -38,8 +38,8 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Enterprise Cyoda | EDBMS for Regulated Backend Systems"
-        description="Enterprise Cyoda provides commercially supported, scalable deployment of the EDBMS platform for stateful, auditable, workflow-driven systems in regulated and mission-critical environments."
+        title="Enterprise Cyoda: EDBMS for auditable, workflow-driven backend systems"
+        description="Build scalable, auditable backend systems on an integrated architecture. Enterprise Cyoda provides commercial support, procurement, and deployment for regulated production."
         url="https://cyoda.com/"
         type="website"
         jsonLd={organizationSchema}
@@ -65,7 +65,7 @@ const Index = () => {
                 Build on an integrated architecture
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                Cyoda combines entity state, workflows, transactions, events, and history in one model. That makes backend systems easier to understand, easier to evolve, more audit-friendly, and far easier for AI to work with effectively.
+                State, workflow, transactions, events, history, and business logic unified in one model. No separate orchestration layer. No separate audit service. No consistency seams to manage.
               </p>
             </div>
 
@@ -81,7 +81,7 @@ const Index = () => {
                 return (
                   <div
                     key={card.title}
-                    className="p-6 rounded-xl border border-border/50 bg-card/20 backdrop-blur flex gap-4 items-start"
+                    className="p-6 rounded-xl border border-border bg-card shadow-sm flex gap-4 items-start"
                   >
                     <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
                       <Icon className="w-4.5 h-4.5 text-primary w-5 h-5" />
@@ -97,7 +97,7 @@ const Index = () => {
 
             {/* Closing line */}
             <p className="text-center text-sm text-muted-foreground font-medium">
-              One model for state, workflow, and history — from early build to enterprise scale.
+              One model. One API surface. One growth path from local to cluster.
             </p>
           </div>
         </section>
@@ -112,39 +112,39 @@ const Index = () => {
                 ENTERPRISE CYODA
               </p>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-                What the enterprise offering adds
+                Built for production in regulated environments
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Open-source Cyoda is the foundation. Enterprise Cyoda wraps it with the operational guarantees, commercial support, and deployment assistance that organisations running regulated workloads require.
+                Teams running Cyoda in regulated production need more than software. Enterprise Cyoda provides commercial structure, deployment assistance, and engineering support to run it with confidence.
               </p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
               {[
                 {
-                  title: 'Commercial support',
+                  title: 'Support for audit-driven deployments',
                   description:
-                    'Defined SLAs, direct engineering access, and escalation paths for production issues.',
+                    'SLAs on workflow integrity, audit-trail validation, and temporal-history review. Not generic ticketing support.',
                 },
                 {
-                  title: 'Scalable deployment',
+                  title: 'Scalable operational modes',
                   description:
-                    'Guidance and assistance for high-throughput, multi-region, and high-availability Kubernetes deployments.',
+                    'Support for PostgreSQL and Cassandra operational modes, including migration between them without changing your entity model.',
                 },
                 {
-                  title: 'Compliance assurance',
+                  title: 'Regulated procurement and rollout',
                   description:
-                    'Architectural reviews, audit-trail validation, and documented controls for regulated environments.',
+                    'Procurement paperwork, security questionnaires, implementation, and rollout support for regulated industries.',
                 },
                 {
-                  title: 'Enterprise engagement',
+                  title: 'Long-term engineering engagement',
                   description:
-                    'Commercial contracts, procurement-compatible terms, and dedicated implementation support.',
+                    'Roadmap access, co-engineering on high-consequence workflows, and direct contact with the Cyoda core team.',
                 },
               ].map((item) => (
                 <div
                   key={item.title}
-                  className="p-6 rounded-xl border border-border/50 bg-card/20 backdrop-blur"
+                  className="p-6 rounded-xl border border-border bg-card shadow-sm"
                 >
                   <h3 className="text-base font-semibold text-foreground mb-2">{item.title}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">{item.description}</p>
@@ -171,8 +171,11 @@ const Index = () => {
                 USE CASES
               </p>
               <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-                Where Cyoda fits
+                Where enterprise teams use Cyoda
               </h2>
+              <p className="text-base text-muted-foreground max-w-2xl mx-auto mt-2">
+                Cyoda fits systems where state transitions, auditability, and consistency under failure are the product, not plumbing around it.
+              </p>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
@@ -214,8 +217,9 @@ const Index = () => {
         </section>
 
         {/* Mission quote */}
-        <section className="py-16 md:py-24 bg-[hsl(var(--section-alt-bg))]">
-          <div className="container mx-auto px-4 max-w-3xl text-center">
+        <section className="py-20 md:py-28 bg-background border-t border-border">
+          <div className="container mx-auto px-4 max-w-2xl text-center">
+            <div className="mx-auto mb-6 w-10 h-0.5 bg-primary rounded" />
             <blockquote className="text-xl md:text-2xl font-medium text-foreground leading-relaxed mb-6">
               "We built Cyoda because we were tired of rebuilding the same infrastructure at every bank
               we worked at. The problem was always the same: state management, audit, consistency under
