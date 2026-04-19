@@ -27,15 +27,6 @@ const Header = () => {
     return 'home';
   };
 
-  const handleCloudClick = (locationId: "header" | "header_mobile") => {
-    trackCtaConversion({
-      location: locationId,
-      page_variant: getPageVariant(),
-      cta: "cyoda_cloud",
-      url: "https://ai.cyoda.net"
-    });
-    window.open('https://ai.cyoda.net', '_blank');
-  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/98 backdrop-blur-sm">
@@ -205,13 +196,6 @@ const Header = () => {
             <Button asChild variant="outline" className="glow-hover mobile-btn-text">
               <Link to="/contact">Contact</Link>
             </Button>
-            <Button
-              variant="outline"
-              className="glow-hover mobile-btn-text"
-              onClick={() => handleCloudClick("header")}
-            >
-              Cyoda Cloud
-            </Button>
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -256,12 +240,6 @@ const Header = () => {
             <div className="flex flex-col space-y-2 pt-4 border-t border-border/40">
               <Button asChild variant="outline" className="justify-start mobile-btn-text">
                 <Link to="/contact">Contact</Link>
-              </Button>
-              <Button
-                className="bg-gradient-primary text-white justify-start mobile-btn-text"
-                onClick={() => handleCloudClick("header_mobile")}
-              >
-                Cyoda Cloud
               </Button>
             </div>
           </div>

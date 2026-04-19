@@ -14,27 +14,48 @@ const CyodaPathsSection = () => {
         </div>
 
         {/* Enterprise card — full width, primary */}
-        <div className="rounded-xl border border-primary/30 bg-primary/[0.03] p-7 mb-5 flex flex-col sm:flex-row sm:items-center gap-6">
-          <div className="flex-1">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-9 h-9 rounded-lg flex items-center justify-center bg-primary/10">
-                <Building2 className="w-5 h-5 text-primary" />
+        <div className="rounded-xl border border-primary/30 bg-primary/[0.03] p-7 mb-5">
+          <div className="flex flex-col sm:flex-row sm:items-start gap-6 mb-6">
+            <div className="flex-1">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-9 h-9 rounded-lg flex items-center justify-center bg-primary/10">
+                  <Building2 className="w-5 h-5 text-primary" />
+                </div>
+                <h3 className="text-xl font-semibold text-foreground">Enterprise Cyoda</h3>
               </div>
-              <h3 className="text-xl font-semibold text-foreground">Enterprise Cyoda</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
+                Commercially supported deployment for teams building regulated, auditable production
+                systems. Includes procurement assistance, implementation support, SLAs, and ongoing
+                engineering engagement with the Cyoda core team.
+              </p>
             </div>
-            <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
-              Commercially supported deployment for teams building regulated, auditable production
-              systems. Includes procurement assistance, implementation support, SLAs, and ongoing
-              engineering engagement with the Cyoda core team.
-            </p>
           </div>
-          <div className="shrink-0">
+
+          {/* Commercial pillars — 2×2 compact grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 mb-6 pl-0 sm:pl-12">
+            {[
+              { title: 'Support for audit-driven deployments', description: 'SLAs on workflow integrity, audit-trail validation, and temporal-history review. Not generic ticketing support.' },
+              { title: 'Scalable operational modes', description: 'PostgreSQL and Cassandra modes, including migration between them without changing your entity model.' },
+              { title: 'Regulated procurement and rollout', description: 'Procurement paperwork, security questionnaires, implementation, and rollout support for regulated industries.' },
+              { title: 'Long-term engineering engagement', description: 'Roadmap access, co-engineering on high-consequence workflows, and direct contact with the Cyoda core team.' },
+            ].map((item) => (
+              <div key={item.title}>
+                <p className="text-sm font-semibold text-foreground mb-0.5">{item.title}</p>
+                <p className="text-xs text-muted-foreground leading-relaxed">{item.description}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4 pl-0 sm:pl-12">
             <a
               href="/contact"
               className="inline-flex items-center justify-center rounded-lg bg-primary px-6 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-primary/90 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
             >
               Talk to us
             </a>
+            <p className="text-xs text-muted-foreground">
+              Deploy alongside your existing Postgres. Move state-machine-shaped workloads over first.
+            </p>
           </div>
         </div>
 
