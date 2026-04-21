@@ -35,7 +35,7 @@ const TermsOfService = lazy(() => import("./pages/TermsOfService"));
 const About = lazy(() => import("./pages/About"));
 const UseCases = lazy(() => import("./pages/UseCases"));
 const UseCaseLoanLifecycle = lazy(() => import("./pages/UseCaseLoanLifecycle"));
-const UseCaseTradeSettlement = lazy(() => import("./pages/UseCaseTradeSettlement"));
+const UseCaseTradeSettlement = lazy(() => import("./pages/UseCaseTradeSettlement_with_workflow"));
 const UseCaseKycOnboarding = lazy(() => import("./pages/UseCaseKycOnboarding"));
 const UseCaseAgenticAi = lazy(() => import("./pages/UseCaseAgenticAi"));
 const Contact = lazy(() => import("./pages/Contact"));
