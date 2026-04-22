@@ -115,8 +115,6 @@ const Header = () => {
                         { label: 'Trade Settlement & Reporting', sub: 'Point-in-time queryable trade states', to: '/use-cases/trade-settlement' },
                         { label: 'KYC & Customer Onboarding', sub: 'Durable retry with full audit', to: '/use-cases/kyc-onboarding' },
                         { label: 'Agentic AI for Regulated Industries', sub: 'Transactional, auditable agent actions', to: '/use-cases/agentic-ai' },
-                        { label: 'Workflow Preview', sub: 'Temporary regulated action workflow graph', to: '/temporary/agentic-ai-workflow' },
-                        { label: 'Workflow Preview Claude', sub: 'Temporary Claude workflow graph', to: '/temporary/agentic-ai-workflow-claude' },
                       ].map((item) => (
                         <NavigationMenuLink key={item.label} asChild>
                           <Link to={item.to} className="block group">
@@ -227,8 +225,6 @@ const Header = () => {
               <Link to="/use-cases/trade-settlement" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">Trade Settlement &amp; Reporting</Link>
               <Link to="/use-cases/kyc-onboarding" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">KYC &amp; Customer Onboarding</Link>
               <Link to="/use-cases/agentic-ai" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">Agentic AI</Link>
-              <Link to="/temporary/agentic-ai-workflow" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">Workflow Preview</Link>
-              <Link to="/temporary/agentic-ai-workflow-claude" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">Workflow Preview Claude</Link>
               <Link to="/cto" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">For Engineering Leaders</Link>
               <Link to="/dev" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">For Developers</Link>
 
