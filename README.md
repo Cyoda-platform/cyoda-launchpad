@@ -42,8 +42,6 @@ Run `npm run build && npm run typecheck` after every change.
 | Path | Page |
 |------|------|
 | `/` | Homepage (Enterprise Cyoda) |
-| `/products` | EDBMS Platform |
-| `/pricing` | Pricing |
 | `/comparison` | Compare vs. alternatives |
 | `/use-cases` | Use cases hub |
 | `/use-cases/loan-lifecycle` | Loan origination |

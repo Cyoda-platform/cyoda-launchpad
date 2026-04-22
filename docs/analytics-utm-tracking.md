@@ -110,7 +110,7 @@ Regular page views now also include UTM parameters:
 
 ```typescript
 // Track a page view
-analyticsService.trackPageView('/products', 'Products Page');
+analyticsService.trackPageView('/use-cases', 'Use Cases Page');
 
 // UTM parameters are automatically included if available
 ```
@@ -248,4 +248,3 @@ npm test -- tests/unit/lib/analytics.test.ts
 
 - [UTM Parameter Tracking](./utm-tracking.md) - UTM capture and storage utilities
 - [Cookie Consent](./cookie-consent.md) - Cookie consent system integration
-

@@ -217,12 +217,12 @@ describe('useUtmTracking', () => {
     });
 
     renderHook(() => useUtmTracking(), {
-      wrapper: createWrapper('/products'),
+      wrapper: createWrapper('/use-cases'),
     });
 
     await waitFor(() => {
       expect(mockTrackEvent).toHaveBeenCalledWith('landing_page_view', {
-        page_path: '/products',
+        page_path: '/use-cases',
         page_variant: 'other',
         page_title: 'Test Page',
       });
@@ -275,4 +275,3 @@ describe('useUtmTracking', () => {
     expect(mockTrackEvent).not.toHaveBeenCalled();
   });
 });
-

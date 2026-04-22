@@ -171,8 +171,8 @@ trackCtaConversion({
 ```typescript
 // Override stored UTM parameters with explicit values
 trackCtaConversion({
-  location: "pricing_card",
-  page_variant: "pricing",
+  location: "cta_section",
+  page_variant: "home",
   cta: "get_started",
   url: "https://ai.cyoda.net/signup",
   utm_source: "linkedin",
@@ -241,4 +241,3 @@ Potential improvements for future iterations:
 3. **Custom conversion goals**: Define different conversion types with different tracking
 4. **Offline conversion tracking**: Track conversions that happen outside the website
 5. **Cross-device tracking**: Track conversions across multiple devices
-

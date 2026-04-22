@@ -279,7 +279,7 @@ const UseCaseTradeSettlement = () => {
                 <Link to="/contact">Talk to us</Link>
               </Button>
               <Button size="lg" variant="outline" className="px-8 font-semibold" asChild>
-                <Link to="/products">Read the architecture</Link>
+                <Link to="/#how-it-works">Read the architecture</Link>
               </Button>
             </div>
           </div>

@@ -19,8 +19,6 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 const Index = lazy(() => import("./pages/Index"));
 const Dev = lazy(() => import("./pages/Dev"));
 const Cto = lazy(() => import("./pages/Cto"));
-const Products = lazy(() => import("./pages/Products"));
-const Pricing = lazy(() => import("./pages/Pricing"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 const BlogTest = lazy(() => import("./pages/BlogTest"));
@@ -78,8 +76,6 @@ const App = () => {
               <Suspense fallback={<LoadingSpinner text="Loading page..." />}>
                 <Routes>
                   <Route path="/" element={<Index />} />
-                  <Route path="/products" element={<Products />} />
-                  <Route path="/pricing" element={<Pricing />} />
                   <Route path="/blog" element={<Blog />} />
                   <Route path="/blog/:slug" element={<BlogPost />} />
                   <Route path="/blog-test" element={<BlogTest />} />

@@ -28,7 +28,7 @@ title string. Do not change any other logic. The canonical tag generation alread
 **Instructions**: For every page listed in REQ-META (REQUIREMENTS.md), add or update
 `<SEO title="..." description="..." url="..." />`. Pass the complete title string exactly as
 written in the requirements table (titles already include "| Cyoda" where appropriate).
-Pages to update: Index, Products, Pricing, Blog, Support, Dev, Cto, About, UseCases,
+Pages to update: Index, Blog, Support, Dev, Cto, About, UseCases,
 UseCaseLoanLifecycle, UseCaseTradeSettlement, UseCaseKycOnboarding, UseCaseAgenticAi, Contact.
 
 **Acceptance Criteria**:
@@ -100,19 +100,6 @@ Use the exact `<loc>`, `<changefreq>`, and `<priority>` values from the requirem
 
 ---
 
-### T07 · [MODIFY] Add FAQPage schema to Pricing page
-**File**: `src/pages/Pricing.tsx`
-**Instructions**: Import `faqSchema` from `src/data/schemas.ts` (create the export in that file).
-Pass it as `jsonLd` to the SEO component on the pricing page.
-The FAQPage schema content is defined in REQ-STRUCTURED-DATA (REQUIREMENTS.md).
-
-**Acceptance Criteria**:
-- [ ] `src/data/schemas.ts` exports `faqSchema` with correct FAQPage structure
-- [ ] `/pricing` page renders FAQPage JSON-LD in `<head>`
-- [ ] `npm run typecheck` passes
-
----
-
 ### T08 · [MODIFY] Add BreadcrumbList schema to use-case detail pages
 **Files**: The 4 use-case detail pages
 **Instructions**: Each detail page gets a BreadcrumbList schema per REQ-STRUCTURED-DATA.
@@ -138,40 +125,6 @@ Also update the section heading to "Built for Developers Who Demand Correctness"
 - [ ] No field names from the warehouse model remain (`sku`, `warehouseId`, `hazards`, `UN3481`)
 - [ ] `loanId`, `borrowerId`, `currentState`, `stateHistory`, `covenants`, `counterparty` are present
 - [ ] Section heading reads "Built for Developers Who Demand Correctness"
-- [ ] `npm run build` passes
-
----
-
-### T10 · [MODIFY] Fix Pricing page copy
-**File**: `src/pages/Pricing.tsx`
-**Instructions**:
-1. Change H1 from `"Get Building for Free"` to `"Start Your Evaluation for Free"`
-2. Remove all "Coming Soon" badges from Developer and Professional plan cards
-3. Replace "TBD /month" with "Contact Us" on Developer and Professional cards
-4. Change Developer and Professional CTA buttons to "Join the Waitlist" → `/contact`
-5. Change Enterprise CTA `href` to `/contact`
-6. Add FAQ section using shadcn `Accordion` with 4 Q&As from REQ-PRICING-FAQ
-
-**Acceptance Criteria**:
-- [ ] H1 reads "Start Your Evaluation for Free"
-- [ ] No "Coming Soon" badge renders on any pricing card
-- [ ] No "TBD" text renders on any pricing card
-- [ ] Developer and Professional CTAs say "Join the Waitlist" and link to `/contact`
-- [ ] Enterprise CTA links to `/contact`
-- [ ] FAQ Accordion renders with 4 questions
-- [ ] `npm run build` passes
-
----
-
-### T11 · [MODIFY] Remove "Available to all" from Products page
-**File**: `src/pages/Products.tsx`
-**Instructions**: Find and remove the text "Available to all" and its surrounding element
-(likely a badge or span). Add the EDBMS definition sentence from REQ-COPY to the page
-(preferably after the first mention of Cyoda EDBMS in the copy).
-
-**Acceptance Criteria**:
-- [ ] "Available to all" does not appear anywhere on the rendered Products page
-- [ ] EDBMS definition sentence is present on the page
 - [ ] `npm run build` passes
 
 ---
@@ -245,8 +198,7 @@ typewriter animation. Replace with static layout per REQ-HOMEPAGE:
 H1 + sub-text + two CTA buttons (Primary: "Start Evaluating for Free", Ghost: "See How It Works").
 Replace the 3D node animation background with the static SVG state machine or clean gradient
 from DESIGN.md. Do NOT add `.texture-overlay`.
-Check `getPageVariant()` logic — ensure `/dev`, `/cto`, `/products`, `/pricing` still render
-correctly after this change.
+Check `getPageVariant()` logic — ensure `/dev` and `/cto` still render correctly after this change.
 
 **Acceptance Criteria**:
 - [ ] No `<Textarea>` or chatbot input in the hero
@@ -298,12 +250,12 @@ correctly after this change.
 
 ### T19 · [MODIFY] Add Use Cases and About to Header nav
 **File**: `src/components/Header.tsx`
-**Instructions**: Add "Use Cases" → `/use-cases` after "Products" and "About" → `/about` after
+**Instructions**: Add "Use Cases" → `/use-cases` and "About" → `/about` after
 "Blog" in both the desktop nav and the mobile hamburger drawer. Follow the exact same JSX
 pattern as existing nav items.
 
 **Acceptance Criteria**:
-- [ ] Desktop nav order: Products, Use Cases, Pricing, Docs, Blog, About
+- [ ] Desktop nav links point only at active routes
 - [ ] Mobile drawer includes both new links
 - [ ] Active link styling works for new routes
 - [ ] `npm run build` passes
@@ -315,12 +267,13 @@ pattern as existing nav items.
 **Instructions**: Replace tagline and restructure links per REQ-FOOTER.
 New tagline: "The unified platform for stateful, auditable workflows in financial services.
 In production in European private-debt markets since 2017."
-Platform column: Products, Use Cases, Pricing, Docs, Blog
+Platform column: Use Cases, Docs, Blog
 Company column: About, Support, Contact
 
 **Acceptance Criteria**:
 - [ ] New tagline renders correctly
 - [ ] "Use Cases", "About", and "Contact" all appear in footer and link correctly
+- [ ] Footer does not link to removed product or pricing routes
 - [ ] All existing footer links still work
 - [ ] `npm run build` passes
 
@@ -385,7 +338,7 @@ On submit: `console.log(data)` + show success message.
 1. Run `npm run build && npm run typecheck` — fix all errors
 2. Run `npm run lint` — fix all lint warnings
 3. Verify every route in the app renders correctly at 375px, 768px, and 1440px:
-   `/`, `/products`, `/pricing`, `/use-cases`, `/use-cases/loan-lifecycle`,
+   `/`, `/use-cases`, `/use-cases/loan-lifecycle`,
    `/use-cases/trade-settlement`, `/use-cases/kyc-onboarding`, `/use-cases/agentic-ai`,
    `/about`, `/contact`, `/blog`, `/dev`, `/cto`
 4. Check dark mode toggle on all new pages
@@ -414,11 +367,8 @@ On submit: `console.log(data)` + show success message.
 | T04 | MODIFY | `public/sitemap.xml`                     | 1-SEO | Missing 7 pages       |
 | T05 | MODIFY | `public/llms.txt`                        | 1-AI  | Weak description      |
 | T06 | MODIFY | SEO.tsx + all pages                      | 2-SD  | Zero structured data  |
-| T07 | MODIFY | `src/pages/Pricing.tsx`                  | 2-SD  | FAQPage schema        |
 | T08 | MODIFY | 4 use-case detail pages                  | 2-SD  | BreadcrumbList        |
 | T09 | MODIFY | `DeveloperReliabilitySection.tsx`        | 3-AI  | Warehouse entity model|
-| T10 | MODIFY | `src/pages/Pricing.tsx`                  | 3-Mkt | Coming Soon / TBD     |
-| T11 | MODIFY | `src/pages/Products.tsx`                 | 3-Mkt | "Available to all"    |
 | T12 | MODIFY | `src/data/HeroPhrases.ts`                | 3-Mkt | Non-fintech examples  |
 | T13 | CREATE | `src/components/ProofBar.tsx`            | 4-Cmp | Missing component     |
 | T14 | CREATE | `src/components/ArchitectureDiagram.tsx` | 4-Cmp | Missing component     |

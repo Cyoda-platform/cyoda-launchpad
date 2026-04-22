@@ -129,7 +129,7 @@ const Cto = () => (
               <Link to="/contact" onClick={trackTalkToUs}>Talk to us</Link>
             </Button>
             <Button size="lg" variant="outline" className="px-7 text-base font-semibold" asChild>
-              <Link to="/products">Read the architecture</Link>
+              <Link to="/#how-it-works">Read the architecture</Link>
             </Button>
           </div>
         </div>

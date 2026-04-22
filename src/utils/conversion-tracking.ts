@@ -38,9 +38,9 @@ const UTM_STORAGE_KEY = 'cyoda_utm_params';
  */
 export interface AdConversionParams {
     /** Location of the CTA on the page */
-    location: "header" | "header_mobile" | "hero" | "cta_section" | "footer" | "nav" | "pricing_card";
+    location: "header" | "header_mobile" | "hero" | "cta_section" | "footer" | "nav";
     /** Page variant where the conversion occurred */
-    page_variant: "dev" | "cto" | "home" | "products" | "pricing";
+    page_variant: "dev" | "cto" | "home";
     /** CTA identifier (e.g., "try_now", "talk_to_sales") */
     cta: string;
     /** Destination URL */
@@ -239,8 +239,8 @@ export function isAiCyodaNetDestination(url: string): boolean {
  * ```typescript
  * // Track a conversion with explicit UTM parameters
  * trackAdConversion({
- *   location: "pricing_card",
- *   page_variant: "pricing",
+ *   location: "cta_section",
+ *   page_variant: "home",
  *   cta: "get_started",
  *   destination: "https://ai.cyoda.net/signup"
  * }, {
@@ -333,4 +333,3 @@ export function trackAdConversion(
         console.error('[conversion-tracking] Failed to track ad conversion:', error);
     }
 }
-

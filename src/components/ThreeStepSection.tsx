@@ -10,12 +10,10 @@ const
   const location = useLocation();
 
   // Determine page variant based on current route
-  const getPageVariant = (): "home" | "dev" | "cto" | "products" | "pricing" => {
+  const getPageVariant = (): "home" | "dev" | "cto" => {
     const path = location.pathname;
     if (path === '/dev') return 'dev';
     if (path === '/cto') return 'cto';
-    if (path === '/products') return 'products';
-    if (path === '/pricing') return 'pricing';
     return 'home';
   };
 

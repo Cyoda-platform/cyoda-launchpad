@@ -270,8 +270,8 @@ describe('conversion-tracking', () => {
       vi.mocked(utmTracking.getUtmParameters).mockReturnValue(null);
 
       const params: AdConversionParams = {
-        location: 'pricing_card',
-        page_variant: 'pricing',
+        location: 'cta_section',
+        page_variant: 'home',
         cta: 'get_started',
         destination: 'https://ai.cyoda.net/signup',
       };
@@ -284,8 +284,8 @@ describe('conversion-tracking', () => {
         'get_started',
         'https://ai.cyoda.net/signup',
         expect.objectContaining({
-          location: 'pricing_card',
-          page_variant: 'pricing',
+          location: 'cta_section',
+          page_variant: 'home',
           cta: 'get_started',
           destination: 'https://ai.cyoda.net/signup',
           time_to_conversion: null,
@@ -314,4 +314,3 @@ describe('conversion-tracking', () => {
     });
   });
 });
-

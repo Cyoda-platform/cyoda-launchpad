@@ -181,12 +181,10 @@ const HeroSection: React.FC<HeroProps> = ({
 }) => {
   const location = useLocation();
 
-  const getPageVariant = (): 'home' | 'dev' | 'cto' | 'products' | 'pricing' => {
+  const getPageVariant = (): 'home' | 'dev' | 'cto' => {
     const path = location.pathname;
     if (path === '/dev') return 'dev';
     if (path === '/cto') return 'cto';
-    if (path === '/products') return 'products';
-    if (path === '/pricing') return 'pricing';
     return 'home';
   };
 
@@ -295,7 +293,7 @@ const HeroSection: React.FC<HeroProps> = ({
             </div>
           </div>
         ) : (
-          /* Other pages (dev, cto, products, pricing): centred layout */
+          /* Other pages (dev, cto): centred layout */
           <div className="max-w-4xl mx-auto text-center space-y-6">
             {renderHeadings && h1 ? (
               <div className="max-w-3xl mx-auto">

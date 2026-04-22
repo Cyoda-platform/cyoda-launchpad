@@ -8,8 +8,8 @@ import { trackAdConversion, isAiCyodaNetDestination } from "@/utils/conversion-t
  * You can also explicitly provide UTM parameters which will take precedence.
  */
 export type CtaParams = {
-    location: "header" | "header_mobile" | "hero" | "cta_section" | "footer" | "nav" | "pricing_card";
-    page_variant: "dev" | "cto" | "home" | "products" | "pricing";
+    location: "header" | "header_mobile" | "hero" | "cta_section" | "footer" | "nav";
+    page_variant: "dev" | "cto" | "home";
     cta: string;          // e.g. "try_now" | "github_repo" | "talk_to_sales"
     label?: string;       // optional extra label
     url?: string;         // optional destination

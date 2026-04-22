@@ -8,9 +8,7 @@ const Footer = () => {
   const [prefsOpen, setPrefsOpen] = useState(false);
 
   const platformLinks = [
-    { name: 'Products', href: '/products' },
     { name: 'Use Cases', href: '/use-cases' },
-    { name: 'Pricing', href: '/pricing' },
     { name: 'Docs', href: 'https://docs.cyoda.net/', external: true },
     { name: 'Blog', href: '/blog' },
   ];

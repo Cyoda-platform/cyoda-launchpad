@@ -160,10 +160,10 @@ immediately after the "How Cyoda Solves It" section on each use-case page.
 
 ---
 
-## EDBMS Definition (Homepage + /products)
+## EDBMS Definition (Homepage)
 The acronym EDBMS (Entity Database Management System) is used in the comparison diagram
 but is not defined in readable body text anywhere on the site. Add one sentence to the
-homepage Three-System Problem section and to the /products page:
+homepage Three-System Problem section:
 
 > "The Cyoda EDBMS (Entity Database Management System) unifies transactional storage,
 >  event-driven processing, and workflow orchestration in a single consistency model."

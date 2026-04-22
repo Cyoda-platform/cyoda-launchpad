@@ -33,8 +33,6 @@ Run `npm run build && npm run typecheck` after every task. Fix all errors before
 
 ### Pages (all routed in `src/App.tsx`)
 - `/` → `src/pages/Index.tsx` ✅
-- `/products` → `src/pages/Products.tsx` ✅
-- `/pricing` → `src/pages/Pricing.tsx` ✅
 - `/comparison` → `src/pages/Comparison.tsx` ✅
 - `/use-cases` → `src/pages/UseCases.tsx` ✅
 - `/use-cases/loan-lifecycle` → `src/pages/UseCaseLoanLifecycle.tsx` ✅
@@ -62,7 +60,7 @@ Run `npm run build && npm run typecheck` after every task. Fix all errors before
 
 ### SEO / Structured Data
 - `src/components/SEO.tsx` ✅ — auto-append removed; renders `jsonLd` prop
-- `src/data/schemas.ts` ✅ — `organizationSchema`, `faqSchema`, breadcrumb schemas
+- `src/data/schemas.ts` ✅ — `organizationSchema` and breadcrumb schemas
 - All pages: unique title, description, canonical URL ✅
 - `public/sitemap.xml` ✅ — includes all routes
 - `public/llms.txt` ✅ — describes three-site structure and Enterprise Cyoda

@@ -21,8 +21,6 @@ Then each page must pass its own complete title string. Every page must also pas
 | Page | Title (pass as-is — include "| Cyoda" where shown) | Meta Description (150–160 chars) | Canonical URL |
 |---|---|---|---|
 | `/` | `Cyoda \| Unified Platform for Stateful Workflows in Financial Services` | `The unified platform that replaces Postgres + Kafka + Camunda for teams building stateful, auditable workflows in regulated financial services.` | `https://cyoda.com/` |
-| `/products` | `Products \| Cyoda` | `A stateful, event-driven platform with entity database, workflows, and built-in audit — without complex infrastructure.` | `https://cyoda.com/products` |
-| `/pricing` | `Pricing \| Cyoda` | `Start your evaluation for free. Scale to enterprise when you need it. No time limits on the free tier.` | `https://cyoda.com/pricing` |
 | `/use-cases` | `Use Cases \| Cyoda` | `See how Cyoda powers loan lifecycle management, trade settlement, KYC onboarding, and agentic AI in financial services.` | `https://cyoda.com/use-cases` |
 | `/use-cases/loan-lifecycle` | `Loan Origination & Lifecycle Management \| Cyoda` | `Manage multi-stage loan approval, drawdown, repayment, and default states with immutable audit and serialized concurrent writes.` | `https://cyoda.com/use-cases/loan-lifecycle` |
 | `/use-cases/trade-settlement` | `Trade Settlement & Regulatory Reporting \| Cyoda` | `Every trade state is a regulatory event. Cyoda gives you point-in-time reconstruction — no ETL pipeline or separate data warehouse required.` | `https://cyoda.com/use-cases/trade-settlement` |
@@ -157,49 +155,6 @@ Add the following Organization schema to every page (pass via `jsonLd` prop in e
 }
 ```
 
-### FAQPage schema (add to `/pricing` only)
-
-```json
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "Is there a free tier?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. The Trial plan is free with no time limit. Start at ai.cyoda.net."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Can I deploy on my own infrastructure?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. The Enterprise plan supports private cloud and on-premises Kubernetes deployment."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What is the SLA for the Enterprise plan?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Full compliance and SLA guarantees are included with Enterprise. Contact sales for details."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "How do I migrate from my existing Postgres and Kafka stack?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Contact the team for a migration assessment. Most teams prototype on Cyoda Cloud in under a week."
-      }
-    }
-  ]
-}
-```
-
 ### BreadcrumbList schema (add to use-case detail pages only)
 
 Each use-case detail page gets a BreadcrumbList. Example for `/use-cases/loan-lifecycle`:
@@ -296,12 +251,8 @@ Valid `currentState` values: `Application → UnderReview → Approved → Activ
 
 ## REQ-COPY: Copy Fixes
 
-### Products page — Remove "Available to all"
-`src/pages/Products.tsx` contains "Available to all" — remove it. Do not replace it with
-another availability claim. Simply remove the phrase and any containing badge/chip element.
-
-### EDBMS definition — add to homepage and /products
-Add this sentence to both the homepage Three-System Problem section and to `src/pages/Products.tsx`:
+### EDBMS definition — add to homepage
+Add this sentence to the homepage Three-System Problem section:
 > "The Cyoda EDBMS (Entity Database Management System) unifies transactional storage,
 >  event-driven processing, and workflow orchestration in a single consistency model."
 
@@ -314,34 +265,15 @@ Attribution line: `Patrick Stanton & Paul Schleger PhD, Co-Founders`
 
 ---
 
-## REQ-PRICING-FAQ: Pricing Page FAQ Section
-
-Add a FAQ section below the pricing cards using shadcn `Accordion` component
-(`src/components/ui/accordion`). Four Q&As:
-
-1. Q: "Is there a free tier?"
-   A: "Yes. The Trial plan is free with no time limit. Start at ai.cyoda.net — no credit card required."
-
-2. Q: "Can I deploy on my own infrastructure?"
-   A: "Yes. The Enterprise plan supports private cloud and on-premises Kubernetes deployment."
-
-3. Q: "What is the SLA for the Enterprise plan?"
-   A: "Full compliance and SLA guarantees are included with Enterprise. Contact sales for details."
-
-4. Q: "How do I migrate from my existing Postgres + Kafka stack?"
-   A: "Contact the team for a migration assessment. Most teams prototype on Cyoda Cloud in under a week."
-
----
-
 ## REQ-NAV: Header Navigation
 
 `src/components/Header.tsx` shall be updated:
-- Add "Use Cases" link → `/use-cases` after "Products" in the desktop nav
-- Add "About" link → `/about` after "Blog" in the desktop nav
+- Keep Platform and Solutions dropdowns focused on active routes
+- Include use-case links under Solutions
 - Both links must also appear in the mobile hamburger drawer
 - All other existing nav links remain unchanged
 
-Desktop order: Products, Use Cases, Pricing, Docs, Blog, About
+Product and pricing pages have been removed; do not link to those routes.
 
 ---
 
@@ -349,7 +281,7 @@ Desktop order: Products, Use Cases, Pricing, Docs, Blog, About
 
 `src/components/Footer.tsx` shall be updated:
 - Replace current tagline with: `"The unified platform for stateful, auditable workflows in financial services. In production in European private-debt markets since 2017."`
-- Platform column: Products, Use Cases, Pricing, Docs, Blog
+- Platform column: Use Cases, Docs, Blog
 - Company column: About, Support, Contact
 - All links route correctly; Contact → `/contact`
 

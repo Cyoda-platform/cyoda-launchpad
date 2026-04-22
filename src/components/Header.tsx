@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Menu, X } from 'lucide-react';
 import { HashLink } from 'react-router-hash-link';
@@ -12,21 +12,9 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import cyodaLogo from '@/assets/cyoda-logo.png';
-import { trackCtaConversion } from '@/utils/analytics';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const location = useLocation();
-
-  const getPageVariant = (): "home" | "dev" | "cto" | "products" | "pricing" => {
-    const path = location.pathname;
-    if (path === '/dev') return 'dev';
-    if (path === '/cto') return 'cto';
-    if (path === '/products') return 'products';
-    if (path === '/pricing') return 'pricing';
-    return 'home';
-  };
-
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/98 backdrop-blur-sm">
@@ -53,7 +41,6 @@ const Header = () => {
                     <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-3">Product</p>
                     <div className="space-y-4">
                       {[
-                        { label: 'EDBMS Platform', sub: 'Unified data + workflow + audit', to: '/products' },
                         { label: 'Architecture', sub: 'How the EDBMS works', to: '/#how-it-works', hash: true },
                         { label: 'Compare vs. alternatives', sub: 'Temporal, Camunda, Kafka, XTDB', to: '/comparison' },
                       ].map((item) => (
@@ -217,7 +204,7 @@ const Header = () => {
           <div className="container py-4 space-y-4">
             <nav className="space-y-1">
               <p className="py-1 text-xs font-semibold text-muted-foreground uppercase tracking-widest">Platform</p>
-              <Link to="/products" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">EDBMS Platform</Link>
+              <HashLink smooth to="/#how-it-works" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">Architecture</HashLink>
               <Link to="/comparison" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">Compare vs. alternatives</Link>
 
               <p className="py-1 text-xs font-semibold text-muted-foreground uppercase tracking-widest mt-3">Solutions</p>

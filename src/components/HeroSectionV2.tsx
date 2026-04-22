@@ -228,12 +228,10 @@ const HeroSectionV2: React.FC<HeroProps> = ({
 }) => {
   const location = useLocation();
 
-  const getPageVariant = (): 'home' | 'dev' | 'cto' | 'products' | 'pricing' => {
+  const getPageVariant = (): 'home' | 'dev' | 'cto' => {
     const path = location.pathname;
     if (path === '/dev') return 'dev';
     if (path === '/cto') return 'cto';
-    if (path === '/products') return 'products';
-    if (path === '/pricing') return 'pricing';
     return 'home';
   };
 

@@ -54,9 +54,9 @@ test.describe('Google Analytics Basic Functionality', () => {
     expect(analyticsState.scripts).toHaveLength(1);
     expect(analyticsState.scripts[0]).toMatch(/googletagmanager\.com\/gtag\/js\?id=G-[A-Z0-9]+/);
 
-    // Navigate to another page to trigger page view
-    await page.getByLabel('Main').getByRole('link', { name: 'Pricing' }).click();
-    await page.waitForURL('/pricing');
+    // Navigate to another active page to trigger page view
+    await page.goto('/use-cases');
+    await page.waitForURL('/use-cases');
 
     // Wait for analytics requests
     await page.waitForTimeout(2000);
