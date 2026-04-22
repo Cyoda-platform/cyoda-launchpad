@@ -38,6 +38,8 @@ const UseCaseLoanLifecycle = lazy(() => import("./pages/UseCaseLoanLifecycle"));
 const UseCaseTradeSettlement = lazy(() => import("./pages/UseCaseTradeSettlement_with_workflow"));
 const UseCaseKycOnboarding = lazy(() => import("./pages/UseCaseKycOnboarding"));
 const UseCaseAgenticAi = lazy(() => import("./pages/UseCaseAgenticAi"));
+const TemporaryAgenticWorkflow = lazy(() => import("./pages/TemporaryAgenticWorkflow"));
+const TemporaryAgenticWorkflowClaude = lazy(() => import("./pages/TemporaryAgenticWorkflowClaude"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Comparison = lazy(() => import("./pages/Comparison"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -100,6 +102,8 @@ const App = () => {
                     <Route path="/use-cases/trade-settlement" element={<UseCaseTradeSettlement />} />
                     <Route path="/use-cases/kyc-onboarding" element={<UseCaseKycOnboarding />} />
                     <Route path="/use-cases/agentic-ai" element={<UseCaseAgenticAi />} />
+                    <Route path="/temporary/agentic-ai-workflow" element={<TemporaryAgenticWorkflow />} />
+                    <Route path="/temporary/agentic-ai-workflow-claude" element={<TemporaryAgenticWorkflowClaude />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/comparison" element={<Comparison />} />
                     {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

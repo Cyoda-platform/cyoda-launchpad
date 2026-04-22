@@ -1,0 +1,40 @@
+import { nodeTextClasses, nodeToneClasses } from '../tokens';
+import type { LaidOutNode, NodeTone } from '../types';
+
+export const TerminalNode = ({ nodeLayout }: { nodeLayout: LaidOutNode }) => {
+  const { node, box, center, titleLines } = nodeLayout;
+  const tone = (node.tone ?? 'danger') as NodeTone;
+  const textTone = nodeTextClasses[tone];
+  const titleStartY = box.y + (node.subtitle ? 48 : 34);
+
+  return (
+    <g>
+      <rect x={box.x} y={box.y} width={box.width} height={box.height} rx="22" className={nodeToneClasses[tone]} strokeWidth="1.6" />
+      <rect
+        x={box.x + 3}
+        y={box.y + 3}
+        width={box.width - 6}
+        height={box.height - 6}
+        rx="18"
+        className="fill-none stroke-white/70"
+        strokeWidth="0.8"
+        strokeDasharray="2 2"
+      />
+      {node.subtitle && (
+        <text x={center.x} y={box.y + 22} textAnchor="middle" className={`${textTone.meta} text-[10px] font-semibold uppercase tracking-[0.14em]`}>
+          {node.subtitle}
+        </text>
+      )}
+      {titleLines.map((line, index) => (
+        <text key={`${node.id}-title-${line}`} x={center.x} y={titleStartY + index * 16} textAnchor="middle" className={`${textTone.title} text-[13px] font-semibold`}>
+          {line}
+        </text>
+      ))}
+      {node.processLabel && (
+        <text x={center.x} y={box.y + box.height - 14} textAnchor="middle" className="fill-slate-500 text-[9px] font-semibold tracking-[0.12em]">
+          {node.processLabel}
+        </text>
+      )}
+    </g>
+  );
+};
