@@ -6,10 +6,20 @@ It is intentionally not a generic graph package. It handles the site's workflow 
 
 ## Data Flow
 
+There are now two supported data paths:
+
+1. Curated presentation specs:
+
 `WorkflowDiagramSpec` -> `computeWorkflowDiagramLayout()` -> `<WorkflowDiagram />`
 
+2. Valid Cyoda workflow JSON:
+
+`Cyoda workflow JSON` -> `normalize/validate` -> `parse/classify` -> `ELK layout` -> `<CyodaWorkflowDiagram />`
+
 - Specs live in `src/workflows/`.
+- JSON-backed workflow examples live in `src/data/workflows/`.
 - Layout logic lives in `src/lib/workflow-diagram/layout.ts` and `routing.ts`.
+- Cyoda JSON parsing and ELK layout live in `src/lib/workflow-diagram/cyoda/`.
 - Rendering primitives live in `nodes/`, `edges/`, and `lanes/`.
 - Shared visual choices live in `tokens.ts`.
 
@@ -21,6 +31,11 @@ It is intentionally not a generic graph package. It handles the site's workflow 
 - `layout.ts`: lane-aware node placement, lane bounds, label anchors.
 - `routing.ts`: edge path generation from routing strategies.
 - `WorkflowDiagram.tsx`: public renderer component.
+- `cyoda/normalizeCyodaInput.ts`: accepts single workflows, import/export envelopes, and UI wrappers.
+- `cyoda/parseCyodaWorkflow.ts`: turns Cyoda states and transitions into display nodes and edges.
+- `cyoda/classifyCyodaGraph.ts`: detects initial, terminal, manual, processing, conditional, and loop semantics.
+- `cyoda/layoutWithElk.ts`: computes read-only presentation layout with ELK.
+- `cyoda/CyodaWorkflowDiagram.tsx`: public renderer for valid Cyoda workflow JSON.
 
 ## Editing Existing Workflows
 
@@ -62,6 +77,17 @@ Transition labels are placed from the edge route and then nudged away from node 
 
 ## Creating A New Workflow
 
+For a real Cyoda workflow JSON file, prefer the JSON-driven renderer:
+
+1. Add the workflow object in `src/data/workflows/` as a typed `CyodaWorkflowConfig`.
+2. Render it with `<CyodaWorkflowDiagram input={workflowConfig} />`.
+3. Keep raw Cyoda state and transition IDs intact.
+4. Disabled transitions are hidden by default. Pass `showDisabledTransitions` only for diagnostics.
+5. Criteria and processors are summarized as badges, not expanded into the main diagram.
+6. Use `direction="DOWN"` for workflows that are too wide as a left-to-right graph.
+
+For a curated non-JSON presentation diagram:
+
 1. Create `src/workflows/myWorkflow.ts`.
 2. Define lanes top-to-bottom with semantic IDs.
 3. Define main-flow nodes with `layout.baseline: true` and increasing `order`.
@@ -78,5 +104,7 @@ Transition labels are placed from the edge route and then nudged away from node 
 - Loop crosses content: try `loop-above`, `loop-left`, or move the target with alignment hints.
 - Labels collide: set `edge.layout.labelPlacement` for the stubborn edge, shorten long transition text, or anchor diagram labels to `nearNodeId`.
 - Lanes too tight: check the node size variants and avoid hiding content in very long subtitles.
+- Cyoda JSON diagram missing a transition: check whether the transition has `disabled: true`; disabled transitions are hidden by default.
+- Cyoda JSON labels feel crowded: keep raw IDs, but tune `wrapRawIdentifier`, ELK spacing, or label collision behavior in `cyoda/layoutWithElk.ts`.
 
 Keep content in specs, shared behavior in layout/routing, and shared style in tokens.

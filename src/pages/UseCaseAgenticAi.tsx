@@ -6,8 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { CheckCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import WorkflowDiagram from '@/lib/workflow-diagram';
-import { agenticAiRegulatedActionWorkflow } from '@/workflows';
+import { CyodaWorkflowDiagram } from '@/lib/workflow-diagram';
+import { agenticAmlTriageWorkflow } from '@/data/workflows/agenticAmlTriageWorkflow';
 
 const workflowNativeChanges = [
   'Agent output becomes a proposal, not an uncontrolled side effect.',
@@ -42,7 +42,7 @@ const productionControls = [
 ];
 
 const AgenticWorkflowEmbed = () => (
-  <WorkflowDiagram spec={agenticAiRegulatedActionWorkflow} minSvgWidth={1080} />
+  <CyodaWorkflowDiagram input={agenticAmlTriageWorkflow} minSvgWidth={940} direction="DOWN" />
 );
 
 const UseCaseAgenticAi = () => {

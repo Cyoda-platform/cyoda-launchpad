@@ -221,13 +221,13 @@ const HeroSection: React.FC<HeroProps> = ({
               {/* Eyebrow */}
               <div className="mb-5">
                 <span
-                  className="inline-flex items-center text-[11px] font-bold uppercase tracking-widest px-3 py-1 rounded-full"
+                  className="inline-flex items-center text-[11px] font-bold tracking-[0.12em] px-3 py-1 rounded-full"
                   style={{
                     background: 'hsl(175,45%,86%)',
                     color: 'hsl(175,62%,24%)',
                   }}
                 >
-                  Enterprise · Regulated Production
+                  Enterprise Cyoda · Regulated production
                 </span>
               </div>
 
@@ -239,7 +239,7 @@ const HeroSection: React.FC<HeroProps> = ({
                     'text-4xl md:text-5xl font-bold tracking-tight leading-tight mb-5',
                   style: { color: 'hsl(215,28%,14%)' },
                 },
-                'Enterprise Cyoda'
+                'Build stateful, auditable systems without the stitched-together stack'
               )}
 
               {/* Sub-copy */}
@@ -247,8 +247,9 @@ const HeroSection: React.FC<HeroProps> = ({
                 className="text-lg leading-relaxed mb-8"
                 style={{ color: 'hsl(215,18%,38%)' }}
               >
-                State, workflow, transactions, events, history, and business logic in one
-                model. Commercially supported for regulated and mission-critical production.
+                Cyoda unifies state, workflow, transactions, events, and history in one model,
+                with one path from local build to regulated production. Commercially supported by
+                the people who built it.
               </p>
 
               {/* CTAs */}
@@ -271,9 +272,7 @@ const HeroSection: React.FC<HeroProps> = ({
                   }}
                   asChild
                 >
-                  <a href="https://cyoda.org" rel="noopener noreferrer">
-                    Run it yourself
-                  </a>
+                  <a href="#how-it-works">See the architecture</a>
                 </Button>
               </div>
 
@@ -290,6 +289,12 @@ const HeroSection: React.FC<HeroProps> = ({
             {/* Right column: workflow/audit artefact */}
             <div className="lg:pl-4 xl:pl-8">
               <WorkflowArtefact />
+              <p
+                className="mt-3 text-center text-xs font-semibold"
+                style={{ color: 'hsl(175,45%,34%)' }}
+              >
+                State, workflow, and history in one system
+              </p>
             </div>
           </div>
         ) : (
