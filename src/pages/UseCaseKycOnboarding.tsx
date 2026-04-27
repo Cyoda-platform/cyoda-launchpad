@@ -15,19 +15,19 @@ const changes = [
   },
   {
     title: 'Exception handling inside the same lifecycle',
-    body: 'EDD and manual casework are not a separate system. They are named states with their own criteria and attached processes — branching off the same entity, feeding back into the same workflow.',
+    body: 'EDD and manual casework are not a separate system. They are named states with their own criteria and attached processors — branching off the same entity, feeding back into the same entity lifecycle.',
   },
   {
     title: 'Decision-time evidence captured by default',
     body: 'The data available at each transition is recorded as part of the entity history. Point-in-time reconstruction for a regulatory exam or internal review is a query, not a rebuild.',
   },
   {
-    title: 'UBO and legal-entity complexity in the workflow',
+    title: 'UBO and legal-entity complexity in the entity lifecycle',
     body: 'Beneficial ownership discovery and control-structure verification are modelled as conditional states with their own criteria. The path is explicit, not hidden in application code.',
   },
   {
     title: 'Post-approval monitoring, not a dead end',
-    body: 'Approval transitions into ongoing monitoring. Trigger-based reassessment and periodic review re-enter the workflow as first-class transitions — not polling jobs or background cron tasks.',
+    body: 'Approval transitions into ongoing monitoring. Trigger-based reassessment and periodic review re-enter the entity lifecycle as first-class transitions — not polling jobs or background cron tasks.',
   },
   {
     title: 'No separate audit layer',
@@ -52,7 +52,7 @@ const productionItems = [
   },
   {
     title: 'Lower operational burden for exceptions',
-    body: 'Casework states, human-in-the-loop branches, and reassessment triggers are part of the workflow definition — not custom orchestration code that must be maintained separately.',
+    body: 'Casework states, human-in-the-loop branches, and reassessment triggers are part of the entity workflow definition — not custom orchestration code that must be maintained separately.',
   },
 ];
 
@@ -78,15 +78,16 @@ const UseCaseKycOnboarding = () => {
               Use case · KYC &amp; customer onboarding
             </p>
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-5 max-w-3xl leading-tight">
-              KYC and customer onboarding in one auditable lifecycle
+              KYC and customer onboarding in one auditable entity lifecycle
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
               Modern onboarding is not a one-time pass/fail check. Low-risk customers should pass
               quickly through automated screening. Higher-risk cases branch into enhanced due
               diligence. Legal entities require beneficial ownership discovery. Approved customers
               enter ongoing monitoring that can trigger reassessment. Cyoda models all of it as a
-              single entity with an explicit workflow — states, criteria-driven transitions, attached
-              processes, and an immutable history of every decision.
+              single CustomerOnboardingCase entity with an explicit entity workflow — named states,
+              criteria-driven transitions, attached processors, and an immutable history of every
+              decision on that entity.
             </p>
           </div>
         </section>
@@ -120,7 +121,8 @@ const UseCaseKycOnboarding = () => {
                     Low-risk cases should complete in seconds via straight-through processing. But
                     the same path must branch into enhanced due diligence for higher-risk cases
                     without losing the STP evidence. Legal entities add a second dimension:
-                    beneficial ownership discovery is a conditional sub-workflow, not a checkbox.
+                    beneficial ownership discovery is a conditional lifecycle branch, not a
+                    checkbox.
                   </p>
                   <p>
                     Onboarding does not end at approval. Ongoing monitoring and trigger-based
@@ -137,7 +139,7 @@ const UseCaseKycOnboarding = () => {
                 </h3>
                 <ul className="space-y-4">
                   {[
-                    { system: 'Onboarding application / CRM', problem: 'Holds the record but cannot model complex branching, loop-back, or conditional sub-workflows.' },
+                    { system: 'Onboarding application / CRM', problem: 'Holds the record but cannot model complex branching, loop-back, or conditional lifecycle branches.' },
                     { system: 'Screening API (sanctions, PEP, adverse media)', problem: 'Asynchronous results with retry logic written in application code; evidence not stored durably.' },
                     { system: 'Case management system for EDD', problem: 'Separate data model and consistency boundary; casework outcome must be reconciled back to the onboarding record.' },
                     { system: 'Audit log or compliance database', problem: 'Assembled separately — does not capture the data available at the exact moment of each decision.' },
@@ -166,14 +168,14 @@ const UseCaseKycOnboarding = () => {
                 How Cyoda models it
               </p>
               <h2 className="text-2xl md:text-3xl font-bold text-foreground">
-                One onboarding entity, one workflow
+                CustomerOnboardingCase entity workflow in a KYC system
               </h2>
               <p className="text-sm text-muted-foreground mt-2 max-w-2xl">
-                The customer case is a Cyoda entity. Its lifecycle is a workflow graph — states,
-                criteria-driven transitions, attached processes, and an immutable event history all
-                in one consistency model. The straight-through path stays fast; exceptions route into
-                controlled case handling; approval transitions into ongoing monitoring rather than a
-                dead end.
+                The CustomerOnboardingCase is a Cyoda entity. Its lifecycle is modelled as an
+                entity workflow graph — named states, criteria-driven transitions, attached
+                processors, and immutable history on the entity, all in one consistency model. The
+                straight-through path stays fast; exceptions route into controlled case handling;
+                approval transitions into ongoing monitoring rather than a dead end.
               </p>
             </div>
 
@@ -186,17 +188,17 @@ const UseCaseKycOnboarding = () => {
                 {
                   label: 'Criteria on every transition',
                   detail:
-                    'Each transition — ID&V pass, sanctions clear, risk threshold met — fires only when its criteria evaluate to true. The criteria are part of the workflow definition, not scattered across service code.',
+                    'Each transition — ID&V pass, sanctions clear, risk threshold met — fires only when its criteria evaluate to true. The criteria are part of the entity workflow definition, not scattered across service code.',
                 },
                 {
-                  label: 'Processes attach to states',
+                  label: 'Processors attach to lifecycle states',
                   detail:
                     "The screening processor runs on entry to Automated ID&V. The risk-scoring processor runs on entry to Dynamic Risk Assessment. Both run inside the entity's transactional boundary — not as fire-and-forget calls.",
                 },
                 {
                   label: 'Ongoing monitoring is a state',
                   detail:
-                    'Approval does not close the entity. It transitions into Active / Ongoing Monitoring. A monitoring alert re-enters the workflow as a named transition — not a background job reading a separate table.',
+                    'Approval does not close the entity. It transitions into Active / Ongoing Monitoring. A monitoring alert re-enters the entity lifecycle as a named transition — not a background job reading a separate table.',
                 },
               ].map((c) => (
                 <div key={c.label} className="rounded-lg border border-primary/20 bg-primary/[0.03] p-4">

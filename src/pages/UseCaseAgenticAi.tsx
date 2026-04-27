@@ -8,7 +8,7 @@ import { CheckCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import AgenticAiWorkflowViewer from '@/components/AgenticAiWorkflowViewer';
 
-const workflowNativeChanges = [
+const entityLifecycleChanges = [
   'Agent output becomes a proposal, not an uncontrolled side effect.',
   'Every proposed action is evaluated against policy before execution.',
   'Low-risk actions can flow through without sacrificing auditability.',
@@ -31,7 +31,7 @@ const productionControls = [
   {
     title: 'Rollback, exception, and retry discipline',
     body:
-      'Failed or contested actions move through explicit states. Retries, rollbacks, escalations, and reassessment are workflow behavior, not scattered log analysis.',
+      'Failed or contested actions move through explicit states. Retries, rollbacks, escalations, and reassessment are entity-lifecycle behavior, not scattered log analysis.',
   },
   {
     title: 'Less custom governance plumbing',
@@ -64,8 +64,8 @@ const UseCaseAgenticAi = () => {
             <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">
               AI can classify, prioritize, explain, and propose. In regulated systems, the action
               still needs deterministic execution: policy gates, approval paths, controlled
-              processes, immutable history, and point-in-time reconstruction. Cyoda provides that
-              governed action layer.
+              processors, immutable history, and point-in-time reconstruction. Cyoda provides that
+              governed action layer as a RegulatedActionCase entity workflow.
             </p>
           </div>
         </section>
@@ -132,13 +132,14 @@ const UseCaseAgenticAi = () => {
                 How Cyoda models it
               </p>
               <h2 className="text-2xl md:text-3xl font-bold text-foreground">
-                One RegulatedActionCase, one governed workflow
+                RegulatedActionCase entity workflow for governed agentic actions
               </h2>
               <p className="text-sm text-muted-foreground mt-2 max-w-3xl">
-                In an agent-assisted AML or transaction-monitoring workflow, the model can propose
-                a classification, rationale, or next action. Cyoda records that proposal inside a
-                case entity, evaluates criteria, routes authorization, executes approved actions
-                through attached processes, and appends immutable history for reconstruction.
+                In an agent-assisted AML or transaction-monitoring system, the model can propose a
+                classification, rationale, or next action. Cyoda records that proposal inside a
+                RegulatedActionCase entity, evaluates criteria, routes authorization, executes
+                approved actions through attached processors, and appends immutable history on that
+                entity for reconstruction.
               </p>
             </div>
 
@@ -146,17 +147,17 @@ const UseCaseAgenticAi = () => {
           </div>
         </section>
 
-        {/* Workflow-native outcomes */}
+        {/* Entity-lifecycle-native outcomes */}
         <section className="py-16 md:py-20 bg-[hsl(var(--section-alt-bg))]">
           <div className="container mx-auto px-4 max-w-5xl">
             <p className="text-xs font-semibold text-primary uppercase tracking-widest mb-3">
               The outcome
             </p>
             <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">
-              What changes when action is workflow-native
+              What changes when the entity lifecycle is native
             </h2>
             <div className="max-w-3xl space-y-4">
-              {workflowNativeChanges.map((point) => (
+              {entityLifecycleChanges.map((point) => (
                 <div key={point} className="flex items-start gap-3">
                   <CheckCircle className="h-5 w-5 text-primary mt-0.5 shrink-0" />
                   <p className="text-muted-foreground">{point}</p>
@@ -191,8 +192,8 @@ const UseCaseAgenticAi = () => {
           <div className="container mx-auto px-4 max-w-2xl text-center">
             <div className="mx-auto mb-6 w-10 h-0.5 bg-primary rounded" />
             <p className="text-xl font-medium text-foreground leading-relaxed mb-8">
-              If you are moving an agentic workflow from demo to regulated production, we can help
-              map the action lifecycle, control points, and audit requirements.
+              If you are moving governed agentic actions from demo to regulated production, we can
+              help map the action lifecycle, control points, and audit requirements.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Button size="lg" className="px-8 font-semibold" asChild>

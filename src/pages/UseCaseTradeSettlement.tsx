@@ -21,7 +21,7 @@ const outcomeCards = [
   },
   {
     title: 'Operational reporting runs on transactional history',
-    body: 'Trade-state distribution, exception rates, and settlement latency are queryable from the same model that drives the workflow. There is no copied data to drift.',
+    body: 'Trade-state distribution, exception rates, and settlement latency are queryable from the same model that governs the entity lifecycle. There is no copied data to drift.',
   },
   {
     title: 'Write conflicts handled at platform level',
@@ -29,7 +29,7 @@ const outcomeCards = [
   },
   {
     title: 'No ETL seam between system of record and regulator',
-    body: 'Regulatory reconstruction queries entity history directly. The record the regulator sees is the same record that drove the operational workflow — no transformation layer in between.',
+    body: 'Regulatory reconstruction queries entity history directly. The record the regulator sees is the same record that governed the operational entity lifecycle — no transformation layer in between.',
   },
 ];
 
@@ -40,15 +40,15 @@ const productionCards = [
   },
   {
     title: 'Lower exception-handling overhead',
-    body: 'SSI mismatches, matching failures, and affirmation delays each open an exception path. Keeping those paths inside the entity workflow — as named states with criteria and processes — means exception state is always visible, always auditable, and never lost in a side system.',
+    body: 'SSI mismatches, matching failures, and affirmation delays each open an exception path. Keeping those paths inside the entity workflow — as named states with criteria and processors — means exception state is always visible, always auditable, and never lost in a side system.',
   },
   {
     title: 'Fewer reconciliation cycles',
-    body: 'When workflow engine, transactional database, event log, and audit trail are separate systems, they diverge. A single consistency model eliminates the daily reconciliation run that checks whether they agree.',
+    body: 'When an orchestration engine, transactional database, event log, and audit trail are separate systems, they diverge. A single consistency model eliminates the daily reconciliation run that checks whether they agree.',
   },
   {
     title: 'Cleaner architecture for T+1 and beyond',
-    body: 'Compressed settlement cycles increase the operational and reporting pressure on every exception. An architecture where exception state, audit history, and operational workflow are the same thing scales better under that pressure than one built from multiple coordinated systems.',
+    body: 'Compressed settlement cycles increase the operational and reporting pressure on every exception. An architecture where exception state, audit history, and the operational entity lifecycle are the same thing scales better under that pressure than one built from multiple coordinated systems.',
   },
 ];
 
@@ -77,8 +77,9 @@ const UseCaseTradeSettlement = () => {
               instruction, repair, settlement, failure, and cancellation are all operationally and
               often regulatorily significant events — and in T+1 environments, each exception
               increases reporting pressure. Cyoda models the full post-trade lifecycle as a single
-              entity with an explicit workflow: states, criteria-driven transitions, attached
-              processes, and an immutable history of every step.
+              TradeSettlement entity with an explicit entity workflow: named states,
+              criteria-driven transitions, attached processors, and an immutable history of every
+              step on that entity.
             </p>
             <p className="text-base text-muted-foreground max-w-2xl leading-relaxed">
               Point-in-time reconstruction of any trade at any historical timestamp is a query
@@ -116,8 +117,9 @@ const UseCaseTradeSettlement = () => {
                   <p>
                     Settlement failures and cancellations add further branching. Each is a terminal
                     or repair path with its own regulatory reporting requirement. In conventional
-                    stacks, these paths live in different systems — the workflow engine handles
-                    orchestration, the database holds state, the event log holds history, and a
+                    stacks, these paths live in different systems — the orchestration engine
+                    handles progression, the database holds state, the event log holds history, and
+                    a
                     separate warehouse or ETL process assembles the view regulators see.
                   </p>
                   <p>
@@ -138,8 +140,8 @@ const UseCaseTradeSettlement = () => {
                       problem: 'Cannot model repair loop-back or exception branching without losing the history of prior state.',
                     },
                     {
-                      system: 'Separate workflow engine',
-                      problem: 'Different consistency boundary from the database — state and workflow can diverge; reconciliation required.',
+                      system: 'Separate orchestration engine',
+                      problem: 'Different consistency boundary from the database — entity state and lifecycle progression can diverge; reconciliation required.',
                     },
                     {
                       system: 'Event log or message broker',
@@ -175,14 +177,14 @@ const UseCaseTradeSettlement = () => {
                 How Cyoda models it
               </p>
               <h2 className="text-2xl md:text-3xl font-bold text-foreground">
-                One TradeSettlement entity, one workflow graph
+                TradeSettlement entity workflow in a settlement system
               </h2>
               <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
-                Each trade is a Cyoda entity. Its lifecycle is a workflow graph — states,
-                criteria-guarded transitions, attached processes, exception branches, repair
-                loop-backs, and an immutable event history, all in one consistency model. The graph
-                below shows the full post-trade lifecycle with the append-only audit record
-                produced by those transitions.
+                Each trade is a Cyoda TradeSettlement entity. Its lifecycle is modelled as an
+                entity workflow graph — named states, criteria-guarded transitions, attached
+                processors, exception branches, repair loop-backs, and immutable history on the
+                entity itself. The graph below shows the full post-trade lifecycle with the
+                append-only record created by those entity transitions.
               </p>
             </div>
 
@@ -193,7 +195,7 @@ const UseCaseTradeSettlement = () => {
                 {
                   label: 'Criteria guard every transition',
                   detail:
-                    'MATCHED to AFFIRMED only fires when the match criterion evaluates to true. INSTRUCTED to SETTLED requires the settlement confirmation criterion. Criteria are part of the workflow definition, not application code.',
+                    'MATCHED to AFFIRMED only fires when the match criterion evaluates to true. INSTRUCTED to SETTLED requires the settlement confirmation criterion. Criteria are part of the entity workflow definition, not application code.',
                 },
                 {
                   label: 'Exception paths are named states',

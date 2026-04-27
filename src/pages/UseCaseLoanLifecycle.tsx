@@ -12,8 +12,8 @@ const changes = [
     body: 'Document requests, exception review, and arrears re-entry are modelled as named transitions with criteria — not handled by application code.',
   },
   {
-    title: 'No separate workflow engine',
-    body: 'Orchestration, audit, and persistence share one consistency contract. There is no seam to reconcile between a workflow engine and a database.',
+    title: 'No separate orchestration engine',
+    body: 'Orchestration, audit, and persistence share one consistency contract. There is no seam to reconcile between a separate orchestration engine and a database.',
   },
   {
     title: 'History is queryable at any point in time',
@@ -29,7 +29,7 @@ const changes = [
   },
   {
     title: 'Less glue code across the stack',
-    body: 'State, workflow, events, and audit collapse into one model. Outbox patterns, duplicate-event guards, and reconciliation pipelines are not needed.',
+    body: 'State, entity lifecycle, events, and audit collapse into one model. Outbox patterns, duplicate-event guards, and reconciliation pipelines are not needed.',
   },
 ];
 
@@ -52,14 +52,15 @@ const UseCaseLoanLifecycle = () => (
             Use case · Loan origination
           </p>
           <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-5 max-w-3xl leading-tight">
-            Model the full loan lifecycle in one entity
+            Model the full LoanApplication entity lifecycle in one system
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
             Loan origination is not a straight line. It branches through identity checks, document
             requests, underwriting decisions, manual exceptions, and multiple end states — then
             continues into servicing, arrears, and settlement. Cyoda models all of it as a single
-            entity with an explicit workflow: states, criteria-driven transitions, attached
-            processors, and an immutable history of every step.
+            LoanApplication entity with an explicit entity workflow: named states,
+            criteria-driven transitions, attached processors, and an immutable history of every
+            step on that entity.
           </p>
         </div>
       </section>
@@ -74,7 +75,7 @@ const UseCaseLoanLifecycle = () => (
                 The problem
               </p>
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-5">
-                Loan workflows don't fit a status column
+                LoanApplication lifecycles don&apos;t fit a status column
               </h2>
               <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
                 <p>
@@ -95,9 +96,9 @@ const UseCaseLoanLifecycle = () => (
                   audit requirement as origination.
                 </p>
                 <p>
-                  Conventional stacks split this across a status column, a workflow engine, an
-                  event log, and a separate audit table. The seams between them are the source of
-                  the bugs.
+                  Conventional stacks split this across a status column, an orchestration engine,
+                  an event log, and a separate audit table. The seams between them are the source
+                  of the bugs.
                 </p>
               </div>
             </div>
@@ -110,7 +111,7 @@ const UseCaseLoanLifecycle = () => (
                 {[
                   { system: 'Status column in PostgreSQL', problem: 'Cannot model loop-back or branching without losing transition history.' },
                   { system: 'Kafka or SQS for events', problem: 'Eventual consistency across services — state and events can diverge.' },
-                  { system: 'Temporal or Camunda for workflow', problem: 'Separate consistency boundary from the database; reconciliation required.' },
+                  { system: 'Separate orchestration engine', problem: 'Separate consistency boundary from the database; the entity lifecycle must be reconciled back into the system of record.' },
                   { system: 'Audit table or event log', problem: 'Assembled after the fact — not an invariant of the write path.' },
                   { system: 'Glue code', problem: 'Outbox pattern, idempotency keys, saga orchestration across all of the above.' },
                 ].map((item) => (
@@ -137,13 +138,14 @@ const UseCaseLoanLifecycle = () => (
               How Cyoda models it
             </p>
             <h2 className="text-2xl md:text-3xl font-bold text-foreground">
-              One LoanApplication entity, one workflow
+              LoanApplication entity workflow in a lending system
             </h2>
             <p className="text-sm text-muted-foreground mt-2 max-w-2xl">
-              The loan is a Cyoda entity. Its lifecycle is a workflow graph — states,
-              criteria-driven transitions, attached processes, and an immutable event history all
-              in one consistency model. The graph below shows branching, loop-back, servicing
-              states, terminal outcomes, and supporting audit history as one model.
+              The LoanApplication is a Cyoda entity. Its lifecycle is modelled as an entity
+              workflow graph — named states, criteria-driven transitions, attached processors, and
+              immutable history on the entity, all in one consistency model. The graph below shows
+              branching, loop-back, servicing states, terminal outcomes, and supporting audit
+              history as one model.
             </p>
           </div>
 
@@ -152,11 +154,11 @@ const UseCaseLoanLifecycle = () => (
           {/* Callouts */}
           <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
             {[
-              {
-                label: 'Criteria on every transition',
-                detail:
-                  'KYC CHECK → UNDERWRITING only fires when the criteria — docs complete, identity verified — evaluate to true. The criteria are part of the workflow definition, not application code.',
-              },
+                {
+                  label: 'Criteria on every transition',
+                  detail:
+                  'KYC CHECK → UNDERWRITING only fires when the criteria — docs complete, identity verified — evaluate to true. The criteria are part of the entity workflow definition, not application code.',
+                },
               {
                 label: 'Processors attach to transitions',
                 detail:
@@ -177,14 +179,14 @@ const UseCaseLoanLifecycle = () => (
         </div>
       </section>
 
-      {/* What changes when workflow is native */}
+      {/* What changes when the entity lifecycle is native */}
       <section className="py-16 md:py-20 bg-[hsl(var(--section-alt-bg))]">
         <div className="container mx-auto px-4 max-w-5xl">
           <p className="text-xs font-semibold text-primary uppercase tracking-widest mb-3">
             The outcome
           </p>
           <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">
-            What changes when workflow is native
+            What changes when the entity lifecycle is native
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {changes.map((item) => (
@@ -202,8 +204,8 @@ const UseCaseLoanLifecycle = () => (
         <div className="container mx-auto px-4 max-w-2xl text-center">
           <div className="mx-auto mb-6 w-10 h-0.5 bg-primary rounded" />
           <p className="text-xl font-medium text-foreground leading-relaxed mb-8">
-            If you're modelling a stateful, auditable workflow and the current stack is the
-            problem, we'd like to talk.
+            If you&apos;re modelling a stateful, auditable entity lifecycle and the current stack
+            is the problem, we&apos;d like to talk.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <Button size="lg" className="px-8 font-semibold" asChild>

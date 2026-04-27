@@ -119,11 +119,12 @@ export default function KycOnboardingWorkflowViewer() {
     return (
       <Card className="border-destructive/30 bg-card/80 shadow-sm">
         <CardHeader>
-          <CardTitle className="text-base">Workflow could not be rendered</CardTitle>
+          <CardTitle className="text-base">Entity workflow could not be rendered</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
           <p className="text-muted-foreground">
-            The supplied customer onboarding workflow JSON did not pass the viewer parser.
+            The supplied CustomerOnboardingCase entity workflow JSON did not pass the viewer
+            parser.
           </p>
           <div className="rounded-lg border border-border/60 bg-background p-4">
             <p className="font-medium text-foreground">Validation issues</p>
@@ -143,9 +144,15 @@ export default function KycOnboardingWorkflowViewer() {
       <Card className="overflow-hidden border-border/60 bg-card/80 shadow-sm">
         <CardContent className="p-0">
           <div className="border-b border-border/60 px-5 py-4">
-            <p className="text-sm font-medium text-foreground">Customer onboarding workflow</p>
+            <p className="text-xs font-semibold uppercase tracking-widest text-primary">
+              ENTITY WORKFLOW
+            </p>
+            <p className="mt-1 text-lg font-semibold text-foreground">
+              CustomerOnboardingCase
+            </p>
+            <p className="mt-1 text-sm text-muted-foreground">Lifecycle in a KYC system</p>
             <p className="mt-1 text-sm text-muted-foreground">
-              Pan to explore the full lifecycle and select a state or transition for details.
+              Pan to explore the entity lifecycle and select a state or transition for details.
             </p>
           </div>
           <div className="h-[760px] w-full bg-background md:h-[900px] xl:h-[980px]">
@@ -162,19 +169,22 @@ export default function KycOnboardingWorkflowViewer() {
 
       <Card className="border-border/60 bg-card/80 shadow-sm">
         <CardHeader className="pb-3">
-          <CardTitle className="text-base">Selection detail</CardTitle>
+          <CardTitle className="text-base">Entity lifecycle detail</CardTitle>
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
           {!selected && (
             <>
               <p className="text-muted-foreground">
-                Select a state or transition to inspect the workflow semantics.
+                Select a state or transition to inspect the entity lifecycle semantics.
               </p>
               <div className="rounded-lg border border-primary/20 bg-primary/[0.03] p-4">
-                <p className="font-medium text-foreground">Customer onboarding JSON</p>
+                <p className="font-medium text-foreground">
+                  CustomerOnboardingCase entity workflow JSON
+                </p>
                 <p className="mt-1 text-muted-foreground">
-                  This viewer is driven directly from the KYC workflow file, including automated
-                  ID&amp;V, legal-entity UBO discovery, EDD, approval, rejection, and monitoring.
+                  This viewer is driven directly from the CustomerOnboardingCase entity workflow
+                  file, including automated ID&amp;V, legal-entity UBO discovery, EDD, approval,
+                  rejection, and monitoring.
                 </p>
               </div>
             </>
@@ -186,10 +196,12 @@ export default function KycOnboardingWorkflowViewer() {
 
           {selected?.kind === 'node' && selected.node.kind === 'startMarker' && (
             <>
-              <p className="text-xs font-semibold uppercase tracking-widest text-primary">Start</p>
-              <p className="text-lg font-semibold text-foreground">Workflow entry</p>
+              <p className="text-xs font-semibold uppercase tracking-widest text-primary">
+                ENTITY ENTRY
+              </p>
+              <p className="text-lg font-semibold text-foreground">Lifecycle start</p>
               <p className="text-muted-foreground">
-                This marks the initial entry into the customer onboarding lifecycle.
+                This marks the initial entry into the CustomerOnboardingCase entity lifecycle.
               </p>
             </>
           )}
@@ -198,7 +210,7 @@ export default function KycOnboardingWorkflowViewer() {
             <>
               <div>
                 <p className="text-xs font-semibold uppercase tracking-widest text-primary">
-                  Transition
+                  ENTITY TRANSITION
                 </p>
                 <p className="mt-1 text-lg font-semibold text-foreground">
                   {selected.edge.label}
@@ -252,7 +264,9 @@ function StateDetail({ node }: { node: StateNode }) {
   return (
     <>
       <div>
-        <p className="text-xs font-semibold uppercase tracking-widest text-primary">State</p>
+        <p className="text-xs font-semibold uppercase tracking-widest text-primary">
+          ENTITY STATE
+        </p>
         <p className="mt-1 text-lg font-semibold text-foreground">{node.stateCode}</p>
       </div>
       <p className="text-muted-foreground">
