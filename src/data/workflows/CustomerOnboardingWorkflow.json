@@ -1,0 +1,302 @@
+{
+  "version": "1.0",
+  "name": "CustomerOnboardingWorkflow",
+  "desc": "KYC and customer onboarding workflow for the Cyoda enterprise website example, covering straight-through processing, legal-entity UBO review, exception handling, rejection, abandonment, and ongoing monitoring.",
+  "initialState": "DATA_INTAKE_TRIAGE",
+  "active": true,
+  "states": {
+    "DATA_INTAKE_TRIAGE": {
+      "transitions": [
+        {
+          "name": "RUN_AUTOMATION",
+          "next": "AUTOMATED_IDV_SCREENING",
+          "manual": false,
+          "disabled": false,
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "ClassifyOnboardingCase",
+              "executionMode": "SYNC",
+              "config": {
+                "attachEntity": true,
+                "context": "Classify applicant, normalize intake payload, and prepare onboarding checks."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "AUTOMATED_IDV_SCREENING": {
+      "transitions": [
+        {
+          "name": "LEGAL_ENTITY",
+          "next": "UBO_CONTROL_DISCOVERY",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.applicant.isLegalEntity",
+            "operation": "EQUALS",
+            "value": true
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "RunAutomatedChecks",
+              "executionMode": "SYNC",
+              "config": {
+                "attachEntity": true,
+                "context": "Run document, identity, sanctions, PEP, and adverse-media checks."
+              }
+            }
+          ]
+        },
+        {
+          "name": "AUTOMATION_CLEAR",
+          "next": "DYNAMIC_RISK_ASSESSMENT",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "group",
+            "operator": "AND",
+            "conditions": [
+              {
+                "type": "simple",
+                "jsonPath": "$.applicant.isLegalEntity",
+                "operation": "EQUALS",
+                "value": false
+              },
+              {
+                "type": "simple",
+                "jsonPath": "$.automation.clear",
+                "operation": "EQUALS",
+                "value": true
+              }
+            ]
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "RunAutomatedChecks",
+              "executionMode": "SYNC",
+              "config": {
+                "attachEntity": true,
+                "context": "Run document, identity, sanctions, PEP, and adverse-media checks."
+              }
+            }
+          ]
+        },
+        {
+          "name": "EXCEPTION",
+          "next": "EXCEPTION_HANDLING_EDD",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.automation.clear",
+            "operation": "EQUALS",
+            "value": false
+          }
+        },
+        {
+          "name": "TIMEOUT",
+          "next": "ABANDONED",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.sla.timeout",
+            "operation": "EQUALS",
+            "value": true
+          }
+        }
+      ]
+    },
+    "UBO_CONTROL_DISCOVERY": {
+      "transitions": [
+        {
+          "name": "LEGAL_ENTITY_OK",
+          "next": "DYNAMIC_RISK_ASSESSMENT",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.ubo.complete",
+            "operation": "EQUALS",
+            "value": true
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "DiscoverUboControl",
+              "executionMode": "SYNC",
+              "config": {
+                "attachEntity": true,
+                "context": "Discover and verify beneficial ownership and control structure."
+              }
+            }
+          ]
+        },
+        {
+          "name": "EXCEPTION",
+          "next": "EXCEPTION_HANDLING_EDD",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.ubo.complete",
+            "operation": "EQUALS",
+            "value": false
+          }
+        }
+      ]
+    },
+    "DYNAMIC_RISK_ASSESSMENT": {
+      "transitions": [
+        {
+          "name": "LOW_RISK",
+          "next": "ACTIVE_MONITORING",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.risk.band",
+            "operation": "EQUALS",
+            "value": "LOW"
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "ScoreRisk",
+              "executionMode": "SYNC",
+              "config": {
+                "attachEntity": true,
+                "context": "Calculate onboarding risk from screening, ownership, jurisdiction, and product signals."
+              }
+            }
+          ]
+        },
+        {
+          "name": "HIGH_RISK",
+          "next": "EXCEPTION_HANDLING_EDD",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.risk.band",
+            "operation": "EQUALS",
+            "value": "HIGH"
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "ScoreRisk",
+              "executionMode": "SYNC",
+              "config": {
+                "attachEntity": true,
+                "context": "Calculate onboarding risk from screening, ownership, jurisdiction, and product signals."
+              }
+            }
+          ]
+        },
+        {
+          "name": "POLICY_REJECT",
+          "next": "REJECTED",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.risk.policyReject",
+            "operation": "EQUALS",
+            "value": true
+          }
+        },
+        {
+          "name": "TIMEOUT",
+          "next": "ABANDONED",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.sla.timeout",
+            "operation": "EQUALS",
+            "value": true
+          }
+        }
+      ]
+    },
+    "EXCEPTION_HANDLING_EDD": {
+      "transitions": [
+        {
+          "name": "EDD_APPROVED",
+          "next": "ACTIVE_MONITORING",
+          "manual": true,
+          "disabled": false,
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "CompleteEddReview",
+              "executionMode": "ASYNC_SAME_TX",
+              "config": {
+                "attachEntity": true,
+                "context": "Persist EDD resolution, rationale, and approval evidence."
+              }
+            }
+          ]
+        },
+        {
+          "name": "POLICY_REJECT",
+          "next": "REJECTED",
+          "manual": true,
+          "disabled": false
+        },
+        {
+          "name": "TIMEOUT",
+          "next": "ABANDONED",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.sla.timeout",
+            "operation": "EQUALS",
+            "value": true
+          }
+        }
+      ]
+    },
+    "ACTIVE_MONITORING": {
+      "transitions": [
+        {
+          "name": "MONITORING_ALERT",
+          "next": "DYNAMIC_RISK_ASSESSMENT",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.monitoring.alert",
+            "operation": "EQUALS",
+            "value": true
+          }
+        },
+        {
+          "name": "LOW_RISK_OK",
+          "next": "ACTIVE_MONITORING",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.monitoring.alert",
+            "operation": "EQUALS",
+            "value": false
+          }
+        }
+      ]
+    },
+    "REJECTED": {
+      "transitions": []
+    },
+    "ABANDONED": {
+      "transitions": []
+    }
+  }
+}

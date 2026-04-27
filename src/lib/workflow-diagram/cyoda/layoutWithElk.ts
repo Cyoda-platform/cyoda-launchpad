@@ -13,16 +13,133 @@ import type {
 type Box = { x: number; y: number; width: number; height: number };
 type Point = { x: number; y: number };
 export type CyodaElkDirection = 'RIGHT' | 'DOWN';
+export type CyodaDiagramDensity = 'compact' | 'comfortable';
 
 const elk = new ELK();
 
-const PADDING = 54;
-const LABEL_PADDING_X = 14;
-const LABEL_PADDING_Y = 8;
-const BADGE_HEIGHT = 16;
-const BADGE_GAP = 6;
-const NODE_LABEL_WIDTH_FACTOR = 6.4;
-const EDGE_LABEL_WIDTH_FACTOR = 5.8;
+export type CyodaDiagramDensityProfile = {
+  padding: number;
+  labelPaddingX: number;
+  labelPaddingY: number;
+  badgeHeight: number;
+  badgeGap: number;
+  nodeLabelWidthFactor: number;
+  edgeLabelWidthFactor: number;
+  edgeTitleLineHeight: number;
+  nodeTitleLineHeight: number;
+  nodeTitleTop: number;
+  nodeTitleMaxChars: number;
+  terminalTitleMaxChars: number;
+  nodeWidthPadding: number;
+  edgeLabelMinWidth: number;
+  badgeMinWidth: number;
+  nodeWidths: {
+    state: number;
+    processing: number;
+    manual: number;
+    terminal: number;
+  };
+  nodeHeights: {
+    state: number;
+    processing: number;
+    manual: number;
+    terminal: number;
+  };
+  elk: {
+    nodeNode: number;
+    edgeEdge: number;
+    edgeNode: number;
+    downLayer: number;
+    rightLayer: number;
+  };
+  labelCandidateStep: number;
+  labelObstaclePadding: number;
+  placedLabelPadding: number;
+};
+
+const densityProfiles: Record<CyodaDiagramDensity, CyodaDiagramDensityProfile> = {
+  compact: {
+    padding: 34,
+    labelPaddingX: 10,
+    labelPaddingY: 6,
+    badgeHeight: 13,
+    badgeGap: 4,
+    nodeLabelWidthFactor: 5.9,
+    edgeLabelWidthFactor: 5.2,
+    edgeTitleLineHeight: 11,
+    nodeTitleLineHeight: 13,
+    nodeTitleTop: 39,
+    nodeTitleMaxChars: 18,
+    terminalTitleMaxChars: 16,
+    nodeWidthPadding: 32,
+    edgeLabelMinWidth: 68,
+    badgeMinWidth: 34,
+    nodeWidths: {
+      state: 164,
+      processing: 180,
+      manual: 178,
+      terminal: 150,
+    },
+    nodeHeights: {
+      state: 66,
+      processing: 68,
+      manual: 68,
+      terminal: 62,
+    },
+    elk: {
+      nodeNode: 38,
+      edgeEdge: 16,
+      edgeNode: 24,
+      downLayer: 64,
+      rightLayer: 82,
+    },
+    labelCandidateStep: 14,
+    labelObstaclePadding: 9,
+    placedLabelPadding: 4,
+  },
+  comfortable: {
+    padding: 54,
+    labelPaddingX: 14,
+    labelPaddingY: 8,
+    badgeHeight: 16,
+    badgeGap: 6,
+    nodeLabelWidthFactor: 6.4,
+    edgeLabelWidthFactor: 5.8,
+    edgeTitleLineHeight: 13,
+    nodeTitleLineHeight: 15,
+    nodeTitleTop: 47,
+    nodeTitleMaxChars: 18,
+    terminalTitleMaxChars: 16,
+    nodeWidthPadding: 44,
+    edgeLabelMinWidth: 84,
+    badgeMinWidth: 42,
+    nodeWidths: {
+      state: 194,
+      processing: 218,
+      manual: 210,
+      terminal: 176,
+    },
+    nodeHeights: {
+      state: 82,
+      processing: 82,
+      manual: 82,
+      terminal: 76,
+    },
+    elk: {
+      nodeNode: 56,
+      edgeEdge: 22,
+      edgeNode: 34,
+      downLayer: 92,
+      rightLayer: 106,
+    },
+    labelCandidateStep: 18,
+    labelObstaclePadding: 12,
+    placedLabelPadding: 5,
+  },
+};
+
+export const getCyodaDensityProfile = (density: CyodaDiagramDensity = 'compact') =>
+  densityProfiles[density];
 
 export const wrapRawIdentifier = (value: string, maxChars: number) => {
   if (value.length <= maxChars) return [value];
@@ -65,11 +182,24 @@ const getNodeSubtitle = (node: CyodaDisplayNode) => {
   return 'STATE';
 };
 
-const getNodeSize = (node: CyodaDisplayNode) => {
-  const titleLines = wrapRawIdentifier(node.label, node.isTerminal ? 16 : 18);
-  const baseWidth = node.isTerminal ? 176 : node.hasManualTransitions ? 210 : node.hasProcessors ? 218 : 194;
-  const width = Math.max(baseWidth, Math.max(...titleLines.map((line) => line.length * NODE_LABEL_WIDTH_FACTOR)) + 44);
-  const height = node.isTerminal ? 76 : Math.max(82, 48 + titleLines.length * 15);
+const getNodeSize = (node: CyodaDisplayNode, profile: CyodaDiagramDensityProfile) => {
+  const titleLines = wrapRawIdentifier(node.label, node.isTerminal ? profile.terminalTitleMaxChars : profile.nodeTitleMaxChars);
+  const baseWidth = node.isTerminal
+    ? profile.nodeWidths.terminal
+    : node.hasManualTransitions
+      ? profile.nodeWidths.manual
+      : node.hasProcessors
+        ? profile.nodeWidths.processing
+        : profile.nodeWidths.state;
+  const baseHeight = node.isTerminal
+    ? profile.nodeHeights.terminal
+    : node.hasManualTransitions
+      ? profile.nodeHeights.manual
+      : node.hasProcessors
+        ? profile.nodeHeights.processing
+        : profile.nodeHeights.state;
+  const width = Math.max(baseWidth, Math.max(...titleLines.map((line) => line.length * profile.nodeLabelWidthFactor)) + profile.nodeWidthPadding);
+  const height = Math.max(baseHeight, profile.nodeTitleTop + titleLines.length * profile.nodeTitleLineHeight + 10);
 
   return {
     width: Math.ceil(width),
@@ -79,18 +209,19 @@ const getNodeSize = (node: CyodaDisplayNode) => {
   };
 };
 
-const getBadgeWidth = (badge: string) => Math.max(42, Math.ceil(badge.length * 5.7 + 14));
+const getBadgeWidth = (badge: string, profile: CyodaDiagramDensityProfile) =>
+  Math.max(profile.badgeMinWidth, Math.ceil(badge.length * 5.1 + 12));
 
-const getEdgeLabelSize = (edge: CyodaDisplayEdge): CyodaEdgeLabelLayout => {
+const getEdgeLabelSize = (edge: CyodaDisplayEdge, profile: CyodaDiagramDensityProfile): CyodaEdgeLabelLayout => {
   const titleLines = wrapRawIdentifier(edge.label, 22);
-  const titleWidth = Math.max(...titleLines.map((line) => line.length * EDGE_LABEL_WIDTH_FACTOR), 0);
+  const titleWidth = Math.max(...titleLines.map((line) => line.length * profile.edgeLabelWidthFactor), 0);
   const badgeWidth = edge.badges.reduce((sum, badge, index) =>
-    sum + getBadgeWidth(badge) + (index > 0 ? BADGE_GAP : 0),
+    sum + getBadgeWidth(badge, profile) + (index > 0 ? profile.badgeGap : 0),
   0);
-  const width = Math.max(84, titleWidth + LABEL_PADDING_X * 2, badgeWidth + LABEL_PADDING_X * 2);
-  const titleHeight = titleLines.length * 13;
-  const badgeHeight = edge.badges.length ? BADGE_HEIGHT + 6 : 0;
-  const height = titleHeight + badgeHeight + LABEL_PADDING_Y * 2;
+  const width = Math.max(profile.edgeLabelMinWidth, titleWidth + profile.labelPaddingX * 2, badgeWidth + profile.labelPaddingX * 2);
+  const titleHeight = titleLines.length * profile.edgeTitleLineHeight;
+  const badgeHeight = edge.badges.length ? profile.badgeHeight + 5 : 0;
+  const height = titleHeight + badgeHeight + profile.labelPaddingY * 2;
 
   return {
     x: 0,
@@ -153,8 +284,8 @@ const getPathFromPoints = (points: Point[]) => {
   return `M ${first.x} ${first.y} ${rest.map((point) => `L ${point.x} ${point.y}`).join(' ')}`;
 };
 
-const getLongestSegmentMidpoint = (points: Point[]) => {
-  if (points.length < 2) return points[0] ?? { x: PADDING, y: PADDING };
+const getLongestSegmentMidpoint = (points: Point[], profile: CyodaDiagramDensityProfile) => {
+  if (points.length < 2) return points[0] ?? { x: profile.padding, y: profile.padding };
 
   let best = { start: points[0], end: points[1], length: getSegmentLength(points[0], points[1]) };
   for (let index = 1; index < points.length - 1; index += 1) {
@@ -170,11 +301,11 @@ const getLongestSegmentMidpoint = (points: Point[]) => {
   };
 };
 
-const getBounds = (boxes: Box[], points: Point[]) => {
-  const minX = Math.min(PADDING, ...boxes.map((box) => box.x), ...points.map((point) => point.x));
-  const minY = Math.min(PADDING, ...boxes.map((box) => box.y), ...points.map((point) => point.y));
-  const maxX = Math.max(PADDING * 2, ...boxes.map(boxRight), ...points.map((point) => point.x));
-  const maxY = Math.max(PADDING * 2, ...boxes.map(boxBottom), ...points.map((point) => point.y));
+const getBounds = (boxes: Box[], points: Point[], profile: CyodaDiagramDensityProfile) => {
+  const minX = Math.min(profile.padding, ...boxes.map((box) => box.x), ...points.map((point) => point.x));
+  const minY = Math.min(profile.padding, ...boxes.map((box) => box.y), ...points.map((point) => point.y));
+  const maxX = Math.max(profile.padding * 2, ...boxes.map(boxRight), ...points.map((point) => point.x));
+  const maxY = Math.max(profile.padding * 2, ...boxes.map(boxBottom), ...points.map((point) => point.y));
 
   return { x: minX, y: minY, width: maxX - minX, height: maxY - minY };
 };
@@ -186,8 +317,9 @@ const placeLabelAwayFromObstacles = (
   anchor: Point,
   obstacles: Box[],
   bounds: Box,
+  profile: CyodaDiagramDensityProfile,
 ) => {
-  const step = 18;
+  const step = profile.labelCandidateStep;
   const directions = [
     { x: 0, y: -1 },
     { x: 0, y: 1 },
@@ -225,14 +357,14 @@ const placeLabelAwayFromObstacles = (
   ).point;
 };
 
-const getElkOptions = (direction: CyodaElkDirection): Record<string, string> => ({
+const getElkOptions = (direction: CyodaElkDirection, profile: CyodaDiagramDensityProfile): Record<string, string> => ({
   'elk.algorithm': 'layered',
   'elk.direction': direction,
   'elk.edgeRouting': 'ORTHOGONAL',
-  'elk.spacing.nodeNode': '56',
-  'elk.spacing.edgeEdge': '22',
-  'elk.spacing.edgeNode': '34',
-  'elk.layered.spacing.nodeNodeBetweenLayers': direction === 'DOWN' ? '92' : '106',
+  'elk.spacing.nodeNode': String(profile.elk.nodeNode),
+  'elk.spacing.edgeEdge': String(profile.elk.edgeEdge),
+  'elk.spacing.edgeNode': String(profile.elk.edgeNode),
+  'elk.layered.spacing.nodeNodeBetweenLayers': String(direction === 'DOWN' ? profile.elk.downLayer : profile.elk.rightLayer),
   'elk.layered.crossingMinimization.strategy': 'LAYER_SWEEP',
   'elk.layered.nodePlacement.strategy': 'NETWORK_SIMPLEX',
   'elk.layered.cycleBreaking.strategy': 'GREEDY',
@@ -240,13 +372,14 @@ const getElkOptions = (direction: CyodaElkDirection): Record<string, string> => 
 
 export const layoutCyodaWorkflowWithElk = async (
   graph: CyodaDisplayGraph,
-  options: { direction?: CyodaElkDirection } = {},
+  options: { direction?: CyodaElkDirection; density?: CyodaDiagramDensity } = {},
 ): Promise<CyodaWorkflowLayout> => {
-  const nodeMetrics = new Map(graph.nodes.map((node) => [node.id, getNodeSize(node)]));
-  const edgeLabelMetrics = new Map(graph.edges.map((edge) => [edge.id, getEdgeLabelSize(edge)]));
+  const profile = getCyodaDensityProfile(options.density);
+  const nodeMetrics = new Map(graph.nodes.map((node) => [node.id, getNodeSize(node, profile)]));
+  const edgeLabelMetrics = new Map(graph.edges.map((edge) => [edge.id, getEdgeLabelSize(edge, profile)]));
   const elkGraph: ElkNode = {
     id: `${graph.id}-layout`,
-    layoutOptions: getElkOptions(options.direction ?? 'RIGHT'),
+    layoutOptions: getElkOptions(options.direction ?? 'RIGHT', profile),
     children: graph.nodes.map((node) => {
       const metrics = nodeMetrics.get(node.id);
       return {
@@ -276,8 +409,8 @@ export const layoutCyodaWorkflowWithElk = async (
 
     return {
       ...node,
-      x: (elkNode?.x ?? 0) + PADDING,
-      y: (elkNode?.y ?? 0) + PADDING,
+      x: (elkNode?.x ?? 0) + profile.padding,
+      y: (elkNode?.y ?? 0) + profile.padding,
       width: metrics?.width ?? elkNode?.width ?? 194,
       height: metrics?.height ?? elkNode?.height ?? 82,
       titleLines: metrics?.titleLines ?? [node.label],
@@ -289,12 +422,12 @@ export const layoutCyodaWorkflowWithElk = async (
   const shiftedEdges = graph.edges.map((edge) => {
     const source = nodeById.get(edge.source);
     const target = nodeById.get(edge.target);
-    const sourceBox = source ? { x: source.x - PADDING, y: source.y - PADDING, width: source.width, height: source.height } : { x: 0, y: 0, width: 1, height: 1 };
-    const targetBox = target ? { x: target.x - PADDING, y: target.y - PADDING, width: target.width, height: target.height } : sourceBox;
+    const sourceBox = source ? { x: source.x - profile.padding, y: source.y - profile.padding, width: source.width, height: source.height } : { x: 0, y: 0, width: 1, height: 1 };
+    const targetBox = target ? { x: target.x - profile.padding, y: target.y - profile.padding, width: target.width, height: target.height } : sourceBox;
     const elkEdge = elkEdgeById.get(edge.id);
     const points = getEdgePoints(elkEdge, sourceBox, targetBox).map((point) => ({
-      x: point.x + PADDING,
-      y: point.y + PADDING,
+      x: point.x + profile.padding,
+      y: point.y + profile.padding,
     }));
 
     return { edge, points };
@@ -302,22 +435,24 @@ export const layoutCyodaWorkflowWithElk = async (
   const routeBounds = getBounds(
     nodes.map((node) => ({ x: node.x, y: node.y, width: node.width, height: node.height })),
     shiftedEdges.flatMap((edge) => edge.points),
+    profile,
   );
-  const labelBounds = expandBox(routeBounds, PADDING);
-  const obstacles = nodes.map((node) => expandBox({ x: node.x, y: node.y, width: node.width, height: node.height }, 12));
+  const labelBounds = expandBox(routeBounds, profile.padding);
+  const obstacles = nodes.map((node) => expandBox({ x: node.x, y: node.y, width: node.width, height: node.height }, profile.labelObstaclePadding));
   const placedLabelObstacles: Box[] = [];
 
   const edges: CyodaLaidOutEdge[] = shiftedEdges.map(({ edge, points }) => {
-    const metrics = edgeLabelMetrics.get(edge.id) ?? getEdgeLabelSize(edge);
-    const anchor = getLongestSegmentMidpoint(points);
+    const metrics = edgeLabelMetrics.get(edge.id) ?? getEdgeLabelSize(edge, profile);
+    const anchor = getLongestSegmentMidpoint(points, profile);
     const point = placeLabelAwayFromObstacles(
       metrics,
       anchor,
       [...obstacles, ...placedLabelObstacles],
       labelBounds,
+      profile,
     );
     const labelLayout = { ...metrics, x: point.x, y: point.y };
-    placedLabelObstacles.push(expandBox(getLabelBox(labelLayout), 5));
+    placedLabelObstacles.push(expandBox(getLabelBox(labelLayout), profile.placedLabelPadding));
 
     return {
       ...edge,
@@ -333,9 +468,10 @@ export const layoutCyodaWorkflowWithElk = async (
       ...edges.map((edge) => getLabelBox(edge.labelLayout)),
     ],
     edges.flatMap((edge) => edge.points),
+    profile,
   );
-  const shiftX = PADDING - finalBounds.x;
-  const shiftY = PADDING - finalBounds.y;
+  const shiftX = profile.padding - finalBounds.x;
+  const shiftY = profile.padding - finalBounds.y;
   const normalizedNodes = nodes.map((node) => ({
     ...node,
     x: node.x + shiftX,
@@ -360,8 +496,8 @@ export const layoutCyodaWorkflowWithElk = async (
   });
 
   return {
-    width: Math.ceil(finalBounds.width + PADDING * 2),
-    height: Math.ceil(finalBounds.height + PADDING * 2),
+    width: Math.ceil(finalBounds.width + profile.padding * 2),
+    height: Math.ceil(finalBounds.height + profile.padding * 2),
     nodes: normalizedNodes,
     edges: normalizedEdges,
   };

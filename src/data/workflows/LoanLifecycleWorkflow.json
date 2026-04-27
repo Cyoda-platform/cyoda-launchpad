@@ -1,0 +1,354 @@
+{
+  "version": "1.0",
+  "name": "LoanLifecycleWorkflow",
+  "desc": "Loan origination and lifecycle workflow for the Cyoda enterprise loans use-case page.",
+  "initialState": "SUBMITTED",
+  "active": true,
+  "states": {
+    "SUBMITTED": {
+      "transitions": [
+        {
+          "name": "DOCS_COMPLETE",
+          "next": "KYC_CHECK",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.documents.complete",
+            "operation": "EQUALS",
+            "value": true
+          }
+        },
+        {
+          "name": "REQUEST_DOCS",
+          "next": "DOCUMENTS_REQUESTED",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.documents.complete",
+            "operation": "EQUALS",
+            "value": false
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "RequestDocuments",
+              "executionMode": "ASYNC_SAME_TX",
+              "config": {
+                "attachEntity": true,
+                "context": "Request missing borrower documents."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "KYC_CHECK": {
+      "transitions": [
+        {
+          "name": "KYC_PASSED",
+          "next": "UNDERWRITING",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.kyc.passed",
+            "operation": "EQUALS",
+            "value": true
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "RunKycChecks",
+              "executionMode": "SYNC",
+              "config": {
+                "attachEntity": true,
+                "context": "Run KYC, sanctions, and identity checks."
+              }
+            }
+          ]
+        },
+        {
+          "name": "KYC_REWORK",
+          "next": "DOCUMENTS_REQUESTED",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.kyc.passed",
+            "operation": "EQUALS",
+            "value": false
+          }
+        }
+      ]
+    },
+    "UNDERWRITING": {
+      "transitions": [
+        {
+          "name": "CREDIT_MET",
+          "next": "OFFER_ISSUED",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.credit.approved",
+            "operation": "EQUALS",
+            "value": true
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "RunUnderwriting",
+              "executionMode": "SYNC",
+              "config": {
+                "attachEntity": true,
+                "context": "Run affordability, credit, and policy review."
+              }
+            },
+            {
+              "type": "externalized",
+              "name": "IssueOffer",
+              "executionMode": "ASYNC_SAME_TX",
+              "config": {
+                "attachEntity": true,
+                "context": "Issue borrower offer pack."
+              }
+            }
+          ]
+        },
+        {
+          "name": "MANUAL_REVIEW",
+          "next": "MANUAL_REVIEW",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.credit.manualReviewRequired",
+            "operation": "EQUALS",
+            "value": true
+          }
+        },
+        {
+          "name": "DECLINE_AUTO",
+          "next": "DECLINED",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "group",
+            "operator": "AND",
+            "conditions": [
+              {
+                "type": "simple",
+                "jsonPath": "$.credit.approved",
+                "operation": "EQUALS",
+                "value": false
+              },
+              {
+                "type": "simple",
+                "jsonPath": "$.credit.manualReviewRequired",
+                "operation": "EQUALS",
+                "value": false
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "DOCUMENTS_REQUESTED": {
+      "transitions": [
+        {
+          "name": "RESUBMIT",
+          "next": "RESUBMITTED",
+          "manual": true,
+          "disabled": false
+        }
+      ]
+    },
+    "RESUBMITTED": {
+      "transitions": [
+        {
+          "name": "RECHECK_KYC",
+          "next": "KYC_CHECK",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.documents.complete",
+            "operation": "EQUALS",
+            "value": true
+          }
+        },
+        {
+          "name": "BACK_TO_REVIEW",
+          "next": "MANUAL_REVIEW",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.documents.routeToReview",
+            "operation": "EQUALS",
+            "value": true
+          }
+        }
+      ]
+    },
+    "MANUAL_REVIEW": {
+      "transitions": [
+        {
+          "name": "APPROVE_REVIEW",
+          "next": "OFFER_ISSUED",
+          "manual": true,
+          "disabled": false
+        },
+        {
+          "name": "REJECT",
+          "next": "DECLINED",
+          "manual": true,
+          "disabled": false
+        },
+        {
+          "name": "REQUEST_MORE",
+          "next": "DOCUMENTS_REQUESTED",
+          "manual": true,
+          "disabled": false
+        }
+      ]
+    },
+    "OFFER_ISSUED": {
+      "transitions": [
+        {
+          "name": "ACCEPT",
+          "next": "ACTIVE_LOAN",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.offer.accepted",
+            "operation": "EQUALS",
+            "value": true
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "StartServicing",
+              "executionMode": "ASYNC_SAME_TX",
+              "config": {
+                "attachEntity": true,
+                "context": "Start active servicing after offer acceptance."
+              }
+            }
+          ]
+        },
+        {
+          "name": "EXPIRES",
+          "next": "OFFER_EXPIRED",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.offer.expired",
+            "operation": "EQUALS",
+            "value": true
+          }
+        }
+      ]
+    },
+    "ACTIVE_LOAN": {
+      "transitions": [
+        {
+          "name": "SETTLE",
+          "next": "SETTLED",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.servicing.missedPayment",
+            "operation": "EQUALS",
+            "value": false
+          }
+        },
+        {
+          "name": "MISSED_PAYMENT",
+          "next": "ARREARS",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.servicing.missedPayment",
+            "operation": "EQUALS",
+            "value": true
+          }
+        }
+      ]
+    },
+    "ARREARS": {
+      "transitions": [
+        {
+          "name": "RESTRUCTURE",
+          "next": "RESTRUCTURED",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.collections.restructureApproved",
+            "operation": "EQUALS",
+            "value": true
+          }
+        },
+        {
+          "name": "DEFAULT",
+          "next": "DEFAULTED",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.collections.defaulted",
+            "operation": "EQUALS",
+            "value": true
+          }
+        }
+      ]
+    },
+    "RESTRUCTURED": {
+      "transitions": [
+        {
+          "name": "RESUME_SERVICING",
+          "next": "ACTIVE_LOAN",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.collections.cured",
+            "operation": "EQUALS",
+            "value": true
+          }
+        },
+        {
+          "name": "EXPIRES",
+          "next": "OFFER_EXPIRED",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.collections.restructureExpired",
+            "operation": "EQUALS",
+            "value": true
+          }
+        }
+      ]
+    },
+    "SETTLED": {
+      "transitions": []
+    },
+    "DECLINED": {
+      "transitions": []
+    },
+    "OFFER_EXPIRED": {
+      "transitions": []
+    },
+    "DEFAULTED": {
+      "transitions": []
+    }
+  }
+}

@@ -6,8 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { CheckCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { CyodaWorkflowDiagram } from '@/lib/workflow-diagram';
-import { agenticAmlTriageWorkflow } from '@/data/workflows/agenticAmlTriageWorkflow';
+import AgenticAiWorkflowViewer from '@/components/AgenticAiWorkflowViewer';
 
 const workflowNativeChanges = [
   'Agent output becomes a proposal, not an uncontrolled side effect.',
@@ -40,10 +39,6 @@ const productionControls = [
       'Firms do not need to build a bespoke event-sourced control layer around every promising agentic prototype just to make it safe for production.',
   },
 ];
-
-const AgenticWorkflowEmbed = () => (
-  <CyodaWorkflowDiagram input={agenticAmlTriageWorkflow} minSvgWidth={940} direction="DOWN" />
-);
 
 const UseCaseAgenticAi = () => {
   return (
@@ -147,7 +142,7 @@ const UseCaseAgenticAi = () => {
               </p>
             </div>
 
-            <AgenticWorkflowEmbed />
+            <AgenticAiWorkflowViewer />
           </div>
         </section>
 

@@ -4,8 +4,7 @@ import SEO from '@/components/SEO';
 import { organizationSchema, breadcrumbLoanLifecycle } from '@/data/schemas';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import WorkflowDiagram from '@/lib/workflow-diagram';
-import { loanLifecycleWorkflow } from '@/workflows';
+import LoanLifecycleWorkflowViewer from '@/components/LoanLifecycleWorkflowViewer';
 
 const changes = [
   {
@@ -33,10 +32,6 @@ const changes = [
     body: 'State, workflow, events, and audit collapse into one model. Outbox patterns, duplicate-event guards, and reconciliation pipelines are not needed.',
   },
 ];
-
-const LoanWorkflowEmbed = () => (
-  <WorkflowDiagram spec={loanLifecycleWorkflow} minSvgWidth={980} />
-);
 
 const UseCaseLoanLifecycle = () => (
   <div className="min-h-screen bg-background">
@@ -136,8 +131,8 @@ const UseCaseLoanLifecycle = () => (
 
       {/* The Cyoda workflow */}
       <section className="py-16 md:py-20 bg-background">
-        <div className="container mx-auto px-4 max-w-6xl">
-          <div className="mb-8">
+        <div className="mx-auto max-w-[1840px] px-4 sm:px-6 lg:px-8">
+          <div className="mx-auto mb-8 max-w-6xl">
             <p className="text-xs font-semibold text-primary uppercase tracking-widest mb-3">
               How Cyoda models it
             </p>
@@ -147,12 +142,12 @@ const UseCaseLoanLifecycle = () => (
             <p className="text-sm text-muted-foreground mt-2 max-w-2xl">
               The loan is a Cyoda entity. Its lifecycle is a workflow graph — states,
               criteria-driven transitions, attached processes, and an immutable event history all
-              in one consistency model. The graph below shows branching, loop-back, terminal
-              outcomes, and terminal outcomes, and supporting audit history as one model.
+              in one consistency model. The graph below shows branching, loop-back, servicing
+              states, terminal outcomes, and supporting audit history as one model.
             </p>
           </div>
 
-          <LoanWorkflowEmbed />
+          <LoanLifecycleWorkflowViewer />
 
           {/* Callouts */}
           <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">

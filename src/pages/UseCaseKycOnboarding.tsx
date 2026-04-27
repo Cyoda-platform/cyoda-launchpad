@@ -4,8 +4,7 @@ import SEO from '@/components/SEO';
 import { organizationSchema, breadcrumbKycOnboarding } from '@/data/schemas';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
-import WorkflowDiagram from '@/lib/workflow-diagram';
-import { kycOnboardingWorkflow } from '@/workflows';
+import KycOnboardingWorkflowViewer from '@/components/KycOnboardingWorkflowViewer';
 
 // ─── What changes section ─────────────────────────────────────────────────────
 
@@ -161,8 +160,8 @@ const UseCaseKycOnboarding = () => {
 
         {/* Section 3 — How Cyoda models it */}
         <section className="py-16 md:py-20 bg-background">
-          <div className="container mx-auto px-4 max-w-6xl">
-            <div className="mb-8">
+          <div className="mx-auto max-w-[1640px] px-4 sm:px-6 lg:px-8">
+            <div className="mx-auto mb-8 max-w-6xl">
               <p className="text-xs font-semibold text-primary uppercase tracking-widest mb-3">
                 How Cyoda models it
               </p>
@@ -179,7 +178,7 @@ const UseCaseKycOnboarding = () => {
             </div>
 
             {/* Workflow artifact */}
-            <WorkflowDiagram spec={kycOnboardingWorkflow} minSvgWidth={940} />
+            <KycOnboardingWorkflowViewer />
 
             {/* Callouts */}
             <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">

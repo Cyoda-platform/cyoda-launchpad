@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { parseCyodaWorkflowInput } from './parseCyodaWorkflow';
-import { layoutCyodaWorkflowWithElk } from './layoutWithElk';
-import type { CyodaElkDirection } from './layoutWithElk';
+import { getCyodaDensityProfile, layoutCyodaWorkflowWithElk } from './layoutWithElk';
+import type { CyodaDiagramDensity, CyodaElkDirection } from './layoutWithElk';
 import type {
   CyodaDisplayEdgeKind,
   CyodaDisplayNodeTone,
@@ -17,7 +17,73 @@ interface CyodaWorkflowDiagramProps {
   minSvgWidth?: number;
   showDisabledTransitions?: boolean;
   direction?: CyodaElkDirection;
+  density?: CyodaDiagramDensity;
 }
+
+const visualDensityProfiles: Record<CyodaDiagramDensity, {
+  nodeSubtitleClass: string;
+  nodeTitleClass: string;
+  edgeTitleClass: string;
+  badgeTextClass: string;
+  nodeSubtitleY: number;
+  nodeTitleStartY: number;
+  nodeTitleLineHeight: number;
+  edgeTitleTop: number;
+  edgeTitleLineHeight: number;
+  badgeTitleGap: number;
+  badgeTextOffsetY: number;
+  nodeRadius: number;
+  terminalRadius: number;
+  terminalInset: number;
+  terminalInnerRadius: number;
+  nodeStrokeWidth: number;
+  initialStrokeWidth: number;
+  edgeStrokeWidth: number;
+  softEdgeStrokeWidth: number;
+}> = {
+  compact: {
+    nodeSubtitleClass: 'text-[8px] font-bold uppercase tracking-[0.12em]',
+    nodeTitleClass: 'text-[11px] font-bold tracking-[0.01em]',
+    edgeTitleClass: 'fill-slate-600 text-[8px] font-bold tracking-[0.01em]',
+    badgeTextClass: 'fill-slate-600 text-[7px] font-bold',
+    nodeSubtitleY: 18,
+    nodeTitleStartY: 39,
+    nodeTitleLineHeight: 13,
+    edgeTitleTop: 12,
+    edgeTitleLineHeight: 11,
+    badgeTitleGap: 2,
+    badgeTextOffsetY: 9.5,
+    nodeRadius: 8,
+    terminalRadius: 18,
+    terminalInset: 3,
+    terminalInnerRadius: 15,
+    nodeStrokeWidth: 1.35,
+    initialStrokeWidth: 1.65,
+    edgeStrokeWidth: 1.8,
+    softEdgeStrokeWidth: 1.5,
+  },
+  comfortable: {
+    nodeSubtitleClass: 'text-[9px] font-bold uppercase tracking-[0.14em]',
+    nodeTitleClass: 'text-[12px] font-bold tracking-[0.02em]',
+    edgeTitleClass: 'fill-slate-600 text-[9px] font-bold tracking-[0.02em]',
+    badgeTextClass: 'fill-slate-600 text-[7.5px] font-bold',
+    nodeSubtitleY: 22,
+    nodeTitleStartY: 47,
+    nodeTitleLineHeight: 15,
+    edgeTitleTop: 15,
+    edgeTitleLineHeight: 13,
+    badgeTitleGap: 3,
+    badgeTextOffsetY: 10.5,
+    nodeRadius: 10,
+    terminalRadius: 22,
+    terminalInset: 3,
+    terminalInnerRadius: 18,
+    nodeStrokeWidth: 1.55,
+    initialStrokeWidth: 1.9,
+    edgeStrokeWidth: 2,
+    softEdgeStrokeWidth: 1.7,
+  },
+};
 
 const nodeToneClasses: Record<CyodaDisplayNodeTone, { rect: string; text: string; meta: string }> = {
   default: {
@@ -69,9 +135,10 @@ const LegendSwatch = ({ type }: { type: 'state' | 'initial' | 'manual' | 'termin
   return <span className="h-2.5 w-2.5 rounded-[3px] border border-teal-400 bg-teal-50" />;
 };
 
-const CyodaNode = ({ node }: { node: CyodaLaidOutNode }) => {
+const CyodaNode = ({ node, density }: { node: CyodaLaidOutNode; density: CyodaDiagramDensity }) => {
   const tone = nodeToneClasses[node.tone];
-  const titleStartY = node.y + 47;
+  const visual = visualDensityProfiles[density];
+  const titleStartY = node.y + visual.nodeTitleStartY;
 
   return (
     <g>
@@ -80,32 +147,32 @@ const CyodaNode = ({ node }: { node: CyodaLaidOutNode }) => {
         y={node.y}
         width={node.width}
         height={node.height}
-        rx={node.isTerminal ? 22 : 10}
+        rx={node.isTerminal ? visual.terminalRadius : visual.nodeRadius}
         className={tone.rect}
-        strokeWidth={node.tone === 'initial' ? 1.9 : 1.55}
+        strokeWidth={node.tone === 'initial' ? visual.initialStrokeWidth : visual.nodeStrokeWidth}
       />
       {node.isTerminal && (
         <rect
-          x={node.x + 3}
-          y={node.y + 3}
-          width={node.width - 6}
-          height={node.height - 6}
-          rx={18}
+          x={node.x + visual.terminalInset}
+          y={node.y + visual.terminalInset}
+          width={node.width - visual.terminalInset * 2}
+          height={node.height - visual.terminalInset * 2}
+          rx={visual.terminalInnerRadius}
           className="fill-none stroke-white/75"
           strokeDasharray="2 2"
           strokeWidth="0.8"
         />
       )}
-      <text x={node.x + node.width / 2} y={node.y + 22} textAnchor="middle" className={`${tone.meta} text-[9px] font-bold uppercase tracking-[0.14em]`}>
+      <text x={node.x + node.width / 2} y={node.y + visual.nodeSubtitleY} textAnchor="middle" className={`${tone.meta} ${visual.nodeSubtitleClass}`}>
         {node.subtitle}
       </text>
       {node.titleLines.map((line, index) => (
         <text
           key={`${node.id}-${line}-${index}`}
           x={node.x + node.width / 2}
-          y={titleStartY + index * 15}
+          y={titleStartY + index * visual.nodeTitleLineHeight}
           textAnchor="middle"
-          className={`${tone.text} text-[12px] font-bold tracking-[0.02em]`}
+          className={`${tone.text} ${visual.nodeTitleClass}`}
         >
           {line}
         </text>
@@ -114,12 +181,16 @@ const CyodaNode = ({ node }: { node: CyodaLaidOutNode }) => {
   );
 };
 
-const CyodaEdgeLabel = ({ edge }: { edge: CyodaLaidOutEdge }) => {
+const CyodaEdgeLabel = ({ edge, density }: { edge: CyodaLaidOutEdge; density: CyodaDiagramDensity }) => {
+  const densityProfile = getCyodaDensityProfile(density);
+  const visual = visualDensityProfiles[density];
   const { labelLayout } = edge;
-  const titleStartY = labelLayout.y - labelLayout.height / 2 + 15;
-  const badgeStartY = titleStartY + labelLayout.titleLines.length * 13 + 3;
-  const badgeWidths = labelLayout.badges.map((badge) => Math.max(42, Math.ceil(badge.length * 5.7 + 14)));
-  const totalBadgeWidth = badgeWidths.reduce((sum, width) => sum + width, 0) + Math.max(0, badgeWidths.length - 1) * 6;
+  const titleStartY = labelLayout.y - labelLayout.height / 2 + visual.edgeTitleTop;
+  const badgeStartY = titleStartY + labelLayout.titleLines.length * visual.edgeTitleLineHeight + visual.badgeTitleGap;
+  const badgeWidths = labelLayout.badges.map((badge) =>
+    Math.max(densityProfile.badgeMinWidth, Math.ceil(badge.length * 5.1 + 12)),
+  );
+  const totalBadgeWidth = badgeWidths.reduce((sum, width) => sum + width, 0) + Math.max(0, badgeWidths.length - 1) * densityProfile.badgeGap;
   let badgeCursor = labelLayout.x - totalBadgeWidth / 2;
 
   return (
@@ -132,16 +203,16 @@ const CyodaEdgeLabel = ({ edge }: { edge: CyodaLaidOutEdge }) => {
         y={labelLayout.y - labelLayout.height / 2}
         width={labelLayout.width}
         height={labelLayout.height}
-        rx={13}
+        rx={density === 'compact' ? 10 : 13}
         className="fill-white/95 stroke-slate-200"
       />
       {labelLayout.titleLines.map((line, index) => (
         <text
           key={`${edge.id}-label-${line}-${index}`}
           x={labelLayout.x}
-          y={titleStartY + index * 13}
+          y={titleStartY + index * visual.edgeTitleLineHeight}
           textAnchor="middle"
-          className="fill-slate-600 text-[9px] font-bold tracking-[0.02em]"
+          className={visual.edgeTitleClass}
         >
           {line}
         </text>
@@ -149,7 +220,7 @@ const CyodaEdgeLabel = ({ edge }: { edge: CyodaLaidOutEdge }) => {
       {labelLayout.badges.map((badge, index) => {
         const width = badgeWidths[index];
         const x = badgeCursor;
-        badgeCursor += width + 6;
+        badgeCursor += width + densityProfile.badgeGap;
 
         return (
           <g key={`${edge.id}-${badge}-${index}`}>
@@ -157,8 +228,8 @@ const CyodaEdgeLabel = ({ edge }: { edge: CyodaLaidOutEdge }) => {
               x={x}
               y={badgeStartY}
               width={width}
-              height={15}
-              rx={7.5}
+              height={densityProfile.badgeHeight}
+              rx={densityProfile.badgeHeight / 2}
               className={badge === 'manual'
                 ? 'fill-violet-50 stroke-violet-200'
                 : badge === 'scheduled' || badge === 'processor' || badge === 'SYNC' || badge.includes('processors')
@@ -169,9 +240,9 @@ const CyodaEdgeLabel = ({ edge }: { edge: CyodaLaidOutEdge }) => {
             />
             <text
               x={x + width / 2}
-              y={badgeStartY + 10.5}
+              y={badgeStartY + visual.badgeTextOffsetY}
               textAnchor="middle"
-              className="fill-slate-600 text-[7.5px] font-bold"
+              className={visual.badgeTextClass}
             >
               {badge}
             </text>
@@ -182,15 +253,27 @@ const CyodaEdgeLabel = ({ edge }: { edge: CyodaLaidOutEdge }) => {
   );
 };
 
-const CyodaEdge = ({ edge, markerId }: { edge: CyodaLaidOutEdge; markerId: string }) => (
-  <path
-    d={edge.path}
-    className={`${edgeToneClasses[edge.kind]} fill-none`}
-    strokeWidth={edge.kind === 'automated' || edge.kind === 'conditional' || edge.kind === 'processing' ? 2 : 1.7}
-    strokeDasharray={isDashedEdge(edge.kind) ? '7 6' : undefined}
-    markerEnd={`url(#${markerId})`}
-  />
-);
+const CyodaEdge = ({
+  edge,
+  markerId,
+  density,
+}: {
+  edge: CyodaLaidOutEdge;
+  markerId: string;
+  density: CyodaDiagramDensity;
+}) => {
+  const visual = visualDensityProfiles[density];
+
+  return (
+    <path
+      d={edge.path}
+      className={`${edgeToneClasses[edge.kind]} fill-none`}
+      strokeWidth={edge.kind === 'automated' || edge.kind === 'conditional' || edge.kind === 'processing' ? visual.edgeStrokeWidth : visual.softEdgeStrokeWidth}
+      strokeDasharray={isDashedEdge(edge.kind) ? '7 6' : undefined}
+      markerEnd={`url(#${markerId})`}
+    />
+  );
+};
 
 export const CyodaWorkflowDiagram = ({
   input,
@@ -198,6 +281,7 @@ export const CyodaWorkflowDiagram = ({
   minSvgWidth = 1040,
   showDisabledTransitions = false,
   direction = 'RIGHT',
+  density = 'compact',
 }: CyodaWorkflowDiagramProps) => {
   const graph = useMemo(
     () => parseCyodaWorkflowInput(input, { showDisabledTransitions }),
@@ -211,7 +295,7 @@ export const CyodaWorkflowDiagram = ({
     setLayout(null);
     setLayoutError(null);
 
-    layoutCyodaWorkflowWithElk(graph, { direction })
+    layoutCyodaWorkflowWithElk(graph, { direction, density })
       .then((nextLayout) => {
         if (!cancelled) setLayout(nextLayout);
       })
@@ -224,10 +308,10 @@ export const CyodaWorkflowDiagram = ({
     return () => {
       cancelled = true;
     };
-  }, [graph, direction]);
+  }, [graph, direction, density]);
 
   const markerId = `${graph.id}-cyoda-arrow`;
-  const svgMinWidth = layout ? Math.min(layout.width, Math.max(minSvgWidth, Math.round(layout.width * 0.7))) : minSvgWidth;
+  const svgMinWidth = layout ? Math.min(layout.width, minSvgWidth) : minSvgWidth;
   const blockingErrors = graph.warnings.filter((warning) => warning.severity === 'error');
 
   return (
@@ -294,7 +378,7 @@ export const CyodaWorkflowDiagram = ({
             role="img"
             aria-labelledby={`${graph.id}-title ${graph.id}-description`}
             preserveAspectRatio="xMidYMin meet"
-            style={{ width: '100%', height: 'auto', minWidth: svgMinWidth }}
+            style={{ width: '100%', height: 'auto', minWidth: svgMinWidth, maxWidth: layout.width, margin: '0 auto', display: 'block' }}
           >
             <title id={`${graph.id}-title`}>{graph.title}</title>
             <desc id={`${graph.id}-description`}>
@@ -309,19 +393,19 @@ export const CyodaWorkflowDiagram = ({
 
             <g>
               {layout.edges.map((edge) => (
-                <CyodaEdge key={edge.id} edge={edge} markerId={markerId} />
+                <CyodaEdge key={edge.id} edge={edge} markerId={markerId} density={density} />
               ))}
             </g>
 
             <g>
               {layout.nodes.map((node) => (
-                <CyodaNode key={node.id} node={node} />
+                <CyodaNode key={node.id} node={node} density={density} />
               ))}
             </g>
 
             <g>
               {layout.edges.map((edge) => (
-                <CyodaEdgeLabel key={`${edge.id}-label`} edge={edge} />
+                <CyodaEdgeLabel key={`${edge.id}-label`} edge={edge} density={density} />
               ))}
             </g>
           </svg>

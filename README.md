@@ -23,6 +23,7 @@ deployment of the Cyoda EDBMS for regulated and mission-critical production envi
 - **SEO**: `react-helmet-async` via `src/components/SEO.tsx`
 - **Analytics**: GA4 via `src/components/AnalyticsManager.tsx`
 - **Blog**: Markdown files in `src/content/`, indexed by `scripts/generate-blog-index.js`
+- **Workflow viewers**: read-only Cyoda workflow rendering via `@cyoda/workflow-core`, `@cyoda/workflow-graph`, `@cyoda/workflow-layout`, and `@cyoda/workflow-viewer`
 - **Components**: shadcn/ui in `src/components/ui/`
 
 ## Build commands
@@ -36,6 +37,8 @@ npm run typecheck # npx tsc --noEmit
 ```
 
 Run `npm run build && npm run typecheck` after every change.
+
+If you're cleaning up before shipping, `npm run lint` is also worth running.
 
 ## Routes
 
