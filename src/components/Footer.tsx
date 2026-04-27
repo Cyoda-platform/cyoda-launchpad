@@ -64,7 +64,7 @@ const Footer = () => {
                 <img src={cyodaLogo} alt="Cyoda" className="h-6 sm:h-6" />
             </div>
             <p className="text-muted-foreground mb-6 max-w-md">
-              Enterprise Cyoda — commercially supported EDBMS for stateful, auditable, workflow-driven systems.
+              Enterprise Cyoda, commercially supported EDBMS for stateful, auditable, workflow-driven systems.
               In production in European private-debt markets since 2017.
             </p>
 

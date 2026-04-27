@@ -15,7 +15,7 @@ type HeroProps = {
 };
 
 /**
- * Workflow audit artefact — the right-hand product visual.
+ * Workflow audit artefact, the right-hand product visual.
  * Shows a Loan Origination entity workflow: ordered state transitions,
  * timestamps, status badges, and entity metadata. Compact, monospace,
  * product-like. Communicates auditability and ordered progression.
@@ -239,7 +239,7 @@ const HeroSection: React.FC<HeroProps> = ({
                     'text-4xl md:text-5xl font-bold tracking-tight leading-tight mb-5',
                   style: { color: 'hsl(215,28%,14%)' },
                 },
-                'Build stateful, auditable systems without the stitched-together stack'
+                'Build auditable backend systems on one consistent architecture'
               )}
 
               {/* Sub-copy */}

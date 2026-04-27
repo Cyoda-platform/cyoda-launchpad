@@ -84,7 +84,6 @@ export default function LoanLifecycleWorkflowViewer() {
 
     void layoutGraph(graph, {
       preset: 'opsAudit',
-      orientation: 'horizontal',
       nodeSize: { width: 184, height: 92 },
     }).then((nextLayout) => {
       if (!cancelled) {
@@ -140,26 +139,23 @@ export default function LoanLifecycleWorkflowViewer() {
   }
 
   return (
-    <div className="space-y-5">
+    <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_320px]">
       <Card className="overflow-hidden border-border/60 bg-card/80 shadow-sm">
         <CardContent className="p-0">
           <div className="border-b border-border/60 px-5 py-4">
             <p className="text-sm font-medium text-foreground">Loan lifecycle workflow</p>
             <p className="mt-1 text-sm text-muted-foreground">
-              This dense lifecycle is rendered on a wide canvas. Scroll sideways, pan, or zoom to
-              inspect the origination, servicing, rework, and terminal paths.
+              Pan to explore the full lifecycle and select a state or transition for details.
             </p>
           </div>
-          <div className="w-full overflow-x-auto bg-background">
-            <div className="h-[882px] min-w-[2556px] bg-background">
-              <WorkflowViewer
-                graph={graph}
-                layout={layout ?? undefined}
-                selectedId={selectedId ?? undefined}
-                onSelectionChange={setSelectedId}
-                className="h-full w-full"
-              />
-            </div>
+          <div className="h-[860px] w-full bg-background md:h-[1040px] xl:h-[1140px]">
+            <WorkflowViewer
+              graph={graph}
+              layout={layout ?? undefined}
+              selectedId={selectedId ?? undefined}
+              onSelectionChange={setSelectedId}
+              className="h-full w-full"
+            />
           </div>
         </CardContent>
       </Card>
@@ -170,7 +166,7 @@ export default function LoanLifecycleWorkflowViewer() {
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
           {!selected && (
-            <div className="grid gap-4 md:grid-cols-[minmax(0,1fr)_320px]">
+            <>
               <p className="text-muted-foreground">
                 Select a state or transition to inspect the workflow semantics.
               </p>
@@ -181,7 +177,7 @@ export default function LoanLifecycleWorkflowViewer() {
                   document rework, KYC, underwriting, servicing, arrears, and terminal outcomes.
                 </p>
               </div>
-            </div>
+            </>
           )}
 
           {selected?.kind === 'node' && selected.node.kind === 'state' && (
