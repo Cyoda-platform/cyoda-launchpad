@@ -88,7 +88,7 @@ const CyodaPathsSection = () => {
                 rel="noopener noreferrer"
                 className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
               >
-                cyoda.org →
+                cyoda.org
               </a>
             </div>
           </div>
@@ -116,7 +116,7 @@ const CyodaPathsSection = () => {
                 rel="noopener noreferrer"
                 className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
               >
-                ai.cyoda.net →
+                ai.cyoda.net
               </a>
             </div>
           </div>

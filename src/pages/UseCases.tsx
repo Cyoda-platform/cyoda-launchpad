@@ -15,7 +15,7 @@ const useCases = [
   {
     icon: BarChart3,
     title: 'Trade Settlement & Regulatory Reporting',
-    description: 'Point-in-time queryable trade states for regulatory reconstruction — no ETL pipeline required.',
+    description: 'Point-in-time queryable trade states for regulatory reconstruction. No ETL pipeline required.',
     href: '/use-cases/trade-settlement',
   },
   {
@@ -27,7 +27,7 @@ const useCases = [
   {
     icon: Bot,
     title: 'Agentic AI for Regulated Industries',
-    description: 'Platform-level consistency for AI agent actions — deterministic, auditable, and recoverable.',
+    description: 'Platform-level consistency for AI agent actions: deterministic, auditable, and recoverable.',
     href: '/use-cases/agentic-ai',
   },
 ];

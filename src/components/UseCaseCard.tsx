@@ -28,7 +28,7 @@ const UseCaseCard = ({ title, description, href, icon: Icon }: UseCaseCardProps)
           to={href}
           className="text-primary text-sm font-medium hover:underline focus-visible:ring-2 focus-visible:ring-primary rounded"
         >
-          Learn more →
+          Learn more
         </Link>
       </CardFooter>
     </Card>

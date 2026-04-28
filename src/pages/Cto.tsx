@@ -22,7 +22,7 @@ const benefitCards: BenefitCard[] = [
     icon: Cpu,
     title: 'Less architecture sprawl',
     description:
-      'One consistency contract instead of reconciling three. Outbox patterns, duplicate-event guards, and reconciliation pipelines are symptoms of a fragmented stack — not requirements.',
+      'One consistency contract instead of reconciling three. Outbox patterns, duplicate-event guards, and reconciliation pipelines are symptoms of a fragmented stack, not requirements.',
   },
   {
     icon: ShieldCheck,
@@ -84,7 +84,7 @@ const Cto = () => (
   <div className="min-h-screen bg-background">
     <SEO
       title="For engineering leaders | Cyoda"
-      description="The commercially supported EDBMS for stateful, auditable backend systems in regulated production. One consistency model for state, workflow, events, transactions, and history."
+      description="The commercially supported EDBMS for stateful, auditable backend systems in regulated production. One consistency model for state, workflow, transactions, and history."
       url="https://cyoda.com/cto"
       type="website"
       jsonLd={organizationSchema}
@@ -121,8 +121,8 @@ const Cto = () => (
             className="text-lg leading-relaxed mb-8 max-w-2xl mx-auto"
             style={{ color: 'hsl(215,18%,38%)' }}
           >
-            One consistency model for state, workflow, events, transactions, history, and business
-            logic. Commercially supported for teams running production systems in regulated environments.
+            One consistency model for state, workflow, transactions, and history, with business
+            logic in your code. Commercially supported for teams running production systems in regulated environments.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <Button size="lg" className="px-8 text-base font-semibold" asChild>
@@ -190,7 +190,7 @@ const Cto = () => (
                     <span className="mt-1.5 w-2 h-2 rounded-full shrink-0 bg-muted-foreground/40" />
                     <span className="text-sm text-foreground">
                       <span className="font-medium">{item.name}</span>{' '}
-                      <span className="text-muted-foreground">— {item.note}</span>
+                      <span className="text-muted-foreground">: {item.note}</span>
                     </span>
                   </li>
                 ))}
@@ -207,24 +207,24 @@ const Cto = () => (
               </h3>
               <ul className="space-y-3">
                 {[
-                  { name: 'One entity model', note: 'state, workflow, events, history, transactions' },
+                  { name: 'One entity model', note: 'state, workflow, transactions, and history' },
                   { name: 'One consistency contract', note: 'no reconciliation between systems' },
                   { name: 'One audit mechanism', note: 'immutable history, built in' },
                   { name: 'One storage model', note: 'PostgreSQL or Cassandra, same API' },
-                  { name: 'Your business logic', note: 'via gRPC processor — no platform lock-in' },
+                  { name: 'Your business logic', note: 'via gRPC processor, no platform lock-in' },
                 ].map((item) => (
                   <li key={item.name} className="flex items-start gap-3">
                     <span className="mt-1.5 w-2 h-2 rounded-full shrink-0 bg-primary/60" />
                     <span className="text-sm text-foreground">
                       <span className="font-medium">{item.name}</span>{' '}
-                      <span className="text-muted-foreground">— {item.note}</span>
+                      <span className="text-muted-foreground">: {item.note}</span>
                     </span>
                   </li>
                 ))}
               </ul>
               <p className="mt-5 text-xs text-muted-foreground border-t border-primary/20 pt-4">
                 One consistency model for everything. Audit trails and temporal history are how data
-                is stored — not added on top.
+                is stored, not added on top.
               </p>
             </div>
 

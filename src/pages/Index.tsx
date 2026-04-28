@@ -21,7 +21,7 @@ const integratedArchCards = [
   },
   {
     title: 'Built for compliance',
-    description: 'Audit trails are not added on top, it\'s are how data is stored. Temporal history is first-class.',
+    description: 'Audit trails are how data is stored, not something added on top. Temporal history is first-class.',
   },
   {
     title: 'No re-engineering wall',
@@ -33,7 +33,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Enterprise Cyoda: EDBMS for auditable, workflow-driven backend systems"
+        title="Enterprise Cyoda: EDBMS for regulated production"
         description="Build scalable, auditable backend systems on an integrated architecture. Enterprise Cyoda provides commercial support, procurement, and deployment for regulated production."
         url="https://cyoda.com/"
         type="website"
@@ -117,7 +117,7 @@ const Index = () => {
               <div className="mt-6 border-t border-border pt-5">
                 <p className="text-sm font-semibold text-foreground">Tobias Zoller</p>
                 <p className="mt-1 text-sm text-muted-foreground">
-                  Co-founder, Value Concepts
+                  Co-founder, Value Concepts (VC Trade)
                 </p>
               </div>
             </div>
@@ -149,7 +149,7 @@ const Index = () => {
               <UseCaseCard
                 icon={BarChart3}
                 title="Trade Settlement & Regulatory Reporting"
-                description="Point-in-time queryable trade states for regulatory reconstruction — no ETL pipeline required."
+                description="Point-in-time queryable trade states for regulatory reconstruction. No ETL pipeline required."
                 href="/use-cases/trade-settlement"
               />
               <UseCaseCard
@@ -171,7 +171,7 @@ const Index = () => {
                 to="/use-cases"
                 className="text-primary font-medium hover:underline focus-visible:ring-2 focus-visible:ring-primary rounded"
               >
-                See all use cases →
+                See all use cases
               </Link>
             </div>
           </div>
@@ -184,7 +184,7 @@ const Index = () => {
             <blockquote className="text-xl md:text-2xl font-medium text-foreground leading-relaxed mb-6">
               "We built Cyoda because we were tired of rebuilding the same infrastructure at every bank
               we worked at. The problem was always the same: state management, audit, consistency under
-              failure and the solution was duct tape. Cyoda is the solution we would have paid for."
+              failure. The solution was duct tape. Cyoda is the solution we would have paid for."
             </blockquote>
             <p className="text-sm text-muted-foreground font-medium uppercase tracking-widest">
               Patrick Stanton &amp; Paul Schleger PhD, Co-Founders

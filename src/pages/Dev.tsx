@@ -23,15 +23,15 @@ const routingCards: RoutingCard[] = [
     title: 'Run it yourself',
     description:
       'Start locally with in-memory or SQLite, grow to PostgreSQL without changing your model. No vendor dependency.',
-    link: { label: 'Go to cyoda.org →', href: 'https://cyoda.org' },
+    link: { label: 'Go to cyoda.org', href: 'https://cyoda.org' },
   },
   {
     icon: Cloud,
     badge: 'SaaS',
     title: 'Cyoda Cloud',
     description:
-      'Free evaluation tier. Managed control plane — your business logic runs in your code via gRPC.',
-    link: { label: 'Go to ai.cyoda.net →', href: 'https://ai.cyoda.net/' },
+      'Free evaluation tier. Managed control plane. Your business logic runs in your code via gRPC.',
+    link: { label: 'Go to ai.cyoda.net', href: 'https://ai.cyoda.net/' },
   },
   {
     icon: Building2,
@@ -39,7 +39,7 @@ const routingCards: RoutingCard[] = [
     title: 'Commercial deployment',
     description:
       'SLAs, procurement support, and regulated rollout. For teams taking Cyoda into production.',
-    link: { label: 'Talk to us →', href: '/contact', internal: true },
+    link: { label: 'Talk to us', href: '/contact', internal: true },
   },
 ];
 

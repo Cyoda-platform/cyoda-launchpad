@@ -216,10 +216,10 @@ const Header = () => {
               <Link to="/dev" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">For Developers</Link>
 
               <p className="py-1 text-xs font-semibold text-muted-foreground uppercase tracking-widest mt-3">Cyoda Web</p>
-              <a href="https://ai.cyoda.net/" target="_blank" rel="noopener noreferrer" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">Cyoda Cloud ↗</a>
-              <a href="https://cyoda.org" target="_blank" rel="noopener noreferrer" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">Open Source ↗</a>
-              <a href="https://docs.cyoda.net/" target="_blank" rel="noopener noreferrer" className="block py-1.5 pl-3 text-sm text-muted-foreground hover:text-primary transition-colors">Docs ↗</a>
-              <a href="https://docs.cyoda.net/api-reference/" target="_blank" rel="noopener noreferrer" className="block py-1.5 pl-3 text-sm text-muted-foreground hover:text-primary transition-colors">API Reference ↗</a>
+              <a href="https://ai.cyoda.net/" target="_blank" rel="noopener noreferrer" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">Cyoda Cloud</a>
+              <a href="https://cyoda.org" target="_blank" rel="noopener noreferrer" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">Open Source</a>
+              <a href="https://docs.cyoda.net/" target="_blank" rel="noopener noreferrer" className="block py-1.5 pl-3 text-sm text-muted-foreground hover:text-primary transition-colors">Docs</a>
+              <a href="https://docs.cyoda.net/api-reference/" target="_blank" rel="noopener noreferrer" className="block py-1.5 pl-3 text-sm text-muted-foreground hover:text-primary transition-colors">API Reference</a>
 
               <Link to="/blog" className="block py-2 text-foreground hover:text-primary transition-colors font-medium">Blog</Link>
             </nav>

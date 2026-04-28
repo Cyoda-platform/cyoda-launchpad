@@ -7,9 +7,9 @@ for regulated, mission-critical, and operationally complex environments.
 ## What Cyoda Is
 
 Cyoda is an EDBMS — Entity Database Management System — that unifies transactional storage,
-event-driven processing, and workflow orchestration in a single consistency model.
+event-driven processing, and workflow orchestration in a single consistency architecture.
 
-State, workflow, transactions, events, history, and business logic are unified in one model.
+State, workflow, transactions, events, history, and business logic are unified in one architecture.
 No separate orchestration layer. No separate audit service. No consistency seams to manage.
 
 Core capabilities:

@@ -26,7 +26,7 @@ const WorkflowArtefact = () => {
     { name: 'CREDIT_CHECK', ts: '09:14:03.882', status: 'committed',   committed: true,  active: false },
     { name: 'UNDERWRITING', ts: '09:14:45.220', status: 'committed',   committed: true,  active: false },
     { name: 'APPROVAL',     ts: '09:15:12.774', status: 'in progress', committed: false, active: true  },
-    { name: 'SETTLEMENT',   ts: '—',            status: 'pending',     committed: false, active: false },
+    { name: 'SETTLEMENT',   ts: 'Pending',      status: 'pending',     committed: false, active: false },
   ];
 
   return (
@@ -247,7 +247,7 @@ const HeroSection: React.FC<HeroProps> = ({
                 className="text-lg leading-relaxed mb-8"
                 style={{ color: 'hsl(215,18%,38%)' }}
               >
-                Cyoda unifies state, workflow, transactions, events, and history in one model,
+                Cyoda unifies state, workflow, transactions, and history in one model,
                 with one path from local build to regulated production. Commercially supported by
                 the people who built it.
               </p>
@@ -293,7 +293,7 @@ const HeroSection: React.FC<HeroProps> = ({
                 className="mt-3 text-center text-xs font-semibold"
                 style={{ color: 'hsl(175,45%,34%)' }}
               >
-                State, workflow, and history in one system
+                State, workflow, transactions, and history in one system
               </p>
             </div>
           </div>
