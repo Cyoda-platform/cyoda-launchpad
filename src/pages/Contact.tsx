@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
@@ -37,24 +37,99 @@ const referralOptions = [
 
 const Contact = () => {
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [referral, setReferral] = useState<string>('');
+  const formRef = useRef<HTMLFormElement | null>(null);
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<ContactFormData>();
 
-  const onSubmit = (data: ContactFormData) => {
-    console.log({ ...data, referral });
-    setSubmitted(true);
+  useEffect(() => {
+    const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY as string | undefined;
+    if (!siteKey) {
+      console.error('VITE_RECAPTCHA_SITE_KEY is not set. reCAPTCHA cannot initialize.');
+      return;
+    }
+
+    if (window.grecaptcha) return;
+
+    const existing = document.querySelector(
+      'script[data-recaptcha="v3"]',
+    ) as HTMLScriptElement | null;
+    if (existing) return;
+
+    const script = document.createElement('script');
+    script.src = `https://www.google.com/recaptcha/api.js?render=${siteKey}`;
+    script.async = true;
+    script.defer = true;
+    script.setAttribute('data-recaptcha', 'v3');
+    document.body.appendChild(script);
+  }, []);
+
+  const onSubmit = async () => {
+    const formEl = formRef.current;
+    const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY as string | undefined;
+
+    if (!formEl) {
+      setSubmitError('The contact form is not ready yet. Please reload the page and try again.');
+      return;
+    }
+
+    if (!siteKey) {
+      setSubmitError('reCAPTCHA is not configured for this site.');
+      return;
+    }
+
+    if (!window.grecaptcha) {
+      setSubmitError('reCAPTCHA is still loading. Please try again in a moment.');
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitError(null);
+
+    try {
+      await new Promise<void>((resolve) => window.grecaptcha!.ready(() => resolve()));
+      const token = await window.grecaptcha!.execute(siteKey, { action: 'submit' });
+
+      const formData = new FormData(formEl);
+      formData.append('g-recaptcha-response', token);
+
+      if (referral) {
+        formData.set('referral', referral);
+      }
+
+      const response = await fetch('https://formspree.io/f/mzzaollp', {
+        method: 'POST',
+        body: formData,
+        headers: { Accept: 'application/json' },
+      });
+
+      if (!response.ok) {
+        throw new Error('Formspree rejected the submission.');
+      }
+
+      reset();
+      setReferral('');
+      setSubmitted(true);
+    } catch (error) {
+      console.error('reCAPTCHA/submit error', error);
+      setSubmitError('There was a problem sending your message. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <div className="min-h-screen bg-background">
       <SEO
         title="Contact | Cyoda"
-        description="Talk to the Cyoda team about your use case. We respond within one business day."
+        description="Talk to the Cyoda team about your use case."
         url="https://cyoda.com/contact"
         type="website"
         jsonLd={organizationSchema}
@@ -71,7 +146,7 @@ const Contact = () => {
                 Talk to the Team
               </h1>
               <p className="text-lg text-muted-foreground">
-                Tell us about your use case and we'll get back to you within one business day.
+                Tell us about your use case.
               </p>
             </div>
 
@@ -81,11 +156,16 @@ const Contact = () => {
                 {submitted ? (
                   <div className="rounded-xl border border-primary/30 bg-primary/5 p-8 text-center">
                     <p className="text-lg font-semibold text-foreground">
-                      Thanks — we'll be in touch within one business day.
+                      Thanks — we'll be in touch asap.
                     </p>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-6">
+                  <form
+                    ref={formRef}
+                    onSubmit={handleSubmit(onSubmit)}
+                    noValidate
+                    className="space-y-6"
+                  >
                     {/* Name */}
                     <div className="space-y-2">
                       <Label htmlFor="name">Name <span className="text-destructive">*</span></Label>
@@ -174,13 +254,45 @@ const Contact = () => {
                       </Select>
                     </div>
 
+                    <input
+                      type="text"
+                      name="_gotcha"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      className="hidden"
+                      aria-hidden="true"
+                    />
+
+                    {submitError && (
+                      <p className="text-sm text-destructive">{submitError}</p>
+                    )}
+
                     <Button
                       type="submit"
                       size="lg"
                       className="bg-primary text-primary-foreground px-8 font-semibold focus-visible:ring-2 focus-visible:ring-primary"
+                      disabled={isSubmitting}
                     >
-                      Send Message
+                      {isSubmitting ? 'Sending...' : 'Send Message'}
                     </Button>
+
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      This site is protected by reCAPTCHA and the Google{' '}
+                      <a
+                        href="https://policies.google.com/privacy"
+                        className="underline underline-offset-2 hover:text-primary transition-colors"
+                      >
+                        Privacy Policy
+                      </a>{' '}
+                      and{' '}
+                      <a
+                        href="https://policies.google.com/terms"
+                        className="underline underline-offset-2 hover:text-primary transition-colors"
+                      >
+                        Terms of Service
+                      </a>{' '}
+                      apply.
+                    </p>
                   </form>
                 )}
               </div>
