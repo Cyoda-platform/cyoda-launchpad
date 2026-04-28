@@ -21,11 +21,11 @@ const integratedArchCards = [
   },
   {
     title: 'Built for compliance',
-    description: 'Audit trails are not added on top — they are how data is stored. Temporal history is first-class.',
+    description: 'Audit trails are not added on top, it\'s are how data is stored. Temporal history is first-class.',
   },
   {
     title: 'No re-engineering wall',
-    description: 'Start on PostgreSQL, scale to Cassandra without changing your entity model.',
+    description: 'Start on SQLite or PostgreSQL, scale to Cassandra without changing your entity model.',
   },
 ];
 
@@ -81,7 +81,7 @@ const Index = () => {
                 One consistency model, not three stitched together
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                No separate orchestration layer, audit service, or consistency seam — because there is no separate layer.
+                No separate orchestration layer, audit service, or consistency seam, because there is no separate layer.
               </p>
             </div>
 
@@ -103,6 +103,26 @@ const Index = () => {
         </section>
 
         <EcosystemSection />
+
+        {/* Customer proof */}
+        <section className="py-16 md:py-20 bg-background">
+          <div className="container mx-auto px-4 max-w-5xl">
+            <div className="mx-auto max-w-4xl rounded-2xl border border-border bg-card/70 px-6 py-8 shadow-sm md:px-10 md:py-10">
+              <p className="text-xs font-semibold text-primary uppercase tracking-widest mb-4">
+                Customer Proof
+              </p>
+              <blockquote className="max-w-3xl text-2xl font-medium leading-relaxed text-foreground md:text-[1.95rem]">
+                “By collaborating with Cyoda, we developed the solution in a fraction of the time normally associated with such a large-scale project.”
+              </blockquote>
+              <div className="mt-6 border-t border-border pt-5">
+                <p className="text-sm font-semibold text-foreground">Tobias Zoller</p>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Co-founder, Value Concepts
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* Use Cases preview section */}
         <section className="py-16 md:py-24 bg-background">

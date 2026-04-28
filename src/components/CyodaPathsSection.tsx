@@ -107,7 +107,7 @@ const CyodaPathsSection = () => {
               </div>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed flex-1">
-              Hosted Cyoda with a free evaluation tier. Managed control plane — your business
+              Hosted Cyoda with a free evaluation tier. Managed control plane, your business
               logic runs in your code via gRPC.
             </p>
             <div className="mt-4">
