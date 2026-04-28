@@ -24,9 +24,9 @@ const CyodaPathsSection = () => {
                 <h3 className="text-xl font-semibold text-foreground">Enterprise Cyoda</h3>
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
-                Commercially supported deployment for teams building regulated, auditable production
-                systems. Includes procurement assistance, implementation support, SLAs, and ongoing
-                engineering engagement with the Cyoda core team.
+                Commercially supported Cyoda for teams building regulated, auditable backend
+                systems. Use the same application model from first service to production scale,
+                with direct support from the engineers who built the platform.
               </p>
             </div>
           </div>
@@ -34,10 +34,10 @@ const CyodaPathsSection = () => {
           {/* Commercial pillars — 2×2 compact grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 mb-6 pl-0 sm:pl-12">
             {[
-              { title: 'Support for audit-driven deployments', description: 'SLAs on workflow integrity, audit-trail validation, and temporal-history review. Not generic ticketing support.' },
-              { title: 'Scalable operational modes', description: 'PostgreSQL and Cassandra modes, including migration between them without changing your entity model.' },
-              { title: 'Regulated procurement and rollout', description: 'Procurement paperwork, security questionnaires, implementation, and rollout support for regulated industries.' },
-              { title: 'Long-term engineering engagement', description: 'Roadmap access, co-engineering on high-consequence workflows, and direct contact with the Cyoda core team.' },
+              { title: 'Start with one service', description: 'Adopt Cyoda for a bounded backend service first. Prove the entity model, workflow, transactions, and history before expanding.' },
+              { title: 'Build with the core team', description: 'Work with Cyoda engineers on entity modelling, workflow design, processors, integrations, and audit requirements.' },
+              { title: 'Choose the right runtime', description: 'Develop and test with in-memory, SQLite, or PostgreSQL. Run smaller deployments on PostgreSQL. Use the licensed Cassandra engine when the workload needs distributed resilience, throughput, and fault tolerance.' },
+              { title: 'Support for regulated systems', description: 'Get practical help with architecture review, security questions, due diligence, and regulated-customer conversations from engineers who have built core systems in investment banks.' },
             ].map((item) => (
               <div key={item.title}>
                 <p className="text-sm font-semibold text-foreground mb-0.5">{item.title}</p>
@@ -54,7 +54,7 @@ const CyodaPathsSection = () => {
               Talk to us
             </a>
             <p className="text-xs text-muted-foreground">
-              Deploy alongside your existing Postgres. Move state-machine-shaped workloads over first.
+              Start small. Build on the right architecture from the beginning.
             </p>
           </div>
         </div>

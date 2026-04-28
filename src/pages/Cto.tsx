@@ -34,24 +34,24 @@ const benefitCards: BenefitCard[] = [
 
 const offeringCards = [
   {
-    title: 'Support for audit-driven deployments',
+    title: 'Start with one service',
     description:
-      'SLAs on workflow integrity, audit-trail validation, and temporal-history review. Not generic ticketing support.',
+      'Adopt Cyoda for a bounded backend service first. Prove the entity model, workflow, transactions, and history before expanding.',
   },
   {
-    title: 'Scalable operational modes',
+    title: 'Build with the core team',
     description:
-      'PostgreSQL and Cassandra modes, including migration between them without changing your entity model.',
+      'Work with Cyoda engineers on entity modelling, workflow design, processors, integrations, and audit requirements.',
   },
   {
-    title: 'Regulated procurement and rollout',
+    title: 'Choose the right runtime',
     description:
-      'Procurement paperwork, security questionnaires, implementation, and rollout support for regulated industries.',
+      'Develop and test with in-memory, SQLite, or PostgreSQL. Run smaller deployments on PostgreSQL. Use the licensed Cassandra engine when the workload needs distributed resilience, throughput, and fault tolerance.',
   },
   {
-    title: 'Long-term engineering engagement',
+    title: 'Support for regulated systems',
     description:
-      'Roadmap access, co-engineering on high-consequence workflows, and direct contact with the Cyoda core team.',
+      'Get practical help with architecture review, security questions, due diligence, and regulated-customer conversations from engineers who have built core systems in investment banks.',
   },
 ];
 

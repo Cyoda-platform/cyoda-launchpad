@@ -10,7 +10,7 @@ const EcosystemSection = () => {
         {
             icon: GitBranch,
             title: "Workflows and State Machines",
-            description: "Approvals, transitions, and lifecycle rules encoded directly into your application model."
+            description: "Model business logic as explicit state machines with small, discrete steps. Easy for humans and AI to understand, develop, and manage."
         },
         {
             icon: RadioTowerIcon,
