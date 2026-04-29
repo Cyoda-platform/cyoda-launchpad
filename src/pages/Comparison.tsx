@@ -109,8 +109,9 @@ export default function Comparison() {
               Why Teams Choose Cyoda Over the Standard Stack
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Temporal for orchestration, Camunda for workflows, Kafka for events — each is excellent at what it does.
-              The hard part is making them consistent with each other. Cyoda eliminates that problem.
+                Temporal, Camunda, Kafka, Postgres, an audit pipeline.
+                Pick your favourites. They all solve part of the problem. The system you end up building is the consistency between them.
+                That part is not off the shelf. Cyoda is.
             </p>
           </div>
         </section>
