@@ -161,7 +161,7 @@ const Index = () => {
               <UseCaseCard
                 icon={Bot}
                 title="Agentic AI for Enterprise Systems"
-                description="AI agents must be accountable, not just capable. Cyoda runs agent actions through governed workflows and records each state change as an immutable event, so teams can audit decisions, trace outcomes, and prove control over autonomous behaviour."
+                description="AI agents must be accountable, not just capable. Cyoda runs agent actions through governed workflows and records each state change as an immutable event, so you can audit decisions, trace outcomes, and prove control over autonomous behaviour."
                 href="/use-cases/agentic-ai"
               />
             </div>
