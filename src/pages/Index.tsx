@@ -147,10 +147,10 @@ const Index = () => {
                 href="/use-cases/loan-lifecycle"
               />
               <UseCaseCard
-                icon={BarChart3}
-                title="Trade Settlement & Regulatory Reporting"
-                description="Point-in-time queryable trade states for regulatory reconstruction. No ETL pipeline required."
-                href="/use-cases/trade-settlement"
+                  icon={Bot}
+                  title="Agentic AI for Enterprise Systems"
+                  description="AI agents must be accountable, not just capable. Cyoda runs agent actions through governed workflows and records each state change as an immutable event, so you can audit decisions, trace outcomes, and prove control over autonomous behaviour."
+                  href="/use-cases/agentic-ai"
               />
               <UseCaseCard
                 icon={UserCheck}
@@ -159,10 +159,10 @@ const Index = () => {
                 href="/use-cases/kyc-onboarding"
               />
               <UseCaseCard
-                icon={Bot}
-                title="Agentic AI for Enterprise Systems"
-                description="AI agents must be accountable, not just capable. Cyoda runs agent actions through governed workflows and records each state change as an immutable event, so you can audit decisions, trace outcomes, and prove control over autonomous behaviour."
-                href="/use-cases/agentic-ai"
+                  icon={BarChart3}
+                  title="Trade Settlement & Regulatory Reporting"
+                  description="Point-in-time queryable trade states for regulatory reconstruction. No ETL pipeline required."
+                  href="/use-cases/trade-settlement"
               />
             </div>
 
