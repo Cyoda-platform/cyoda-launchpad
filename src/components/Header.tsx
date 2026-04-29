@@ -99,9 +99,9 @@ const Header = () => {
                     <div className="space-y-4">
                       {[
                         { label: 'Loan Origination & Lifecycle', sub: 'State machine from application to settlement', to: '/use-cases/loan-lifecycle' },
+                          { label: 'Agentic AI for Enterprise Systems', sub: 'Transactional, auditable agent actions', to: '/use-cases/agentic-ai' },
                         { label: 'Trade Settlement & Reporting', sub: 'Point-in-time queryable trade states', to: '/use-cases/trade-settlement' },
                         { label: 'KYC & Customer Onboarding', sub: 'Durable retry with full audit', to: '/use-cases/kyc-onboarding' },
-                        { label: 'Agentic AI for Enterprise Systems', sub: 'Transactional, auditable agent actions', to: '/use-cases/agentic-ai' },
                       ].map((item) => (
                         <NavigationMenuLink key={item.label} asChild>
                           <Link to={item.to} className="block group">
