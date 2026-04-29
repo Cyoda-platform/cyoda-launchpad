@@ -160,7 +160,7 @@ const Index = () => {
               />
               <UseCaseCard
                 icon={Bot}
-                title="Agentic AI for Regulated Industries"
+                title="Agentic AI for Enterprise Systems"
                 description="AI agents that take actions on behalf of businesses need more than model inference. Cyoda provides the transactional consistency, ordered state transitions, and audit history that make agent actions recoverable when something goes wrong."
                 href="/use-cases/agentic-ai"
               />

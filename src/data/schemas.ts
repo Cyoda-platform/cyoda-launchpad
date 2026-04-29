@@ -34,7 +34,7 @@ export const breadcrumbAgenticAi = {
   "itemListElement": [
     { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cyoda.com/" },
     { "@type": "ListItem", "position": 2, "name": "Use Cases", "item": "https://cyoda.com/use-cases" },
-    { "@type": "ListItem", "position": 3, "name": "Agentic AI for Regulated Industries", "item": "https://cyoda.com/use-cases/agentic-ai" }
+    { "@type": "ListItem", "position": 3, "name": "Agentic AI for Enterprise Systems", "item": "https://cyoda.com/use-cases/agentic-ai" }
   ]
 };
 

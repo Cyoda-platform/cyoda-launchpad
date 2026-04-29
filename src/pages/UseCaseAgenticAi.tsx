@@ -44,7 +44,7 @@ const UseCaseAgenticAi = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Agentic AI for Regulated Industries | Cyoda"
+        title="Agentic AI for Enterprise Systems | Cyoda"
         description="AI agent actions need platform-level consistency. Cyoda gives every agent action an immutable audit trail within the same entity consistency model."
         url="https://cyoda.com/use-cases/agentic-ai"
         type="website"
