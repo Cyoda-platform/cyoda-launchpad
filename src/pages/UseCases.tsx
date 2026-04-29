@@ -26,8 +26,14 @@ const useCases = [
   },
   {
     icon: Bot,
-    title: 'Agentic AI for Regulated Industries',
-    description: 'Platform-level consistency for AI agent actions: deterministic, auditable, and recoverable.',
+    title: 'Governed AI Actions',
+    description: 'AI agents must be accountable, not just capable. Cyoda runs agent actions through governed workflows and records each state change as an immutable event, so teams can audit decisions, trace outcomes, and prove control over autonomous behaviour.',
+    href: '/use-cases/governed-ai-actions',
+  },
+  {
+    icon: Bot,
+    title: 'Agentic AI for Enterprise Systems',
+    description: 'Transactional, auditable agent actions with governed execution paths for regulated production systems.',
     href: '/use-cases/agentic-ai',
   },
 ];
@@ -37,7 +43,7 @@ const UseCases = () => {
     <div className="min-h-screen bg-background">
       <SEO
         title="Use Cases | Cyoda"
-        description="See how Cyoda powers loan lifecycle management, trade settlement, KYC onboarding, and agentic AI in financial services."
+        description="See how Cyoda powers loan lifecycle management, governed AI actions, trade settlement, and KYC onboarding in financial services."
         url="https://cyoda.com/use-cases"
         type="website"
         jsonLd={organizationSchema}

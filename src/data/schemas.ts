@@ -38,6 +38,16 @@ export const breadcrumbAgenticAi = {
   ]
 };
 
+export const breadcrumbGovernedAiActions = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cyoda.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Use Cases", "item": "https://cyoda.com/use-cases" },
+    { "@type": "ListItem", "position": 3, "name": "Governed AI Actions", "item": "https://cyoda.com/use-cases/governed-ai-actions" }
+  ]
+};
+
 export const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",

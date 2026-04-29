@@ -99,9 +99,10 @@ const Header = () => {
                     <div className="space-y-4">
                       {[
                         { label: 'Loan Origination & Lifecycle', sub: 'State machine from application to settlement', to: '/use-cases/loan-lifecycle' },
-                          { label: 'Agentic AI for Enterprise Systems', sub: 'Transactional, auditable agent actions', to: '/use-cases/agentic-ai' },
+                        { label: 'Governed AI Actions', sub: 'Traceable autonomous workflows', to: '/use-cases/governed-ai-actions' },
                         { label: 'Trade Settlement & Reporting', sub: 'Point-in-time queryable trade states', to: '/use-cases/trade-settlement' },
                         { label: 'KYC & Customer Onboarding', sub: 'Durable retry with full audit', to: '/use-cases/kyc-onboarding' },
+                        { label: 'Agentic AI for Enterprise Systems', sub: 'Transactional, auditable agent actions', to: '/use-cases/agentic-ai' },
                       ].map((item) => (
                         <NavigationMenuLink key={item.label} asChild>
                           <Link to={item.to} className="block group">
@@ -209,9 +210,10 @@ const Header = () => {
 
               <p className="py-1 text-xs font-semibold text-muted-foreground uppercase tracking-widest mt-3">Solutions</p>
               <Link to="/use-cases/loan-lifecycle" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">Loan Origination &amp; Lifecycle</Link>
+              <Link to="/use-cases/governed-ai-actions" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">Governed AI Actions</Link>
               <Link to="/use-cases/trade-settlement" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">Trade Settlement &amp; Reporting</Link>
               <Link to="/use-cases/kyc-onboarding" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">KYC &amp; Customer Onboarding</Link>
-              <Link to="/use-cases/agentic-ai" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">Agentic AI</Link>
+              <Link to="/use-cases/agentic-ai" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">Agentic AI for Enterprise Systems</Link>
               <Link to="/cto" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">For Engineering Leaders</Link>
               <Link to="/dev" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">For Developers</Link>
 
