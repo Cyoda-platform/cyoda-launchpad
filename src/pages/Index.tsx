@@ -161,7 +161,7 @@ const Index = () => {
               <UseCaseCard
                 icon={Bot}
                 title="Agentic AI for Enterprise Systems"
-                description="AI agents that take actions on behalf of businesses need more than model inference. Cyoda provides the transactional consistency, ordered state transitions, and audit history that make agent actions recoverable when something goes wrong."
+                description="AI agents must be accountable, not just capable. Cyoda runs agent actions through governed workflows and records each state change as an immutable event, so teams can audit decisions, trace outcomes, and prove control over autonomous behaviour."
                 href="/use-cases/agentic-ai"
               />
             </div>
