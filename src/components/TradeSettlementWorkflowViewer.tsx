@@ -10,7 +10,22 @@ import {
 import { layoutGraph, type LayoutResult as WorkflowLayoutResult } from '@cyoda/workflow-layout';
 import { WorkflowViewer } from '@cyoda/workflow-viewer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import EntityDataModelCard from '@/components/EntityDataModelCard';
 import workflowJson from '@/data/workflows/tradeSettlementWorkflow.json?raw';
+
+const tradeSettlementEntityModel = {
+  title: 'What the entity contains',
+  body:
+    'The TradeSettlement entity holds the structured business information needed to run the settlement lifecycle: parties, instrument details, economics, approvals, exceptions, repair state, and audit-relevant data. The workflow changes the entity state; it is not a separate process floating beside the data.',
+  snippet: `{
+  "entity": "TradeSettlement",
+  "state": "AFFIRMED",
+  "parties": ["buyer", "seller"],
+  "instrument": "PrivateDebt",
+  "settlementDate": "2026-05-14",
+  "lastTransition": "IS_AFFIRMED"
+}`,
+};
 
 function formatExecution(kind?: 'sync' | 'asyncSameTx' | 'asyncNewTx') {
   switch (kind) {
@@ -238,6 +253,8 @@ export default function TradeSettlementWorkflowViewer() {
               )}
             </>
           )}
+
+          <EntityDataModelCard {...tradeSettlementEntityModel} />
         </CardContent>
       </Card>
     </div>

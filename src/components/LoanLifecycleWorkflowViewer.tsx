@@ -10,7 +10,22 @@ import {
 import { layoutGraph, type LayoutResult as WorkflowLayoutResult } from '@cyoda/workflow-layout';
 import { WorkflowViewer } from '@cyoda/workflow-viewer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import EntityDataModelCard from '@/components/EntityDataModelCard';
 import workflowJson from '@/data/workflows/LoanLifecycleWorkflow.json?raw';
+
+const loanApplicationEntityModel = {
+  title: 'What the entity contains',
+  body:
+    'The LoanApplication entity holds the structured business information needed to manage the lifecycle: applicant details, product terms, risk checks, approval status, conditions, exceptions, and audit-relevant data. The workflow changes the entity state as the application moves from intake to decision and completion.',
+  snippet: `{
+  "entity": "LoanApplication",
+  "state": "UNDER_REVIEW",
+  "applicantId": "APP-10291",
+  "product": "TermLoan",
+  "riskChecks": ["identity", "affordability"],
+  "lastTransition": "SUBMIT_FOR_REVIEW"
+}`,
+};
 
 function asImportPayload(rawWorkflowJson: string) {
   const parsed = JSON.parse(rawWorkflowJson) as { workflows?: unknown };
@@ -249,6 +264,8 @@ export default function LoanLifecycleWorkflowViewer() {
               )}
             </>
           )}
+
+          <EntityDataModelCard {...loanApplicationEntityModel} />
         </CardContent>
       </Card>
     </div>

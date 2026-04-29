@@ -10,7 +10,22 @@ import {
 import { layoutGraph, type LayoutResult as WorkflowLayoutResult } from '@cyoda/workflow-layout';
 import { WorkflowViewer } from '@cyoda/workflow-viewer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import EntityDataModelCard from '@/components/EntityDataModelCard';
 import workflowJson from '@/data/workflows/AgenticAiWorkflow.json?raw';
+
+const agentActionEntityModel = {
+  title: 'What the entity contains',
+  body:
+    'The AgentAction entity holds the structured business information needed to govern autonomous actions: requested action, target system, policy checks, approval state, execution result, exception details, and audit-relevant data. The workflow controls whether the action can proceed and records the outcome.',
+  snippet: `{
+  "entity": "AgentAction",
+  "state": "APPROVED",
+  "agentId": "AGT-019",
+  "requestedAction": "UpdateLimit",
+  "policyChecks": ["authority", "risk"],
+  "lastTransition": "APPROVE_ACTION"
+}`,
+};
 
 function asImportPayload(rawWorkflowJson: string) {
   const parsed = JSON.parse(rawWorkflowJson) as { workflows?: unknown };
@@ -254,6 +269,8 @@ export default function AgenticAiWorkflowViewer() {
               )}
             </>
           )}
+
+          <EntityDataModelCard {...agentActionEntityModel} />
         </CardContent>
       </Card>
     </div>

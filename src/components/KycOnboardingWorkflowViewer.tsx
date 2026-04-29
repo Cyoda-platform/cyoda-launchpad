@@ -10,7 +10,22 @@ import {
 import { layoutGraph, type LayoutResult as WorkflowLayoutResult } from '@cyoda/workflow-layout';
 import { WorkflowViewer } from '@cyoda/workflow-viewer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import EntityDataModelCard from '@/components/EntityDataModelCard';
 import workflowJson from '@/data/workflows/CustomerOnboardingWorkflow.json?raw';
+
+const customerOnboardingEntityModel = {
+  title: 'What the entity contains',
+  body:
+    'The CustomerOnboarding entity holds the structured business information needed to manage onboarding: customer profile, identity checks, risk rating, external screening results, required documents, exceptions, and audit-relevant data. The workflow changes the entity state as checks complete, fail, retry, or move to manual review.',
+  snippet: `{
+  "entity": "CustomerOnboarding",
+  "state": "SCREENING",
+  "customerId": "CUS-44821",
+  "riskRating": "MEDIUM",
+  "checks": ["identity", "sanctions"],
+  "lastTransition": "START_SCREENING"
+}`,
+};
 
 function asImportPayload(rawWorkflowJson: string) {
   const parsed = JSON.parse(rawWorkflowJson) as { workflows?: unknown };
@@ -254,6 +269,8 @@ export default function KycOnboardingWorkflowViewer() {
               )}
             </>
           )}
+
+          <EntityDataModelCard {...customerOnboardingEntityModel} />
         </CardContent>
       </Card>
     </div>
