@@ -19,8 +19,8 @@ const EcosystemSection = () => {
         },
         {
             icon: Table,
-            title: "Transactional Consistency and History",
-            description: "Point-in-time queries on a distributed store with snapshot isolation. No ETL pipeline. No retention window."
+            title: "Consistency, Audit, and Data Lineage",
+            description: "Point-in-time queries, ordered state changes, and traceable entity history give teams the evidence trail needed for enterprise systems."
         },
     ];
 
