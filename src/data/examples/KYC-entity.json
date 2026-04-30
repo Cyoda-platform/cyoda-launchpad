@@ -1,0 +1,223 @@
+{
+  "caseId": "KYC-CASE-2026-004218",
+  "caseType": "LEGAL_ENTITY_ONBOARDING",
+  "status": "ENHANCED_DUE_DILIGENCE_REQUIRED",
+  "clientSegment": "CORPORATE_BANKING",
+  "bookingLocation": "GB",
+  "lineOfBusiness": "Treasury Services",
+  "requestedProducts": [
+    "OperatingAccount",
+    "LiquidityManagement",
+    "InterestRateHedging"
+  ],
+  "applicant": {
+    "legalName": "Northstar Manufacturing Holdings Limited",
+    "tradingName": "Northstar Manufacturing",
+    "entityType": "PRIVATE_LIMITED_COMPANY",
+    "registrationNumber": "09876543",
+    "countryOfIncorporation": "GB",
+    "incorporationDate": "2012-06-18",
+    "registeredAddress": {
+      "line1": "18 Charterhouse Square",
+      "city": "London",
+      "postalCode": "EC1M 6AX",
+      "country": "GB"
+    },
+    "operatingAddress": {
+      "line1": "Unit 4 Riverside Industrial Estate",
+      "city": "Birmingham",
+      "postalCode": "B24 9QR",
+      "country": "GB"
+    },
+    "industry": {
+      "sicCode": "25990",
+      "description": "Manufacture of fabricated metal products",
+      "highRiskIndustry": false
+    },
+    "expectedActivity": {
+      "expectedMonthlyTurnover": {
+        "amount": 4250000,
+        "currency": "GBP"
+      },
+      "expectedMonthlyTransactionCount": 340,
+      "expectedCountries": ["GB", "DE", "NL", "US"],
+      "cashIntensiveBusiness": false,
+      "crossBorderPaymentsExpected": true
+    }
+  },
+  "connectedParties": [
+    {
+      "partyId": "CP-001",
+      "role": "DIRECTOR",
+      "fullName": "Amelia Rachel Turner",
+      "dateOfBirth": "1978-03-11",
+      "nationality": "GB",
+      "residentialCountry": "GB",
+      "ownershipPercentage": 0,
+      "controlType": "BOARD_CONTROL",
+      "identityVerificationStatus": "VERIFIED",
+      "screeningStatus": "CLEAR"
+    },
+    {
+      "partyId": "CP-002",
+      "role": "ULTIMATE_BENEFICIAL_OWNER",
+      "fullName": "Daniel James Whitmore",
+      "dateOfBirth": "1969-10-04",
+      "nationality": "GB",
+      "residentialCountry": "GB",
+      "ownershipPercentage": 38.4,
+      "controlType": "SHARE_OWNERSHIP",
+      "identityVerificationStatus": "VERIFIED",
+      "screeningStatus": "POTENTIAL_PEP_MATCH"
+    },
+    {
+      "partyId": "CP-003",
+      "role": "ULTIMATE_BENEFICIAL_OWNER",
+      "fullName": "Harbour Peak Investments BV",
+      "entityType": "PRIVATE_COMPANY",
+      "countryOfIncorporation": "NL",
+      "ownershipPercentage": 31.2,
+      "controlType": "INDIRECT_SHARE_OWNERSHIP",
+      "beneficialOwnershipResolved": true,
+      "screeningStatus": "CLEAR"
+    }
+  ],
+  "ownershipAndControl": {
+    "uboDiscoveryRequired": true,
+    "uboDiscoveryStatus": "COMPLETED",
+    "ownershipThresholdPercent": 25,
+    "controlStructureVerified": true,
+    "layers": [
+      {
+        "level": 1,
+        "entityName": "Northstar Manufacturing Holdings Limited",
+        "owners": [
+          {
+            "ownerName": "Daniel James Whitmore",
+            "ownerType": "NATURAL_PERSON",
+            "ownershipPercentage": 38.4,
+            "ubo": true
+          },
+          {
+            "ownerName": "Harbour Peak Investments BV",
+            "ownerType": "LEGAL_ENTITY",
+            "ownershipPercentage": 31.2,
+            "ubo": false
+          },
+          {
+            "ownerName": "Employee Share Trust",
+            "ownerType": "TRUST",
+            "ownershipPercentage": 12.8,
+            "ubo": false
+          },
+          {
+            "ownerName": "Minority Shareholders",
+            "ownerType": "AGGREGATED_HOLDERS",
+            "ownershipPercentage": 17.6,
+            "ubo": false
+          }
+        ]
+      },
+      {
+        "level": 2,
+        "entityName": "Harbour Peak Investments BV",
+        "owners": [
+          {
+            "ownerName": "Sophie Van Dijk",
+            "ownerType": "NATURAL_PERSON",
+            "ownershipPercentage": 62.5,
+            "effectiveOwnershipPercentage": 19.5,
+            "ubo": false,
+            "reason": "Below configured 25 percent effective ownership threshold"
+          }
+        ]
+      }
+    ]
+  },
+  "documents": [
+    {
+      "documentId": "DOC-CERT-INC-001",
+      "type": "CertificateOfIncorporation",
+      "status": "VERIFIED",
+      "source": "CompanyRegistry"
+    },
+    {
+      "documentId": "DOC-OWNERSHIP-CHART-002",
+      "type": "OwnershipChart",
+      "status": "VERIFIED",
+      "source": "ClientUpload"
+    },
+    {
+      "documentId": "DOC-ARTICLES-003",
+      "type": "ArticlesOfAssociation",
+      "status": "VERIFIED",
+      "source": "CompanyRegistry"
+    },
+    {
+      "documentId": "DOC-SOURCE-FUNDS-004",
+      "type": "SourceOfFundsStatement",
+      "status": "REQUESTED",
+      "source": "Client"
+    },
+    {
+      "documentId": "DOC-AUDITED-ACCOUNTS-005",
+      "type": "LatestAuditedAccounts",
+      "status": "REQUESTED",
+      "source": "Client"
+    }
+  ],
+  "verificationResults": {
+    "companyRegistryCheck": {
+      "status": "PASS",
+      "companyStatus": "ACTIVE",
+      "registeredAddressMatched": true,
+      "officersMatched": true
+    },
+    "identityVerification": {
+      "status": "PASS",
+      "checkedParties": ["CP-001", "CP-002"]
+    },
+    "sanctionsScreening": {
+      "status": "CLEAR",
+      "screenedSubjects": [
+        "Northstar Manufacturing Holdings Limited",
+        "Amelia Rachel Turner",
+        "Daniel James Whitmore",
+        "Harbour Peak Investments BV",
+        "Sophie Van Dijk"
+      ]
+    },
+    "pepScreening": {
+      "status": "POTENTIAL_MATCH",
+      "matches": [
+        {
+          "matchId": "PEP-MATCH-77291",
+          "subjectPartyId": "CP-002",
+          "matchedName": "Daniel J Whitmore",
+          "matchStrength": 0.82,
+          "category": "FORMER_LOCAL_GOVERNMENT_OFFICIAL",
+          "requiresReview": true
+        }
+      ]
+    },
+    "adverseMediaScreening": {
+      "status": "REVIEW_REQUIRED",
+      "matches": [
+        {
+          "matchId": "MEDIA-448120",
+          "subject": "Northstar Manufacturing",
+          "category": "REGULATORY_FINE",
+          "summary": "Historical health and safety fine from 2021",
+          "materiality": "LOW",
+          "requiresReview": true
+        }
+      ]
+    },
+    "fraudAndDeviceChecks": {
+      "status": "PASS",
+      "applicationIpCountry": "GB",
+      "emailDomainAgeDays": 3912,
+      "suspiciousDeviceSignals": false
+    }
+  }
+}

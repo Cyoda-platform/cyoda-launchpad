@@ -1,0 +1,599 @@
+{
+  "applicationMetadata": {
+    "applicationId": "APP-99283-XJ",
+    "status": "UNDER_REVIEW",
+    "submissionDate": "2026-04-30T10:00:00Z",
+    "lastUpdated": "2026-04-30T14:22:00Z",
+    "channel": "RELATIONSHIP_MANAGER",
+    "sourceBranch": "BR-SEA-014",
+    "assignedRelationshipManager": {
+      "employeeId": "EMP-4471",
+      "name": "Marcus Chen"
+    },
+    "assignedUnderwriter": {
+      "employeeId": "EMP-2289",
+      "name": "Priya Natarajan"
+    },
+    "relatedApplications": [],
+    "decisionTarget": "2026-05-21",
+    "internalRiskRating": null,
+    "decisionRationale": null
+  },
+  "borrower": {
+    "legalName": "Acme Industrial Solutions Services LLC",
+    "dba": "Acme Heavy Tech",
+    "entityType": "US_LLC",
+    "jurisdictionOfFormation": {
+      "country": "US",
+      "stateOrProvince": "DE"
+    },
+    "jurisdictionOfOperation": {
+      "country": "US",
+      "stateOrProvince": "WA"
+    },
+    "governingLawPreference": "US_WA",
+    "dateOfFormation": "2012-06-04",
+    "taxIds": [
+      {
+        "type": "US_EIN",
+        "value": "12-3456789"
+      }
+    ],
+    "industryClassification": {
+      "system": "NAICS_2022",
+      "code": "332111",
+      "description": "Iron and Steel Forging"
+    },
+    "registeredAddress": {
+      "street": "12300 Enterprise Way",
+      "city": "Seattle",
+      "stateOrProvince": "WA",
+      "postalCode": "98108",
+      "country": "US"
+    },
+    "primaryOperatingAddress": {
+      "sameAsRegistered": true
+    },
+    "websiteUrl": "https://www.acmeheavytech.example",
+    "employeeCount": 142,
+    "yearsInBusiness": 13
+  },
+  "facilities": [
+    {
+      "facilityId": "FAC-001",
+      "type": "TERM_LOAN",
+      "amount": 5000000,
+      "currency": "USD",
+      "termMonths": 60,
+      "purpose": "CAPITAL_EXPENDITURE",
+      "amortization": {
+        "type": "STRAIGHT_LINE",
+        "balloonAmount": 0,
+        "interestOnlyMonths": 6
+      },
+      "repaymentFrequency": "QUARTERLY",
+      "pricing": {
+        "interestType": "FLOATING",
+        "referenceRate": "TERM_SOFR_3M",
+        "spreadBps": 325,
+        "floorBps": 100,
+        "ceilingBps": null,
+        "allInRateAtIssuance": null
+      },
+      "fees": {
+        "originationBps": 75,
+        "commitmentFeeBps": 0,
+        "unusedLineFeeBps": 0,
+        "prepaymentPenalty": {
+          "schedule": "DECLINING_3_2_1",
+          "appliesToVoluntaryOnly": true
+        }
+      }
+    },
+    {
+      "facilityId": "FAC-002",
+      "type": "REVOLVING_LINE_OF_CREDIT",
+      "amount": 1500000,
+      "currency": "USD",
+      "termMonths": 24,
+      "purpose": "WORKING_CAPITAL",
+      "borrowingBase": {
+        "isBorrowingBaseFacility": true,
+        "components": [
+          {
+            "collateralRef": "COL-002",
+            "advanceRate": 0.8,
+            "eligibilityCap": 850000
+          }
+        ],
+        "reportingFrequency": "MONTHLY"
+      },
+      "pricing": {
+        "interestType": "FLOATING",
+        "referenceRate": "TERM_SOFR_1M",
+        "spreadBps": 275,
+        "floorBps": 100
+      },
+      "fees": {
+        "commitmentFeeBps": 25,
+        "unusedLineFeeBps": 50
+      }
+    }
+  ],
+  "useOfProceeds": [
+    {
+      "facilityRef": "FAC-001",
+      "category": "EQUIPMENT_PURCHASE",
+      "description": "Two CNC forging presses (Schuler MSP-2500)",
+      "amount": 3800000,
+      "vendor": "Schuler North America",
+      "expectedDrawDate": "2026-07-15"
+    },
+    {
+      "facilityRef": "FAC-001",
+      "category": "FACILITY_BUILDOUT",
+      "description": "Foundation reinforcement and electrical upgrades for new line",
+      "amount": 1200000,
+      "expectedDrawDate": "2026-08-30"
+    }
+  ],
+  "financials": {
+    "reportingCurrency": "USD",
+    "preparationBasis": "US_GAAP_ACCRUAL",
+    "historicals": [
+      {
+        "fiscalYear": 2023,
+        "isAudited": true,
+        "auditor": "Moss Adams LLP",
+        "revenue": 18900000,
+        "cogs": 13200000,
+        "grossProfit": 5700000,
+        "operatingExpenses": 2400000,
+        "ebitda": 3500000,
+        "depreciationAmortization": 620000,
+        "interestExpense": 410000,
+        "netIncome": 1820000,
+        "cashFromOperations": 2900000,
+        "capex": 1100000,
+        "totalAssets": 14200000,
+        "totalLiabilities": 7100000,
+        "totalEquity": 7100000
+      },
+      {
+        "fiscalYear": 2024,
+        "isAudited": true,
+        "auditor": "Moss Adams LLP",
+        "revenue": 20800000,
+        "cogs": 14300000,
+        "grossProfit": 6500000,
+        "operatingExpenses": 2700000,
+        "ebitda": 3900000,
+        "depreciationAmortization": 680000,
+        "interestExpense": 450000,
+        "netIncome": 2050000,
+        "cashFromOperations": 3200000,
+        "capex": 950000,
+        "totalAssets": 15400000,
+        "totalLiabilities": 7600000,
+        "totalEquity": 7800000
+      },
+      {
+        "fiscalYear": 2025,
+        "isAudited": true,
+        "auditor": "Moss Adams LLP",
+        "revenue": 22500000,
+        "cogs": 15400000,
+        "grossProfit": 7100000,
+        "operatingExpenses": 2900000,
+        "ebitda": 4200000,
+        "depreciationAmortization": 720000,
+        "interestExpense": 480000,
+        "netIncome": 2240000,
+        "cashFromOperations": 3450000,
+        "capex": 1050000,
+        "totalAssets": 16800000,
+        "totalLiabilities": 8000000,
+        "totalEquity": 8800000
+      }
+    ],
+    "interim": {
+      "periodStart": "2026-01-01",
+      "periodEnd": "2026-03-31",
+      "isAudited": false,
+      "isReviewed": true,
+      "revenue": 6100000,
+      "ebitda": 1180000,
+      "netIncome": 590000,
+      "cashAndEquivalents": 1450000
+    },
+    "projections": [
+      {
+        "fiscalYear": 2026,
+        "revenue": 25500000,
+        "ebitda": 4900000,
+        "capex": 5200000
+      },
+      {
+        "fiscalYear": 2027,
+        "revenue": 28200000,
+        "ebitda": 5800000,
+        "capex": 1200000
+      },
+      {
+        "fiscalYear": 2028,
+        "revenue": 30100000,
+        "ebitda": 6300000,
+        "capex": 1300000
+      }
+    ],
+    "keyRatios": {
+      "asOf": "2025-12-31",
+      "currentRatio": 1.85,
+      "debtToEbitda": 1.9,
+      "debtServiceCoverageRatio": 2.45,
+      "fixedChargeCoverageRatio": 2.1,
+      "interestCoverageRatio": 8.75
+    }
+  },
+  "existingDebt": [
+    {
+      "debtId": "DEBT-001",
+      "lender": "First Cascade Bank",
+      "type": "TERM_LOAN",
+      "originalAmount": 2500000,
+      "outstandingBalance": 1450000,
+      "interestRate": 6.25,
+      "rateType": "FIXED",
+      "maturityDate": "2028-09-30",
+      "monthlyPayment": 48500,
+      "secured": true,
+      "lienPosition": 1,
+      "collateralRef": "COL-001",
+      "willBeRefinanced": false
+    },
+    {
+      "debtId": "DEBT-002",
+      "lender": "Pacific Equipment Finance",
+      "type": "EQUIPMENT_LEASE",
+      "originalAmount": 1800000,
+      "outstandingBalance": 920000,
+      "interestRate": 7.1,
+      "rateType": "FIXED",
+      "maturityDate": "2029-03-15",
+      "monthlyPayment": 32100,
+      "secured": true,
+      "lienPosition": 1,
+      "willBeRefinanced": false
+    },
+    {
+      "debtId": "DEBT-003",
+      "lender": "Northshore Credit Union",
+      "type": "REVOLVING_LINE_OF_CREDIT",
+      "originalAmount": 1000000,
+      "outstandingBalance": 380000,
+      "interestRate": 8.5,
+      "rateType": "FLOATING",
+      "maturityDate": "2026-12-01",
+      "secured": false,
+      "willBeRefinanced": true,
+      "refinanceFacilityRef": "FAC-002"
+    }
+  ],
+  "collateral": [
+    {
+      "collateralId": "COL-001",
+      "type": "REAL_ESTATE",
+      "description": "Manufacturing Plant - 12300 Enterprise Way, Seattle WA",
+      "estimatedValue": 3200000,
+      "valuation": {
+        "valuationDate": "2026-01-15",
+        "method": "FULL_APPRAISAL_INCOME_AND_COST",
+        "appraiser": "CBRE Valuation Advisory",
+        "appraiserLicense": "WA-CGA-22841"
+      },
+      "existingLiens": [
+        {
+          "debtRef": "DEBT-001",
+          "balance": 1450000,
+          "position": 1
+        }
+      ],
+      "lienPositionOffered": 2,
+      "netCollateralValue": 1750000,
+      "facilityRef": "FAC-001",
+      "insurancePolicyRef": "INS-002"
+    },
+    {
+      "collateralId": "COL-002",
+      "type": "ACCOUNTS_RECEIVABLE",
+      "description": "General AR Ledger - eligible domestic receivables under 90 days",
+      "estimatedValue": 850000,
+      "valuation": {
+        "valuationDate": "2026-03-31",
+        "method": "AGED_AR_REPORT",
+        "source": "BORROWER_PROVIDED"
+      },
+      "advanceRate": 0.8,
+      "concentrationLimits": {
+        "singleObligorMaxPct": 0.2,
+        "ineligibleAgingDays": 90
+      },
+      "existingLiens": [],
+      "lienPositionOffered": 1,
+      "facilityRef": "FAC-002"
+    },
+    {
+      "collateralId": "COL-003",
+      "type": "EQUIPMENT",
+      "description": "Schuler MSP-2500 forging presses (financed under FAC-001)",
+      "estimatedValue": 3800000,
+      "valuation": {
+        "valuationDate": "2026-04-12",
+        "method": "PURCHASE_INVOICE",
+        "source": "VENDOR_QUOTE"
+      },
+      "existingLiens": [],
+      "lienPositionOffered": 1,
+      "facilityRef": "FAC-001"
+    }
+  ],
+  "beneficialOwners": [
+    {
+      "ownerId": "OWN-001",
+      "name": "Jane Doe",
+      "ownerType": "INDIVIDUAL",
+      "ownershipPercentage": 60,
+      "role": "CEO",
+      "isControlPerson": true,
+      "isGuarantor": true,
+      "guarantorRef": "GTR-001",
+      "kycStatus": "VERIFIED",
+      "kycDate": "2026-04-22"
+    },
+    {
+      "ownerId": "OWN-002",
+      "name": "Robert Kim",
+      "ownerType": "INDIVIDUAL",
+      "ownershipPercentage": 28,
+      "role": "CTO",
+      "isControlPerson": false,
+      "isGuarantor": false,
+      "kycStatus": "VERIFIED",
+      "kycDate": "2026-04-22"
+    },
+    {
+      "ownerId": "OWN-003",
+      "name": "Cascade Founders Fund II LP",
+      "ownerType": "ENTITY",
+      "ownershipPercentage": 12,
+      "role": "INVESTOR",
+      "isControlPerson": false,
+      "isGuarantor": false,
+      "kycStatus": "VERIFIED",
+      "kycDate": "2026-04-23"
+    }
+  ],
+  "ownershipSumPct": 100,
+  "guarantors": [
+    {
+      "guarantorId": "GTR-001",
+      "name": "Jane Doe",
+      "guaranteeType": "PERSONAL_UNLIMITED",
+      "jointAndSeveral": false,
+      "personalFinancialStatement": {
+        "asOf": "2026-03-31",
+        "totalAssets": 8400000,
+        "liquidAssets": 1900000,
+        "totalLiabilities": 2100000,
+        "netWorth": 6300000,
+        "annualIncome": 540000,
+        "contingentLiabilities": 1450000
+      },
+      "creditScore": {
+        "bureau": "EXPERIAN",
+        "score": 782,
+        "pulledDate": "2026-04-25"
+      }
+    }
+  ],
+  "creditProfile": {
+    "businessCreditReport": {
+      "bureau": "DUN_AND_BRADSTREET",
+      "dunsNumber": "07-892-4451",
+      "paydexScore": 78,
+      "pulledDate": "2026-04-26"
+    },
+    "bankingRelationships": [
+      {
+        "institution": "First Cascade Bank",
+        "accountTypes": [
+          "OPERATING",
+          "PAYROLL"
+        ],
+        "averageBalance12m": 1250000,
+        "nsfEvents12m": 0,
+        "relationshipYears": 9
+      }
+    ],
+    "tradeReferences": [
+      {
+        "vendor": "Carpenter Technology",
+        "yearsOfRelationship": 8,
+        "averageMonthlyVolume": 180000,
+        "paymentRating": "PAYS_NET_30"
+      }
+    ],
+    "publicRecords": {
+      "bankruptciesLast10Years": 0,
+      "judgmentsOutstanding": 0,
+      "taxLiensOutstanding": 0,
+      "ucc1FilingsActive": 2
+    }
+  },
+  "compliance": {
+    "insurance": [
+      {
+        "policyId": "INS-001",
+        "type": "GENERAL_LIABILITY",
+        "carrier": "Travelers",
+        "coverageLimit": 5000000,
+        "expirationDate": "2026-11-30",
+        "lenderListedAsAdditionalInsured": false
+      },
+      {
+        "policyId": "INS-002",
+        "type": "PROPERTY",
+        "carrier": "Chubb",
+        "coverageLimit": 4500000,
+        "expirationDate": "2026-09-15",
+        "lenderListedAsAdditionalInsured": true,
+        "coversCollateralRef": "COL-001"
+      }
+    ],
+    "taxStatus": {
+      "federalFilingsCurrent": true,
+      "stateFilingsCurrent": true,
+      "outstandingTaxBalances": 0,
+      "lastFilingYear": 2025
+    },
+    "litigation": {
+      "hasMaterialPendingLitigation": false,
+      "matters": []
+    },
+    "environmental": {
+      "phaseIAssessmentCompleted": true,
+      "phaseIDate": "2026-02-08",
+      "recAreasIdentified": false,
+      "phaseIIRequired": false
+    },
+    "ofacScreening": {
+      "borrowerCleared": true,
+      "ownersCleared": true,
+      "screeningDate": "2026-04-26"
+    }
+  },
+  "proposedCovenants": {
+    "financial": [
+      {
+        "name": "MIN_DSCR",
+        "threshold": 1.25,
+        "testFrequency": "QUARTERLY"
+      },
+      {
+        "name": "MAX_TOTAL_LEVERAGE",
+        "threshold": 3.5,
+        "testFrequency": "QUARTERLY"
+      },
+      {
+        "name": "MIN_LIQUIDITY",
+        "threshold": 750000,
+        "currency": "USD",
+        "testFrequency": "QUARTERLY"
+      }
+    ],
+    "negative": [
+      "NO_ADDITIONAL_INDEBTEDNESS_ABOVE_500K_WITHOUT_CONSENT",
+      "NO_DIVIDENDS_IF_DSCR_BELOW_1.50",
+      "NO_CHANGE_OF_CONTROL_WITHOUT_CONSENT"
+    ],
+    "affirmative": [
+      "MAINTAIN_PRIMARY_DEPOSIT_RELATIONSHIP",
+      "ANNUAL_AUDITED_FINANCIALS_WITHIN_120_DAYS",
+      "QUARTERLY_COMPLIANCE_CERTIFICATE"
+    ]
+  },
+  "reportingRequirements": [
+    {
+      "deliverable": "AUDITED_ANNUAL_FINANCIALS",
+      "frequency": "ANNUAL",
+      "dueWithinDays": 120
+    },
+    {
+      "deliverable": "INTERNAL_QUARTERLY_FINANCIALS",
+      "frequency": "QUARTERLY",
+      "dueWithinDays": 45
+    },
+    {
+      "deliverable": "BORROWING_BASE_CERTIFICATE",
+      "frequency": "MONTHLY",
+      "dueWithinDays": 20,
+      "facilityRef": "FAC-002"
+    },
+    {
+      "deliverable": "AR_AGING_REPORT",
+      "frequency": "MONTHLY",
+      "dueWithinDays": 20,
+      "facilityRef": "FAC-002"
+    },
+    {
+      "deliverable": "COMPLIANCE_CERTIFICATE",
+      "frequency": "QUARTERLY",
+      "dueWithinDays": 45
+    }
+  ],
+  "documentChecklist": [
+    {
+      "documentType": "ARTICLES_OF_ORGANIZATION",
+      "status": "RECEIVED",
+      "receivedDate": "2026-04-22"
+    },
+    {
+      "documentType": "OPERATING_AGREEMENT",
+      "status": "RECEIVED",
+      "receivedDate": "2026-04-22"
+    },
+    {
+      "documentType": "AUDITED_FINANCIALS_3YR",
+      "status": "RECEIVED",
+      "receivedDate": "2026-04-22"
+    },
+    {
+      "documentType": "INTERIM_FINANCIALS_Q1_2026",
+      "status": "RECEIVED",
+      "receivedDate": "2026-04-25"
+    },
+    {
+      "documentType": "BUSINESS_TAX_RETURNS_3YR",
+      "status": "RECEIVED",
+      "receivedDate": "2026-04-23"
+    },
+    {
+      "documentType": "REAL_ESTATE_APPRAISAL",
+      "status": "RECEIVED",
+      "receivedDate": "2026-04-26"
+    },
+    {
+      "documentType": "EQUIPMENT_PURCHASE_QUOTES",
+      "status": "RECEIVED",
+      "receivedDate": "2026-04-22"
+    },
+    {
+      "documentType": "PERSONAL_FINANCIAL_STATEMENT_GUARANTOR",
+      "status": "RECEIVED",
+      "receivedDate": "2026-04-24"
+    },
+    {
+      "documentType": "PHASE_I_ENVIRONMENTAL",
+      "status": "RECEIVED",
+      "receivedDate": "2026-04-26"
+    },
+    {
+      "documentType": "INSURANCE_CERTIFICATES",
+      "status": "PENDING_LENDER_AS_AI",
+      "expectedDate": "2026-05-10"
+    },
+    {
+      "documentType": "UCC_LIEN_SEARCH",
+      "status": "IN_PROGRESS"
+    }
+  ],
+  "conditionsPrecedent": [
+    "EXECUTED_LOAN_AGREEMENT_AND_NOTES",
+    "SECOND_LIEN_DEED_OF_TRUST_RECORDED_ON_COL-001",
+    "FIRST_LIEN_UCC1_FILED_ON_COL-002_AND_COL-003",
+    "PERSONAL_GUARANTEE_EXECUTED_BY_GTR-001",
+    "INSURANCE_CERTIFICATES_NAMING_LENDER_AS_ADDITIONAL_INSURED_AND_LOSS_PAYEE",
+    "OFAC_AND_KYC_CLEARANCE_ALL_PARTIES",
+    "NO_MATERIAL_ADVERSE_CHANGE_CERTIFICATE"
+  ]
+}

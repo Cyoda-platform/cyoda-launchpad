@@ -142,15 +142,15 @@ const Index = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
               <UseCaseCard
                 icon={Building2}
-                title="Loan Origination & Lifecycle"
-                description="Full state machine from application to settlement, with immutable event history and concurrent consistency."
+                title="Corporate Loan Origination & Lifecycle"
+                description="Model borrower-company origination, credit assessment, approval conditions, drawdown, and servicing in one governed entity lifecycle."
                 href="/use-cases/loan-lifecycle"
               />
               <UseCaseCard
                   icon={Bot}
-                  title="Governed AI Actions"
-                  description="AI agents must be accountable, not just capable. Cyoda runs agent actions through governed workflows and records each state change as an immutable event, so teams can audit decisions, trace outcomes, and prove control over autonomous behaviour."
-                  href="/use-cases/governed-ai-actions"
+                  title="Governed Agentic Workflows"
+                  description="AI agents need governance when they act on enterprise systems. Cyoda runs agent decisions through entity workflows, records each state change, and keeps the context needed to audit, review, or reverse the outcome."
+                  href="/use-cases/governed-agentic-workflows"
               />
               <UseCaseCard
                 icon={UserCheck}
@@ -171,7 +171,7 @@ const Index = () => {
                 to="/use-cases"
                 className="text-primary font-medium hover:underline focus-visible:ring-2 focus-visible:ring-primary rounded"
               >
-                See all use cases
+                See more examples
               </Link>
             </div>
           </div>

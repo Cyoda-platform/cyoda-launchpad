@@ -7,36 +7,36 @@ import { Card, CardContent } from '@/components/ui/card';
 import { CheckCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import GovernedAiActionsWorkflowViewer from '@/components/GovernedAiActionsWorkflowViewer';
+import UseCaseIllustrativeNote from '@/components/UseCaseIllustrativeNote';
 
 const entityLifecycleChanges = [
-  'The requested action is held on the AgentAction entity, not passed around as workflow-local state.',
-  'Authority checks, captured context, review outcomes, and execution results stay on the same entity record.',
-  'Low-risk actions can flow through criteria-driven transitions without sacrificing auditability.',
-  'Human review is part of the lifecycle when the workflow criteria require it.',
-  'Execution, reversal, failure handling, and exception state remain queryable on one entity history.',
-  'The action record is reconstructable at any point in time.',
+  'Agent proposals become part of an entity lifecycle, not disconnected tool output.',
+  'Business state changes only through valid workflow transitions.',
+  'Human review can be required for high-risk or low-confidence actions.',
+  'Failures, retries, reversals, and exceptions remain visible in the same entity history.',
+  'Teams can reconstruct what the agent knew, what checks ran, who approved the action, and why the entity moved state.',
 ];
 
 const productionControls = [
   {
-    title: 'Snapshot reconstruction for explainability',
+    title: 'Controlled execution',
     body:
-      'Teams can reconstruct the exact action state, captured context, review outcome, and execution result at the moment an action was proposed or executed.',
+      'AI-driven actions move through explicit workflow transitions rather than hidden prompt logic.',
   },
   {
-    title: 'Governed authorization',
+    title: 'Decision reconstruction',
     body:
-      'An autonomous recommendation does not equal a direct production mutation. Authority checks, review decisions, and operator override remain part of the write path.',
+      'Teams can review the context, criteria, proposal, approval, and outcome associated with each state change.',
   },
   {
-    title: 'Reversal, exception, and retry discipline',
+    title: 'Human review where it matters',
     body:
-      'Failed or contested actions move through explicit states. Reversal, retry, escalation, and reassessment are entity-lifecycle behavior, not scattered log analysis.',
+      'Manual transitions can be required for high-risk actions without blocking lower-risk automation.',
   },
   {
-    title: 'Less custom control plumbing',
+    title: 'Audit trail by design',
     body:
-      'Teams do not need to stitch together a separate control layer around every promising autonomous workflow just to make it safe for production.',
+      'Each action becomes part of the entity’s ordered history instead of a log trail added later.',
   },
 ];
 
@@ -44,9 +44,9 @@ const UseCaseGovernedAiActions = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Governed AI Actions | Cyoda"
-        description="AI agents acting in enterprise systems must be accountable, not just capable. Cyoda runs agent actions through governed workflows and records each state change as an immutable event."
-        url="https://cyoda.com/use-cases/governed-ai-actions"
+        title="Governed Agentic Workflows | Cyoda"
+        description="Use Cyoda to govern AI-driven business actions through entity workflows, traceable state transitions, audit history, and decision reconstruction."
+        url="https://cyoda.com/use-cases/governed-agentic-workflows"
         type="website"
         jsonLd={[organizationSchema, breadcrumbGovernedAiActions]}
       />
@@ -55,19 +55,19 @@ const UseCaseGovernedAiActions = () => {
         <section className="py-16 md:py-20 bg-background">
           <div className="container mx-auto px-4 max-w-5xl">
             <p className="text-xs font-semibold text-primary uppercase tracking-widest mb-3">
-              Use case · Governed AI actions
+              USE CASE
             </p>
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4 max-w-4xl leading-tight">
-              Governed AI Actions
+              Governed Agentic Workflows
             </h1>
             <p className="text-lg font-medium text-foreground/90 mb-5 max-w-3xl leading-relaxed">
-              Governance lifecycle for autonomous enterprise actions
+              Control, audit, and reconstruct AI-driven business actions
             </p>
             <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">
-              AI agents acting in enterprise systems must be accountable, not just capable. Cyoda
-              runs agent actions through governed workflows and records each state change as an
-              immutable event, so teams can audit decisions, trace outcomes, and prove control over
-              autonomous behaviour.
+              AI agents can draft, recommend, and trigger business actions. In regulated systems,
+              that is not enough. Cyoda runs those actions through governed entity workflows,
+              records every state change, and keeps the decision context traceable so teams can
+              audit what happened, who or what acted, and why the system moved state.
             </p>
           </div>
         </section>
@@ -80,23 +80,20 @@ const UseCaseGovernedAiActions = () => {
                   The problem
                 </p>
                 <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-5">
-                  Autonomous actions need an entity lifecycle, not a sidecar approval trail.
+                  AI actions need a governed lifecycle
                 </h2>
                 <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
                   <p>
-                    An autonomous system can recommend or trigger a production change in seconds.
-                    The hard part is proving what context it saw, what checks were performed, who
-                    approved it, what changed, and how failures or reversals were handled.
+                    Agent frameworks can call tools, memory systems can recall context, and
+                    orchestration tools can run steps. The hard part in an enterprise system is
+                    proving that an AI-driven business action was allowed, reviewed where
+                    necessary, executed correctly, and recoverable when something goes wrong.
                   </p>
                   <p>
-                    If that context lives in one place, the requested action in another, and the
-                    approval evidence in a third, teams end up reconstructing the control story
-                    after the fact instead of governing it at write time.
-                  </p>
-                  <p>
-                    Cyoda models the autonomous action as an entity. The workflow transitions act on
-                    that entity directly, so captured context, authority checks, review decisions,
-                    execution results, and immutable history stay together.
+                    Cyoda treats the action as part of an entity workflow. The agent can propose or
+                    trigger a transition, but the platform controls whether that transition is
+                    valid, what criteria must pass, whether human review is required, and how the
+                    outcome is recorded.
                   </p>
                 </div>
               </div>
@@ -108,10 +105,11 @@ const UseCaseGovernedAiActions = () => {
                   </h3>
                   <ul className="space-y-4">
                     {[
-                      'The requested action is kept outside the system-of-record lifecycle.',
-                      'Approvals and authority checks are bolted on after the prototype.',
-                      'Execution, failure, and reversal are split across queues, logs, scripts, or manual runbooks.',
-                      'Audit requires stitching together prompts, tool traces, database state, and operator notes.',
+                      'Agent decisions sit outside the system-of-record lifecycle.',
+                      'Prompt logs and tool traces do not explain why business state changed.',
+                      'Human approval is bolted on after the AI pilot instead of modelled in the workflow.',
+                      'Recovery, reversal, and audit paths are reconstructed after the event.',
+                      'Governance rules live in application code or prompts rather than explicit workflow transitions.',
                     ].map((item) => (
                       <li key={item} className="flex items-start gap-3">
                         <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-muted-foreground/50 shrink-0" />
@@ -129,20 +127,23 @@ const UseCaseGovernedAiActions = () => {
           <div className="container mx-auto px-4 max-w-6xl">
             <div className="mb-8">
               <p className="text-xs font-semibold text-primary uppercase tracking-widest mb-3">
-                How Cyoda models it
+                How you can model it with Cyoda
               </p>
               <h2 className="text-2xl md:text-3xl font-bold text-foreground">
-                AgentAction entity workflow for governed autonomous actions
+                Entity workflow for governed agentic actions
               </h2>
               <p className="text-sm text-muted-foreground mt-2 max-w-3xl">
-                Each requested action is a Cyoda AgentAction entity. Its lifecycle is modelled as
-                an entity workflow: captured context, authority checks, proposal review, execution,
-                failure handling, reversal paths, and immutable history on that entity itself. The
-                graph below is rendered directly from the supplied workflow JSON file.
+                Each AI-driven action can be represented as an entity lifecycle. Context is
+                captured, authority and risk checks run, the agent proposal is recorded, human
+                review is required where criteria demand it, approved actions execute through
+                controlled transitions, and failures or reversals remain part of the same entity
+                history.
               </p>
             </div>
 
             <GovernedAiActionsWorkflowViewer />
+
+            <UseCaseIllustrativeNote />
           </div>
         </section>
 
@@ -152,7 +153,7 @@ const UseCaseGovernedAiActions = () => {
               The outcome
             </p>
             <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">
-              What changes when the entity lifecycle is native
+              What changes when AI actions are governed
             </h2>
             <div className="max-w-3xl space-y-4">
               {entityLifecycleChanges.map((point) => (
@@ -171,7 +172,7 @@ const UseCaseGovernedAiActions = () => {
               Regulated production
             </p>
             <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8">
-              Why this matters once autonomous actions leave the pilot
+              Why this matters once AI-driven workflows leave the pilot
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               {productionControls.map((item) => (
@@ -188,7 +189,7 @@ const UseCaseGovernedAiActions = () => {
           <div className="container mx-auto px-4 max-w-2xl text-center">
             <div className="mx-auto mb-6 w-10 h-0.5 bg-primary rounded" />
             <p className="text-xl font-medium text-foreground leading-relaxed mb-8">
-              If you are moving autonomous actions from prototype to governed production, we can
+              If you are moving AI-driven workflows from prototype to governed production, we can
               help map the entity lifecycle, control points, and audit requirements.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">

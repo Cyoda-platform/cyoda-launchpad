@@ -5,6 +5,7 @@ import { organizationSchema, breadcrumbKycOnboarding } from '@/data/schemas';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import KycOnboardingWorkflowViewer from '@/components/KycOnboardingWorkflowViewer';
+import UseCaseIllustrativeNote from '@/components/UseCaseIllustrativeNote';
 
 // ─── What changes section ─────────────────────────────────────────────────────
 
@@ -160,22 +161,22 @@ const UseCaseKycOnboarding = () => {
           </div>
         </section>
 
-        {/* Section 3 — How Cyoda models it */}
+        {/* Section 3 — How you can model it with Cyoda */}
         <section className="py-16 md:py-20 bg-background">
           <div className="mx-auto max-w-[1640px] px-4 sm:px-6 lg:px-8">
             <div className="mx-auto mb-8 max-w-6xl">
               <p className="text-xs font-semibold text-primary uppercase tracking-widest mb-3">
-                How Cyoda models it
+                How you can model it with Cyoda
               </p>
               <h2 className="text-2xl md:text-3xl font-bold text-foreground">
                 CustomerOnboardingCase entity workflow in a KYC system
               </h2>
               <p className="text-sm text-muted-foreground mt-2 max-w-2xl">
-                The CustomerOnboardingCase is a Cyoda entity. Its lifecycle is modelled as an
-                entity workflow graph — named states, criteria-driven transitions, attached
+                The CustomerOnboardingCase is a Cyoda entity. Its lifecycle can be modelled as an
+                entity workflow graph with named states, criteria-driven transitions, attached
                 processors, and immutable history on the entity, all in one consistency model. The
-                straight-through path stays fast; exceptions route into controlled case handling;
-                approval transitions into ongoing monitoring rather than a dead end.
+                straight-through path stays fast, exceptions route into controlled case handling,
+                and approval transitions into ongoing monitoring rather than a dead end.
               </p>
             </div>
 
@@ -207,6 +208,8 @@ const UseCaseKycOnboarding = () => {
                 </div>
               ))}
             </div>
+
+            <UseCaseIllustrativeNote />
           </div>
         </section>
 

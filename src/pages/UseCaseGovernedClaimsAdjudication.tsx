@@ -7,6 +7,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { CheckCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import ClaimsAdjudicationWorkflowViewer from '@/components/ClaimsAdjudicationWorkflowViewer';
+import UseCaseIllustrativeNote from '@/components/UseCaseIllustrativeNote';
 
 const entityLifecycleChanges = [
   'Proposed adjudication is held on the Claim entity, not passed around as workflow-local state.',
@@ -132,13 +133,13 @@ const UseCaseGovernedClaimsAdjudication = () => {
           <div className="container mx-auto px-4 max-w-6xl">
             <div className="mb-8">
               <p className="text-xs font-semibold text-primary uppercase tracking-widest mb-3">
-                How Cyoda models it
+                How you can model it with Cyoda
               </p>
               <h2 className="text-2xl md:text-3xl font-bold text-foreground">
                 Claim entity workflow for governed adjudication
               </h2>
               <p className="mt-2 max-w-3xl text-sm text-muted-foreground">
-                Each claim is a Cyoda Claim entity. Its lifecycle is modelled as an entity
+                Each claim is a Cyoda Claim entity. Its lifecycle can be modelled as an entity
                 workflow: captured FNOL context, coverage and authority checks, agent-drafted
                 assessment, adjuster review, adjudication, payment, failure handling, appeal, and
                 reversal paths, all as transitions on the claim itself.
@@ -152,6 +153,8 @@ const UseCaseGovernedClaimsAdjudication = () => {
             </div>
 
             <ClaimsAdjudicationWorkflowViewer />
+
+            <UseCaseIllustrativeNote />
           </div>
         </section>
 

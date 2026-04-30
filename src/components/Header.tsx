@@ -98,12 +98,11 @@ const Header = () => {
                     <p className="text-xs font-semibold text-muted-foreground uppercase tracking-widest mb-3">By Use Case</p>
                     <div className="space-y-4">
                       {[
-                        { label: 'Loan Origination & Lifecycle', sub: 'State machine from application to settlement', to: '/use-cases/loan-lifecycle' },
-                        { label: 'Governed AI Actions', sub: 'Traceable autonomous workflows', to: '/use-cases/governed-ai-actions' },
+                        { label: 'Corporate Loan Origination & Lifecycle', sub: 'Borrower company to drawdown', to: '/use-cases/loan-lifecycle' },
+                        { label: 'Governed Agentic Workflows', sub: 'Traceable AI-driven business actions', to: '/use-cases/governed-agentic-workflows' },
                         { label: 'Governed Claims Adjudication', sub: 'AI-assisted claims lifecycle', to: '/use-cases/governed-claims-adjudication' },
                         { label: 'Trade Settlement & Reporting', sub: 'Point-in-time queryable trade states', to: '/use-cases/trade-settlement' },
                         { label: 'KYC & Customer Onboarding', sub: 'Durable retry with full audit', to: '/use-cases/kyc-onboarding' },
-                        { label: 'Agentic AI for Enterprise Systems', sub: 'Transactional, auditable agent actions', to: '/use-cases/agentic-ai' },
                       ].map((item) => (
                         <NavigationMenuLink key={item.label} asChild>
                           <Link to={item.to} className="block group">
@@ -210,12 +209,11 @@ const Header = () => {
               <Link to="/comparison" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">Compare vs. alternatives</Link>
 
               <p className="py-1 text-xs font-semibold text-muted-foreground uppercase tracking-widest mt-3">Solutions</p>
-              <Link to="/use-cases/loan-lifecycle" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">Loan Origination &amp; Lifecycle</Link>
-              <Link to="/use-cases/governed-ai-actions" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">Governed AI Actions</Link>
+              <Link to="/use-cases/loan-lifecycle" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">Corporate Loan Origination &amp; Lifecycle</Link>
+              <Link to="/use-cases/governed-agentic-workflows" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">Governed Agentic Workflows</Link>
               <Link to="/use-cases/governed-claims-adjudication" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">Governed Claims Adjudication</Link>
               <Link to="/use-cases/trade-settlement" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">Trade Settlement &amp; Reporting</Link>
               <Link to="/use-cases/kyc-onboarding" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">KYC &amp; Customer Onboarding</Link>
-              <Link to="/use-cases/agentic-ai" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">Agentic AI for Enterprise Systems</Link>
               <Link to="/cto" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">For Engineering Leaders</Link>
               <Link to="/dev" className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors">For Developers</Link>
 

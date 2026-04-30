@@ -1,0 +1,105 @@
+{
+  "modelVersion": "claim/v3",
+  "claimNumber": "CLM-2026-04-0073829",
+  "lineOfBusiness": "personal_auto",
+  "jurisdiction": "US-CA",
+  "reportingChannel": "MOBILE_APP",
+  "reportedAt": "2026-04-12T14:03:11Z",
+  "lossDate": "2026-04-11T22:40:00Z",
+  "policy": {
+    "policyNumber": "POL-PA-3389441",
+    "effectiveFrom": "2025-09-01",
+    "effectiveTo": "2026-09-01",
+    "carrierEntityCode": "ACME-PA-CA",
+    "producerCode": "BRK-44012",
+    "policyVersionAtLoss": 7,
+    "endorsements": ["END-RENTAL-A", "END-OEM-PARTS"]
+  },
+  "insured": {
+    "partyId": "PRT-882140",
+    "displayName": "[REDACTED]",
+    "preferredLanguage": "en-US",
+    "contactPreference": "SMS"
+  },
+  "claimants": [
+    {
+      "claimantId": "CLT-1",
+      "partyId": "PRT-882140",
+      "role": "INSURED_DRIVER",
+      "represented": false
+    },
+    {
+      "claimantId": "CLT-2",
+      "partyId": "PRT-991733",
+      "role": "THIRD_PARTY",
+      "represented": true,
+      "counsel": {
+        "firmName": "[REDACTED]",
+        "firstNoticeOfRepresentationAt": "2026-04-13T16:22:00Z"
+      }
+    }
+  ],
+  "lossEvent": {
+    "lossType": "COLLISION_TWO_VEHICLE",
+    "faultIndicator": "INSURED_AT_FAULT_LIKELY",
+    "narrativeFromFnol": "Insured rear-ended stationary vehicle at signalized intersection; low speed; airbags did not deploy.",
+    "policeReportNumber": "SFPD-26-118944",
+    "location": {
+      "street": "16th & Folsom",
+      "city": "San Francisco",
+      "region": "CA",
+      "country": "US",
+      "geo": { "lat": 37.767, "lng": -122.417 }
+    },
+    "weatherSnapshot": {
+      "source": "NOAA-LCD",
+      "fetchedAt": "2026-04-12T14:04:51Z",
+      "conditions": "CLEAR",
+      "visibilityMiles": 10,
+      "precipitationInches": 0
+    }
+  },
+  "vehicles": [
+    {
+      "vehicleRef": "VEH-1",
+      "role": "INSURED_VEHICLE",
+      "vin": "1HGCV1F30LA*****",
+      "year": 2020,
+      "make": "Honda",
+      "model": "Accord",
+      "garagingZip": "94110",
+      "estimatedRepairCost": 6420,
+      "totalLossThresholdUsd": 14500,
+      "totalLossSuspected": false
+    },
+    {
+      "vehicleRef": "VEH-2",
+      "role": "THIRD_PARTY_VEHICLE",
+      "vin": "5YJ3E1EA7K*****",
+      "year": 2019,
+      "make": "Tesla",
+      "model": "Model 3",
+      "thirdPartyDemandAmount": 11800
+    }
+  ],
+  "coverageAssessment": {
+    "applicableCoverages": [
+      { "code": "COLL", "limitUsd": 50000, "deductibleUsd": 1000, "perOccurrence": true },
+      { "code": "BI", "limitUsd": 100000, "deductibleUsd": 0, "perPerson": true },
+      { "code": "PD", "limitUsd": 50000, "deductibleUsd": 0, "perOccurrence": true },
+      { "code": "RENT", "limitUsd": 1500, "deductibleUsd": 0, "perOccurrence": true }
+    ],
+    "exclusionsConsidered": ["EXC-RACING", "EXC-DUI"],
+    "exclusionsTriggered": []
+  },
+  "financials": {
+    "currency": "USD",
+    "reserves": {
+      "indemnity": { "collision": 6420, "bodilyInjury": 8000, "propertyDamage": 11800 },
+      "expense": { "appraisal": 350, "legal": 0 }
+    },
+    "paymentsToDate": [],
+    "subrogationPotential": "NONE",
+    "salvagePotential": "NONE"
+  }
+}

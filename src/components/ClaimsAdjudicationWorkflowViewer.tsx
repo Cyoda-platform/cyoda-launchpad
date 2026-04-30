@@ -12,32 +12,13 @@ import { WorkflowViewer } from '@cyoda/workflow-viewer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import EntityDataModelCard from '@/components/EntityDataModelCard';
 import workflowJson from '@/data/workflows/claim-workflow.json?raw';
+import claimEntitySampleJson from '@/data/examples/claim_entity_sample.json?raw';
 
 const claimEntityModel = {
   title: 'What the entity contains',
   body:
-    'The Claim entity holds the structured business information needed to govern adjudication: claim and policy identifiers, line of business, captured FNOL context, coverage and triage results, agent-drafted assessment, adjudication proposal, adjuster decisions, payment status, exception details, and audit-relevant data. The workflow controls whether the claim can advance and records the outcome.',
-  snippet: `{
-  "entity": "Claim",
-  "state": "ASSESSMENT_PROPOSED",
-  "claimNumber": "CLM-2026-0044182",
-  "policy": {
-    "policyNumber": "POL-7748231",
-    "lineOfBusiness": "AUTO_PHYSICAL_DAMAGE"
-  },
-  "assessment": {
-    "severityTier": 2,
-    "proposedReserve": 8400,
-    "confidence": 0.91
-  },
-  "review": {
-    "status": "AUTO_ELIGIBLE",
-    "authorityLimit": 10000
-  },
-  "audit": {
-    "lastTransition": "PROPOSE_ASSESSMENT"
-  }
-}`,
+    'This illustrative Claim example uses a more realistic adjudication model: policy terms, insured and claimant parties, loss-event context, vehicle data, coverage evaluation, reserves, and captured evidence all sit on the same governed entity record.',
+  snippet: claimEntitySampleJson,
 };
 
 function asImportPayload(rawWorkflowJson: string) {
@@ -168,7 +149,7 @@ export default function ClaimsAdjudicationWorkflowViewer() {
   }
 
   return (
-    <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_320px]">
+    <div className="space-y-5">
       <Card className="overflow-hidden border-border/60 bg-card/80 shadow-sm">
         <CardContent className="p-0">
           <div className="border-b border-border/60 px-5 py-4">
@@ -183,7 +164,7 @@ export default function ClaimsAdjudicationWorkflowViewer() {
               Pan to explore the claim lifecycle and select a state or transition for details.
             </p>
           </div>
-          <div className="h-[1060px] w-full bg-background md:h-[1275px]">
+          <div className="h-[clamp(40rem,70vh,76rem)] min-h-[40rem] w-full bg-background">
             <WorkflowViewer
               graph={graph}
               layout={layout ?? undefined}
@@ -195,95 +176,104 @@ export default function ClaimsAdjudicationWorkflowViewer() {
         </CardContent>
       </Card>
 
-      <Card className="border-border/60 bg-card/80 shadow-sm">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-base">Entity lifecycle detail</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3 text-sm">
-          {!selected && (
-            <>
-              <p className="text-muted-foreground">
-                Select a state or transition to inspect the entity lifecycle semantics.
-              </p>
-              <div className="rounded-lg border border-primary/20 bg-primary/[0.03] p-4">
-                <p className="font-medium text-foreground">Claim entity workflow JSON</p>
-                <p className="mt-1 text-muted-foreground">
-                  This viewer is driven directly from the supplied Claim entity workflow file,
-                  including FNOL capture, coverage checks, assessment proposal, adjuster review,
-                  payment, appeal, failure, and reversal paths.
-                </p>
-              </div>
-            </>
-          )}
+      <div className="grid items-start gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(320px,24rem)]">
+        <EntityDataModelCard
+          {...claimEntityModel}
+          className="border-border/60 bg-card/80 shadow-sm"
+          codeClassName="min-h-[24rem] max-h-[clamp(28rem,56vh,44rem)] text-[12px] leading-6"
+          dialogTitle="Illustrative claims adjudication entity model"
+          dialogDescription="A larger view of the illustrative Claim entity example used on this page."
+          dialogTriggerLabel="Open larger model window"
+        />
 
-          {selected?.kind === 'node' && selected.node.kind === 'state' && (
-            <StateDetail node={selected.node} />
-          )}
-
-          {selected?.kind === 'node' && selected.node.kind === 'startMarker' && (
-            <>
-              <p className="text-xs font-semibold uppercase tracking-widest text-primary">
-                ENTITY ENTRY
-              </p>
-              <p className="text-lg font-semibold text-foreground">Lifecycle start</p>
-              <p className="text-muted-foreground">
-                This marks the initial entry into the Claim entity lifecycle.
-              </p>
-            </>
-          )}
-
-          {selected?.kind === 'edge' && (
-            <>
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-widest text-primary">
-                  ENTITY TRANSITION
-                </p>
-                <p className="mt-1 text-lg font-semibold text-foreground">
-                  {selected.edge.label}
-                </p>
-              </div>
-              <p className="text-muted-foreground">
-                Path:{' '}
-                <span className="text-foreground">
-                  {stateLabel(nodesById.get(selected.edge.sourceId))} to{' '}
-                  {stateLabel(nodesById.get(selected.edge.targetId))}
-                </span>
-              </p>
-              <p className="text-muted-foreground">
-                Manual: <span className="text-foreground">{selected.edge.manual ? 'Yes' : 'No'}</span>
-              </p>
-              <p className="text-muted-foreground">
-                Execution:{' '}
-                <span className="text-foreground">
-                  {formatExecution(selected.edge.summary.execution?.kind) ?? 'Default'}
-                </span>
-              </p>
-              {describeCriterion(selected.edge.summary.criterion) && (
+        <Card className="h-full min-h-[24rem] border-border/60 bg-card/80 shadow-sm xl:sticky xl:top-20">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-base">Entity lifecycle detail</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3 text-sm">
+            {!selected && (
+              <>
                 <p className="text-muted-foreground">
-                  Criterion:{' '}
+                  Select a state or transition to inspect the entity lifecycle semantics.
+                </p>
+                <div className="rounded-lg border border-primary/20 bg-primary/[0.03] p-4">
+                  <p className="font-medium text-foreground">Claim entity workflow JSON</p>
+                  <p className="mt-1 text-muted-foreground">
+                    This viewer is driven directly from the supplied Claim entity workflow file,
+                    including FNOL capture, coverage checks, assessment proposal, adjuster review,
+                    payment, appeal, failure, and reversal paths.
+                  </p>
+                </div>
+              </>
+            )}
+
+            {selected?.kind === 'node' && selected.node.kind === 'state' && (
+              <StateDetail node={selected.node} />
+            )}
+
+            {selected?.kind === 'node' && selected.node.kind === 'startMarker' && (
+              <>
+                <p className="text-xs font-semibold uppercase tracking-widest text-primary">
+                  ENTITY ENTRY
+                </p>
+                <p className="text-lg font-semibold text-foreground">Lifecycle start</p>
+                <p className="text-muted-foreground">
+                  This marks the initial entry into the Claim entity lifecycle.
+                </p>
+              </>
+            )}
+
+            {selected?.kind === 'edge' && (
+              <>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-widest text-primary">
+                    ENTITY TRANSITION
+                  </p>
+                  <p className="mt-1 text-lg font-semibold text-foreground">
+                    {selected.edge.label}
+                  </p>
+                </div>
+                <p className="text-muted-foreground">
+                  Path:{' '}
                   <span className="text-foreground">
-                    {describeCriterion(selected.edge.summary.criterion)}
+                    {stateLabel(nodesById.get(selected.edge.sourceId))} to{' '}
+                    {stateLabel(nodesById.get(selected.edge.targetId))}
                   </span>
                 </p>
-              )}
-              {selected.edge.summary.processor?.kind === 'single' && (
                 <p className="text-muted-foreground">
-                  Processor:{' '}
-                  <span className="text-foreground">{selected.edge.summary.processor.name}</span>
+                  Manual: <span className="text-foreground">{selected.edge.manual ? 'Yes' : 'No'}</span>
                 </p>
-              )}
-              {selected.edge.summary.processor?.kind === 'multiple' && (
                 <p className="text-muted-foreground">
-                  Processors:{' '}
-                  <span className="text-foreground">{selected.edge.summary.processor.count}</span>
+                  Execution:{' '}
+                  <span className="text-foreground">
+                    {formatExecution(selected.edge.summary.execution?.kind) ?? 'Default'}
+                  </span>
                 </p>
-              )}
-            </>
-          )}
-
-          <EntityDataModelCard {...claimEntityModel} />
-        </CardContent>
-      </Card>
+                {describeCriterion(selected.edge.summary.criterion) && (
+                  <p className="text-muted-foreground">
+                    Criterion:{' '}
+                    <span className="text-foreground">
+                      {describeCriterion(selected.edge.summary.criterion)}
+                    </span>
+                  </p>
+                )}
+                {selected.edge.summary.processor?.kind === 'single' && (
+                  <p className="text-muted-foreground">
+                    Processor:{' '}
+                    <span className="text-foreground">{selected.edge.summary.processor.name}</span>
+                  </p>
+                )}
+                {selected.edge.summary.processor?.kind === 'multiple' && (
+                  <p className="text-muted-foreground">
+                    Processors:{' '}
+                    <span className="text-foreground">{selected.edge.summary.processor.count}</span>
+                  </p>
+                )}
+              </>
+            )}
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }

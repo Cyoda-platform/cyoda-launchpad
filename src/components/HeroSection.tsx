@@ -16,7 +16,7 @@ type HeroProps = {
 
 /**
  * Workflow audit artefact, the right-hand product visual.
- * Shows a Loan Origination entity workflow: ordered state transitions,
+ * Shows a Corporate Loan Origination entity workflow: ordered state transitions,
  * timestamps, status badges, and entity metadata. Compact, monospace,
  * product-like. Communicates auditability and ordered progression.
  */
@@ -55,7 +55,7 @@ const WorkflowArtefact = () => {
             Entity Workflow
           </p>
           <p className="text-sm font-semibold" style={{ color: 'hsl(215,25%,18%)' }}>
-            Loan Origination
+            Corporate Loan Origination
           </p>
         </div>
         <span

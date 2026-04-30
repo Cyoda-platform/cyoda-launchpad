@@ -4,7 +4,7 @@ export const breadcrumbLoanLifecycle = {
   "itemListElement": [
     { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cyoda.com/" },
     { "@type": "ListItem", "position": 2, "name": "Use Cases", "item": "https://cyoda.com/use-cases" },
-    { "@type": "ListItem", "position": 3, "name": "Loan Origination & Lifecycle Management", "item": "https://cyoda.com/use-cases/loan-lifecycle" }
+    { "@type": "ListItem", "position": 3, "name": "Corporate Loan Origination & Lifecycle", "item": "https://cyoda.com/use-cases/loan-lifecycle" }
   ]
 };
 
@@ -34,7 +34,7 @@ export const breadcrumbAgenticAi = {
   "itemListElement": [
     { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cyoda.com/" },
     { "@type": "ListItem", "position": 2, "name": "Use Cases", "item": "https://cyoda.com/use-cases" },
-    { "@type": "ListItem", "position": 3, "name": "Agentic AI for Enterprise Systems", "item": "https://cyoda.com/use-cases/agentic-ai" }
+    { "@type": "ListItem", "position": 3, "name": "Governed Agentic Workflows", "item": "https://cyoda.com/use-cases/governed-agentic-workflows" }
   ]
 };
 
@@ -44,7 +44,7 @@ export const breadcrumbGovernedAiActions = {
   "itemListElement": [
     { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://cyoda.com/" },
     { "@type": "ListItem", "position": 2, "name": "Use Cases", "item": "https://cyoda.com/use-cases" },
-    { "@type": "ListItem", "position": 3, "name": "Governed AI Actions", "item": "https://cyoda.com/use-cases/governed-ai-actions" }
+    { "@type": "ListItem", "position": 3, "name": "Governed Agentic Workflows", "item": "https://cyoda.com/use-cases/governed-agentic-workflows" }
   ]
 };
 

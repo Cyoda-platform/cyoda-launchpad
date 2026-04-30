@@ -12,34 +12,13 @@ import { WorkflowViewer } from '@cyoda/workflow-viewer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import EntityDataModelCard from '@/components/EntityDataModelCard';
 import workflowJson from '@/data/workflows/tradeSettlementWorkflow.json?raw';
+import tradeEntityJson from '@/data/examples/tradeEntity.json?raw';
 
 const tradeSettlementEntityModel = {
   title: 'What the entity contains',
   body:
-    'The TradeSettlement entity holds the structured business information needed to run the settlement lifecycle: parties, instrument details, economics, approvals, exceptions, repair state, and audit-relevant data. The workflow changes the entity state; it is not a separate process floating beside the data.',
-  snippet: `{
-  "entity": "TradeSettlement",
-  "tradeId": "TRD-28471",
-  "state": "AFFIRMED",
-  "parties": {
-    "buyer": "Fund A",
-    "seller": "Bank B",
-    "custodian": "Global Custody Ltd"
-  },
-  "instrument": {
-    "type": "PrivateDebt",
-    "currency": "EUR",
-    "identifier": "PD-2026-118"
-  },
-  "economics": {
-    "notional": 1250000,
-    "settlementDate": "2026-05-14"
-  },
-  "audit": {
-    "lastTransition": "IS_AFFIRMED",
-    "changedBy": "SettlementProcessor"
-  }
-}`,
+    'This illustrative StructuredTrade example uses a more realistic settlement model: identifiers, rates product terms, counterparties, confirmation and clearing status, settlement instructions, projected cashflows, regulatory reporting, workflow transitions, controls, and immutable audit state all live on the same governed entity record.',
+  snippet: tradeEntityJson,
 };
 
 function formatExecution(kind?: 'sync' | 'asyncSameTx' | 'asyncNewTx') {
@@ -157,7 +136,7 @@ export default function TradeSettlementWorkflowViewer() {
   }
 
   return (
-    <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_320px]">
+    <div className="space-y-5">
       <Card className="overflow-hidden border-border/60 bg-card/80 shadow-sm">
         <CardContent className="p-0">
           <div className="border-b border-border/60 px-5 py-4">
@@ -172,7 +151,7 @@ export default function TradeSettlementWorkflowViewer() {
               Pan to explore the entity lifecycle and select a state or transition for details.
             </p>
           </div>
-          <div className="h-[760px] w-full bg-background md:h-[900px]">
+          <div className="h-[clamp(38rem,66vh,64rem)] min-h-[38rem] w-full bg-background">
             <WorkflowViewer
               graph={graph}
               layout={layout ?? undefined}
@@ -184,94 +163,103 @@ export default function TradeSettlementWorkflowViewer() {
         </CardContent>
       </Card>
 
-      <Card className="border-border/60 bg-card/80 shadow-sm">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-base">Entity lifecycle detail</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3 text-sm">
-          {!selected && (
-            <>
-              <p className="text-muted-foreground">
-                Select a state or transition to inspect the entity lifecycle semantics.
-              </p>
-              <div className="rounded-lg border border-primary/20 bg-primary/[0.03] p-4">
-                <p className="font-medium text-foreground">TradeSettlement entity workflow JSON</p>
-                <p className="mt-1 text-muted-foreground">
-                  This viewer is driven directly from the supplied TradeSettlement entity workflow
-                  file, including exception branches, repair loop-backs, and terminal outcomes.
-                </p>
-              </div>
-            </>
-          )}
+      <div className="grid items-start gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(320px,24rem)]">
+        <EntityDataModelCard
+          {...tradeSettlementEntityModel}
+          className="border-border/60 bg-card/80 shadow-sm"
+          codeClassName="min-h-[24rem] max-h-[clamp(28rem,56vh,44rem)] text-[12px] leading-6"
+          dialogTitle="Illustrative trade settlement entity model"
+          dialogDescription="A larger view of the illustrative StructuredTrade entity example used on this page."
+          dialogTriggerLabel="Open larger model window"
+        />
 
-          {selected?.kind === 'node' && selected.node.kind === 'state' && (
-            <StateDetail node={selected.node} />
-          )}
-
-          {selected?.kind === 'node' && selected.node.kind === 'startMarker' && (
-            <>
-              <p className="text-xs font-semibold uppercase tracking-widest text-primary">
-                ENTITY ENTRY
-              </p>
-              <p className="text-lg font-semibold text-foreground">Lifecycle start</p>
-              <p className="text-muted-foreground">
-                This marks the initial entry into the TradeSettlement entity lifecycle.
-              </p>
-            </>
-          )}
-
-          {selected?.kind === 'edge' && (
-            <>
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-widest text-primary">
-                  ENTITY TRANSITION
-                </p>
-                <p className="mt-1 text-lg font-semibold text-foreground">
-                  {selected.edge.label}
-                </p>
-              </div>
-              <p className="text-muted-foreground">
-                Path:{' '}
-                <span className="text-foreground">
-                  {stateLabel(nodesById.get(selected.edge.sourceId))} to{' '}
-                  {stateLabel(nodesById.get(selected.edge.targetId))}
-                </span>
-              </p>
-              <p className="text-muted-foreground">
-                Manual: <span className="text-foreground">{selected.edge.manual ? 'Yes' : 'No'}</span>
-              </p>
-              <p className="text-muted-foreground">
-                Execution:{' '}
-                <span className="text-foreground">
-                  {formatExecution(selected.edge.summary.execution?.kind) ?? 'Default'}
-                </span>
-              </p>
-              {describeCriterion(selected.edge.summary.criterion) && (
+        <Card className="h-full min-h-[24rem] border-border/60 bg-card/80 shadow-sm xl:sticky xl:top-20">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-base">Entity lifecycle detail</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3 text-sm">
+            {!selected && (
+              <>
                 <p className="text-muted-foreground">
-                  Criterion:{' '}
+                  Select a state or transition to inspect the entity lifecycle semantics.
+                </p>
+                <div className="rounded-lg border border-primary/20 bg-primary/[0.03] p-4">
+                  <p className="font-medium text-foreground">TradeSettlement entity workflow JSON</p>
+                  <p className="mt-1 text-muted-foreground">
+                    This viewer is driven directly from the supplied TradeSettlement entity workflow
+                    file, including exception branches, repair loop-backs, and terminal outcomes.
+                  </p>
+                </div>
+              </>
+            )}
+
+            {selected?.kind === 'node' && selected.node.kind === 'state' && (
+              <StateDetail node={selected.node} />
+            )}
+
+            {selected?.kind === 'node' && selected.node.kind === 'startMarker' && (
+              <>
+                <p className="text-xs font-semibold uppercase tracking-widest text-primary">
+                  ENTITY ENTRY
+                </p>
+                <p className="text-lg font-semibold text-foreground">Lifecycle start</p>
+                <p className="text-muted-foreground">
+                  This marks the initial entry into the TradeSettlement entity lifecycle.
+                </p>
+              </>
+            )}
+
+            {selected?.kind === 'edge' && (
+              <>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-widest text-primary">
+                    ENTITY TRANSITION
+                  </p>
+                  <p className="mt-1 text-lg font-semibold text-foreground">
+                    {selected.edge.label}
+                  </p>
+                </div>
+                <p className="text-muted-foreground">
+                  Path:{' '}
                   <span className="text-foreground">
-                    {describeCriterion(selected.edge.summary.criterion)}
+                    {stateLabel(nodesById.get(selected.edge.sourceId))} to{' '}
+                    {stateLabel(nodesById.get(selected.edge.targetId))}
                   </span>
                 </p>
-              )}
-              {selected.edge.summary.processor?.kind === 'single' && (
                 <p className="text-muted-foreground">
-                  Processor:{' '}
-                  <span className="text-foreground">{selected.edge.summary.processor.name}</span>
+                  Manual: <span className="text-foreground">{selected.edge.manual ? 'Yes' : 'No'}</span>
                 </p>
-              )}
-              {selected.edge.summary.processor?.kind === 'multiple' && (
                 <p className="text-muted-foreground">
-                  Processors:{' '}
-                  <span className="text-foreground">{selected.edge.summary.processor.count}</span>
+                  Execution:{' '}
+                  <span className="text-foreground">
+                    {formatExecution(selected.edge.summary.execution?.kind) ?? 'Default'}
+                  </span>
                 </p>
-              )}
-            </>
-          )}
-
-          <EntityDataModelCard {...tradeSettlementEntityModel} />
-        </CardContent>
-      </Card>
+                {describeCriterion(selected.edge.summary.criterion) && (
+                  <p className="text-muted-foreground">
+                    Criterion:{' '}
+                    <span className="text-foreground">
+                      {describeCriterion(selected.edge.summary.criterion)}
+                    </span>
+                  </p>
+                )}
+                {selected.edge.summary.processor?.kind === 'single' && (
+                  <p className="text-muted-foreground">
+                    Processor:{' '}
+                    <span className="text-foreground">{selected.edge.summary.processor.name}</span>
+                  </p>
+                )}
+                {selected.edge.summary.processor?.kind === 'multiple' && (
+                  <p className="text-muted-foreground">
+                    Processors:{' '}
+                    <span className="text-foreground">{selected.edge.summary.processor.count}</span>
+                  </p>
+                )}
+              </>
+            )}
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }

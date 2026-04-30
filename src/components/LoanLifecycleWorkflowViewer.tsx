@@ -12,34 +12,13 @@ import { WorkflowViewer } from '@cyoda/workflow-viewer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import EntityDataModelCard from '@/components/EntityDataModelCard';
 import workflowJson from '@/data/workflows/LoanLifecycleWorkflow.json?raw';
+import enhancedLoanApplicationJson from '@/data/examples/corporate-loan-application-enhanced.json?raw';
 
 const loanApplicationEntityModel = {
   title: 'What the entity contains',
   body:
-    'The LoanApplication entity holds the structured business information needed to manage the lifecycle: applicant details, product terms, risk checks, approval status, conditions, exceptions, and audit-relevant data. The workflow changes the entity state as the application moves from intake to decision and completion.',
-  snippet: `{
-  "entity": "LoanApplication",
-  "applicationId": "APP-10291",
-  "state": "UNDER_REVIEW",
-  "applicant": {
-    "type": "Company",
-    "country": "GB",
-    "customerId": "CUS-44821"
-  },
-  "product": {
-    "type": "TermLoan",
-    "amount": 250000,
-    "currency": "GBP"
-  },
-  "checks": {
-    "identity": "PASSED",
-    "affordability": "PENDING",
-    "creditRisk": "REFERRED"
-  },
-  "audit": {
-    "lastTransition": "SUBMIT_FOR_REVIEW"
-  }
-}`,
+    'This illustrative LoanApplication example uses a more realistic corporate credit model: borrower identity, multiple facilities, financials, collateral, beneficial owners, guarantors, covenants, reporting requirements, and conditions precedent all sit on the same governed entity record.',
+  snippet: enhancedLoanApplicationJson,
 };
 
 function asImportPayload(rawWorkflowJson: string) {
@@ -169,7 +148,7 @@ export default function LoanLifecycleWorkflowViewer() {
   }
 
   return (
-    <div className="grid gap-5 xl:grid-cols-[minmax(0,1fr)_320px]">
+    <div className="space-y-5">
       <Card className="overflow-hidden border-border/60 bg-card/80 shadow-sm">
         <CardContent className="p-0">
           <div className="border-b border-border/60 px-5 py-4">
@@ -177,12 +156,14 @@ export default function LoanLifecycleWorkflowViewer() {
               ENTITY WORKFLOW
             </p>
             <p className="mt-1 text-lg font-semibold text-foreground">LoanApplication</p>
-            <p className="mt-1 text-sm text-muted-foreground">Lifecycle in a lending system</p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Lifecycle in a corporate lending system
+            </p>
             <p className="mt-1 text-sm text-muted-foreground">
               Pan to explore the entity lifecycle and select a state or transition for details.
             </p>
           </div>
-          <div className="h-[860px] w-full bg-background md:h-[1040px] xl:h-[1140px]">
+          <div className="h-[clamp(42rem,72vh,78rem)] min-h-[42rem] w-full bg-background">
             <WorkflowViewer
               graph={graph}
               layout={layout ?? undefined}
@@ -194,95 +175,104 @@ export default function LoanLifecycleWorkflowViewer() {
         </CardContent>
       </Card>
 
-      <Card className="border-border/60 bg-card/80 shadow-sm">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-base">Entity lifecycle detail</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3 text-sm">
-          {!selected && (
-            <>
-              <p className="text-muted-foreground">
-                Select a state or transition to inspect the entity lifecycle semantics.
-              </p>
-              <div className="rounded-lg border border-primary/20 bg-primary/[0.03] p-4">
-                <p className="font-medium text-foreground">LoanApplication entity workflow JSON</p>
-                <p className="mt-1 text-muted-foreground">
-                  This viewer is driven directly from the LoanApplication entity workflow file,
-                  including document rework, KYC, underwriting, servicing, arrears, and terminal
-                  outcomes.
-                </p>
-              </div>
-            </>
-          )}
+      <div className="grid items-start gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(320px,24rem)]">
+        <EntityDataModelCard
+          {...loanApplicationEntityModel}
+          className="border-border/60 bg-card/80 shadow-sm"
+          codeClassName="min-h-[24rem] max-h-[clamp(28rem,56vh,44rem)] text-[12px] leading-6"
+          dialogTitle="Illustrative corporate loan application model"
+          dialogDescription="A larger view of the illustrative LoanApplication entity example used on this page."
+          dialogTriggerLabel="Open larger model window"
+        />
 
-          {selected?.kind === 'node' && selected.node.kind === 'state' && (
-            <StateDetail node={selected.node} />
-          )}
-
-          {selected?.kind === 'node' && selected.node.kind === 'startMarker' && (
-            <>
-              <p className="text-xs font-semibold uppercase tracking-widest text-primary">
-                ENTITY ENTRY
-              </p>
-              <p className="text-lg font-semibold text-foreground">Lifecycle start</p>
-              <p className="text-muted-foreground">
-                This marks the initial entry into the LoanApplication entity lifecycle.
-              </p>
-            </>
-          )}
-
-          {selected?.kind === 'edge' && (
-            <>
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-widest text-primary">
-                  ENTITY TRANSITION
-                </p>
-                <p className="mt-1 text-lg font-semibold text-foreground">
-                  {selected.edge.label}
-                </p>
-              </div>
-              <p className="text-muted-foreground">
-                Path:{' '}
-                <span className="text-foreground">
-                  {stateLabel(nodesById.get(selected.edge.sourceId))} to{' '}
-                  {stateLabel(nodesById.get(selected.edge.targetId))}
-                </span>
-              </p>
-              <p className="text-muted-foreground">
-                Manual: <span className="text-foreground">{selected.edge.manual ? 'Yes' : 'No'}</span>
-              </p>
-              <p className="text-muted-foreground">
-                Execution:{' '}
-                <span className="text-foreground">
-                  {formatExecution(selected.edge.summary.execution?.kind) ?? 'Default'}
-                </span>
-              </p>
-              {describeCriterion(selected.edge.summary.criterion) && (
+        <Card className="h-full min-h-[24rem] border-border/60 bg-card/80 shadow-sm xl:sticky xl:top-20">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-base">Entity lifecycle detail</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3 text-sm">
+            {!selected && (
+              <>
                 <p className="text-muted-foreground">
-                  Criterion:{' '}
+                  Select a state or transition to inspect the entity lifecycle semantics.
+                </p>
+                <div className="rounded-lg border border-primary/20 bg-primary/[0.03] p-4">
+                  <p className="font-medium text-foreground">LoanApplication entity workflow JSON</p>
+                  <p className="mt-1 text-muted-foreground">
+                    This viewer is driven directly from the LoanApplication entity workflow file,
+                    including borrower intake, KYC, credit assessment, approval committee review,
+                    drawdown, servicing, arrears, and terminal outcomes.
+                  </p>
+                </div>
+              </>
+            )}
+
+            {selected?.kind === 'node' && selected.node.kind === 'state' && (
+              <StateDetail node={selected.node} />
+            )}
+
+            {selected?.kind === 'node' && selected.node.kind === 'startMarker' && (
+              <>
+                <p className="text-xs font-semibold uppercase tracking-widest text-primary">
+                  ENTITY ENTRY
+                </p>
+                <p className="text-lg font-semibold text-foreground">Lifecycle start</p>
+                <p className="text-muted-foreground">
+                  This marks the initial entry into the LoanApplication entity lifecycle.
+                </p>
+              </>
+            )}
+
+            {selected?.kind === 'edge' && (
+              <>
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-widest text-primary">
+                    ENTITY TRANSITION
+                  </p>
+                  <p className="mt-1 text-lg font-semibold text-foreground">
+                    {selected.edge.label}
+                  </p>
+                </div>
+                <p className="text-muted-foreground">
+                  Path:{' '}
                   <span className="text-foreground">
-                    {describeCriterion(selected.edge.summary.criterion)}
+                    {stateLabel(nodesById.get(selected.edge.sourceId))} to{' '}
+                    {stateLabel(nodesById.get(selected.edge.targetId))}
                   </span>
                 </p>
-              )}
-              {selected.edge.summary.processor?.kind === 'single' && (
                 <p className="text-muted-foreground">
-                  Processor:{' '}
-                  <span className="text-foreground">{selected.edge.summary.processor.name}</span>
+                  Manual: <span className="text-foreground">{selected.edge.manual ? 'Yes' : 'No'}</span>
                 </p>
-              )}
-              {selected.edge.summary.processor?.kind === 'multiple' && (
                 <p className="text-muted-foreground">
-                  Processors:{' '}
-                  <span className="text-foreground">{selected.edge.summary.processor.count}</span>
+                  Execution:{' '}
+                  <span className="text-foreground">
+                    {formatExecution(selected.edge.summary.execution?.kind) ?? 'Default'}
+                  </span>
                 </p>
-              )}
-            </>
-          )}
-
-          <EntityDataModelCard {...loanApplicationEntityModel} />
-        </CardContent>
-      </Card>
+                {describeCriterion(selected.edge.summary.criterion) && (
+                  <p className="text-muted-foreground">
+                    Criterion:{' '}
+                    <span className="text-foreground">
+                      {describeCriterion(selected.edge.summary.criterion)}
+                    </span>
+                  </p>
+                )}
+                {selected.edge.summary.processor?.kind === 'single' && (
+                  <p className="text-muted-foreground">
+                    Processor:{' '}
+                    <span className="text-foreground">{selected.edge.summary.processor.name}</span>
+                  </p>
+                )}
+                {selected.edge.summary.processor?.kind === 'multiple' && (
+                  <p className="text-muted-foreground">
+                    Processors:{' '}
+                    <span className="text-foreground">{selected.edge.summary.processor.count}</span>
+                  </p>
+                )}
+              </>
+            )}
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }

@@ -8,8 +8,8 @@ import { Building2, BarChart3, UserCheck, Bot, FileText } from 'lucide-react';
 const useCases = [
   {
     icon: Building2,
-    title: 'Loan Origination & Lifecycle',
-    description: 'Full state machine from application to settlement, with immutable event history and concurrent consistency.',
+    title: 'Corporate Loan Origination & Lifecycle',
+    description: 'Model borrower-company origination, credit assessment, approval conditions, drawdown, and servicing in one governed entity lifecycle.',
     href: '/use-cases/loan-lifecycle',
   },
   {
@@ -26,21 +26,15 @@ const useCases = [
   },
   {
     icon: Bot,
-    title: 'Governed AI Actions',
-    description: 'AI agents must be accountable, not just capable. Cyoda runs agent actions through governed workflows and records each state change as an immutable event, so teams can audit decisions, trace outcomes, and prove control over autonomous behaviour.',
-    href: '/use-cases/governed-ai-actions',
+    title: 'Governed Agentic Workflows',
+    description: 'AI agents need governance when they act on enterprise systems. Cyoda runs agent decisions through entity workflows, records each state change, and keeps the context needed to audit, review, or reverse the outcome.',
+    href: '/use-cases/governed-agentic-workflows',
   },
   {
     icon: FileText,
     title: 'Governed Claims Adjudication',
     description: 'Run AI-assisted claims decisions through a governed Claim entity lifecycle, with traceable state changes, adjuster review, payment, appeal, and reversal paths.',
     href: '/use-cases/governed-claims-adjudication',
-  },
-  {
-    icon: Bot,
-    title: 'Agentic AI for Enterprise Systems',
-    description: 'Transactional, auditable agent actions with governed execution paths for regulated production systems.',
-    href: '/use-cases/agentic-ai',
   },
 ];
 
@@ -49,7 +43,7 @@ const UseCases = () => {
     <div className="min-h-screen bg-background">
       <SEO
         title="Use Cases | Cyoda"
-        description="See how Cyoda powers loan lifecycle management, governed AI actions, governed claims adjudication, trade settlement, and KYC onboarding in financial services."
+        description="See how Cyoda powers loan lifecycle management, governed agentic workflows, governed claims adjudication, trade settlement, and KYC onboarding in financial services."
         url="https://cyoda.com/use-cases"
         type="website"
         jsonLd={organizationSchema}

@@ -5,6 +5,7 @@ import { organizationSchema, breadcrumbLoanLifecycle } from '@/data/schemas';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import LoanLifecycleWorkflowViewer from '@/components/LoanLifecycleWorkflowViewer';
+import UseCaseIllustrativeNote from '@/components/UseCaseIllustrativeNote';
 
 const changes = [
   {
@@ -36,8 +37,8 @@ const changes = [
 const UseCaseLoanLifecycle = () => (
   <div className="min-h-screen bg-background">
     <SEO
-      title="Loan Origination & Lifecycle Management | Cyoda"
-      description="Model the full loan lifecycle as a Cyoda entity — branching, criteria-driven transitions, loop-back, and immutable event history in one consistency model."
+      title="Corporate Loan Origination & Lifecycle | Cyoda"
+      description="Model corporate loan origination and lifecycle management as a Cyoda entity workflow with credit assessment, approval conditions, drawdown, servicing, and immutable history."
       url="https://cyoda.com/use-cases/loan-lifecycle"
       type="website"
       jsonLd={[organizationSchema, breadcrumbLoanLifecycle]}
@@ -49,16 +50,16 @@ const UseCaseLoanLifecycle = () => (
       <section className="py-16 md:py-20 bg-background">
         <div className="container mx-auto px-4 max-w-5xl">
           <p className="text-xs font-semibold text-primary uppercase tracking-widest mb-3">
-            Use case · Loan origination
+            Use case · Corporate lending
           </p>
-          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-5 max-w-3xl leading-tight">
-            Model the full LoanApplication entity lifecycle in one system
+          <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-5 max-w-4xl leading-tight">
+            Corporate Loan Origination &amp; Lifecycle
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
-            Loan origination is not a straight line. It branches through identity checks, document
-            requests, underwriting decisions, manual exceptions, and multiple end states — then
-            continues into servicing, arrears, and settlement. Cyoda models all of it as a single
-            LoanApplication entity with an explicit entity workflow: named states,
+          <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">
+            Corporate lending is not a straight line. A borrower company moves through intake,
+            document collection, KYC, credit assessment, approval committee review, conditions,
+            completion, drawdown, servicing, and exception paths. Cyoda models all of it as a
+            single LoanApplication entity with an explicit entity workflow: named states,
             criteria-driven transitions, attached processors, and an immutable history of every
             step on that entity.
           </p>
@@ -75,25 +76,26 @@ const UseCaseLoanLifecycle = () => (
                 The problem
               </p>
               <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-5">
-                LoanApplication lifecycles don&apos;t fit a status column
+                Corporate loan lifecycles don&apos;t fit a status column
               </h2>
               <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
                 <p>
-                  A loan can return to document collection after KYC — then re-enter the
-                  underwriting queue with a different set of documents. That is a loop-back.
-                  Status flags in a database cannot model it without losing the history of the
-                  original check.
+                  A borrower company can return to document collection after KYC and then re-enter
+                  credit assessment with a different pack of supporting documents. That is a
+                  loop-back. Status flags in a database cannot model it without losing the history
+                  of the original check.
                 </p>
                 <p>
-                  Underwriting is a decision gate with three exits: approved, manual review, or
-                  hard decline. Each exit is a different transition with different criteria. Manual
-                  review is itself a state with its own transitions and attached processor.
+                  Credit assessment is a decision gate with multiple exits: approve with
+                  conditions, refer to committee, request amendments, or decline. Each exit is a
+                  different transition with different criteria. Approval review is itself a state
+                  with its own transitions and attached processor.
                 </p>
                 <p>
-                  Once the loan is active, the lifecycle continues through servicing cycles,
-                  arrears, restructuring, and eventual settlement or default. These are not edge
-                  cases — they are normal lifecycle events that share the same entity and the same
-                  audit requirement as origination.
+                  Once the facility completes, the lifecycle continues through drawdown, servicing,
+                  covenant exceptions, arrears, restructuring, and eventual repayment or default.
+                  These are not edge cases. They are normal lifecycle events that share the same
+                  entity and the same audit requirement as origination.
                 </p>
                 <p>
                   Conventional stacks split this across a status column, an orchestration engine,
@@ -104,16 +106,16 @@ const UseCaseLoanLifecycle = () => (
             </div>
 
             <div className="rounded-xl border border-border bg-card p-6">
-              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-widest mb-4">
-                The conventional assembly
-              </h3>
-              <ul className="space-y-4">
-                {[
-                  { system: 'Status column in PostgreSQL', problem: 'Cannot model loop-back or branching without losing transition history.' },
-                  { system: 'Kafka or SQS for events', problem: 'Eventual consistency across services — state and events can diverge.' },
-                  { system: 'Separate orchestration engine', problem: 'Separate consistency boundary from the database; the entity lifecycle must be reconciled back into the system of record.' },
-                  { system: 'Audit table or event log', problem: 'Assembled after the fact — not an invariant of the write path.' },
-                  { system: 'Glue code', problem: 'Outbox pattern, idempotency keys, saga orchestration across all of the above.' },
+                <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-widest mb-4">
+                  The conventional assembly
+                </h3>
+                <ul className="space-y-4">
+                  {[
+                  { system: 'Status column in PostgreSQL', problem: 'Cannot model loop-back, conditional approvals, or drawdown branching without losing transition history.' },
+                  { system: 'Kafka or SQS for events', problem: 'Eventual consistency across services means facility state and event history can diverge.' },
+                  { system: 'Separate orchestration engine', problem: 'Different consistency boundary from the database, so the borrower lifecycle must be reconciled back into the system of record.' },
+                  { system: 'Audit table or event log', problem: 'Assembled after the fact instead of being an invariant of the write path.' },
+                  { system: 'Glue code', problem: 'Outbox patterns, idempotency keys, and approval workflow plumbing are required to hold the assembly together.' },
                 ].map((item) => (
                   <li key={item.system} className="flex items-start gap-3">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full shrink-0 bg-muted-foreground/50" />
@@ -134,35 +136,35 @@ const UseCaseLoanLifecycle = () => (
       <section className="py-16 md:py-20 bg-background">
         <div className="mx-auto max-w-[1840px] px-4 sm:px-6 lg:px-8">
           <div className="mx-auto mb-8 max-w-6xl">
-            <p className="text-xs font-semibold text-primary uppercase tracking-widest mb-3">
-              How Cyoda models it
-            </p>
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground">
-              LoanApplication entity workflow in a lending system
-            </h2>
-            <p className="text-sm text-muted-foreground mt-2 max-w-2xl">
-              The LoanApplication is a Cyoda entity. Its lifecycle is modelled as an entity
-              workflow graph — named states, criteria-driven transitions, attached processors, and
-              immutable history on the entity, all in one consistency model. The graph below shows
-              branching, loop-back, servicing states, terminal outcomes, and supporting audit
-              history as one model.
-            </p>
-          </div>
+              <p className="text-xs font-semibold text-primary uppercase tracking-widest mb-3">
+              How you can model it with Cyoda
+              </p>
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground">
+              LoanApplication entity workflow in a corporate lending system
+              </h2>
+              <p className="text-sm text-muted-foreground mt-2 max-w-2xl">
+              The LoanApplication is a Cyoda entity. Its lifecycle can be modelled as an entity
+              workflow graph with named states, criteria-driven transitions, attached processors,
+              and immutable history on the entity, all in one consistency model. The graph below
+              shows branching, loop-back, approval conditions, drawdown, servicing states, terminal
+              outcomes, and supporting audit history as one model.
+              </p>
+            </div>
 
           <LoanLifecycleWorkflowViewer />
 
           {/* Callouts */}
           <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4">
             {[
-                {
-                  label: 'Criteria on every transition',
-                  detail:
-                  'KYC CHECK → UNDERWRITING only fires when the criteria — docs complete, identity verified — evaluate to true. The criteria are part of the entity workflow definition, not application code.',
+              {
+                label: 'Criteria on every transition',
+                detail:
+                  'KYC CHECK to CREDIT ASSESSMENT only fires when the criteria evaluate to true. The criteria are part of the entity workflow definition, not application code.',
                 },
               {
                 label: 'Processors attach to transitions',
                 detail:
-                  "kyc-svc runs when the entity enters KYC CHECK. The scoring processor runs on entry to UNDERWRITING. Both run inside the entity's transactional boundary — not as background jobs.",
+                  "KYC processors, credit assessment processors, and facility-servicing hooks attach to transitions. They run inside the entity's transactional boundary, not as background jobs.",
               },
               {
                 label: 'Loop-back is a first-class pattern',
@@ -176,6 +178,8 @@ const UseCaseLoanLifecycle = () => (
               </div>
             ))}
           </div>
+
+          <UseCaseIllustrativeNote />
         </div>
       </section>
 

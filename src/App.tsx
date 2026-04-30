@@ -35,7 +35,6 @@ const UseCases = lazy(() => import("./pages/UseCases"));
 const UseCaseLoanLifecycle = lazy(() => import("./pages/UseCaseLoanLifecycle"));
 const UseCaseTradeSettlement = lazy(() => import("./pages/UseCaseTradeSettlement"));
 const UseCaseKycOnboarding = lazy(() => import("./pages/UseCaseKycOnboarding"));
-const UseCaseAgenticAi = lazy(() => import("./pages/UseCaseAgenticAi"));
 const UseCaseGovernedAiActions = lazy(() => import("./pages/UseCaseGovernedAiActions"));
 const UseCaseGovernedClaimsAdjudication = lazy(() => import("./pages/UseCaseGovernedClaimsAdjudication"));
 const Contact = lazy(() => import("./pages/Contact"));
@@ -97,9 +96,10 @@ const App = () => {
                     <Route path="/use-cases/loan-lifecycle" element={<UseCaseLoanLifecycle />} />
                     <Route path="/use-cases/trade-settlement" element={<UseCaseTradeSettlement />} />
                     <Route path="/use-cases/kyc-onboarding" element={<UseCaseKycOnboarding />} />
+                    <Route path="/use-cases/governed-agentic-workflows" element={<UseCaseGovernedAiActions />} />
                     <Route path="/use-cases/governed-ai-actions" element={<UseCaseGovernedAiActions />} />
                     <Route path="/use-cases/governed-claims-adjudication" element={<UseCaseGovernedClaimsAdjudication />} />
-                    <Route path="/use-cases/agentic-ai" element={<UseCaseAgenticAi />} />
+                    <Route path="/use-cases/agentic-ai" element={<UseCaseGovernedAiActions />} />
                     <Route path="/contact" element={<Contact />} />
                     <Route path="/comparison" element={<Comparison />} />
                     {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

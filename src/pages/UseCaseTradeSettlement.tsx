@@ -5,6 +5,7 @@ import { organizationSchema, breadcrumbTradeSettlement } from '@/data/schemas';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import TradeSettlementWorkflowViewer from '@/components/TradeSettlementWorkflowViewer';
+import UseCaseIllustrativeNote from '@/components/UseCaseIllustrativeNote';
 
 const outcomeCards = [
   {
@@ -174,17 +175,17 @@ const UseCaseTradeSettlement = () => {
           <div className="container mx-auto px-4 max-w-6xl">
             <div className="mb-8">
               <p className="text-xs font-semibold text-primary uppercase tracking-widest mb-3">
-                How Cyoda models it
+                How you can model it with Cyoda
               </p>
               <h2 className="text-2xl md:text-3xl font-bold text-foreground">
                 TradeSettlement entity workflow in a settlement system
               </h2>
               <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
                 Each trade is a Cyoda TradeSettlement entity. Its lifecycle is modelled as an
-                entity workflow graph — named states, criteria-guarded transitions, attached
+                entity workflow graph with named states, criteria-guarded transitions, attached
                 processors, exception branches, repair loop-backs, and immutable history on the
-                entity itself. The graph below shows the full post-trade lifecycle with the
-                append-only record created by those entity transitions.
+                entity itself. The graph below shows one way the full post-trade lifecycle could be
+                modelled with the append-only record created by those entity transitions.
               </p>
             </div>
 
@@ -214,6 +215,8 @@ const UseCaseTradeSettlement = () => {
                 </div>
               ))}
             </div>
+
+            <UseCaseIllustrativeNote />
           </div>
         </section>
 
