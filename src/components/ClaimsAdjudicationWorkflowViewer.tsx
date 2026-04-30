@@ -176,16 +176,7 @@ export default function ClaimsAdjudicationWorkflowViewer() {
         </CardContent>
       </Card>
 
-      <div className="grid items-start gap-5 xl:grid-cols-[minmax(0,1fr)_minmax(320px,24rem)]">
-        <EntityDataModelCard
-          {...claimEntityModel}
-          className="border-border/60 bg-card/80 shadow-sm"
-          codeClassName="min-h-[24rem] max-h-[clamp(28rem,56vh,44rem)] text-[12px] leading-6"
-          dialogTitle="Illustrative claims adjudication entity model"
-          dialogDescription="A larger view of the illustrative Claim entity example used on this page."
-          dialogTriggerLabel="Open larger model window"
-        />
-
+      <div className="grid items-start gap-5 xl:grid-cols-[minmax(320px,24rem)_minmax(0,1fr)]">
         <Card className="h-full min-h-[24rem] border-border/60 bg-card/80 shadow-sm xl:sticky xl:top-20">
           <CardHeader className="pb-3">
             <CardTitle className="text-base">Entity lifecycle detail</CardTitle>
@@ -206,6 +197,11 @@ export default function ClaimsAdjudicationWorkflowViewer() {
                 </div>
               </>
             )}
+
+            <div className="rounded-lg border border-border/60 bg-background p-4">
+              <p className="font-medium text-foreground">{claimEntityModel.title}</p>
+              <p className="mt-1 text-muted-foreground">{claimEntityModel.body}</p>
+            </div>
 
             {selected?.kind === 'node' && selected.node.kind === 'state' && (
               <StateDetail node={selected.node} />
@@ -273,6 +269,20 @@ export default function ClaimsAdjudicationWorkflowViewer() {
             )}
           </CardContent>
         </Card>
+
+        <EntityDataModelCard
+          title=""
+          body=""
+          snippet={claimEntityModel.snippet}
+          className="border-border/60 bg-card/80 shadow-sm"
+          codeClassName="min-h-[18rem]"
+          jsonTitle="Claim.json"
+          jsonBadge="JSON entity"
+          jsonMaxHeight="26rem"
+          dialogTitle="Illustrative claims adjudication entity model"
+          dialogDescription="A larger view of the illustrative Claim entity example used on this page."
+          dialogTriggerLabel="Open larger model window"
+        />
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
+import PrettyJsonBlock from '@/components/PrettyJsonBlock';
 import { cn } from '@/lib/utils';
 
 interface EntityDataModelCardProps {
@@ -15,6 +16,10 @@ interface EntityDataModelCardProps {
   snippet: string;
   className?: string;
   codeClassName?: string;
+  jsonTitle?: string;
+  jsonBadge?: string;
+  jsonMaxHeight?: string;
+  jsonDefaultExpanded?: boolean;
   dialogTitle?: string;
   dialogDescription?: string;
   dialogTriggerLabel?: string;
@@ -26,17 +31,34 @@ const EntityDataModelCard = ({
   snippet,
   className,
   codeClassName,
+  jsonTitle,
+  jsonBadge,
+  jsonMaxHeight,
+  jsonDefaultExpanded,
   dialogTitle,
   dialogDescription,
   dialogTriggerLabel,
 }: EntityDataModelCardProps) => {
+  const hasSummary = title.trim().length > 0 || body.trim().length > 0;
+
   return (
     <div className={cn('rounded-lg border border-border/60 bg-background p-4', className)}>
-      <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
-        <div className="min-w-0">
-          <p className="font-medium text-foreground">{title}</p>
-          <p className="mt-1 text-muted-foreground">{body}</p>
-        </div>
+      <div
+        className={cn(
+          'flex flex-col gap-3 md:flex-row md:items-start',
+          hasSummary ? 'md:justify-between' : 'md:justify-end',
+        )}
+      >
+        {hasSummary ? (
+          <div className="min-w-0">
+            {title.trim().length > 0 ? <p className="font-medium text-foreground">{title}</p> : null}
+            {body.trim().length > 0 ? (
+              <p className={cn('text-muted-foreground', title.trim().length > 0 ? 'mt-1' : '')}>
+                {body}
+              </p>
+            ) : null}
+          </div>
+        ) : null}
         {dialogTriggerLabel ? (
           <Dialog>
             <DialogTrigger asChild>
@@ -51,21 +73,25 @@ const EntityDataModelCard = ({
                   <DialogDescription>{dialogDescription}</DialogDescription>
                 ) : null}
               </DialogHeader>
-              <pre className="max-h-[72vh] overflow-x-auto overflow-y-auto rounded-md border border-border/60 bg-card px-4 py-4 text-[12px] leading-6 text-muted-foreground">
-                <code>{snippet}</code>
-              </pre>
+              <PrettyJsonBlock
+                title={jsonTitle ?? dialogTitle ?? title}
+                badge={jsonBadge}
+                value={snippet}
+                maxHeight="72vh"
+                defaultExpanded
+              />
             </DialogContent>
           </Dialog>
         ) : null}
       </div>
-      <pre
-        className={cn(
-          'mt-3 max-h-72 overflow-x-auto overflow-y-auto rounded-md border border-border/60 bg-card px-3 py-3 text-[11px] leading-5 text-muted-foreground',
-          codeClassName,
-        )}
-      >
-        <code>{snippet}</code>
-      </pre>
+      <PrettyJsonBlock
+        title={jsonTitle ?? title}
+        badge={jsonBadge}
+        value={snippet}
+        maxHeight={jsonMaxHeight}
+        defaultExpanded={jsonDefaultExpanded}
+        className={cn(hasSummary ? 'mt-3' : 'mt-0', codeClassName)}
+      />
     </div>
   );
 };
