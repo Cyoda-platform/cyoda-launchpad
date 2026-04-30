@@ -19,11 +19,26 @@ const loanApplicationEntityModel = {
     'The LoanApplication entity holds the structured business information needed to manage the lifecycle: applicant details, product terms, risk checks, approval status, conditions, exceptions, and audit-relevant data. The workflow changes the entity state as the application moves from intake to decision and completion.',
   snippet: `{
   "entity": "LoanApplication",
+  "applicationId": "APP-10291",
   "state": "UNDER_REVIEW",
-  "applicantId": "APP-10291",
-  "product": "TermLoan",
-  "riskChecks": ["identity", "affordability"],
-  "lastTransition": "SUBMIT_FOR_REVIEW"
+  "applicant": {
+    "type": "Company",
+    "country": "GB",
+    "customerId": "CUS-44821"
+  },
+  "product": {
+    "type": "TermLoan",
+    "amount": 250000,
+    "currency": "GBP"
+  },
+  "checks": {
+    "identity": "PASSED",
+    "affordability": "PENDING",
+    "creditRisk": "REFERRED"
+  },
+  "audit": {
+    "lastTransition": "SUBMIT_FOR_REVIEW"
+  }
 }`,
 };
 

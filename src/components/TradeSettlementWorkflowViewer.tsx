@@ -19,11 +19,26 @@ const tradeSettlementEntityModel = {
     'The TradeSettlement entity holds the structured business information needed to run the settlement lifecycle: parties, instrument details, economics, approvals, exceptions, repair state, and audit-relevant data. The workflow changes the entity state; it is not a separate process floating beside the data.',
   snippet: `{
   "entity": "TradeSettlement",
+  "tradeId": "TRD-28471",
   "state": "AFFIRMED",
-  "parties": ["buyer", "seller"],
-  "instrument": "PrivateDebt",
-  "settlementDate": "2026-05-14",
-  "lastTransition": "IS_AFFIRMED"
+  "parties": {
+    "buyer": "Fund A",
+    "seller": "Bank B",
+    "custodian": "Global Custody Ltd"
+  },
+  "instrument": {
+    "type": "PrivateDebt",
+    "currency": "EUR",
+    "identifier": "PD-2026-118"
+  },
+  "economics": {
+    "notional": 1250000,
+    "settlementDate": "2026-05-14"
+  },
+  "audit": {
+    "lastTransition": "IS_AFFIRMED",
+    "changedBy": "SettlementProcessor"
+  }
 }`,
 };
 

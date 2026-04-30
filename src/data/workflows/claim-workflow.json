@@ -1,0 +1,563 @@
+{
+  "version": "1",
+  "name": "ClaimAdjudicationWorkflow",
+  "desc": "Governance lifecycle for AI-assisted property and casualty claims",
+  "initialState": "SUBMITTED",
+  "active": true,
+  "states": {
+    "SUBMITTED": {
+      "transitions": [
+        {
+          "name": "CAPTURE_FNOL",
+          "next": "CONTEXT_CAPTURED",
+          "manual": false,
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "ExtractFnol",
+              "executionMode": "SYNC",
+              "config": {
+                "attachEntity": true,
+                "calculationNodesTags": "agent-language",
+                "responseTimeoutMs": 30000,
+                "retryPolicy": "FIXED"
+              }
+            }
+          ],
+          "disabled": false
+        },
+        {
+          "name": "CANCEL_CLAIM",
+          "next": "WITHDRAWN",
+          "manual": true,
+          "disabled": false
+        }
+      ]
+    },
+    "CONTEXT_CAPTURED": {
+      "transitions": [
+        {
+          "name": "CHECK_COVERAGE",
+          "next": "COVERAGE_CHECKED",
+          "manual": false,
+          "criterion": {
+            "type": "group",
+            "operator": "AND",
+            "conditions": [
+              { "type": "simple", "jsonPath": "$.fnol.lossDate", "operation": "NOT_NULL" },
+              { "type": "simple", "jsonPath": "$.fnol.narrative", "operation": "NOT_NULL" },
+              { "type": "simple", "jsonPath": "$.policyNumber", "operation": "NOT_NULL" }
+            ]
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "VerifyCoverage",
+              "executionMode": "SYNC",
+              "config": {
+                "attachEntity": true,
+                "calculationNodesTags": "deterministic",
+                "responseTimeoutMs": 5000
+              }
+            }
+          ],
+          "disabled": false
+        },
+        {
+          "name": "REJECT_INCOMPLETE",
+          "next": "REJECTED",
+          "manual": false,
+          "criterion": {
+            "type": "group",
+            "operator": "OR",
+            "conditions": [
+              { "type": "simple", "jsonPath": "$.fnol.lossDate", "operation": "IS_NULL" },
+              { "type": "simple", "jsonPath": "$.fnol.narrative", "operation": "IS_NULL" },
+              { "type": "simple", "jsonPath": "$.policyNumber", "operation": "IS_NULL" }
+            ]
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "RecordRejectedClaim",
+              "executionMode": "ASYNC_NEW_TX",
+              "config": { "attachEntity": true, "calculationNodesTags": "deterministic" }
+            }
+          ],
+          "disabled": false
+        }
+      ]
+    },
+    "COVERAGE_CHECKED": {
+      "transitions": [
+        {
+          "name": "TRIAGE",
+          "next": "TRIAGED",
+          "manual": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.coverage.policyEffective",
+            "operation": "EQUALS",
+            "value": true
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "SeverityTriage",
+              "executionMode": "ASYNC_SAME_TX",
+              "config": {
+                "attachEntity": true,
+                "calculationNodesTags": "agent-language",
+                "responseTimeoutMs": 15000
+              }
+            },
+            {
+              "type": "externalized",
+              "name": "FraudScreen",
+              "executionMode": "ASYNC_SAME_TX",
+              "config": {
+                "attachEntity": true,
+                "calculationNodesTags": "deterministic",
+                "responseTimeoutMs": 8000
+              }
+            }
+          ],
+          "disabled": false
+        },
+        {
+          "name": "REJECT_NO_COVERAGE",
+          "next": "REJECTED",
+          "manual": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.coverage.policyEffective",
+            "operation": "EQUALS",
+            "value": false
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "RecordRejectedClaim",
+              "executionMode": "ASYNC_NEW_TX",
+              "config": { "attachEntity": true, "calculationNodesTags": "deterministic" }
+            }
+          ],
+          "disabled": false
+        }
+      ]
+    },
+    "TRIAGED": {
+      "transitions": [
+        {
+          "name": "PROPOSE_ASSESSMENT",
+          "next": "ASSESSMENT_PROPOSED",
+          "manual": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.fraudFlag",
+            "operation": "NOT_EQUAL",
+            "value": "REFER_SIU"
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "ExtractDamageEvidence",
+              "executionMode": "ASYNC_SAME_TX",
+              "config": {
+                "attachEntity": true,
+                "calculationNodesTags": "agent-vision",
+                "responseTimeoutMs": 60000
+              }
+            },
+            {
+              "type": "externalized",
+              "name": "DraftAssessment",
+              "executionMode": "SYNC",
+              "config": {
+                "attachEntity": true,
+                "calculationNodesTags": "agent-language",
+                "responseTimeoutMs": 45000
+              }
+            }
+          ],
+          "disabled": false
+        },
+        {
+          "name": "REJECT_FRAUD",
+          "next": "REJECTED",
+          "manual": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.fraudFlag",
+            "operation": "EQUALS",
+            "value": "REFER_SIU"
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "EscalateSiu",
+              "executionMode": "ASYNC_NEW_TX",
+              "config": { "attachEntity": true, "calculationNodesTags": "siu" }
+            }
+          ],
+          "disabled": false
+        }
+      ]
+    },
+    "ASSESSMENT_PROPOSED": {
+      "transitions": [
+        {
+          "name": "AUTO_ADJUDICATE_LOW_VALUE",
+          "next": "ADJUDICATION_PROPOSED",
+          "manual": false,
+          "criterion": {
+            "type": "group",
+            "operator": "AND",
+            "conditions": [
+              { "type": "simple", "jsonPath": "$.proposedReserve", "operation": "LESS_THAN", "value": 2500 },
+              { "type": "simple", "jsonPath": "$.assessmentConfidence", "operation": "GREATER_OR_EQUAL", "value": 0.9 },
+              { "type": "simple", "jsonPath": "$.severityTier", "operation": "LESS_OR_EQUAL", "value": 2 }
+            ]
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "ProposeAdjudication",
+              "executionMode": "SYNC",
+              "config": {
+                "attachEntity": true,
+                "calculationNodesTags": "agent-language",
+                "responseTimeoutMs": 30000
+              }
+            }
+          ],
+          "disabled": false
+        },
+        {
+          "name": "ESCALATE_FOR_REVIEW",
+          "next": "HUMAN_REVIEW",
+          "manual": false,
+          "criterion": {
+            "type": "group",
+            "operator": "OR",
+            "conditions": [
+              { "type": "simple", "jsonPath": "$.proposedReserve", "operation": "GREATER_OR_EQUAL", "value": 2500 },
+              { "type": "simple", "jsonPath": "$.assessmentConfidence", "operation": "LESS_THAN", "value": 0.9 },
+              { "type": "simple", "jsonPath": "$.severityTier", "operation": "GREATER_THAN", "value": 2 }
+            ]
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "CreateAdjusterReviewTask",
+              "executionMode": "ASYNC_NEW_TX",
+              "config": { "attachEntity": true, "calculationNodesTags": "deterministic" }
+            },
+            {
+              "type": "scheduled",
+              "name": "ReviewSlaEscalation",
+              "config": {
+                "delayMs": 86400000,
+                "transition": "REQUEST_MORE_EVIDENCE"
+              }
+            }
+          ],
+          "disabled": false
+        },
+        {
+          "name": "REQUEST_MORE_EVIDENCE",
+          "next": "CONTEXT_CAPTURED",
+          "manual": true,
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "RequestAdditionalEvidence",
+              "executionMode": "ASYNC_NEW_TX",
+              "config": { "attachEntity": true, "calculationNodesTags": "deterministic" }
+            }
+          ],
+          "disabled": false
+        }
+      ]
+    },
+    "HUMAN_REVIEW": {
+      "transitions": [
+        {
+          "name": "CONFIRM_ASSESSMENT",
+          "next": "ADJUDICATION_PROPOSED",
+          "manual": true,
+          "criterion": {
+            "type": "function",
+            "function": {
+              "name": "WithinAdjusterAuthority",
+              "config": { "attachEntity": true, "calculationNodesTags": "deterministic" }
+            }
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "ProposeAdjudication",
+              "executionMode": "SYNC",
+              "config": {
+                "attachEntity": true,
+                "calculationNodesTags": "agent-language",
+                "responseTimeoutMs": 30000
+              }
+            }
+          ],
+          "disabled": false
+        },
+        {
+          "name": "DENY_AT_REVIEW",
+          "next": "DENIED",
+          "manual": true,
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "RecordAdjudicationDecision",
+              "executionMode": "SYNC",
+              "config": { "attachEntity": true, "calculationNodesTags": "deterministic" }
+            },
+            {
+              "type": "externalized",
+              "name": "GenerateDenialLetter",
+              "executionMode": "ASYNC_NEW_TX",
+              "config": { "attachEntity": true, "calculationNodesTags": "agent-language" }
+            }
+          ],
+          "disabled": false
+        },
+        {
+          "name": "RETRIAGE",
+          "next": "TRIAGED",
+          "manual": true,
+          "disabled": false
+        }
+      ]
+    },
+    "ADJUDICATION_PROPOSED": {
+      "transitions": [
+        {
+          "name": "APPROVE",
+          "next": "APPROVED",
+          "manual": true,
+          "criterion": {
+            "type": "function",
+            "function": {
+              "name": "WithinAdjusterAuthority",
+              "config": { "attachEntity": true, "calculationNodesTags": "deterministic" }
+            }
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "RecordAdjudicationDecision",
+              "executionMode": "SYNC",
+              "config": { "attachEntity": true, "calculationNodesTags": "deterministic" }
+            }
+          ],
+          "disabled": false
+        },
+        {
+          "name": "DENY",
+          "next": "DENIED",
+          "manual": true,
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "RecordAdjudicationDecision",
+              "executionMode": "SYNC",
+              "config": { "attachEntity": true, "calculationNodesTags": "deterministic" }
+            },
+            {
+              "type": "externalized",
+              "name": "GenerateDenialLetter",
+              "executionMode": "ASYNC_NEW_TX",
+              "config": { "attachEntity": true, "calculationNodesTags": "agent-language" }
+            }
+          ],
+          "disabled": false
+        }
+      ]
+    },
+    "APPROVED": {
+      "transitions": [
+        {
+          "name": "INITIATE_PAYMENT",
+          "next": "PAYING",
+          "manual": false,
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "InitiatePayment",
+              "executionMode": "SYNC",
+              "config": {
+                "attachEntity": true,
+                "calculationNodesTags": "payment-integration",
+                "responseTimeoutMs": 10000
+              }
+            }
+          ],
+          "disabled": false
+        }
+      ]
+    },
+    "PAYING": {
+      "transitions": [
+        {
+          "name": "CONFIRM_PAYMENT",
+          "next": "PAID",
+          "manual": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.payment.status",
+            "operation": "EQUALS",
+            "value": "CLEARED"
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "RecordPaymentOutcome",
+              "executionMode": "ASYNC_NEW_TX",
+              "config": { "attachEntity": true, "calculationNodesTags": "deterministic" }
+            }
+          ],
+          "disabled": false
+        },
+        {
+          "name": "RECORD_PAYMENT_FAILURE",
+          "next": "PAYMENT_FAILED",
+          "manual": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.payment.status",
+            "operation": "EQUALS",
+            "value": "FAILED"
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "RecordPaymentFailure",
+              "executionMode": "ASYNC_NEW_TX",
+              "config": { "attachEntity": true, "calculationNodesTags": "deterministic" }
+            }
+          ],
+          "disabled": false
+        }
+      ]
+    },
+    "PAYMENT_FAILED": {
+      "transitions": [
+        {
+          "name": "RETRY_PAYMENT",
+          "next": "PAYING",
+          "manual": true,
+          "criterion": {
+            "type": "function",
+            "function": {
+              "name": "PaymentRetryEligible",
+              "config": { "attachEntity": true, "calculationNodesTags": "deterministic" }
+            }
+          },
+          "disabled": false
+        },
+        {
+          "name": "MARK_UNRECOVERABLE",
+          "next": "UNRECOVERABLE",
+          "manual": true,
+          "disabled": false
+        }
+      ]
+    },
+    "PAID": {
+      "transitions": [
+        {
+          "name": "OPEN_DISPUTE",
+          "next": "REVERSAL_REQUESTED",
+          "manual": true,
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "PrepareReversal",
+              "executionMode": "SYNC",
+              "config": { "attachEntity": true, "calculationNodesTags": "deterministic" }
+            }
+          ],
+          "disabled": false
+        },
+        {
+          "name": "CLOSE_CLAIM",
+          "next": "CLOSED",
+          "manual": true,
+          "disabled": false
+        }
+      ]
+    },
+    "DENIED": {
+      "transitions": [
+        {
+          "name": "FILE_APPEAL",
+          "next": "CONTESTED",
+          "manual": true,
+          "disabled": false
+        },
+        {
+          "name": "CLOSE_CLAIM",
+          "next": "CLOSED",
+          "manual": true,
+          "disabled": false
+        }
+      ]
+    },
+    "CONTESTED": {
+      "transitions": [
+        {
+          "name": "REASSESS",
+          "next": "TRIAGED",
+          "manual": true,
+          "disabled": false
+        }
+      ]
+    },
+    "REVERSAL_REQUESTED": {
+      "transitions": [
+        {
+          "name": "APPROVE_REVERSAL",
+          "next": "REVERSED",
+          "manual": true,
+          "criterion": {
+            "type": "function",
+            "function": {
+              "name": "WithinReversalAuthority",
+              "config": { "attachEntity": true, "calculationNodesTags": "deterministic" }
+            }
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "ExecuteReversal",
+              "executionMode": "SYNC",
+              "config": {
+                "attachEntity": true,
+                "calculationNodesTags": "payment-integration",
+                "responseTimeoutMs": 10000
+              }
+            }
+          ],
+          "disabled": false
+        },
+        {
+          "name": "REJECT_REVERSAL",
+          "next": "CLOSED",
+          "manual": true,
+          "disabled": false
+        }
+      ]
+    },
+    "REJECTED": { "transitions": [] },
+    "WITHDRAWN": { "transitions": [] },
+    "UNRECOVERABLE": { "transitions": [] },
+    "REVERSED": { "transitions": [] },
+    "CLOSED": { "transitions": [] }
+  }
+}

@@ -11,31 +11,31 @@ import { layoutGraph, type LayoutResult as WorkflowLayoutResult } from '@cyoda/w
 import { WorkflowViewer } from '@cyoda/workflow-viewer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import EntityDataModelCard from '@/components/EntityDataModelCard';
-import workflowJson from '@/data/workflows/AgenticAiWorkflow.json?raw';
+import workflowJson from '@/data/workflows/claim-workflow.json?raw';
 
-const agentActionEntityModel = {
+const claimEntityModel = {
   title: 'What the entity contains',
   body:
-    'The AgentAction entity holds the structured business information needed to govern autonomous actions: requested action, target system, policy checks, approval state, execution result, exception details, and audit-relevant data. The workflow controls whether the action can proceed and records the outcome.',
+    'The Claim entity holds the structured business information needed to govern adjudication: claim and policy identifiers, line of business, captured FNOL context, coverage and triage results, agent-drafted assessment, adjudication proposal, adjuster decisions, payment status, exception details, and audit-relevant data. The workflow controls whether the claim can advance and records the outcome.',
   snippet: `{
-  "entity": "AgentAction",
-  "actionId": "ACT-019",
-  "state": "PROPOSED",
-  "agent": {
-    "id": "AGT-019",
-    "role": "CreditLimitAssistant",
-    "model": "policy-approved"
+  "entity": "Claim",
+  "state": "ASSESSMENT_PROPOSED",
+  "claimNumber": "CLM-2026-0044182",
+  "policy": {
+    "policyNumber": "POL-7748231",
+    "lineOfBusiness": "AUTO_PHYSICAL_DAMAGE"
   },
-  "target": {
-    "system": "CreditLimits",
-    "operation": "UpdateLimit"
+  "assessment": {
+    "severityTier": 2,
+    "proposedReserve": 8400,
+    "confidence": 0.91
   },
-  "governance": {
-    "authorityChecks": ["role", "risk"],
-    "review": "HUMAN_REQUIRED"
+  "review": {
+    "status": "AUTO_ELIGIBLE",
+    "authorityLimit": 10000
   },
   "audit": {
-    "lastTransition": "PROPOSE_ACTION"
+    "lastTransition": "PROPOSE_ASSESSMENT"
   }
 }`,
 };
@@ -89,7 +89,7 @@ function stateLabel(node?: GraphNode) {
   return 'Start';
 }
 
-export default function AgenticAiWorkflowViewer() {
+export default function ClaimsAdjudicationWorkflowViewer() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [layout, setLayout] = useState<WorkflowLayoutResult | null>(null);
 
@@ -152,7 +152,7 @@ export default function AgenticAiWorkflowViewer() {
         </CardHeader>
         <CardContent className="space-y-3 text-sm">
           <p className="text-muted-foreground">
-            The supplied RegulatedActionCase entity workflow JSON did not pass the viewer parser.
+            The supplied Claim entity workflow JSON did not pass the viewer parser.
           </p>
           <div className="rounded-lg border border-border/60 bg-background p-4">
             <p className="font-medium text-foreground">Validation issues</p>
@@ -175,12 +175,12 @@ export default function AgenticAiWorkflowViewer() {
             <p className="text-xs font-semibold uppercase tracking-widest text-primary">
               ENTITY WORKFLOW
             </p>
-            <p className="mt-1 text-lg font-semibold text-foreground">RegulatedActionCase</p>
+            <p className="mt-1 text-lg font-semibold text-foreground">Claim</p>
             <p className="mt-1 text-sm text-muted-foreground">
-              Lifecycle for governed agentic actions
+              Governance lifecycle for AI-assisted claims adjudication
             </p>
             <p className="mt-1 text-sm text-muted-foreground">
-              Pan to explore the entity lifecycle and select a state or transition for details.
+              Pan to explore the claim lifecycle and select a state or transition for details.
             </p>
           </div>
           <div className="h-[1060px] w-full bg-background md:h-[1275px]">
@@ -206,13 +206,11 @@ export default function AgenticAiWorkflowViewer() {
                 Select a state or transition to inspect the entity lifecycle semantics.
               </p>
               <div className="rounded-lg border border-primary/20 bg-primary/[0.03] p-4">
-                <p className="font-medium text-foreground">
-                  RegulatedActionCase entity workflow JSON
-                </p>
+                <p className="font-medium text-foreground">Claim entity workflow JSON</p>
                 <p className="mt-1 text-muted-foreground">
-                  This viewer is driven directly from the RegulatedActionCase entity workflow file,
-                  including policy gates, manual review paths, rollback handling, and monitoring
-                  re-entry.
+                  This viewer is driven directly from the supplied Claim entity workflow file,
+                  including FNOL capture, coverage checks, assessment proposal, adjuster review,
+                  payment, appeal, failure, and reversal paths.
                 </p>
               </div>
             </>
@@ -229,7 +227,7 @@ export default function AgenticAiWorkflowViewer() {
               </p>
               <p className="text-lg font-semibold text-foreground">Lifecycle start</p>
               <p className="text-muted-foreground">
-                This marks the initial entry into the RegulatedActionCase entity lifecycle.
+                This marks the initial entry into the Claim entity lifecycle.
               </p>
             </>
           )}
@@ -283,7 +281,7 @@ export default function AgenticAiWorkflowViewer() {
             </>
           )}
 
-          <EntityDataModelCard {...agentActionEntityModel} />
+          <EntityDataModelCard {...claimEntityModel} />
         </CardContent>
       </Card>
     </div>

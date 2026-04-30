@@ -19,11 +19,25 @@ const customerOnboardingEntityModel = {
     'The CustomerOnboarding entity holds the structured business information needed to manage onboarding: customer profile, identity checks, risk rating, external screening results, required documents, exceptions, and audit-relevant data. The workflow changes the entity state as checks complete, fail, retry, or move to manual review.',
   snippet: `{
   "entity": "CustomerOnboarding",
-  "state": "SCREENING",
   "customerId": "CUS-44821",
-  "riskRating": "MEDIUM",
-  "checks": ["identity", "sanctions"],
-  "lastTransition": "START_SCREENING"
+  "state": "SCREENING",
+  "profile": {
+    "type": "Corporate",
+    "country": "GB",
+    "riskRating": "MEDIUM"
+  },
+  "checks": {
+    "identity": "PASSED",
+    "sanctions": "CLEAR",
+    "pep": "REVIEW_REQUIRED"
+  },
+  "documents": [
+    { "type": "CertificateOfIncorporation", "status": "VERIFIED" },
+    { "type": "OwnershipChart", "status": "PENDING" }
+  ],
+  "audit": {
+    "lastTransition": "START_SCREENING"
+  }
 }`,
 };
 

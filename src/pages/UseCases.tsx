@@ -3,7 +3,7 @@ import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
 import { organizationSchema } from '@/data/schemas';
 import UseCaseCard from '@/components/UseCaseCard';
-import { Building2, BarChart3, UserCheck, Bot } from 'lucide-react';
+import { Building2, BarChart3, UserCheck, Bot, FileText } from 'lucide-react';
 
 const useCases = [
   {
@@ -31,6 +31,12 @@ const useCases = [
     href: '/use-cases/governed-ai-actions',
   },
   {
+    icon: FileText,
+    title: 'Governed Claims Adjudication',
+    description: 'Run AI-assisted claims decisions through a governed Claim entity lifecycle, with traceable state changes, adjuster review, payment, appeal, and reversal paths.',
+    href: '/use-cases/governed-claims-adjudication',
+  },
+  {
     icon: Bot,
     title: 'Agentic AI for Enterprise Systems',
     description: 'Transactional, auditable agent actions with governed execution paths for regulated production systems.',
@@ -43,7 +49,7 @@ const UseCases = () => {
     <div className="min-h-screen bg-background">
       <SEO
         title="Use Cases | Cyoda"
-        description="See how Cyoda powers loan lifecycle management, governed AI actions, trade settlement, and KYC onboarding in financial services."
+        description="See how Cyoda powers loan lifecycle management, governed AI actions, governed claims adjudication, trade settlement, and KYC onboarding in financial services."
         url="https://cyoda.com/use-cases"
         type="website"
         jsonLd={organizationSchema}

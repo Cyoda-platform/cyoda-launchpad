@@ -19,13 +19,24 @@ const agentActionEntityModel = {
     'The AgentAction entity holds the structured business information needed to govern an autonomous action: requesting agent, target system, proposed change, captured context, authority checks, review status, execution result, exception details, and audit-relevant data. The workflow controls whether the action can proceed and records the outcome.',
   snippet: `{
   "entity": "AgentAction",
+  "actionId": "ACT-019",
   "state": "PROPOSED",
-  "agentId": "AGT-019",
-  "targetSystem": "CreditLimits",
-  "requestedAction": "UpdateLimit",
-  "authorityChecks": ["role", "riskLimit"],
-  "review": "HUMAN_REQUIRED",
-  "lastTransition": "PROPOSE_ACTION"
+  "agent": {
+    "id": "AGT-019",
+    "role": "CreditLimitAssistant",
+    "model": "policy-approved"
+  },
+  "target": {
+    "system": "CreditLimits",
+    "operation": "UpdateLimit"
+  },
+  "governance": {
+    "authorityChecks": ["role", "riskLimit"],
+    "review": "HUMAN_REQUIRED"
+  },
+  "audit": {
+    "lastTransition": "PROPOSE_ACTION"
+  }
 }`,
 };
 
