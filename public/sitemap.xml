@@ -73,6 +73,13 @@
     <priority>0.7</priority>
   </url>
 
+  <!-- Comparison -->
+  <url>
+    <loc>https://cyoda.com/comparison</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
   <!-- Company Pages -->
   <url>
     <loc>https://cyoda.com/about</loc>

@@ -35,6 +35,7 @@ playwright-report/
 # AI files
 .claude/
 .sandbox/
+.playwright-mcp/
 docs/lint-and-validate-issues.md
 docs/react-best-practices-changes.md
 docs/website-improvement-audit.md
