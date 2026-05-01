@@ -6,24 +6,25 @@ import { Card, CardContent } from '@/components/ui/card';
 
 const founders = [
   {
-    initials: 'PS',
+    initials: 'PSt',
     name: 'Patrick Stanton',
     title: 'CEO & Co-Founder',
     bio: '30+ years building core systems for global investment banks. LCH Automated Brokerage Service. Dresdner Kleinwort fixed income settlement (Frankfurt). Westpac FX (Sydney). Macquarie treasury and equity derivatives — live during the GFC. Intesa Sanpaolo (Milan). Co-founded Cyoda in 2012. Mechanical Engineering, University of Leeds.',
   },
   {
-    initials: 'PSch',
+    initials: 'PSc',
     name: 'Paul Schleger PhD',
     title: 'CTO & Co-Founder',
-    bio: 'Experimental physicist background. 25 years in financial software. Co-architect of the Entity Database Management System concept. Based in Vancouver.',
+    bio: 'PhD experimental physicist (UBC). Research fellow and scientist at European national laboratories. 25+ years in regulated banking as IT project manager, including engineering and platform transformation lead at European banks and financial institutions — Helaba, LBBW, Dresdner Kleinwort, and the Bundesrepublik Deutschland — Finanzagentur. Co-architect of the Cyoda EDBMS. Co-founded Cyoda in 2012. Vancouver.',
   },
 ];
 
 const timeline = [
   { year: '2012', event: 'Cyoda founded' },
-  { year: '2015', event: 'Full-time operations, London' },
+  { year: '2015', event: 'Platform feature-complete with core architectural innovations in place' },
   { year: '2017', event: 'First production deployment (VC Trade, European private-debt market)' },
   { year: '2025', event: 'Cyoda Cloud live beta launched (free tier at ai.cyoda.net)' },
+  { year: '2026', event: 'Release of cyoda-go — digital twin of the scalable Cyoda EDBMS. Open-source storage engines for different operational shapes, plus a commercial Cassandra plugin for fully scalable production' },
 ];
 
 const About = () => {
@@ -46,10 +47,9 @@ const About = () => {
                 Built by People Who Lived the Problem
               </h1>
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Cyoda was not designed from first principles. It was designed by engineers who
-                spent careers building the back-office systems that needed it at LCH, Dresdner
-                Kleinwort, Westpac, Macquarie, and Intesa Sanpaolo. The platform reflects what
-                those systems actually needed.
+                Cyoda was built by engineers who spent careers inside the regulated systems
+                that run global finance — at LCH, Dresdner Kleinwort, Westpac, Macquarie, and
+                Intesa Sanpaolo. Every part of the platform answers a problem we hit there.
               </p>
             </div>
           </div>

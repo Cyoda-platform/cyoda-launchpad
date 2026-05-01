@@ -1,104 +1,65 @@
-# Cyoda Website — Instructions for Claude Code
+# CLAUDE.md
 
-## This Is an Existing Project
-Repository: `/Users/patrick/dev/cyoda-launchpad`
-Do NOT create a new project. Work entirely within the existing codebase.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Project Stack
-- **Framework**: Vite + React 18 + TypeScript
-- **Routing**: react-router-dom v6 (routes defined in `src/App.tsx`)
-- **Styling**: Tailwind CSS v3 + shadcn/ui component library
-- **Design tokens**: CSS variables in `src/index.css`
-- **Font**: Montserrat (Google Fonts, loaded in `src/index.css`)
-- **Theme**: Light mode default; dark/light toggle via `next-themes` + `ThemeProvider`
-  (`defaultTheme="light"` in `src/App.tsx`, `attribute="class"`)
-- **SEO**: `react-helmet-async` via `src/components/SEO.tsx`
-  — `fullTitle = title` (no auto-append; each page owns its own complete title string)
-- **Analytics**: GA4 via `src/components/AnalyticsManager.tsx`
-- **Blog**: Markdown content in `src/content/`, indexed by `scripts/generate-blog-index.js`
-- **shadcn/ui**: Full component library in `src/components/ui/`
-- **Sitemap**: Static file at `public/sitemap.xml` (manually maintained)
-- **llms.txt**: Static file at `public/llms.txt`
+This is the **cyoda.com** marketing/product site (Enterprise Cyoda). `AGENTS.md` and `README.md` carry the canonical project rules and route table — read those for copy constraints, brand DOs/DON'Ts, and the full route list. This file focuses on commands and the architectural shape that isn't obvious from a single file.
 
-## Build Commands
+## Commands
+
 ```bash
-npm run dev       # Development server on port 8080
-npm run build     # Production build
-npm run lint      # ESLint check
-npm run typecheck # npx tsc --noEmit
+npm run dev         # Vite dev server on port 8080
+npm run dev:test    # Dev server with Vite mode "test" (uses .env.test)
+npm run build       # Production build (runs prebuild → generate-blog-index.js)
+npm run build:dev   # Build with development mode (sourcemaps, no minify)
+npm run lint        # ESLint
+npm run typecheck   # tsc --noEmit
+npm run generate-index   # Manually rebuild src/data/blog-index.json from src/content/
+
+npm run test        # Vitest watch
+npm run test:run    # Vitest one-shot
+npm run test:ui     # Vitest UI
+npm run test:coverage
+npm run test:e2e    # Playwright (requires dev server reachable at localhost:8080)
+npm run test:e2e:ui
 ```
-Run `npm run build && npm run typecheck` after every task. Fix all errors before proceeding.
 
-## Current State — Completed Work
+Run a single Vitest file: `npx vitest run path/to/file.test.ts`
+Run a single Playwright test: `npx playwright test tests/e2e/<file>.spec.ts -g "<title>"`
 
-### Pages (all routed in `src/App.tsx`)
-- `/` → `src/pages/Index.tsx` ✅
-- `/comparison` → `src/pages/Comparison.tsx` ✅
-- `/use-cases` → `src/pages/UseCases.tsx` ✅
-- `/use-cases/loan-lifecycle` → `src/pages/UseCaseLoanLifecycle.tsx` ✅
-- `/use-cases/trade-settlement` → `src/pages/UseCaseTradeSettlement.tsx` ✅
-- `/use-cases/kyc-onboarding` → `src/pages/UseCaseKycOnboarding.tsx` ✅
-- `/use-cases/agentic-ai` → `src/pages/UseCaseAgenticAi.tsx` ✅
-- `/dev` → `src/pages/Dev.tsx` ✅
-- `/cto` → `src/pages/Cto.tsx` ✅ (duplicate H1 fixed)
-- `/about` → `src/pages/About.tsx` ✅
-- `/contact` → `src/pages/Contact.tsx` ✅
-- `/blog` → `src/pages/Blog.tsx` ✅
-- `/blog/:slug` → `src/pages/BlogPost.tsx` ✅
-- `/support` → `src/pages/Support.tsx` ✅
+After changes, run `npm run build && npm run typecheck` (and `npm run lint` before shipping). Tests live in `tests/{unit,integration,e2e}` with `tests/setup.ts` as the Vitest setup file (see `vitest.config.ts`).
 
-### Components
-- `src/components/HeroSection.tsx` ✅ — SVG architecture field background; CTAs: "Talk to us" + "Open source, run it yourself"
-- `src/components/ProofBar.tsx` ✅ — Two production proof points, ShieldCheck icon
-- `src/components/CyodaPathsSection.tsx` ✅ — Enterprise card full-width primary; OSS + Cloud as 2-column secondary row
-- `src/components/CyodaModelDiagram.tsx` ✅ — Hexagon layout, 6 nodes including Business Logic
-- `src/components/EcosystemSection.tsx` ✅ — 4 tiles, teal icons, 2×2 grid
-- `src/components/ArchitectureDiagram.tsx` ✅
-- `src/components/UseCaseCard.tsx` ✅
-- `src/components/Header.tsx` ✅ — Platform, Solutions, Cyoda Cloud, Open Source, Docs nav; mobile drawer
-- `src/components/Footer.tsx` ✅ — Platform, Company, Cyoda columns; social links; cookie preferences
+## Architecture
 
-### SEO / Structured Data
-- `src/components/SEO.tsx` ✅ — auto-append removed; renders `jsonLd` prop
-- `src/data/schemas.ts` ✅ — `organizationSchema` and breadcrumb schemas
-- All pages: unique title, description, canonical URL ✅
-- `public/sitemap.xml` ✅ — includes all routes
-- `public/llms.txt` ✅ — describes three-site structure and Enterprise Cyoda
+**SPA shape.** Vite + React 18 + TypeScript. `@` is aliased to `src/` (see `vite.config.ts`). React/react-dom are deduped and pinned via explicit aliases — don't add a second copy via a sub-dependency.
 
-### Design System
-- Light mode default with teal primary (`--primary: 175 65% 32%`)
-- `src/index.css` ✅ — `:root` has `--primary`, `--primary-foreground`, `--border`, `--accent`, `--muted-foreground`
-- `bg-gradient-primary` and `glow-hover` utilities defined
+**Routing & app shell — `src/App.tsx`.** All pages are `React.lazy()` imports, wrapped in a single `<Suspense>`. Routes are declared above a `*` catch-all (`NotFound`). The shell wires, in order: `HelmetProvider` → `QueryClientProvider` (TanStack Query) → `ThemeProvider` (`next-themes`, `attribute="class"`, `defaultTheme="light"`) → `CookieConsentProvider` → `AnalyticsManager` → `TooltipProvider` → `BrowserRouter` (with `basename` from `import.meta.env.BASE_URL`) → `AnalyticsTracker` (calls `useAnalyticsTracking` + `useUtmTracking`). The cookie-consent banner and the lazy-loaded preferences modal sit outside the routed area so they persist across navigation. New pages must be added inside the `<Routes>` block, above the catch-all, and registered in `public/sitemap.xml`.
 
-## Cyoda Web Estate (three-site structure)
-- **cyoda.com** — Enterprise Cyoda (this site). Commercially supported for regulated production.
-- **cyoda.org** — Open-source Cyoda. Self-hosted, run-it-yourself.
-- **ai.cyoda.net** — Cyoda Cloud. Hosted SaaS, free evaluation tier.
-- **docs.cyoda.net** — Documentation and API reference.
+**Note on aliased routes.** `App.tsx` intentionally maps several use-case URLs (`/use-cases/governed-agentic-workflows`, `/use-cases/governed-ai-actions`, `/use-cases/agentic-ai`) to the same `UseCaseGovernedAiActions` page. Don't "deduplicate" these — they exist to preserve external links.
 
-The homepage positions Enterprise Cyoda as the primary offering. The other two properties
-are surfaced as secondary options in `CyodaPathsSection` and the header nav.
+**SEO — `src/components/SEO.tsx` + `src/data/schemas.ts`.** Each page renders its own `<SEO title="…" description="…" url="…" jsonLd={…} />`. The component does **not** auto-append a site suffix to titles — every page must own its full `<title>` string. JSON-LD is passed via the `jsonLd` prop using the helpers in `src/data/schemas.ts` (`organizationSchema`, breadcrumb builders).
 
-## Key Constraints — DO NOT
-- Do NOT create a new project or change the build system
-- Do NOT remove working features (blog, analytics, cookie consent, theme toggle)
-- Do NOT use orange (`--cyoda-orange` / `bg-icon`) in new enterprise sections
-- Do NOT add `.texture-overlay` class to new sections
-- Do NOT put "Available to all" in any copy
-- Do NOT use "Get Building for Free"
-- Do NOT invent customer names or metrics — use only verified proof points
-- Do NOT change the purpose or layout of `/cto` or `/dev` — only fix their SEO metadata
-- External links to cyoda.org and ai.cyoda.net should open in the **same tab** from CTA buttons;
-  use `target="_blank"` for nav links only
+**Blog pipeline.** Markdown lives in `src/content/` (parsed at runtime via `gray-matter` and `react-markdown` + `remark-gfm` + `rehype-raw`). `scripts/generate-blog-index.js` runs in `prebuild` and writes `src/data/blog-index.json`, which the blog pages consume — so a content change isn't visible after `npm run build` unless the index regenerates. Use `npm run generate-index` to force it. Code blocks in posts are rendered with `react-syntax-highlighter` (Prism).
 
-## Routing — How to Add New Pages
-1. Create the file in `src/pages/`
-2. Import it in `src/App.tsx`
-3. Add `<Route path="..." element={<Component />} />` above the `*` catch-all
-4. Add `<SEO title="..." description="..." url="..." />` in the page
-5. Add the URL to `public/sitemap.xml`
+**Workflow viewers.** Read-only Cyoda workflow rendering is provided by the `@cyoda/workflow-{core,graph,layout,viewer}` packages. Diagrams elsewhere use `reactflow` and `mermaid`. `gray-matter`/`buffer` need explicit Vite pre-bundling and a `globalThis` shim — both are configured in `vite.config.ts`; preserve them when touching that file.
 
-## Read Next
-1. `docs/DESIGN.md` — visual specs, design tokens, entity model
-2. `docs/REQUIREMENTS.md` — exact SEO values, copy, and structured data per page
-3. `docs/TASKS.md` — task list with acceptance criteria
+**Analytics & consent.** GA4 is loaded via `react-ga4` inside `AnalyticsManager`, gated by the consent state from `CookieConsentProvider`. `useAnalyticsTracking` hooks page-view tracking into route changes; `useUtmTracking` captures UTMs once on app load. Don't fire analytics outside this gate.
+
+**Design system.** Tailwind v3 + shadcn/ui (full library in `src/components/ui/`). Design tokens are CSS variables in `src/index.css` (light is the default theme; teal primary at `--primary: 175 65% 32%`). Tailwind config (`tailwind.config.ts`) extends colors from those CSS vars and registers `tailwindcss-animate` and `@tailwindcss/typography`. The font is Montserrat, loaded in `src/index.css`.
+
+## Three-site context
+
+The Cyoda web estate is split across three sites — this matters when writing copy and CTAs:
+
+- **cyoda.com** (this repo) — Enterprise, commercially supported.
+- **cyoda.org** — Open-source, self-hosted.
+- **ai.cyoda.net** — Cyoda Cloud, hosted SaaS.
+- **docs.cyoda.net** — Docs.
+
+Convention: CTA buttons that go to `cyoda.org` / `ai.cyoda.net` open in the **same tab**; only header/footer nav links to those properties use `target="_blank"`.
+
+## Project docs to consult
+
+- `AGENTS.md` — full route table, brand/copy constraints, "DO NOT" rules.
+- `docs/DESIGN.md` — visual specs, design tokens, entity model.
+- `docs/REQUIREMENTS.md` — exact SEO values, copy, and structured data per page.
+- `docs/TASKS.md` — task list with acceptance criteria.

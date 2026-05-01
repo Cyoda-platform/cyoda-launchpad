@@ -301,12 +301,29 @@ const Contact = () => {
               <div className="space-y-6">
                 <div>
                   <div className="w-14 h-14 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold mb-4">
-                    PS
+                    PSt
                   </div>
                   <h3 className="font-semibold text-foreground text-lg">Patrick Stanton</h3>
                   <p className="text-sm text-primary mb-3">CEO & Co-Founder</p>
                   <a
                     href="https://www.linkedin.com/in/patrick-stanton-cyoda/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors focus-visible:ring-2 focus-visible:ring-primary rounded"
+                  >
+                    <SiLinkedin className="w-4 h-4" />
+                    Connect on LinkedIn
+                  </a>
+                </div>
+
+                <div>
+                  <div className="w-14 h-14 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold mb-4">
+                    PSc
+                  </div>
+                  <h3 className="font-semibold text-foreground text-lg">Paul Schleger</h3>
+                  <p className="text-sm text-primary mb-3">CTO & Co-Founder</p>
+                  <a
+                    href="https://www.linkedin.com/in/paulschleger"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors focus-visible:ring-2 focus-visible:ring-primary rounded"
