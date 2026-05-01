@@ -1,0 +1,45 @@
+{
+  "governance": {
+    "transition_rationale": "Applicant meets Tier-1 credit requirements; automated verification of income successful.",
+    "agent_proposal": {
+      "processor_id": "credit-underwriting-agent-alpha",
+      "proposed_action": "APPROVE",
+      "confidence": 0.98,
+      "reasoning_trace": "DTI is 22%, below the 35% threshold. Credit score (740) retrieved from Bureau-X via API is valid for this product. No recent derogatory marks found in last 24 months.",
+      "evidence_manifest": [
+        {
+          "type": "CREDIT_REPORT_SNAPSHOT",
+          "ref": "audit://reports/credit/740-9901.json",
+          "timestamp": "2026-04-30T14:01:45Z"
+        },
+        {
+          "type": "PAYSTUB_OCR_EXTRACT",
+          "ref": "audit://docs/income/verified-9901.pdf",
+          "logic": "monthly_gross_income_calc"
+        }
+      ],
+      "compliance_checks": {
+        "fair_lending_check": "PASSED",
+        "model_risk_id": "MR-2026-04-B"
+      }
+    },
+    "human_gate": {
+      "status": "AWAITING_OFFICER_SIGNATURE",
+      "eligible_roles": ["CREDIT_OFFICER_LVL_2"],
+      "escalation_path": "SENIOR_UNDERWRITER",
+      "sla_deadline": "2026-05-01T14:00:00Z"
+    }
+  },
+  "data": {
+    "application_details": {
+      "requested_amount": 25000,
+      "purpose": "Debt Consolidation",
+      "term_months": 48
+    },
+    "applicant_financials": {
+      "stated_annual_income": 85000,
+      "verified_annual_income": 84200,
+      "current_debt_load": 1540
+    }
+  }
+}

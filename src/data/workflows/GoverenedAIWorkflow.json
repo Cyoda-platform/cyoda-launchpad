@@ -1,0 +1,585 @@
+{
+  "version": "1.0",
+  "name": "GovernedAIActionWorkflow",
+  "desc": "Illustrative workflow for governing an AI agent action against an enterprise system. The workflow captures context, checks authority and risk, creates an agent proposal, routes high-risk actions to human review, executes approved actions, records the outcome, and supports failure or reversal paths.",
+  "initialState": "REQUESTED",
+  "active": true,
+  "states": {
+    "REQUESTED": {
+      "transitions": [
+        {
+          "name": "CAPTURE_CONTEXT",
+          "next": "CONTEXT_CAPTURED",
+          "manual": false,
+          "disabled": false,
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "CaptureDecisionContext",
+              "executionMode": "SYNC",
+              "config": {
+                "attachEntity": true,
+                "calculationNodesTags": "agent-governance,context",
+                "responseTimeoutMs": 5000,
+                "retryPolicy": "FIXED",
+                "context": "Capture the requesting agent, target system, requested action, user or tenant context, source evidence, and data available at decision time."
+              }
+            }
+          ]
+        },
+        {
+          "name": "CANCEL_REQUEST",
+          "next": "CANCELLED",
+          "manual": true,
+          "disabled": false
+        }
+      ]
+    },
+    "CONTEXT_CAPTURED": {
+      "transitions": [
+        {
+          "name": "CHECK_AUTHORITY",
+          "next": "AUTHORITY_CHECKED",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "group",
+            "operator": "AND",
+            "conditions": [
+              {
+                "type": "simple",
+                "jsonPath": "$.agentId",
+                "operation": "NOT_NULL"
+              },
+              {
+                "type": "simple",
+                "jsonPath": "$.requestedAction",
+                "operation": "NOT_NULL"
+              },
+              {
+                "type": "simple",
+                "jsonPath": "$.targetSystem",
+                "operation": "NOT_NULL"
+              }
+            ]
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "EvaluateAgentAuthority",
+              "executionMode": "SYNC",
+              "config": {
+                "attachEntity": true,
+                "calculationNodesTags": "agent-governance,authority",
+                "responseTimeoutMs": 5000,
+                "retryPolicy": "FIXED",
+                "context": "Evaluate whether the agent is allowed to request this action against the target system."
+              }
+            }
+          ]
+        },
+        {
+          "name": "REJECT_INCOMPLETE_CONTEXT",
+          "next": "REJECTED",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "group",
+            "operator": "OR",
+            "conditions": [
+              {
+                "type": "simple",
+                "jsonPath": "$.agentId",
+                "operation": "IS_NULL"
+              },
+              {
+                "type": "simple",
+                "jsonPath": "$.requestedAction",
+                "operation": "IS_NULL"
+              },
+              {
+                "type": "simple",
+                "jsonPath": "$.targetSystem",
+                "operation": "IS_NULL"
+              }
+            ]
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "RecordRejectedAction",
+              "executionMode": "ASYNC_NEW_TX",
+              "config": {
+                "attachEntity": true,
+                "calculationNodesTags": "agent-governance,audit",
+                "responseTimeoutMs": 3000,
+                "retryPolicy": "FIXED",
+                "context": "Record rejection because required decision context is missing."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "AUTHORITY_CHECKED": {
+      "transitions": [
+        {
+          "name": "CHECK_POLICY",
+          "next": "POLICY_CHECKED",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.authority.allowed",
+            "operation": "EQUALS",
+            "value": true
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "EvaluatePolicyAndRisk",
+              "executionMode": "SYNC",
+              "config": {
+                "attachEntity": true,
+                "calculationNodesTags": "agent-governance,policy,risk",
+                "responseTimeoutMs": 8000,
+                "retryPolicy": "FIXED",
+                "context": "Evaluate workflow criteria, risk limits, required approvals, and whether the action can proceed automatically or needs human review."
+              }
+            }
+          ]
+        },
+        {
+          "name": "REJECT_UNAUTHORISED",
+          "next": "REJECTED",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.authority.allowed",
+            "operation": "EQUALS",
+            "value": false
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "RecordRejectedAction",
+              "executionMode": "ASYNC_NEW_TX",
+              "config": {
+                "attachEntity": true,
+                "calculationNodesTags": "agent-governance,audit",
+                "responseTimeoutMs": 3000,
+                "retryPolicy": "FIXED",
+                "context": "Record rejection because the agent is not authorised to perform the requested action."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "POLICY_CHECKED": {
+      "transitions": [
+        {
+          "name": "BUILD_PROPOSAL",
+          "next": "PROPOSED",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.policy.passed",
+            "operation": "EQUALS",
+            "value": true
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "BuildActionProposal",
+              "executionMode": "ASYNC_SAME_TX",
+              "config": {
+                "attachEntity": true,
+                "calculationNodesTags": "agent-governance,proposal",
+                "responseTimeoutMs": 8000,
+                "retryPolicy": "FIXED",
+                "context": "Create a structured proposal containing the requested action, rationale, confidence, evidence references, and expected state change."
+              }
+            }
+          ]
+        },
+        {
+          "name": "REJECT_POLICY_FAILURE",
+          "next": "REJECTED",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.policy.passed",
+            "operation": "EQUALS",
+            "value": false
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "RecordRejectedAction",
+              "executionMode": "ASYNC_NEW_TX",
+              "config": {
+                "attachEntity": true,
+                "calculationNodesTags": "agent-governance,audit",
+                "responseTimeoutMs": 3000,
+                "retryPolicy": "FIXED",
+                "context": "Record rejection because policy or risk checks failed."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "PROPOSED": {
+      "transitions": [
+        {
+          "name": "AUTO_APPROVE_LOW_RISK",
+          "next": "APPROVED",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "group",
+            "operator": "AND",
+            "conditions": [
+              {
+                "type": "simple",
+                "jsonPath": "$.policy.requiresHumanReview",
+                "operation": "EQUALS",
+                "value": false
+              },
+              {
+                "type": "simple",
+                "jsonPath": "$.proposal.confidence",
+                "operation": "GREATER_OR_EQUAL",
+                "value": 0.9
+              },
+              {
+                "type": "simple",
+                "jsonPath": "$.risk.level",
+                "operation": "NOT_EQUAL",
+                "value": "HIGH"
+              }
+            ]
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "RecordApprovalDecision",
+              "executionMode": "ASYNC_NEW_TX",
+              "config": {
+                "attachEntity": true,
+                "calculationNodesTags": "agent-governance,audit",
+                "responseTimeoutMs": 3000,
+                "retryPolicy": "FIXED",
+                "context": "Record automated approval for a low-risk action."
+              }
+            }
+          ]
+        },
+        {
+          "name": "ESCALATE_FOR_REVIEW",
+          "next": "HUMAN_REVIEW",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "group",
+            "operator": "OR",
+            "conditions": [
+              {
+                "type": "simple",
+                "jsonPath": "$.policy.requiresHumanReview",
+                "operation": "EQUALS",
+                "value": true
+              },
+              {
+                "type": "simple",
+                "jsonPath": "$.risk.level",
+                "operation": "EQUALS",
+                "value": "HIGH"
+              },
+              {
+                "type": "simple",
+                "jsonPath": "$.proposal.confidence",
+                "operation": "LESS_THAN",
+                "value": 0.9
+              }
+            ]
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "CreateHumanReviewTask",
+              "executionMode": "ASYNC_NEW_TX",
+              "config": {
+                "attachEntity": true,
+                "calculationNodesTags": "agent-governance,review",
+                "responseTimeoutMs": 5000,
+                "retryPolicy": "FIXED",
+                "context": "Create a review task containing the proposal, rationale, evidence, and required reviewer role."
+              }
+            }
+          ]
+        },
+        {
+          "name": "WITHDRAW_PROPOSAL",
+          "next": "CANCELLED",
+          "manual": true,
+          "disabled": false
+        }
+      ]
+    },
+    "HUMAN_REVIEW": {
+      "transitions": [
+        {
+          "name": "APPROVE_ACTION",
+          "next": "APPROVED",
+          "manual": true,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.review.decision",
+            "operation": "EQUALS",
+            "value": "APPROVED"
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "RecordApprovalDecision",
+              "executionMode": "ASYNC_NEW_TX",
+              "config": {
+                "attachEntity": true,
+                "calculationNodesTags": "agent-governance,audit",
+                "responseTimeoutMs": 3000,
+                "retryPolicy": "FIXED",
+                "context": "Record human approval, reviewer identity, rationale, and timestamp."
+              }
+            }
+          ]
+        },
+        {
+          "name": "REJECT_ACTION",
+          "next": "REJECTED",
+          "manual": true,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.review.decision",
+            "operation": "EQUALS",
+            "value": "REJECTED"
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "RecordRejectedAction",
+              "executionMode": "ASYNC_NEW_TX",
+              "config": {
+                "attachEntity": true,
+                "calculationNodesTags": "agent-governance,audit",
+                "responseTimeoutMs": 3000,
+                "retryPolicy": "FIXED",
+                "context": "Record human rejection, reviewer identity, rationale, and timestamp."
+              }
+            }
+          ]
+        },
+        {
+          "name": "REQUEST_MORE_CONTEXT",
+          "next": "REQUESTED",
+          "manual": true,
+          "disabled": false,
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "RequestAdditionalContext",
+              "executionMode": "ASYNC_NEW_TX",
+              "config": {
+                "attachEntity": true,
+                "calculationNodesTags": "agent-governance,context",
+                "responseTimeoutMs": 3000,
+                "retryPolicy": "FIXED",
+                "context": "Request additional evidence or missing business context before approving or rejecting the action."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "APPROVED": {
+      "transitions": [
+        {
+          "name": "EXECUTE_ACTION",
+          "next": "EXECUTING",
+          "manual": false,
+          "disabled": false,
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "ExecuteApprovedAction",
+              "executionMode": "ASYNC_NEW_TX",
+              "config": {
+                "attachEntity": true,
+                "calculationNodesTags": "agent-governance,execution",
+                "responseTimeoutMs": 10000,
+                "retryPolicy": "FIXED",
+                "context": "Execute the approved action against the target system and capture the execution result."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "EXECUTING": {
+      "transitions": [
+        {
+          "name": "MARK_COMPLETED",
+          "next": "COMPLETED",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.execution.status",
+            "operation": "EQUALS",
+            "value": "SUCCEEDED"
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "RecordExecutionOutcome",
+              "executionMode": "ASYNC_NEW_TX",
+              "config": {
+                "attachEntity": true,
+                "calculationNodesTags": "agent-governance,audit",
+                "responseTimeoutMs": 3000,
+                "retryPolicy": "FIXED",
+                "context": "Record final execution outcome and audit-relevant result data."
+              }
+            }
+          ]
+        },
+        {
+          "name": "EXECUTION_FAILED",
+          "next": "FAILED",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.execution.status",
+            "operation": "EQUALS",
+            "value": "FAILED"
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "RecordExecutionFailure",
+              "executionMode": "ASYNC_NEW_TX",
+              "config": {
+                "attachEntity": true,
+                "calculationNodesTags": "agent-governance,audit",
+                "responseTimeoutMs": 3000,
+                "retryPolicy": "FIXED",
+                "context": "Record execution failure, error details, affected target system, and recovery options."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "FAILED": {
+      "transitions": [
+        {
+          "name": "RETRY_EXECUTION",
+          "next": "APPROVED",
+          "manual": true,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.execution.retryAllowed",
+            "operation": "EQUALS",
+            "value": true
+          }
+        },
+        {
+          "name": "MARK_UNRECOVERABLE",
+          "next": "UNRECOVERABLE",
+          "manual": true,
+          "disabled": false
+        }
+      ]
+    },
+    "COMPLETED": {
+      "transitions": [
+        {
+          "name": "REVERSE_OUTCOME",
+          "next": "REVERSAL_REQUESTED",
+          "manual": true,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.reversal.requested",
+            "operation": "EQUALS",
+            "value": true
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "PrepareReversal",
+              "executionMode": "ASYNC_NEW_TX",
+              "config": {
+                "attachEntity": true,
+                "calculationNodesTags": "agent-governance,reversal",
+                "responseTimeoutMs": 5000,
+                "retryPolicy": "FIXED",
+                "context": "Prepare reversal plan and capture the original decision context needed to unwind or compensate the action."
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "REVERSAL_REQUESTED": {
+      "transitions": [
+        {
+          "name": "APPROVE_REVERSAL",
+          "next": "REVERSED",
+          "manual": true,
+          "disabled": false,
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "ExecuteReversal",
+              "executionMode": "ASYNC_NEW_TX",
+              "config": {
+                "attachEntity": true,
+                "calculationNodesTags": "agent-governance,reversal",
+                "responseTimeoutMs": 10000,
+                "retryPolicy": "FIXED",
+                "context": "Execute approved reversal or compensating action and record the outcome."
+              }
+            }
+          ]
+        },
+        {
+          "name": "REJECT_REVERSAL",
+          "next": "COMPLETED",
+          "manual": true,
+          "disabled": false
+        }
+      ]
+    },
+    "REJECTED": {
+      "transitions": []
+    },
+    "CANCELLED": {
+      "transitions": []
+    },
+    "UNRECOVERABLE": {
+      "transitions": []
+    },
+    "REVERSED": {
+      "transitions": []
+    }
+  }
+}

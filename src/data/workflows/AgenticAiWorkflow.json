@@ -1,0 +1,251 @@
+{
+  "version": "1.0",
+  "name": "AgenticAiGraphDemoWorkflow",
+  "desc": "Visually simplified agentic AI workflow for cyoda-workflow-editor graph rendering.",
+  "initialState": "ALERT",
+  "active": true,
+  "states": {
+    "ALERT": {
+      "transitions": [
+        {
+          "name": "DRAFT_AI",
+          "next": "TRIAGE",
+          "manual": false,
+          "disabled": false,
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "DraftAI",
+              "executionMode": "SYNC",
+              "config": {
+                "attachEntity": true,
+                "context": "Draft proposal"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "TRIAGE": {
+      "transitions": [
+        {
+          "name": "VALIDATE",
+          "next": "GATING",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.proposal.ok",
+            "operation": "EQUALS",
+            "value": true
+          }
+        },
+        {
+          "name": "LOW_CONF",
+          "next": "L2_REVIEW",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.proposal.ok",
+            "operation": "EQUALS",
+            "value": false
+          }
+        }
+      ]
+    },
+    "GATING": {
+      "transitions": [
+        {
+          "name": "STP_OK",
+          "next": "AUTHORIZED",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "group",
+            "operator": "AND",
+            "conditions": [
+              {
+                "type": "simple",
+                "jsonPath": "$.policy.clear",
+                "operation": "EQUALS",
+                "value": true
+              },
+              {
+                "type": "simple",
+                "jsonPath": "$.policy.stp",
+                "operation": "EQUALS",
+                "value": true
+              }
+            ]
+          }
+        },
+        {
+          "name": "L2_ESC",
+          "next": "L2_REVIEW",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.policy.review",
+            "operation": "EQUALS",
+            "value": true
+          }
+        },
+        {
+          "name": "BLOCK",
+          "next": "BLOCKED",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.policy.clear",
+            "operation": "EQUALS",
+            "value": false
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "RecordBlock",
+              "executionMode": "ASYNC_SAME_TX",
+              "config": {
+                "attachEntity": true,
+                "context": "Block"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "L2_REVIEW": {
+      "transitions": [
+        {
+          "name": "APPROVE",
+          "next": "AUTHORIZED",
+          "manual": true,
+          "disabled": false
+        },
+        {
+          "name": "REJECT",
+          "next": "BLOCKED",
+          "manual": true,
+          "disabled": false,
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "RecordReject",
+              "executionMode": "ASYNC_SAME_TX",
+              "config": {
+                "attachEntity": true,
+                "context": "Reject"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "AUTHORIZED": {
+      "transitions": [
+        {
+          "name": "EXECUTE",
+          "next": "EXECUTING",
+          "manual": false,
+          "disabled": false,
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "Execute",
+              "executionMode": "SYNC",
+              "config": {
+                "attachEntity": true,
+                "context": "Execute"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "EXECUTING": {
+      "transitions": [
+        {
+          "name": "SUCCESS",
+          "next": "RECORDED",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.exec.ok",
+            "operation": "EQUALS",
+            "value": true
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "RecordOk",
+              "executionMode": "ASYNC_SAME_TX",
+              "config": {
+                "attachEntity": true,
+                "context": "Record"
+              }
+            }
+          ]
+        },
+        {
+          "name": "FAIL",
+          "next": "ROLLED_BACK",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.exec.ok",
+            "operation": "EQUALS",
+            "value": false
+          },
+          "processors": [
+            {
+              "type": "externalized",
+              "name": "Rollback",
+              "executionMode": "ASYNC_SAME_TX",
+              "config": {
+                "attachEntity": true,
+                "context": "Rollback"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "RECORDED": {
+      "transitions": [
+        {
+          "name": "MONITOR",
+          "next": "MONITORING",
+          "manual": false,
+          "disabled": false
+        }
+      ]
+    },
+    "MONITORING": {
+      "transitions": [
+        {
+          "name": "REASSESS",
+          "next": "GATING",
+          "manual": false,
+          "disabled": false,
+          "criterion": {
+            "type": "simple",
+            "jsonPath": "$.monitor.reassess",
+            "operation": "EQUALS",
+            "value": true
+          }
+        }
+      ]
+    },
+    "BLOCKED": {
+      "transitions": []
+    },
+    "ROLLED_BACK": {
+      "transitions": []
+    }
+  }
+}

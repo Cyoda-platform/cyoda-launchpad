@@ -19,8 +19,6 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 const Index = lazy(() => import("./pages/Index"));
 const Dev = lazy(() => import("./pages/Dev"));
 const Cto = lazy(() => import("./pages/Cto"));
-const Products = lazy(() => import("./pages/Products"));
-const Pricing = lazy(() => import("./pages/Pricing"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 const BlogTest = lazy(() => import("./pages/BlogTest"));
@@ -32,6 +30,15 @@ const Support = lazy(() => import("./pages/Support"));
 const CookiePolicy = lazy(() => import("./pages/CookiePolicy"));
 const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
 const TermsOfService = lazy(() => import("./pages/TermsOfService"));
+const About = lazy(() => import("./pages/About"));
+const UseCases = lazy(() => import("./pages/UseCases"));
+const UseCaseLoanLifecycle = lazy(() => import("./pages/UseCaseLoanLifecycle"));
+const UseCaseTradeSettlement = lazy(() => import("./pages/UseCaseTradeSettlement"));
+const UseCaseKycOnboarding = lazy(() => import("./pages/UseCaseKycOnboarding"));
+const UseCaseGovernedAiActions = lazy(() => import("./pages/UseCaseGovernedAiActions"));
+const UseCaseGovernedClaimsAdjudication = lazy(() => import("./pages/UseCaseGovernedClaimsAdjudication"));
+const Contact = lazy(() => import("./pages/Contact"));
+const Comparison = lazy(() => import("./pages/Comparison"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 // Cookie consent test component
@@ -56,7 +63,7 @@ const App = () => {
     <QueryClientProvider client={queryClient}>
 
 
-      <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+      <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
         <CookieConsentProvider>
           <ErrorBoundary>
             <AnalyticsManager />
@@ -70,8 +77,6 @@ const App = () => {
               <Suspense fallback={<LoadingSpinner text="Loading page..." />}>
                 <Routes>
                   <Route path="/" element={<Index />} />
-                  <Route path="/products" element={<Products />} />
-                  <Route path="/pricing" element={<Pricing />} />
                   <Route path="/blog" element={<Blog />} />
                   <Route path="/blog/:slug" element={<BlogPost />} />
                   <Route path="/blog-test" element={<BlogTest />} />
@@ -86,6 +91,17 @@ const App = () => {
                   <Route path="/terms-of-service" element={<TermsOfService />} />
                     <Route path="/dev" element={<Dev />} />
                     <Route path="/cto" element={<Cto />} />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/use-cases" element={<UseCases />} />
+                    <Route path="/use-cases/loan-lifecycle" element={<UseCaseLoanLifecycle />} />
+                    <Route path="/use-cases/trade-settlement" element={<UseCaseTradeSettlement />} />
+                    <Route path="/use-cases/kyc-onboarding" element={<UseCaseKycOnboarding />} />
+                    <Route path="/use-cases/governed-agentic-workflows" element={<UseCaseGovernedAiActions />} />
+                    <Route path="/use-cases/governed-ai-actions" element={<UseCaseGovernedAiActions />} />
+                    <Route path="/use-cases/governed-claims-adjudication" element={<UseCaseGovernedClaimsAdjudication />} />
+                    <Route path="/use-cases/agentic-ai" element={<UseCaseGovernedAiActions />} />
+                    <Route path="/contact" element={<Contact />} />
+                    <Route path="/comparison" element={<Comparison />} />
                     {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>

@@ -1,3 +1,4 @@
+import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
@@ -67,34 +68,33 @@ function resolveMarkdownImageSrc(src?: string): string | undefined {
 }
 
 
+// Hoisted module-level constants — created once, not on every call
+const PROMPT_PATTERNS = [
+  /^(copy this|use this prompt|prompt:|sample prompt)/i,
+  /^(generate|create|build|make).*using/i,
+  /^(here's the prompt|this prompt)/i,
+];
+
+const COMMAND_PATTERNS = [
+  /^(curl|npm|yarn|pip|docker|git|mvn|gradle|cargo)\s/i,
+  /^(sudo|chmod|mkdir|cd|ls|cat|echo)\s/i,
+  /^\$\s/,
+  /^#\s/,
+];
+
 // Utility functions to detect copyable content patterns
 const detectCopyableContent = (text: string): { isCopyable: boolean; variant: 'prompt' | 'command' | 'code'; extractedText: string } => {
   const cleanText = text.trim();
 
-  // Detect prompts (common patterns)
-  const promptPatterns = [
-    /^(copy this|use this prompt|prompt:|sample prompt)/i,
-    /^(generate|create|build|make).*using/i,
-    /^(here's the prompt|this prompt)/i,
-  ];
-
-  // Detect commands (bash, shell, etc.)
-  const commandPatterns = [
-    /^(curl|npm|yarn|pip|docker|git|mvn|gradle|cargo)\s/i,
-    /^(sudo|chmod|mkdir|cd|ls|cat|echo)\s/i,
-    /^\$\s/,
-    /^#\s/,
-  ];
-
   // Check for prompt patterns
-  for (const pattern of promptPatterns) {
+  for (const pattern of PROMPT_PATTERNS) {
     if (pattern.test(cleanText)) {
       return { isCopyable: true, variant: 'prompt', extractedText: cleanText };
     }
   }
 
   // Check for command patterns
-  for (const pattern of commandPatterns) {
+  for (const pattern of COMMAND_PATTERNS) {
     if (pattern.test(cleanText)) {
       return { isCopyable: true, variant: 'command', extractedText: cleanText };
     }
@@ -121,228 +121,232 @@ const extractTextFromChildren = (children: unknown): string => {
   return '';
 };
 
+// Hoisted at module level — object and all function references are created once,
+// not on every render of MarkdownRenderer.
+const MARKDOWN_COMPONENTS = {
+  // Custom heading components with better styling
+  h1: ({ children }: { children: React.ReactNode }) => (
+    <h1 className="text-4xl font-bold text-foreground mb-6 mt-8 first:mt-0">
+      {children}
+    </h1>
+  ),
+  h2: ({ children }: { children: React.ReactNode }) => (
+    <h2 className="text-3xl font-semibold text-foreground mb-4 mt-8 first:mt-0">
+      {children}
+    </h2>
+  ),
+  h3: ({ children }: { children: React.ReactNode }) => (
+    <h3 className="text-2xl font-semibold text-foreground mb-3 mt-6 first:mt-0">
+      {children}
+    </h3>
+  ),
+  h4: ({ children }: { children: React.ReactNode }) => (
+    <h4 className="text-xl font-semibold text-foreground mb-2 mt-4 first:mt-0">
+      {children}
+    </h4>
+  ),
+  h5: ({ children }: { children: React.ReactNode }) => (
+    <h5 className="text-lg font-semibold text-foreground mb-2 mt-4 first:mt-0">
+      {children}
+    </h5>
+  ),
+  h6: ({ children }: { children: React.ReactNode }) => (
+    <h6 className="text-base font-semibold text-foreground mb-2 mt-4 first:mt-0">
+      {children}
+    </h6>
+  ),
+
+  // Custom paragraph styling with copyable content detection
+  p: ({ children }: { children: React.ReactNode }) => {
+    const textContent = extractTextFromChildren(children);
+    const { isCopyable, variant } = detectCopyableContent(textContent);
+
+    // Only make paragraphs copyable if they contain commands or are very specific patterns
+    // Avoid making regular text copyable to prevent UI clutter
+    if (isCopyable && (variant === 'command' || textContent.length > 200)) {
+      return (
+        <CopyableTextBlock
+          text={textContent}
+          variant={variant}
+          className="my-6"
+        >
+          <div className="text-foreground leading-relaxed">{children}</div>
+        </CopyableTextBlock>
+      );
+    }
+
+    return (
+      <p className="text-foreground leading-relaxed mb-6">
+        {children}
+      </p>
+    );
+  },
+
+  // Custom link styling
+  a: ({ href, children }: { href?: string; children: React.ReactNode }) => (
+    <a
+      href={href}
+      className="text-primary hover:text-primary/80 underline underline-offset-4 transition-all duration-200 hover:bg-primary/10 px-1 py-0.5 rounded"
+      target={href?.startsWith('http') ? '_blank' : undefined}
+      rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
+    >
+      {children}
+    </a>
+  ),
+
+  // Custom list styling
+  ul: ({ children }: { children: React.ReactNode }) => (
+    <ul className="list-disc list-inside mb-6 space-y-2 text-foreground">
+      {children}
+    </ul>
+  ),
+  ol: ({ children }: { children: React.ReactNode }) => (
+    <ol className="list-decimal list-inside mb-6 space-y-2 text-foreground">
+      {children}
+    </ol>
+  ),
+  li: ({ children }: { children: React.ReactNode }) => (
+    <li className="leading-relaxed text-muted-foreground">{children}</li>
+  ),
+
+  // Custom blockquote styling with copyable content detection
+  blockquote: ({ children }: { children: React.ReactNode }) => {
+    const textContent = extractTextFromChildren(children);
+    const { isCopyable, variant } = detectCopyableContent(textContent);
+
+    if (isCopyable) {
+      return (
+        <CopyableTextBlock
+          text={textContent}
+          variant={variant}
+          className="my-6"
+        >
+          <div className="text-foreground leading-relaxed">{children}</div>
+        </CopyableTextBlock>
+      );
+    }
+
+    return (
+      <blockquote className="border-l-4 border-primary/50 pl-6 py-4 my-6 bg-card/20 backdrop-blur border border-border/50 rounded-r-lg">
+        <div className="text-muted-foreground italic leading-relaxed">{children}</div>
+      </blockquote>
+    );
+  },
+
+  // Custom code styling with syntax highlighting, copy functionality, and mermaid support
+  code: ({ inline, className, children }: { inline?: boolean; className?: string; children: React.ReactNode }) => {
+    const match = /language-(\w+)/.exec(className || '');
+    const language = match ? match[1] : '';
+    const codeContent = String(children).replace(/\n$/, '');
+
+    if (inline) {
+      return (
+        <code className="bg-muted px-1.5 py-0.5 rounded text-sm font-mono text-foreground">
+          {children}
+        </code>
+      );
+    }
+
+    // Handle mermaid diagrams
+    if (language === 'mermaid') {
+      return (
+        <MermaidDiagram
+          chart={codeContent}
+          className="my-6"
+        />
+      );
+    }
+
+    // Use the new CopyableCodeBlock component
+    const lineCount = codeContent.split('\n').length;
+    return (
+      <CopyableCodeBlock
+        language={language}
+        showLineNumbers={language && language !== 'text' && lineCount > 10}
+        maxHeight={lineCount > 15 ? '400px' : undefined}
+      >
+        {codeContent}
+      </CopyableCodeBlock>
+    );
+  },
+
+  // Custom pre styling for code blocks (fallback)
+  pre: ({ children }: { children: React.ReactNode }) => (
+    <div className="mb-4">
+      {children}
+    </div>
+  ),
+
+  // Custom table styling
+  table: ({ children }: { children: React.ReactNode }) => (
+    <div className="overflow-x-auto mb-6">
+      <div className="bg-card/20 backdrop-blur border border-border/50 rounded-lg overflow-hidden">
+        <table className="min-w-full border-collapse">
+          {children}
+        </table>
+      </div>
+    </div>
+  ),
+  th: ({ children }: { children: React.ReactNode }) => (
+    <th className="bg-primary/10 border-b border-border/50 px-4 py-3 text-left font-semibold text-foreground">
+      {children}
+    </th>
+  ),
+  td: ({ children }: { children: React.ReactNode }) => (
+    <td className="border-b border-border/30 px-4 py-3 text-foreground">
+      {children}
+    </td>
+  ),
+
+  // Custom image styling with asset resolution for relative paths
+  img: ({ src, alt }: { src?: string; alt?: string }) => {
+    const resolved = resolveMarkdownImageSrc(src);
+    return (
+      <img
+        src={resolved}
+        alt={alt}
+        className="rounded-lg shadow-lg max-w-full h-auto my-6"
+        loading="lazy"
+      />
+    );
+  },
+
+  // Custom horizontal rule
+  hr: () => (
+    <hr className="border-border my-8" />
+  ),
+
+  // Custom strong/bold styling
+  strong: ({ children }: { children: React.ReactNode }) => (
+    <strong className="font-semibold text-foreground">{children}</strong>
+  ),
+
+  // Custom emphasis/italic styling
+  em: ({ children }: { children: React.ReactNode }) => (
+    <em className="italic text-muted-foreground">{children}</em>
+  ),
+
+  // Custom figure and figcaption styling
+  figure: ({ children, ...props }: { children: React.ReactNode }) => (
+    <figure className="text-center my-8" {...props}>
+      {children}
+    </figure>
+  ),
+
+  figcaption: ({ children, ...props }: { children: React.ReactNode }) => (
+    <figcaption className="italic text-muted-foreground mt-2 text-sm" {...props}>
+      {children}
+    </figcaption>
+  ),
+};
+
 const MarkdownRenderer = ({ content, className }: MarkdownRendererProps) => {
   return (
     <div className={cn('prose prose-slate dark:prose-invert max-w-none', className)}>
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeRaw]}
-        components={{
-          // Custom heading components with better styling
-          h1: ({ children }) => (
-            <h1 className="text-4xl font-bold text-foreground mb-6 mt-8 first:mt-0">
-              {children}
-            </h1>
-          ),
-          h2: ({ children }) => (
-            <h2 className="text-3xl font-semibold text-foreground mb-4 mt-8 first:mt-0">
-              {children}
-            </h2>
-          ),
-          h3: ({ children }) => (
-            <h3 className="text-2xl font-semibold text-foreground mb-3 mt-6 first:mt-0">
-              {children}
-            </h3>
-          ),
-          h4: ({ children }) => (
-            <h4 className="text-xl font-semibold text-foreground mb-2 mt-4 first:mt-0">
-              {children}
-            </h4>
-          ),
-          h5: ({ children }) => (
-            <h5 className="text-lg font-semibold text-foreground mb-2 mt-4 first:mt-0">
-              {children}
-            </h5>
-          ),
-          h6: ({ children }) => (
-            <h6 className="text-base font-semibold text-foreground mb-2 mt-4 first:mt-0">
-              {children}
-            </h6>
-          ),
-
-          // Custom paragraph styling with copyable content detection
-          p: ({ children }) => {
-            const textContent = extractTextFromChildren(children);
-            const { isCopyable, variant } = detectCopyableContent(textContent);
-
-            // Only make paragraphs copyable if they contain commands or are very specific patterns
-            // Avoid making regular text copyable to prevent UI clutter
-            if (isCopyable && (variant === 'command' || textContent.length > 200)) {
-              return (
-                <CopyableTextBlock
-                  text={textContent}
-                  variant={variant}
-                  className="my-6"
-                >
-                  <div className="text-foreground leading-relaxed">{children}</div>
-                </CopyableTextBlock>
-              );
-            }
-
-            return (
-              <p className="text-foreground leading-relaxed mb-6">
-                {children}
-              </p>
-            );
-          },
-
-          // Custom link styling
-          a: ({ href, children }) => (
-            <a
-              href={href}
-              className="text-primary hover:text-primary/80 underline underline-offset-4 transition-all duration-200 hover:bg-primary/10 px-1 py-0.5 rounded"
-              target={href?.startsWith('http') ? '_blank' : undefined}
-              rel={href?.startsWith('http') ? 'noopener noreferrer' : undefined}
-            >
-              {children}
-            </a>
-          ),
-
-          // Custom list styling
-          ul: ({ children }) => (
-            <ul className="list-disc list-inside mb-6 space-y-2 text-foreground">
-              {children}
-            </ul>
-          ),
-          ol: ({ children }) => (
-            <ol className="list-decimal list-inside mb-6 space-y-2 text-foreground">
-              {children}
-            </ol>
-          ),
-          li: ({ children }) => (
-            <li className="leading-relaxed text-muted-foreground">{children}</li>
-          ),
-
-          // Custom blockquote styling with copyable content detection
-          blockquote: ({ children }) => {
-            const textContent = extractTextFromChildren(children);
-            const { isCopyable, variant } = detectCopyableContent(textContent);
-
-            if (isCopyable) {
-              return (
-                <CopyableTextBlock
-                  text={textContent}
-                  variant={variant}
-                  className="my-6"
-                >
-                  <div className="text-foreground leading-relaxed">{children}</div>
-                </CopyableTextBlock>
-              );
-            }
-
-            return (
-              <blockquote className="border-l-4 border-primary/50 pl-6 py-4 my-6 bg-card/20 backdrop-blur border border-border/50 rounded-r-lg">
-                <div className="text-muted-foreground italic leading-relaxed">{children}</div>
-              </blockquote>
-            );
-          },
-
-          // Custom code styling with syntax highlighting, copy functionality, and mermaid support
-          code: ({ inline, className, children, ...props }) => {
-            const match = /language-(\w+)/.exec(className || '');
-            const language = match ? match[1] : '';
-            const codeContent = String(children).replace(/\n$/, '');
-
-            if (inline) {
-              return (
-                <code className="bg-muted px-1.5 py-0.5 rounded text-sm font-mono text-foreground">
-                  {children}
-                </code>
-              );
-            }
-
-            // Handle mermaid diagrams
-            if (language === 'mermaid') {
-              return (
-                <MermaidDiagram
-                  chart={codeContent}
-                  className="my-6"
-                />
-              );
-            }
-
-            // Use the new CopyableCodeBlock component
-            const lineCount = codeContent.split('\n').length;
-            return (
-              <CopyableCodeBlock
-                language={language}
-                showLineNumbers={language && language !== 'text' && lineCount > 10}
-                maxHeight={lineCount > 15 ? '400px' : undefined}
-              >
-                {codeContent}
-              </CopyableCodeBlock>
-            );
-          },
-
-          // Custom pre styling for code blocks (fallback)
-          pre: ({ children }) => (
-            <div className="mb-4">
-              {children}
-            </div>
-          ),
-
-          // Custom table styling
-          table: ({ children }) => (
-            <div className="overflow-x-auto mb-6">
-              <div className="bg-card/20 backdrop-blur border border-border/50 rounded-lg overflow-hidden">
-                <table className="min-w-full border-collapse">
-                  {children}
-                </table>
-              </div>
-            </div>
-          ),
-          th: ({ children }) => (
-            <th className="bg-primary/10 border-b border-border/50 px-4 py-3 text-left font-semibold text-foreground">
-              {children}
-            </th>
-          ),
-          td: ({ children }) => (
-            <td className="border-b border-border/30 px-4 py-3 text-foreground">
-              {children}
-            </td>
-          ),
-
-          // Custom image styling with asset resolution for relative paths
-          img: ({ src, alt }) => {
-            const resolved = resolveMarkdownImageSrc(src);
-            return (
-              <img
-                src={resolved}
-                alt={alt}
-                className="rounded-lg shadow-lg max-w-full h-auto my-6"
-                loading="lazy"
-              />
-            );
-          },
-
-          // Custom horizontal rule
-          hr: () => (
-            <hr className="border-border my-8" />
-          ),
-
-          // Custom strong/bold styling
-          strong: ({ children }) => (
-            <strong className="font-semibold text-foreground">{children}</strong>
-          ),
-
-          // Custom emphasis/italic styling
-          em: ({ children }) => (
-            <em className="italic text-muted-foreground">{children}</em>
-          ),
-
-          // Custom figure and figcaption styling
-          figure: ({ children, ...props }) => (
-            <figure className="text-center my-8" {...props}>
-              {children}
-            </figure>
-          ),
-
-          figcaption: ({ children, ...props }) => (
-            <figcaption className="italic text-muted-foreground mt-2 text-sm" {...props}>
-              {children}
-            </figcaption>
-          ),
-        }}
+        components={MARKDOWN_COMPONENTS}
       >
         {content}
       </ReactMarkdown>

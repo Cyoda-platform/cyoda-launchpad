@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { Copy, Check } from 'lucide-react';
@@ -14,13 +14,13 @@ interface CopyableCodeBlockProps {
   showLineNumbers?: boolean;
 }
 
-const CopyableCodeBlock: React.FC<CopyableCodeBlockProps> = ({
+const CopyableCodeBlock = memo(function CopyableCodeBlock({
   children,
   language = 'text',
   className,
   maxHeight = '400px',
   showLineNumbers = false,
-}) => {
+}: CopyableCodeBlockProps) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -135,6 +135,6 @@ const CopyableCodeBlock: React.FC<CopyableCodeBlockProps> = ({
       </div>
     </div>
   );
-};
+});
 
 export default CopyableCodeBlock;

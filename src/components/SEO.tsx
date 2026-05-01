@@ -14,6 +14,7 @@ interface SEOProps {
   type?: 'website' | 'article';
   siteName?: string;
   twitterHandle?: string;
+  jsonLd?: object | object[];
 }
 
 const SEO: React.FC<SEOProps> = ({
@@ -27,9 +28,10 @@ const SEO: React.FC<SEOProps> = ({
   url,
   type = 'article',
   siteName = 'Cyoda',
-  twitterHandle = '@cyodaops'
+  twitterHandle = '@cyodaops',
+  jsonLd,
 }) => {
-  const fullTitle = `${title} | ${siteName}`;
+  const fullTitle = title;
   const currentUrl = url || (typeof window !== 'undefined' ? window.location.href : '');
   const resolvedImage = resolveAppAssetUrl(image);
   const defaultImage = toAbsoluteUrl(resolvedImage) || 'https://lovable.dev/opengraph-image-p98pqg.png';
@@ -76,6 +78,13 @@ const SEO: React.FC<SEOProps> = ({
       <meta name="googlebot" content="index, follow" />
       {currentUrl && <link rel="canonical" href={currentUrl} />}
       
+      {/* Custom JSON-LD Structured Data */}
+      {jsonLd && (Array.isArray(jsonLd) ? jsonLd : [jsonLd]).map((schema, i) => (
+        <script key={i} type="application/ld+json">
+          {JSON.stringify(schema, null, 2)}
+        </script>
+      ))}
+
       {/* JSON-LD Structured Data */}
       {type === 'article' && (
         <script type="application/ld+json">

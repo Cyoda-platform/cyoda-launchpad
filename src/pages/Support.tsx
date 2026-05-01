@@ -1,399 +1,311 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-// at top
-import {useEffect} from 'react';
-
-
-import {Button} from '@/components/ui/button';
+import SEO from '@/components/SEO';
+import { organizationSchema } from '@/data/schemas';
+import { Card, CardContent } from '@/components/ui/card';
 import {
-    MessageCircle,
-    FileText,
-    Video,
-    ArrowRight,
-    ExternalLink,
-    HelpCircle,
-    BookOpen,
-    Zap
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import { Button } from '@/components/ui/button';
+import {
+  MessageCircle,
+  FileText,
+  BookOpen,
+  Zap,
+  Video,
+  ArrowRight,
+  ExternalLink,
 } from 'lucide-react';
-// inside Support component, near the top
+import { Link } from 'react-router-dom';
+
+const supportChannels = [
+  {
+    icon: MessageCircle,
+    title: 'Discord Community',
+    description:
+      'Real-time help and discussion with the Cyoda team and other developers.',
+    action: 'Join Discord',
+    href: 'https://discord.gg/95rdAyBZr2',
+    external: true,
+  },
+  {
+    icon: FileText,
+    title: 'Documentation',
+    description: 'Guides, API reference, and tutorials at docs.cyoda.net.',
+    action: 'Browse docs',
+    href: 'https://docs.cyoda.net/',
+    external: true,
+  },
+  {
+    icon: MessageCircle,
+    title: 'Talk to the team',
+    description:
+      'Direct line for architecture, procurement, and deployment questions.',
+    action: 'Contact us',
+    href: '/contact',
+    external: false,
+  },
+];
+
+const resources = [
+  {
+    icon: BookOpen,
+    title: 'Application Documentation',
+    description: 'Complete API documentation and integration guides.',
+    href: 'https://docs.cyoda.net/',
+    external: true,
+  },
+  {
+    icon: Zap,
+    title: 'How-To Guides',
+    description: 'Step-by-step tutorials for common use cases.',
+    href: 'https://docs.cyoda.net/guides/cyoda-design-principles/',
+    external: true,
+  },
+  {
+    icon: Video,
+    title: 'Video Explanations',
+    description: 'Visual tutorials and product demonstrations.',
+    href: null,
+    badge: 'Coming soon',
+  },
+];
+
+const faqs = [
+  {
+    question: 'How do I get started with Cyoda?',
+    answer:
+      'Sign up for a free Cyoda Cloud account at ai.cyoda.net and try the AI Assistant. The documentation and how-to guides at docs.cyoda.net cover the underlying entity model.',
+  },
+  {
+    question: 'What programming languages does Cyoda support?',
+    answer:
+      'Generated applications are produced in Java or Python. The exported code can be integrated with any language via the Cyoda HTTP and event APIs. If you need another target language, get in touch.',
+  },
+  {
+    question: 'Can I export my code from Cyoda?',
+    answer:
+      'Yes. You have full access to the generated code and can export it to your own GitHub branch and IDE.',
+  },
+  {
+    question: 'What kind of applications can I build?',
+    answer:
+      'Cyoda is designed for stateful, data-driven systems where state transitions, auditability, and consistency under failure matter — corporate lending, KYC, trade settlement, claims adjudication, and similar regulated workloads.',
+  },
+  {
+    question: 'Can I run the AI Assistant locally?',
+    answer:
+      'Yes. The AI Assistant is open source and runs on Cyoda Cloud, but you can self-host it, configure your own LLMs, and run it locally.',
+  },
+  {
+    question: 'How secure are applications built with Cyoda?',
+    answer:
+      'Authentication, authorization, encryption, and audit are first-class concerns. Cyoda Cloud is operated to SOC 2 and GDPR standards.',
+  },
+];
 
 const Support = () => {
+  return (
+    <div className="min-h-screen bg-background">
+      <SEO
+        title="Support | Cyoda"
+        description="Get help with Cyoda — documentation, Discord community, and direct support for engineering teams building stateful systems."
+        url="https://cyoda.com/support"
+        type="website"
+        jsonLd={organizationSchema}
+      />
+      <Header />
+      <main>
+        {/* Hero */}
+        <section className="py-16 md:py-24 bg-background">
+          <div className="container mx-auto px-4 max-w-6xl">
+            <div className="max-w-3xl">
+              <p className="text-xs font-semibold text-primary uppercase tracking-widest mb-3">
+                SUPPORT
+              </p>
+              <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+                How can we help?
+              </h1>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Documentation, community, and a direct line to the engineers who
+                built the platform. Pick whichever fits the question.
+              </p>
+            </div>
+          </div>
+        </section>
 
-    useEffect(() => {
-        const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY as string | undefined;
-        if (!siteKey) {
-            console.error("VITE_RECAPTCHA_SITE_KEY is not set. reCAPTCHA cannot initialize.");
-            return;
-        }
+        {/* Support channels */}
+        <section className="py-16 md:py-24 bg-[hsl(var(--section-alt-bg))]">
+          <div className="container mx-auto px-4 max-w-6xl">
+            <p className="text-xs font-semibold text-primary uppercase tracking-widest mb-3">
+              CHANNELS
+            </p>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-10">
+              Get help
+            </h2>
+            <div className="grid md:grid-cols-3 gap-6">
+              {supportChannels.map((channel) => {
+                const Icon = channel.icon;
+                const ButtonInner = (
+                  <>
+                    {channel.action}
+                    {channel.external ? (
+                      <ExternalLink className="w-4 h-4 ml-2" />
+                    ) : (
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    )}
+                  </>
+                );
 
-        // Avoid injecting multiple times and avoid removing script on unmount (clients can break)
-        if (window.grecaptcha) return;
-        const existing = document.querySelector('script[data-recaptcha="v3"]') as HTMLScriptElement | null;
-        if (existing) return;
+                return (
+                  <Card key={channel.title}>
+                    <CardContent className="p-6 flex flex-col h-full">
+                      <div className="w-12 h-12 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-5">
+                        <Icon className="w-6 h-6" />
+                      </div>
+                      <h3 className="font-semibold text-foreground text-lg mb-2">
+                        {channel.title}
+                      </h3>
+                      <p className="text-muted-foreground text-sm leading-relaxed mb-6 flex-1">
+                        {channel.description}
+                      </p>
+                      <Button
+                        asChild
+                        variant="outline"
+                        className="w-full justify-center"
+                      >
+                        {channel.external ? (
+                          <a
+                            href={channel.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {ButtonInner}
+                          </a>
+                        ) : (
+                          <Link to={channel.href}>{ButtonInner}</Link>
+                        )}
+                      </Button>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          </div>
+        </section>
 
-        const s = document.createElement("script");
-        s.src = `https://www.google.com/recaptcha/api.js?render=${siteKey}`;
-        s.async = true;
-        s.defer = true;
-        s.setAttribute("data-recaptcha", "v3");
-        document.body.appendChild(s);
-    }, []);
+        {/* Resources */}
+        <section className="py-16 md:py-24 bg-background">
+          <div className="container mx-auto px-4 max-w-6xl">
+            <p className="text-xs font-semibold text-primary uppercase tracking-widest mb-3">
+              LEARNING
+            </p>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-10">
+              Resources
+            </h2>
+            <div className="grid md:grid-cols-3 gap-6">
+              {resources.map((resource) => {
+                const Icon = resource.icon;
+                const isAvailable = !!resource.href;
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const formEl = e.currentTarget;
-        const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY as string | undefined;
-
-        if (!siteKey) {
-            alert("reCAPTCHA site key is not configured.");
-            return;
-        }
-
-        if (!window.grecaptcha) {
-            alert("reCAPTCHA is still loading. Please try again in a moment.");
-            return;
-        }
-
-        try {
-            await new Promise<void>((resolve) => window.grecaptcha!.ready(() => resolve()));
-            const token = await window.grecaptcha!.execute(siteKey, {action: "submit"});
-
-            const formData = new FormData(formEl);
-            formData.append("g-recaptcha-response", token);
-
-            const res = await fetch("https://formspree.io/f/mzzaollp", {
-                method: "POST",
-                body: formData,
-                headers: {Accept: "application/json"},
-            });
-
-            if (res.ok) {
-                alert("Thanks for your message!");
-                formEl.reset();
-            } else {
-                alert("There was a problem submitting the form.");
-            }
-        } catch (err) {
-            console.error("reCAPTCHA/submit error", err);
-            alert("There was a problem verifying reCAPTCHA. Please reload the page and try again.");
-        }
-    };
-
-
-    const supportChannels = [
-        {
-            icon: MessageCircle,
-            title: "Discord Community",
-            description: "Join our active Discord community for real-time help, discussions, and networking with other developers.",
-            action: "Join Discord",
-            link: "https://discord.gg/95rdAyBZr2",
-            primary: true
-        },
-        /* {
-            icon: BookOpen,
-            title: "How to and worked examples",
-            description: "Follow worked examples and learn how to build with Cyoda.",
-            action: "How to's",
-            link: "/guides",
-            primary: false
-        }, */
-        {
-            icon: FileText,
-            title: "Documentation",
-            description: "Guides, API references, and tutorials to help you build with Cyoda.",
-            action: "Browse Docs",
-            link: "https://docs.cyoda.net/",
-            primary: false
-        }
-    ];
-
-    const resources = [
-        {
-            icon: BookOpen,
-            title: "Application Documentation",
-            description: "Complete API documentation and integration guides",
-            link: "https://docs.cyoda.net/",
-            openInNewTab: true
-        },
-        {
-            icon: Zap,
-            title: "How-To Guides",
-            description: "Step-by-step tutorials for common use cases",
-            link: "https://docs.cyoda.net/guides/cyoda-design-principles/",
-            openInNewTab: false
-        },
-        {
-            icon: Video,
-            title: "Video Explanations",
-            description: "Visual tutorials and product demonstrations",
-            status: "Coming Soon",
-            link: "#",
-            openInNewTab: false
-        }
-    ];
-
-    const faqs = [
-        {
-            question: "How do I get started with Cyoda?",
-            answer: "The easiest way to get started is to sign up for a free account and try our AI Assistant. You can also check out our documentation and how-to guides for more information."
-        },
-        {
-            question: "What programming languages does Cyoda support?",
-            answer: "Cyoda generates applications in Java or Python, but you can export and work with the code in any language.If you want another language, please let us know."
-        },
-        {
-            question: "Can I export my code from Cyoda?",
-            answer: "Yes! You have full access to your generated code and can export it to work in your preferred IDE via the GitHub branch supplied during the AI interactions."
-        },
-        {
-            question: "What kind of applications can I build?",
-            answer: "Cyoda excels at building data-driven applications like order management systems, customer portals, and enterprise workflows. It was orginally designed for financial services, but can be used for any complex, data-driven system."
-        },
-        {
-            question: "Can I run the AI Assistant locally?",
-            answer: "Yes, it's an open source project that runs on Cyoda Cloud. You're welcome to download it, configure your own LLMs, and run it locally."
-        },
-        {
-            question: "How secure are applications built with Cyoda?",
-            answer: "Security is built into every application with features like authentication, authorization, encryption, and compliance with standards like SOC2 and GDPR."
-        }
-    ];
-
-
-    return (
-        <div className="min-h-screen bg-background">
-            <Header/>
-            <main>
-                {/* Hero Section */}
-                <section className="pt-24 pb-16 bg-gradient-to-br from-background via-card to-secondary/20 relative">
-                    <div className="absolute inset-0 texture-overlay opacity-30"/>
-
-                    <div className="container mx-auto px-4 relative z-10">
-                        <div className="text-center max-w-4xl mx-auto">
-                            <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6">
-                                How Can We Help?
-                            </h1>
-                            <p className="text-xl text-muted-foreground mb-8">
-                                Get the support you need to build amazing applications with Cyoda. Our community and
-                                resources are here to help you succeed.
-                            </p>
-
+                return (
+                  <Card key={resource.title}>
+                    <CardContent className="p-6">
+                      <div className="flex items-start gap-4">
+                        <div className="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                          <Icon className="w-5 h-5" />
                         </div>
-                    </div>
-                </section>
-
-                {/* Support Channels */}
-                <section className="py-24 relative">
-                    <div className="container mx-auto px-4">
-                        <div className="text-center mb-16">
-                            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-                                Get Support
-                            </h2>
-                            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                                Choose the support channel that works best for you
-                            </p>
-                        </div>
-
-                        <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                            {supportChannels.map((channel, index) => (
-                                <div
-                                    key={index}
-                                    className={`p-8 rounded-2xl border transition-all duration-300 ${
-                                        channel.primary
-                                            ? 'border-primary bg-card/50 scale-105'
-                                            : 'border-border/50 bg-card/30 hover:bg-card/50'
-                                    }`}
-                                >
-                                    <div
-                                        className="w-16 h-16 rounded-2xl bg-icon flex items-center justify-center mb-6">
-                                        <channel.icon className="w-8 h-8 text-white"/>
-                                    </div>
-
-                                    <h3 className="text-2xl font-bold mb-4 text-foreground">
-                                        {channel.title}
-                                    </h3>
-                                    <p className="text-muted-foreground mb-6">
-                                        {channel.description}
-                                    </p>
-
-                                    <Button
-                                        className={`w-full ${
-                                            channel.primary
-                                                ? 'bg-button text-primary-foreground'
-                                                : 'bg-card/20 text-white backdrop-blur border border-primary/30 hover:bg-primary/10 hover:border-primary'
-                                        }`}
-                                        onClick={() => window.open(channel.link, '_blank')}
-                                    >
-                                        {channel.action} <ExternalLink className="w-4 h-4 ml-2"/>
-                                    </Button>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-
-                {/* Resources */}
-                <section className="py-24 bg-gradient-to-br from-background via-card to-secondary/20 relative">
-                    <div className="absolute inset-0 texture-overlay opacity-20"/>
-
-                    <div className="container mx-auto px-4 relative z-10">
-                        <div className="text-center mb-16">
-                            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-                                Learning Resources
-                            </h2>
-                            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                                Everything you need to master Cyoda development
-                            </p>
-                        </div>
-
-                        <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-                            {resources.map((resource, index) => (
-                                <div
-                                    key={index}
-                                    className="group p-6 rounded-xl border border-border/50 bg-card/20 backdrop-blur hover:bg-card/40 transition-all duration-300"
-                                >
-                                    <div className="flex items-start space-x-4">
-                                        <div className="flex-shrink-0">
-                                            <div
-                                                className="w-12 h-12 rounded-lg bg-icon flex items-center justify-center">
-                                                <resource.icon className="w-6 h-6 text-white"/>
-                                            </div>
-                                        </div>
-                                        <div className="flex-1">
-                                            <div className="flex items-center gap-2 mb-2">
-                                                <h3 className="text-lg font-semibold text-foreground group-hover:text-primary transition-colors">
-                                                    {resource.title}
-                                                </h3>
-                                                {resource.status && (
-                                                    <span
-                                                        className="text-xs bg-cyoda-orange/20 text-cyoda-orange px-2 py-1 rounded">
-                            {resource.status}
-                          </span>
-                                                )}
-                                            </div>
-                                            <p className="text-muted-foreground text-sm leading-relaxed mb-3">
-                                                {resource.description}
-                                            </p>
-                                            <Button
-                                                variant="ghost"
-                                                size="sm"
-                                                className="text-primary hover:text-primary hover:bg-primary/10 p-0"
-                                                disabled={resource.status === "Coming Soon"}
-                                                onClick={() => {
-                                                    if (resource.status !== "Coming Soon") {
-                                                        if (resource.openInNewTab) {
-                                                            window.open(resource.link, '_blank');
-                                                        } else {
-                                                            window.location.href = resource.link;
-                                                        }
-                                                    }
-                                                }}
-                                            >
-                                                Learn More <ArrowRight className="w-3 h-3 ml-1"/>
-                                            </Button>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-
-                {/* FAQ Section */}
-                <section className="py-24 relative">
-                    <div className="container mx-auto px-4">
-                        <div className="text-center mb-16">
-                            <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-                                Frequently Asked Questions
-                            </h2>
-                            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                                Quick answers to common questions
-                            </p>
-                        </div>
-
-                        <div className="max-w-4xl mx-auto space-y-6">
-                            {faqs.map((faq, index) => (
-                                <div
-                                    key={index}
-                                    className="p-6 rounded-xl border border-border/50 bg-card/20 backdrop-blur hover:bg-card/30 transition-all duration-300"
-                                >
-                                    <div className="flex items-start space-x-4">
-                                        <HelpCircle className="w-6 h-6 text-primary mt-1 flex-shrink-0"/>
-                                        <div>
-                                            <h3 className="text-lg font-semibold text-foreground mb-3">
-                                                {faq.question}
-                                            </h3>
-                                            <p className="text-muted-foreground leading-relaxed">
-                                                {faq.answer}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-                {/* Contact form */}
-                <section id={"contact"} className="py-24 relative">
-                    <div className="mt-10 max-w-2xl mx-auto">
-                        <h2 className="text-3xl font-bold mb-6">Contact Sales</h2>
-                        <form onSubmit={handleSubmit} className="space-y-4">
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <input
-                                    type="text"
-                                    name="name"
-                                    placeholder="Your name"
-                                    required
-                                    className="w-full rounded-xl border border-border bg-background px-4 py-3 outline-none focus:ring-2 focus:ring-primary"
-                                />
-                                <input
-                                    type="email"
-                                    name="email"
-                                    placeholder="you@company.com"
-                                    required
-                                    className="w-full rounded-xl border border-border bg-background px-4 py-3 outline-none focus:ring-2 focus:ring-primary"
-                                />
-                            </div>
-
-                            <textarea
-                                name="message"
-                                placeholder="Your message"
-                                required
-                                rows={5}
-                                className="w-full rounded-xl border border-border bg-background px-4 py-3 outline-none focus:ring-2 focus:ring-primary resize-y"
-                            />
-
-                            {/* Honeypot */}
-                            <input
-                                type="text"
-                                name="_gotcha"
-                                tabIndex={-1}
-                                autoComplete="off"
-                                className="hidden"
-                                aria-hidden="true"
-                            />
-
-                            <Button
-                                type="submit"
-                                className="bg-button text-primary-foreground px-8 py-4 btn-text-lg min-h-[44px] w-full sm:w-auto"
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-2">
+                            <h3 className="font-semibold text-foreground">
+                              {resource.title}
+                            </h3>
+                            {resource.badge && (
+                              <span className="text-[10px] font-semibold uppercase tracking-wider bg-muted text-muted-foreground px-2 py-0.5 rounded">
+                                {resource.badge}
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-muted-foreground text-sm leading-relaxed mb-3">
+                            {resource.description}
+                          </p>
+                          {isAvailable ? (
+                            <a
+                              href={resource.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center text-sm text-primary font-medium hover:underline focus-visible:ring-2 focus-visible:ring-primary rounded"
                             >
-                                Send
-                            </Button>
-                        </form>
-                        <div className="text-muted-foreground text-sm transition-colors mt-4 ">
-
-                            This site is protected by reCAPTCHA and the Google{" "}
-                            <a href="https://policies.google.com/privacy">Privacy Policy</a>{" "}
-                            and{" "}
-                            <a href="https://policies.google.com/terms">Terms of Service</a>{" "}
-                            apply.
+                              Learn more
+                              <ArrowRight className="w-3.5 h-3.5 ml-1" />
+                            </a>
+                          ) : (
+                            <span className="inline-flex items-center text-sm text-muted-foreground">
+                              Not yet available
+                            </span>
+                          )}
                         </div>
-                    </div>
-                </section>
-            </main>
-            <Footer/>
-        </div>
-    );
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section className="py-16 md:py-24 bg-[hsl(var(--section-alt-bg))]">
+          <div className="container mx-auto px-4 max-w-3xl">
+            <p className="text-xs font-semibold text-primary uppercase tracking-widest mb-3">
+              FAQ
+            </p>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-10">
+              Frequently asked questions
+            </h2>
+            <Accordion type="single" collapsible className="w-full">
+              {faqs.map((faq, i) => (
+                <AccordionItem key={faq.question} value={`item-${i}`}>
+                  <AccordionTrigger className="text-left text-base font-semibold text-foreground hover:no-underline">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground leading-relaxed">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        </section>
+
+        {/* Direct contact CTA */}
+        <section className="py-16 md:py-24 bg-background border-t border-border">
+          <div className="container mx-auto px-4 max-w-3xl text-center">
+            <p className="text-xs font-semibold text-primary uppercase tracking-widest mb-3">
+              STILL STUCK?
+            </p>
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+              Talk to the team
+            </h2>
+            <p className="text-base text-muted-foreground mb-8">
+              For architecture reviews, procurement, or anything that needs a
+              human, send us a message.
+            </p>
+            <Button asChild size="lg" className="px-8 font-semibold">
+              <Link to="/contact">
+                Contact us
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Link>
+            </Button>
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </div>
+  );
 };
 
 export default Support;

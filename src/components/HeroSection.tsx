@@ -1,337 +1,346 @@
-import { useState, useRef, FormEvent } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
-import { useTheme } from 'next-themes';
-import { useTypewriter } from '@/hooks/use-typewriter';
-import { heroPhrases } from '@/data/HeroPhrases';
-import heroBackgroundDark from '@/assets/hero-bg.jpg';
-import heroBackgroundLight from '@/assets/hero-bg-lm.png';
-import {ArrowBigRightIcon} from "lucide-react";
-import * as React from "react";
+import * as React from 'react';
 import { trackCtaConversion } from '@/utils/analytics';
-// HeroSection.tsx
+import { ShieldCheck } from 'lucide-react';
+import { ArchitectureField, heroGradient } from '@/components/HeroBackground';
+
 type HeroProps = {
-    renderHeadings?: boolean;   // default false
-    h1?: string;
-    h2?: string;
-    h3?: string;
-    className?: string;
-    // ...existing props
+  renderHeadings?: boolean;
+  h1?: string;
+  h2?: string;
+  h3?: string;
+  className?: string;
+  defaultHeadingAs?: 'h1' | 'h2';
 };
-const HeroSection: React.FC<HeroProps> = ({
-                                 renderHeadings = false,
-                                 h1,
-                                 h2,
-                                 h3,
-                                          }) => {
-    const { theme } = useTheme();
-    const location = useLocation();
 
-    // Determine page variant based on current route
-    const getPageVariant = (): "home" | "dev" | "cto" | "products" | "pricing" => {
-      const path = location.pathname;
-      if (path === '/dev') return 'dev';
-      if (path === '/cto') return 'cto';
-      if (path === '/products') return 'products';
-      if (path === '/pricing') return 'pricing';
-      return 'home';
-    };
-
-    const prebakedExamples = [
-    {
-      name: "Order & Inventory Tracking",
-      prompt: "Build an order and inventory tracking service for a multi-channel retailer. Capture structured orders, track product stock levels, manage fulfilment, and provide audit and reporting.\n" +
-          "\n" +
-          "Primary entity: Order\n" +
-          "\t•\tIdentifiers: orderId, externalRef, channel (web, store, marketplace), createdTimestamp, status.\n" +
-          "\t•\tCustomer: {customerId, name, contactDetails, addresses[]}\n" +
-          "\t•\tLineItems: array of {productId, description, quantity, unitPrice, discount, tax, fulfilmentStatus}.\n" +
-          "\t•\tPayments: {method, amount, currency, transactionRef, status, timestamps}.\n" +
-          "\t•\tShipments: {shipmentId, carrier, serviceLevel, trackingNumber, estimatedDelivery, events[]}.\n" +
-          "\t•\tState: {Draft, Submitted, Paid, Packed, Shipped, Delivered, Cancelled, Returned}.\n" +
-          "\n" +
-          "Secondary entity: InventoryItem\n" +
-          "\t•\tproductId, sku, description, attributes {size, colour, batch, expiryDate}.\n" +
-          "\t•\tstockByLocation: {locationId, available, reserved, damaged}.\n" +
-          "\t•\treorderPoint, reorderQuantity, supplierRef.\n" +
-          "\t•\tauditLog of adjustments {reason, actor, delta, timestamp}.\n" +
-          "\n" +
-          "Workflow:\n" +
-          "\t•\tDraft → Submitted when mandatory fields and line items exist.\n" +
-          "\t•\tSubmitted → Paid once payment status confirmed.\n" +
-          "\t•\tPaid → Packed triggers inventory reservation, stock deduction, and fulfilment task.\n" +
-          "\t•\tPacked → Shipped with carrier/tracking assignment.\n" +
-          "\t•\tShipped → Delivered on carrier confirmation.\n" +
-          "\t•\tAny → Cancelled/Returned with reason codes; inventory auto-adjusted.\n" +
-          "\t•\tSLA timers: escalate if Packed but not Shipped > 24h.\n" +
-          "\n" +
-          "Validations & checks:\n" +
-          "\t•\tOrder total = sum(lineItems × unitPrice − discounts + tax).\n" +
-          "\t•\tInventoryItem availability must cover reserved quantities; prevent overselling.\n" +
-          "\t•\tStock adjustments logged immutably with who/what/when.\n" +
-          "\t•\tLocation-level checks: negative stock disallowed; expiry-dated items tracked.\n" +
-          "\t•\tDuplicate order prevention by externalRef + channel.\n" +
-          "\n" +
-          "APIs & reports:\n" +
-          "\t•\tCreate/Update Order; adjust Inventory; post shipment events; query stock.\n" +
-          "\t•\tWebhooks on order status changes, low stock alerts, shipment updates.\n" +
-          "\t•\tReports: order throughput, fulfilment cycle times, backorders, inventory by location, shrinkage, audit of adjustments."
-    },
-    {
-      name: "Customer Onboarding Portal",
-      prompt: "Goal: Build a customer onboarding portal for regulated businesses. Capture rich customer data, run validations and checks, and drive stateful workflows from submission to approval.\n" +
-          "\n" +
-          "Primary entity: CustomerProfile\n" +
-          "\t•\tIdentity: legalName, tradingName, registrationId, taxId, countryOfIncorporation.\n" +
-          "\t•\tOwnershipGraph: nested structure of beneficial owners (persons or entities), each with percentOwnership, controlFlags, residency, and optional children to represent multi-level ownership. Support cycles prevention and aggregate ownership by ultimate beneficiaries.\n" +
-          "\t•\tContacts: emails[], phones[] with labels and verificationStatus.\n" +
-          "\t•\tAddresses: array with type, lines[], locality, region, postalCode, country, geoCode.\n" +
-          "\t•\tKYCArtifacts: documents[] with type, fileRef, hash, issuer, issueDate, expiryDate, verificationResult, and revision history.\n" +
-          "\t•\tRisk: riskScore, riskFactors[], pepFlags[], sanctionsHits[] with dispositions.\n" +
-          "\t•\tState: {Draft, Submitted, InReview, PendingDocs, Approved, Rejected, Archived} with timestamps and actor.\n" +
-          "\n" +
-          "Workflow:\n" +
-          "\t•\tDraft → Submitted when mandatory fields and minimum documents are present.\n" +
-          "\t•\tSubmitted → InReview auto-triggers checks (KYC, PEP/sanctions via external APIs, address verification, duplicate detection).\n" +
-          "\t•\tInReview → PendingDocs on missing or expired documents; request specific artifacts.\n" +
-          "\t•\tInReview → Approved requires: verified identity, ownership aggregation ≥ 75% coverage of ultimate owners, riskScore ≤ threshold, all sanctions hits dispositioned.\n" +
-          "\t•\tAny → Rejected with reason codes; auto-notify and allow re-submission.\n" +
-          "\t•\tSLA timers: escalate if InReview > 48h or PendingDocs > 7d.\n" +
-          "\n" +
-          "Validations & checks:\n" +
-          "\t•\tStrong ID rules per country; VAT/tax number formats; address postal code by country.\n" +
-          "\t•\tOwnershipGraph consistency: no circular references; total declared ownership ≥ 100% ± tolerance; UBO roll-up.\n" +
-          "\t•\tDocument integrity via file hash; expiry alerts; revision audit.\n" +
-          "\t•\tDuplicate detection by fuzzy match on legalName + registrationId + country.\n" +
-          "\n" +
-          "APIs & reports:\n" +
-          "\t•\tCreate/Update CustomerProfile; upload documents; request decision.\n" +
-          "\t•\tWebhook events on state changes.\n" +
-          "\t•\tReports: onboarding throughput, time-to-approve by risk band, outstanding PendingDocs, UBO coverage, audit of decisions."
-    },
-    {
-      name: "Loan Application Processing",
-      prompt: "Build a loan application service for regulated lenders. Capture rich applicant data, evaluate risk, manage collateral, and drive stateful workflows from submission to funding with full audit.\n" +
-          "\n" +
-          "Primary entity: LoanApplication\n" +
-          "\t•\tApplicant: personOrOrg, legalName, identifiers {taxId, regId}, incomeStreams[], expenses[], creditScore, residency.\n" +
-          "\t•\tCollateralPool: heterogeneous assets (property, vehicles, accounts, guarantees). Each asset has type-specific attributes plus liens[], valuations[] with {value, provider, method, timestamp}, and cross-references to other assets to express senior/subordinate liens.\n" +
-          "\t•\tCashflowProjection: schedule[] of {period, inflow, outflow, assumptions{rate, index, margin}}, supports scenario variants and revision history.\n" +
-          "\t•\tTerms: productType, principal, currency, rateType (fixed/floating), index, margin, tenor, repaymentMethod, fees[].\n" +
-          "\t•\tCompliance: KYCArtifacts[], AMLFlags[], disclosuresAck, consents[].\n" +
-          "\t•\tState: {Draft, Submitted, Screening, Underwriting, PendingDocs, Approved, Declined, Funded, Withdrawn, Archived} with timestamps and actor.\n" +
-          "\n" +
-          "Workflow:\n" +
-          "\t•\tDraft → Submitted when mandatory applicant, collateral, and terms exist.\n" +
-          "\t•\tSubmitted → Screening triggers checks: KYC/AML, sanctions/PEP, bureau pull, fraud/dup detection.\n" +
-          "\t•\tScreening → Underwriting on pass; auto-generate risk assessment from CashflowProjection (DSCR/LTV/LTI).\n" +
-          "\t•\tUnderwriting → PendingDocs when missing/expired proofs (income, valuation, insurance).\n" +
-          "\t•\tUnderwriting → Approved when policy thresholds met, collateral coverage and lien priority validated, and conditions precedent satisfied.\n" +
-          "\t•\tApproved → Funded on execution of documents and final disbursement checklist.\n" +
-          "\t•\tAny → Declined with reason codes; allow resubmission.\n" +
-          "\n" +
-          "Validations & checks:\n" +
-          "\t•\tID formats by jurisdiction; address and bank detail validation.\n" +
-          "\t•\tCollateralPool integrity: no circular lien references; valuations within staleness window; coverage ≥ policy threshold per product.\n" +
-          "\t•\tCashflowProjection math and rate conventions; DSCR ≥ threshold; APR disclosure.\n" +
-          "\t•\tDuplicate detection on applicant + identifiers.\n" +
-          "\t•\tDocument hash verification and expiry alerts.\n" +
-          "\n" +
-          "APIs & reports:\n" +
-          "\t•\tCreate/Update LoanApplication; upload artifacts; request decision; post funding.\n" +
-          "\t•\tWebhooks for state changes and conditions requests.\n" +
-          "\t•\tReports: pipeline by stage, approval rates by risk band, time-to-decision, collateral coverage, audit of decisions."
-    }
+/**
+ * Workflow audit artefact, the right-hand product visual.
+ * Shows a Corporate Loan Origination entity workflow: ordered state transitions,
+ * timestamps, status badges, and entity metadata. Compact, monospace,
+ * product-like. Communicates auditability and ordered progression.
+ */
+const WorkflowArtefact = () => {
+  const states = [
+    { name: 'APPLICATION',  ts: '09:14:02.041', status: 'committed',   committed: true,  active: false },
+    { name: 'CREDIT_CHECK', ts: '09:14:03.882', status: 'committed',   committed: true,  active: false },
+    { name: 'UNDERWRITING', ts: '09:14:45.220', status: 'committed',   committed: true,  active: false },
+    { name: 'APPROVAL',     ts: '09:15:12.774', status: 'in progress', committed: false, active: true  },
+    { name: 'SETTLEMENT',   ts: 'Pending',      status: 'pending',     committed: false, active: false },
   ];
 
-  // Typewriter effect state
-  const [userText, setUserText] = useState('');
-  const [isUserTyping, setIsUserTyping] = useState(false);
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-
-  const fixedPrefix = 'Build a ';
-
-  // Typewriter hook with configuration - using very slow speeds for testing
-  const [typewriterState, typewriterControls] = useTypewriter(
-    heroPhrases,
-    fixedPrefix,
-    {
-      typeSpeed: 80,
-      deleteSpeed: 30,
-      pauseDuration: 600,
-      phrasesGap: 300,
-      loop: true,
-      autoStart: true,
-    }
-  );
-
-  // Select background image based on theme
-  const heroBackground = theme === 'light' ? heroBackgroundLight : heroBackgroundDark;
-
-  // Handle user interaction with textarea
-  const handleFocus = () => {
-    setIsUserTyping(true);
-    typewriterControls.stop();
-    if (!userText) {
-      setUserText('');
-      if (textareaRef.current) {
-        textareaRef.current.value = '';
-      }
-    }
-  };
-
-  const handleBlur = () => {
-    const currentValue = textareaRef.current?.value || '';
-    setUserText(currentValue);
-
-    if (!currentValue.trim()) {
-      // Empty input - resume animation
-      setIsUserTyping(false);
-      typewriterControls.reset();
-      typewriterControls.start();
-    } else {
-      // User has content - keep it and don't resume animation
-      setIsUserTyping(true);
-    }
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const value = e.target.value;
-    setUserText(value);
-
-    // If user clears the text while typing, we should be ready to resume animation on blur
-    if (!value.trim() && isUserTyping) {
-      // Don't resume animation yet, wait for blur
-    }
-  };
-
-  // Determine what text to show in the textarea
-  const displayValue = isUserTyping ? userText : typewriterState.displayText;
-
-  // Handle example button clicks
-  const handleExampleClick = (example: { name: string; prompt: string }) => {
-    const encodedPrompt = encodeURIComponent(example.prompt);
-    const url = `https://ai.cyoda.net/?name=${encodedPrompt}`;
-
-    trackCtaConversion({
-      location: "hero",
-      page_variant: getPageVariant(),
-      cta: "example_click",
-      label: example.name,
-      url: url
-    });
-
-    window.open(url, '_blank');
-  };
-
-	  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-	    e.preventDefault();
-	    const isTypewriterActive = typewriterState.isAnimating && !isUserTyping;
-	    const valueToSubmit = isTypewriterActive
-	      ? `${fixedPrefix}${heroPhrases[typewriterState.currentPhraseIndex] || ''}`
-	      : (textareaRef.current?.value ?? displayValue);
-	    const encoded = encodeURIComponent(valueToSubmit);
-	    const url = `https://ai.cyoda.net/?name=${encoded}`;
-
-	    trackCtaConversion({
-	      location: "hero",
-	      page_variant: getPageVariant(),
-	      cta: "hero_submit",
-	      url: url
-	    });
-
-	    window.open(url, '_blank');
-	  };
-
   return (
-    <section className="relative max-h-screen flex items-center justify-center overflow-hidden py-20">
-      {/* Background with texture overlay */}
+    <div
+      className="rounded-2xl overflow-hidden select-none"
+      style={{
+        background: 'hsl(0,0%,100%)',
+        border: '1px solid hsl(175,35%,82%)',
+        boxShadow:
+          '0 2px 8px -2px hsl(175,40%,55%,0.12), 0 8px 32px -8px hsl(175,40%,50%,0.16), 0 1px 2px 0 hsl(175,30%,60%,0.08)',
+      }}
+    >
+      {/* Header */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-60"
-        style={{ backgroundImage: `url(${heroBackground})` }}
-      />
-      <div className="absolute inset-0 bg-background/70" />
-
-      {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 text-center">
-        <div className="max-w-4xl mx-auto space-y-6">
-          {/* Hero headline here */}
-            {renderHeadings && (
-                <div className="max-w-3xl mx-auto text-center">
-                    {h1 && (
-                        <h1 className="text-4xl md:text-5xl font-semibold tracking-tight">
-                            {h1}
-                        </h1>
-                    )}
-                    {(h2 || h3) && (
-                        <div className="mt-4 mb-8 text-muted-foreground space-y-1">
-                            {h2 && <p className="text-base md:text-lg">{h2}</p>}
-                            {h3 && <p className="text-sm md:text-base">{h3}</p>}
-                        </div>
-                    )}
-                </div>
-            )}
-          <div className="space-y-2">
-            {/* Subtext */}
-            <p className="mobile-text-base text-foreground/90 leading-relaxed max-w-2xl mx-auto">
-               Build your prototype in minutes
-            </p>
-          </div>
-
-          {/* Input section */}
-          <div className="max-w-2xl mx-auto space-y-6">
-            <form action="https://ai.cyoda.net" method="GET" target="_blank" id="start-form" className="relative" onSubmit={handleSubmit}>
-              <Textarea
-                ref={textareaRef}
-                name="name"
-                id="name"
-                required
-                minLength={1}
-                maxLength={10000}
-                value={displayValue}
-                onChange={handleChange}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
-                aria-label="Describe what you want to build..."
-                placeholder={isUserTyping ? "Describe your application idea..." : ""}
-                className="min-h-[120px] mobile-text-base bg-background/10 backdrop-blur border-2 border-primary/30 focus:border-primary placeholder:text-foreground/60 pr-24 sm:pr-32"
-              />
-                <Button
-                    type="submit"
-                    id="start-btn"
-                    size="icon"
-                    className="absolute right-2 bottom-2 text-white bg-primary hover:bg-primary/90 h-12 w-12"
-                >
-                    <ArrowBigRightIcon className="w-8 h-8" />
-                </Button>
-            </form>
-
-            {/* Pre-baked examples */}
-            <div className="space-y-3">
-              <p className="mobile-text-sm text-muted-foreground">Or try these examples:</p>
-              <div className="flex flex-wrap justify-center gap-3">
-                {prebakedExamples.map((example, index) => (
-                  <Button
-                    key={index}
-                    variant="outline"
-                    size="mobile-sm"
-                    onClick={() => handleExampleClick(example)}
-                    className="bg-card/20 backdrop-blur border-primary/30 hover:bg-primary/10 hover:border-primary mobile-btn-text-sm min-h-[44px]"
-                  >
-                    {example.name}
-                  </Button>
-                ))}
-              </div>
-            </div>
-          </div>
-
-
+        className="flex items-center justify-between px-5 py-4 border-b"
+        style={{
+          background: 'linear-gradient(135deg, hsl(175,35%,95%) 0%, hsl(175,25%,97%) 100%)',
+          borderColor: 'hsl(175,30%,88%)',
+        }}
+      >
+        <div>
+          <p
+            className="text-[10px] font-bold uppercase tracking-widest mb-1"
+            style={{ color: 'hsl(175,55%,30%)' }}
+          >
+            Entity Workflow
+          </p>
+          <p className="text-sm font-semibold" style={{ color: 'hsl(215,25%,18%)' }}>
+            Corporate Loan Origination
+          </p>
         </div>
+        <span
+          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide"
+          style={{ background: 'hsl(175,45%,90%)', color: 'hsl(175,60%,26%)' }}
+        >
+          <span
+            className="w-1.5 h-1.5 rounded-full inline-block animate-pulse"
+            style={{ background: 'hsl(175,60%,38%)' }}
+          />
+          Live
+        </span>
       </div>
 
+      {/* State transitions */}
+      <div className="px-5 py-4 space-y-3">
+        {states.map((s) => (
+          <div
+            key={s.name}
+            className="flex items-center gap-3"
+            style={{
+              opacity: s.committed ? 0.68 : s.active ? 1 : 0.32,
+            }}
+          >
+            {/* Status dot */}
+            <div
+              className="shrink-0 w-2.5 h-2.5 rounded-full"
+              style={{
+                background: s.committed
+                  ? 'hsl(175,55%,42%)'
+                  : s.active
+                  ? 'hsl(175,50%,52%)'
+                  : 'hsl(215,15%,80%)',
+                boxShadow: s.active
+                  ? '0 0 0 3px hsl(175,50%,90%)'
+                  : undefined,
+              }}
+            />
 
+            {/* State name */}
+            <span
+              className="flex-1 text-[11px] font-mono font-semibold tracking-wide"
+              style={{
+                color: s.active
+                  ? 'hsl(215,25%,18%)'
+                  : s.committed
+                  ? 'hsl(215,18%,42%)'
+                  : 'hsl(215,12%,58%)',
+              }}
+            >
+              {s.name}
+            </span>
+
+            {/* Timestamp */}
+            <span
+              className="text-[10px] tabular-nums font-mono"
+              style={{ color: 'hsl(215,12%,60%)' }}
+            >
+              {s.ts}
+            </span>
+
+            {/* Status badge */}
+            <span
+              className="text-[9px] font-bold px-1.5 py-0.5 rounded uppercase tracking-wide"
+              style={{
+                background: s.committed
+                  ? 'hsl(175,40%,91%)'
+                  : s.active
+                  ? 'hsl(38,85%,92%)'
+                  : 'hsl(215,15%,93%)',
+                color: s.committed
+                  ? 'hsl(175,55%,27%)'
+                  : s.active
+                  ? 'hsl(32,75%,32%)'
+                  : 'hsl(215,15%,55%)',
+              }}
+            >
+              {s.status}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {/* Footer metadata */}
+      <div
+        className="px-5 py-3.5 border-t grid grid-cols-3 gap-4"
+        style={{
+          borderColor: 'hsl(175,28%,90%)',
+          background: 'hsl(175,25%,97%)',
+        }}
+      >
+        {[
+          { label: 'Entity ID',   value: 'LN-28471' },
+          { label: 'Transitions', value: '4 of 5'   },
+          { label: 'History',     value: 'immutable' },
+        ].map((m) => (
+          <div key={m.label}>
+            <p
+              className="text-[9px] uppercase tracking-widest font-bold mb-0.5"
+              style={{ color: 'hsl(175,35%,52%)' }}
+            >
+              {m.label}
+            </p>
+            <p
+              className="text-[11px] font-mono font-semibold"
+              style={{ color: 'hsl(215,20%,28%)' }}
+            >
+              {m.value}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const HeroSection: React.FC<HeroProps> = ({
+  renderHeadings = false,
+  h1,
+  h2,
+  h3,
+  defaultHeadingAs = 'h1',
+}) => {
+  const location = useLocation();
+
+  const getPageVariant = (): 'home' | 'dev' | 'cto' => {
+    const path = location.pathname;
+    if (path === '/dev') return 'dev';
+    if (path === '/cto') return 'cto';
+    return 'home';
+  };
+
+  const handleContactSales = () => {
+    trackCtaConversion({
+      location: 'hero',
+      page_variant: getPageVariant(),
+      cta: 'talk_to_us',
+      url: '/contact',
+    });
+    window.location.href = '/contact';
+  };
+
+  const isHomepage = !renderHeadings;
+
+  return (
+    <section
+      className="relative overflow-hidden"
+      style={{
+        background: heroGradient,
+        paddingTop: 'clamp(3.5rem, 7vw, 6rem)',
+        paddingBottom: 'clamp(3.5rem, 7vw, 6rem)',
+      }}
+    >
+      <ArchitectureField />
+
+      <div className="relative z-10 container mx-auto px-4">
+        {isHomepage ? (
+          /* Homepage: two-column layout */
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 xl:gap-16 items-center max-w-6xl mx-auto">
+
+            {/* Left column: headline, copy, CTAs */}
+            <div className="max-w-lg lg:max-w-none">
+              {/* Eyebrow */}
+              <div className="mb-5">
+                <span
+                  className="inline-flex items-center text-[11px] font-bold tracking-[0.12em] px-3 py-1 rounded-full"
+                  style={{
+                    background: 'hsl(175,45%,86%)',
+                    color: 'hsl(175,62%,24%)',
+                  }}
+                >
+                  Enterprise Cyoda · Regulated production
+                </span>
+              </div>
+
+              {/* H1 */}
+              {React.createElement(
+                defaultHeadingAs,
+                {
+                  className:
+                    'text-4xl md:text-5xl font-bold tracking-tight leading-tight mb-5',
+                  style: { color: 'hsl(215,28%,14%)' },
+                },
+                'Build auditable backend systems on one consistent architecture'
+              )}
+
+              {/* Sub-copy */}
+              <p
+                className="text-lg leading-relaxed mb-8"
+                style={{ color: 'hsl(215,18%,38%)' }}
+              >
+                Cyoda unifies state, workflow, transactions, and history in one model,
+                with one path from local build to regulated production. Commercially supported by
+                the people who built it.
+              </p>
+
+              {/* CTAs */}
+              <div className="flex flex-col sm:flex-row gap-3 mb-8">
+                <Button
+                  size="lg"
+                  className="px-8 text-base font-semibold"
+                  onClick={handleContactSales}
+                >
+                  Talk to us
+                </Button>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="px-7 text-base font-semibold"
+                  style={{
+                    borderColor: 'hsl(175,38%,65%)',
+                    color: 'hsl(175,62%,24%)',
+                    background: 'hsl(175,40%,96%)',
+                  }}
+                  asChild
+                >
+                  <a href="#how-it-works">See the architecture</a>
+                </Button>
+              </div>
+
+              {/* Inline proof line */}
+              <div
+                className="flex items-center gap-2 text-sm"
+                style={{ color: 'hsl(175,45%,34%)' }}
+              >
+                <ShieldCheck className="w-4 h-4 shrink-0" />
+                <span>In production since 2017 · VC Trade, European private debt</span>
+              </div>
+            </div>
+
+            {/* Right column: workflow/audit artefact */}
+            <div className="lg:pl-4 xl:pl-8">
+              <WorkflowArtefact />
+              <p
+                className="mt-3 text-center text-xs font-semibold"
+                style={{ color: 'hsl(175,45%,34%)' }}
+              >
+                State, workflow, transactions, and history in one system
+              </p>
+            </div>
+          </div>
+        ) : (
+          /* Other pages (dev, cto): centred layout */
+          <div className="max-w-4xl mx-auto text-center space-y-6">
+            {renderHeadings && h1 ? (
+              <div className="max-w-3xl mx-auto">
+                <h1 className="text-4xl md:text-5xl font-semibold tracking-tight text-foreground">
+                  {h1}
+                </h1>
+                {(h2 || h3) && (
+                  <div className="mt-4 mb-2 text-muted-foreground space-y-1">
+                    {h2 && <p className="text-base md:text-lg">{h2}</p>}
+                    {h3 && <p className="text-sm md:text-base">{h3}</p>}
+                  </div>
+                )}
+              </div>
+            ) : null}
+
+            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+              Build scalable, auditable backend systems on an integrated architecture.
+              Commercially supported for regulated and mission-critical production.
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+              <Button
+                size="lg"
+                className="px-8 text-base font-semibold"
+                onClick={handleContactSales}
+              >
+                Talk to us
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="px-8 text-base font-semibold"
+                asChild
+              >
+                <a href="https://cyoda.org" rel="noopener noreferrer">
+                  Open source, run it yourself
+                </a>
+              </Button>
+            </div>
+          </div>
+        )}
+      </div>
     </section>
   );
 };

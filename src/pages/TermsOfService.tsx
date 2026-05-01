@@ -25,8 +25,8 @@ const TermsOfService = () => {
                 Effective Date: June 2, 2025
               </p>
               <div className="bg-yellow-500/20 border border-yellow-500/30 rounded-xl p-4 sm:p-6 lg:p-8 mt-6 sm:mt-8 text-left page-break-inside-avoid">
-                <p className="text-sm sm:text-base font-medium text-yellow-200 mb-2 sm:mb-3">IMPORTANT NOTICE</p>
-                <p className="text-sm sm:text-base text-yellow-100 leading-relaxed">
+                <p className="text-sm sm:text-base font-medium text-yellow-900 dark:text-yellow-200 mb-2 sm:mb-3">IMPORTANT NOTICE</p>
+                <p className="text-sm sm:text-base text-yellow-900 dark:text-yellow-100 leading-relaxed">
                   PLEASE READ THESE TERMS OF SERVICE CAREFULLY. BY ACCESSING OR USING THE SERVICES, YOU AGREE TO BE BOUND BY THESE TERMS. IF YOU DO NOT AGREE TO ALL OF THESE TERMS, DO NOT ACCESS OR USE THE SERVICES.
                 </p>
               </div>
@@ -69,8 +69,8 @@ const TermsOfService = () => {
 
               <h2>3. Scope of Services & Alpha/Beta Nature</h2>
               <div className="bg-red-500/20 border border-red-500/30 rounded-xl p-6 my-6">
-                <h3 className="text-red-200 mt-0">Important Alpha/Beta Limitations</h3>
-                <ul className="text-red-100 space-y-2">
+                <h3 className="text-red-900 dark:text-red-200 mt-0">Important Alpha/Beta Limitations</h3>
+                <ul className="text-red-900 dark:text-red-100 space-y-2">
                   <li><strong>Experimental Services:</strong> You acknowledge that the Services are provided during an Alpha/Beta Period and are experimental, pre-release versions. They may contain bugs, errors, and defects, and may not operate correctly or continuously.</li>
                   <li><strong>"AS IS" and "AS AVAILABLE":</strong> The Services are provided strictly on an "AS IS" and "AS AVAILABLE" basis, without any warranties or representations of any kind, express or implied.</li>
                   <li><strong>No Service Level Agreement (SLA):</strong> Cyoda provides NO SERVICE LEVEL AGREEMENT (SLA) during the Alpha/Beta Period.</li>
@@ -106,11 +106,11 @@ const TermsOfService = () => {
 
               <h2>6. User Content Data Management</h2>
               <div className="bg-blue-500/20 border border-blue-500/30 rounded-xl p-6 my-6">
-                <h3 className="text-blue-200 mt-0">Data We Use for AI Assistant Improvement</h3>
-                <p className="text-blue-100">
+                <h3 className="text-blue-900 dark:text-blue-200 mt-0">Data We Use for AI Assistant Improvement</h3>
+                <p className="text-blue-900 dark:text-blue-100">
                   To continuously develop, improve, and enhance the functionality, accuracy, safety, and overall performance of Our AI Assistant, Cyoda may use:
                 </p>
-                <ul className="text-blue-100">
+                <ul className="text-blue-900 dark:text-blue-100">
                   <li><strong>User Input Prompts:</strong> We may use Your User Input Prompts to understand user needs and refine the AI Assistant's ability to generate relevant and accurate responses.</li>
                   <li><strong>AI-Generated Code:</strong> We may use the AI-Generated Code produced by Our AI Assistant to further teach, train, evaluate, and improve the AI Assistant.</li>
                   <li><strong>Open Source Repository Contributions:</strong> If You voluntarily contribute to our designated open-source repositories, we may use these contributions for AI Assistant Improvement.</li>
@@ -118,8 +118,8 @@ const TermsOfService = () => {
               </div>
 
               <div className="bg-green-500/20 border border-green-500/30 rounded-xl p-6 my-6">
-                <h3 className="text-green-200 mt-0">Data We Do Not Access or Use</h3>
-                <p className="text-green-100">
+                <h3 className="text-green-900 dark:text-green-200 mt-0">Data We Do Not Access or Use</h3>
+                <p className="text-green-900 dark:text-green-100">
                   <strong>User Application Data in Your Running System:</strong> Cyoda will not retrieve, copy, or use Your User Application Data that is located, stored, and managed within Your Running System for the purposes of AI Assistant Improvement, or for training, fine-tuning, or evaluating any of Cyoda's AI models or algorithms.
                 </p>
               </div>
@@ -131,17 +131,17 @@ const TermsOfService = () => {
 
               <h2>8. Disclaimers of Warranties</h2>
               <div className="bg-yellow-500/20 border border-yellow-500/30 rounded-xl p-6 my-6">
-                <p className="text-yellow-100 font-medium">
+                <p className="text-yellow-900 dark:text-yellow-100 font-medium">
                   THE SERVICES ARE PROVIDED "AS IS," "AS AVAILABLE," AND WITHOUT WARRANTY OF ANY KIND. TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, CYODA EXPRESSLY DISCLAIMS ALL WARRANTIES, WHETHER EXPRESS, IMPLIED, STATUTORY, OR OTHERWISE, INCLUDING, BUT NOT LIMITED TO, WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, QUIET ENJOYMENT, ACCURACY, AND NON-INFRINGEMENT.
                 </p>
               </div>
 
               <h2>9. Limitation of Liability</h2>
               <div className="bg-red-500/20 border border-red-500/30 rounded-xl p-6 my-6">
-                <p className="text-red-100 font-medium">
+                <p className="text-red-900 dark:text-red-100 font-medium">
                   TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL CYODA, ITS AFFILIATES, DIRECTORS, EMPLOYEES, AGENTS, OR LICENSORS BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, PUNITIVE, OR EXEMPLARY DAMAGES ARISING OUT OF OR IN CONNECTION WITH YOUR ACCESS TO OR USE OF, OR INABILITY TO ACCESS OR USE, THE SERVICES DURING THE ALPHA/BETA PERIOD.
                 </p>
-                <p className="text-red-100 mt-4">
+                <p className="text-red-900 dark:text-red-100 mt-4">
                   <strong>CYODA'S TOTAL CUMULATIVE LIABILITY TO YOU FOR ANY AND ALL CLAIMS ARISING FROM OR RELATING TO THESE TERMS OR YOUR USE OF THE SERVICES DURING THE ALPHA/BETA PERIOD SHALL NOT EXCEED TEN POUNDS STERLING (£10.00 GBP).</strong>
                 </p>
               </div>

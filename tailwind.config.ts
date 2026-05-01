@@ -19,7 +19,7 @@ export default {
 		},
 		extend: {
 			fontFamily: {
-				'montserrat': ['Montserrat', 'sans-serif'],
+				'montserrat': ['Inter', 'sans-serif'],
 			},
 			colors: {
 				// Cyoda brand colors
