@@ -306,7 +306,7 @@ const Contact = () => {
                   <h3 className="font-semibold text-foreground text-lg">Patrick Stanton</h3>
                   <p className="text-sm text-primary mb-3">CEO & Co-Founder</p>
                   <a
-                    href="https://www.linkedin.com/in/patrick-stanton-cyoda/"
+                    href="https://www.linkedin.com/in/patrick-cyoda/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors focus-visible:ring-2 focus-visible:ring-primary rounded"

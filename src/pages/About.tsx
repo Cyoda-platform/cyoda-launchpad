@@ -9,7 +9,7 @@ const founders = [
     initials: 'PSt',
     name: 'Patrick Stanton',
     title: 'CEO & Co-Founder',
-    bio: '30+ years building core systems for global investment banks. LCH Automated Brokerage Service. Dresdner Kleinwort fixed income settlement (Frankfurt). Westpac FX (Sydney). Macquarie treasury and equity derivatives — live during the GFC. Intesa Sanpaolo (Milan). Co-founded Cyoda in 2012. Mechanical Engineering, University of Leeds.',
+    bio: '30+ years building core systems for global investment banks. LCH Automated Brokerage Service. Dresdner Kleinwort fixed income settlement (Frankfurt). Westpac FX (Sydney). Macquarie treasury and equity derivatives — live during the GFC. Intesa Sanpaolo (Milan). Mechanical Engineering, University of Leeds. Co-founded Cyoda in 2012. London.',
   },
   {
     initials: 'PSc',
