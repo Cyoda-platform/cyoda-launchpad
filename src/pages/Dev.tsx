@@ -1,12 +1,12 @@
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
-import SEO from '@/components/SEO';
-import { organizationSchema } from '@/data/schemas';
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Server, Cloud, Building2 } from 'lucide-react';
-import { ArchitectureField, heroGradient } from '@/components/HeroBackground';
-import type { LucideIcon } from 'lucide-react';
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
+import { organizationSchema } from "@/data/schemas";
+import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Server, Cloud, Building2 } from "lucide-react";
+import { ArchitectureField, heroGradient } from "@/components/HeroBackground";
+import type { LucideIcon } from "lucide-react";
 
 type RoutingCard = {
   icon: LucideIcon;
@@ -19,27 +19,27 @@ type RoutingCard = {
 const routingCards: RoutingCard[] = [
   {
     icon: Server,
-    badge: 'Open source',
-    title: 'Run it yourself',
+    badge: "Open source",
+    title: "Run it yourself",
     description:
-      'Start locally with in-memory or SQLite, grow to PostgreSQL without changing your model. No vendor dependency.',
-    link: { label: 'Go to cyoda.org', href: 'https://cyoda.org' },
+      "Start locally with in-memory or SQLite, grow to PostgreSQL without changing your model. No vendor dependency.",
+    link: { label: "Go to cyoda.dev", href: "https://cyoda.dev" },
   },
   {
     icon: Cloud,
-    badge: 'SaaS',
-    title: 'Cyoda Cloud',
+    badge: "SaaS",
+    title: "Cyoda Cloud",
     description:
-      'Free evaluation tier. Managed control plane. Your business logic runs in your code via gRPC.',
-    link: { label: 'Go to ai.cyoda.net', href: 'https://ai.cyoda.net/' },
+      "Free evaluation tier. Managed control plane. Your business logic runs in your code via gRPC.",
+    link: { label: "Go to ai.cyoda.net", href: "https://ai.cyoda.net/" },
   },
   {
     icon: Building2,
-    badge: 'Enterprise',
-    title: 'Commercial deployment',
+    badge: "Enterprise",
+    title: "Commercial deployment",
     description:
-      'SLAs, procurement support, and regulated rollout. For teams taking Cyoda into production.',
-    link: { label: 'Talk to us', href: '/contact', internal: true },
+      "SLAs, procurement support, and regulated rollout. For teams taking Cyoda into production.",
+    link: { label: "Talk to us", href: "/contact", internal: true },
   },
 ];
 
@@ -67,21 +67,20 @@ const Dev = () => (
   <div className="min-h-screen bg-background">
     <SEO
       title="For developers | Cyoda"
-      description="Building with Cyoda? Start on the open-source project at cyoda.org or try Cyoda Cloud free at ai.cyoda.net. Come to cyoda.com when you need commercial support."
+      description="Building with Cyoda? Start on the open-source project at cyoda.dev or try Cyoda Cloud free at ai.cyoda.net. Come to cyoda.com when you need commercial support."
       url="https://cyoda.com/dev"
       type="website"
       jsonLd={organizationSchema}
     />
     <Header />
     <main>
-
       {/* Hero */}
       <section
         className="relative overflow-hidden"
         style={{
           background: heroGradient,
-          paddingTop: 'clamp(3.5rem, 7vw, 6rem)',
-          paddingBottom: 'clamp(3.5rem, 7vw, 6rem)',
+          paddingTop: "clamp(3.5rem, 7vw, 6rem)",
+          paddingBottom: "clamp(3.5rem, 7vw, 6rem)",
         }}
       >
         <ArchitectureField />
@@ -89,35 +88,50 @@ const Dev = () => (
           <div className="mb-4">
             <span
               className="inline-flex items-center text-[11px] font-bold uppercase tracking-widest px-3 py-1 rounded-full"
-              style={{ background: 'hsl(175,45%,86%)', color: 'hsl(175,62%,24%)' }}
+              style={{
+                background: "hsl(175,45%,86%)",
+                color: "hsl(175,62%,24%)",
+              }}
             >
               For developers
             </span>
           </div>
           <h1
             className="text-4xl md:text-5xl font-bold tracking-tight leading-tight mb-5"
-            style={{ color: 'hsl(215,28%,14%)' }}
+            style={{ color: "hsl(215,28%,14%)" }}
           >
             Looking to build with Cyoda?
           </h1>
           <p
             className="text-lg leading-relaxed mb-8 max-w-xl mx-auto"
-            style={{ color: 'hsl(215,18%,38%)' }}
+            style={{ color: "hsl(215,18%,38%)" }}
           >
-            Start on the open-source project or on Cyoda Cloud. Come back to cyoda.com when you
-            need commercial support.
+            Start on the open-source project or on Cyoda Cloud. Come back to
+            cyoda.com when you need commercial support.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <Button size="lg" className="px-8 text-base font-semibold" asChild>
-              <a href="https://cyoda.org" rel="noopener noreferrer">Go to cyoda.org</a>
+              <a href="https://cyoda.dev" rel="noopener noreferrer">
+                Go to cyoda.dev
+              </a>
             </Button>
-            <Button size="lg" variant="outline" className="px-7 text-base font-semibold" asChild>
-              <a href="https://ai.cyoda.net/" rel="noopener noreferrer">Try Cyoda Cloud</a>
+            <Button
+              size="lg"
+              variant="outline"
+              className="px-7 text-base font-semibold"
+              asChild
+            >
+              <a href="https://ai.cyoda.net/" rel="noopener noreferrer">
+                Try Cyoda Cloud
+              </a>
             </Button>
           </div>
-          <p className="mt-5 text-sm" style={{ color: 'hsl(215,18%,48%)' }}>
-            Need enterprise support?{' '}
-            <Link to="/contact" className="underline underline-offset-2 hover:text-primary transition-colors">
+          <p className="mt-5 text-sm" style={{ color: "hsl(215,18%,48%)" }}>
+            Need enterprise support?{" "}
+            <Link
+              to="/contact"
+              className="underline underline-offset-2 hover:text-primary transition-colors"
+            >
               Talk to us
             </Link>
           </p>
@@ -135,13 +149,16 @@ const Dev = () => (
               Three paths, one model
             </h2>
             <p className="text-sm text-muted-foreground mt-2 max-w-xl mx-auto">
-              Cyoda keeps the same entity model across open source, cloud, and enterprise. No
-              re-platforming wall as your requirements change.
+              Cyoda keeps the same entity model across open source, cloud, and
+              enterprise. No re-platforming wall as your requirements change.
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             {routingCards.map((card) => (
-              <div key={card.title} className="rounded-xl border border-border bg-card p-6 flex flex-col">
+              <div
+                key={card.title}
+                className="rounded-xl border border-border bg-card p-6 flex flex-col"
+              >
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-9 h-9 rounded-lg flex items-center justify-center bg-muted/40">
                     <card.icon className="w-5 h-5 text-primary" />
@@ -150,7 +167,9 @@ const Dev = () => (
                     <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground block">
                       {card.badge}
                     </span>
-                    <h3 className="text-base font-semibold text-foreground leading-tight">{card.title}</h3>
+                    <h3 className="text-base font-semibold text-foreground leading-tight">
+                      {card.title}
+                    </h3>
                   </div>
                 </div>
                 <p className="text-sm text-muted-foreground leading-relaxed flex-1">
@@ -191,22 +210,32 @@ const Dev = () => (
               Your code lives in a gRPC processor
             </h2>
             <p className="text-sm text-muted-foreground max-w-xl mx-auto">
-              Cyoda calls your processor when an entity transitions state. You handle the logic;
-              Cyoda handles consistency, history, and delivery.
+              Cyoda calls your processor when an entity transitions state. You
+              handle the logic; Cyoda handles consistency, history, and
+              delivery.
             </p>
           </div>
           <div className="rounded-xl overflow-hidden border border-border shadow-sm">
             {/* IDE chrome */}
             <div
               className="flex items-center gap-2 px-4 py-2.5"
-              style={{ background: 'hsl(220,14%,18%)' }}
+              style={{ background: "hsl(220,14%,18%)" }}
             >
-              <span className="w-3 h-3 rounded-full" style={{ background: 'hsl(0,72%,60%)' }} />
-              <span className="w-3 h-3 rounded-full" style={{ background: 'hsl(40,85%,58%)' }} />
-              <span className="w-3 h-3 rounded-full" style={{ background: 'hsl(134,45%,48%)' }} />
+              <span
+                className="w-3 h-3 rounded-full"
+                style={{ background: "hsl(0,72%,60%)" }}
+              />
+              <span
+                className="w-3 h-3 rounded-full"
+                style={{ background: "hsl(40,85%,58%)" }}
+              />
+              <span
+                className="w-3 h-3 rounded-full"
+                style={{ background: "hsl(134,45%,48%)" }}
+              />
               <span
                 className="ml-3 text-[11px] font-mono"
-                style={{ color: 'hsl(220,10%,65%)' }}
+                style={{ color: "hsl(220,10%,65%)" }}
               >
                 loan_processor.py
               </span>
@@ -215,8 +244,8 @@ const Dev = () => (
             <pre
               className="overflow-x-auto text-sm leading-relaxed p-5"
               style={{
-                background: 'hsl(220,14%,12%)',
-                color: 'hsl(220,15%,88%)',
+                background: "hsl(220,14%,12%)",
+                color: "hsl(220,15%,88%)",
                 fontFamily:
                   '"JetBrains Mono","Fira Code","Cascadia Code",ui-monospace,monospace',
               }}
@@ -233,25 +262,25 @@ const Dev = () => (
           <ol className="flex flex-col sm:flex-row gap-6 sm:gap-0 sm:divide-x divide-border">
             {[
               {
-                step: '1',
+                step: "1",
                 content: (
                   <>
-                    Start on{' '}
+                    Start on{" "}
                     <a
-                      href="https://cyoda.org"
+                      href="https://cyoda.dev"
                       rel="noopener noreferrer"
                       className="text-primary font-medium hover:underline"
                     >
-                      cyoda.org
+                      cyoda.dev
                     </a>
                   </>
                 ),
               },
               {
-                step: '2',
+                step: "2",
                 content: (
                   <>
-                    Build or test on{' '}
+                    Build or test on{" "}
                     <a
                       href="https://ai.cyoda.net/"
                       rel="noopener noreferrer"
@@ -263,8 +292,9 @@ const Dev = () => (
                 ),
               },
               {
-                step: '3',
-                content: 'Move to enterprise if you need SLAs, procurement, or regulated support.',
+                step: "3",
+                content:
+                  "Move to enterprise if you need SLAs, procurement, or regulated support.",
               },
             ].map((item) => (
               <li
@@ -273,7 +303,10 @@ const Dev = () => (
               >
                 <span
                   className="shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold"
-                  style={{ background: 'hsl(175,45%,86%)', color: 'hsl(175,60%,26%)' }}
+                  style={{
+                    background: "hsl(175,45%,86%)",
+                    color: "hsl(175,60%,26%)",
+                  }}
                 >
                   {item.step}
                 </span>
@@ -289,18 +322,28 @@ const Dev = () => (
       {/* Section 4 — CTA close */}
       <section className="py-14 md:py-20 bg-[hsl(var(--section-alt-bg))] border-t border-border">
         <div className="container mx-auto px-4 max-w-xl text-center">
-          <h2 className="text-xl font-semibold text-foreground mb-6">Ready to start building?</h2>
+          <h2 className="text-xl font-semibold text-foreground mb-6">
+            Ready to start building?
+          </h2>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <Button size="lg" className="px-8 text-base font-semibold" asChild>
-              <a href="https://cyoda.org" rel="noopener noreferrer">Go to cyoda.org</a>
+              <a href="https://cyoda.dev" rel="noopener noreferrer">
+                Go to cyoda.dev
+              </a>
             </Button>
-            <Button size="lg" variant="outline" className="px-7 text-base font-semibold" asChild>
-              <a href="https://ai.cyoda.net/" rel="noopener noreferrer">Try Cyoda Cloud</a>
+            <Button
+              size="lg"
+              variant="outline"
+              className="px-7 text-base font-semibold"
+              asChild
+            >
+              <a href="https://ai.cyoda.net/" rel="noopener noreferrer">
+                Try Cyoda Cloud
+              </a>
             </Button>
           </div>
         </div>
       </section>
-
     </main>
     <Footer />
   </div>

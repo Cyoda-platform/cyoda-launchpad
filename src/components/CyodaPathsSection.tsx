@@ -1,4 +1,4 @@
-import { Server, Cloud, Building2 } from 'lucide-react';
+import { Server, Cloud, Building2 } from "lucide-react";
 
 const CyodaPathsSection = () => {
   return (
@@ -21,12 +21,15 @@ const CyodaPathsSection = () => {
                 <div className="w-9 h-9 rounded-lg flex items-center justify-center bg-primary/10">
                   <Building2 className="w-5 h-5 text-primary" />
                 </div>
-                <h3 className="text-xl font-semibold text-foreground">Enterprise Cyoda</h3>
+                <h3 className="text-xl font-semibold text-foreground">
+                  Enterprise Cyoda
+                </h3>
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed max-w-2xl">
-                Commercially supported Cyoda for teams building regulated, auditable backend
-                systems. Use the same application model from first service to production scale,
-                with direct support from the engineers who built the platform.
+                Commercially supported Cyoda for teams building regulated,
+                auditable backend systems. Use the same application model from
+                first service to production scale, with direct support from the
+                engineers who built the platform.
               </p>
             </div>
           </div>
@@ -34,14 +37,34 @@ const CyodaPathsSection = () => {
           {/* Commercial pillars — 2×2 compact grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 mb-6 pl-0 sm:pl-12">
             {[
-              { title: 'Start with one service', description: 'Adopt Cyoda for a bounded backend service first. Prove the entity model, workflow, transactions, and history before expanding.' },
-              { title: 'Build with the core team', description: 'Work with Cyoda engineers on entity modelling, workflow design, processors, integrations, and audit requirements.' },
-              { title: 'Choose the right runtime', description: 'Develop and test with in-memory, SQLite, or PostgreSQL. Run smaller deployments on PostgreSQL. Use the licensed Cassandra engine when the workload needs distributed resilience, throughput, and fault tolerance.' },
-              { title: 'Support for regulated systems', description: 'Get practical help with architecture review, security questions, due diligence, and regulated-customer conversations from engineers who have built core systems in investment banks.' },
+              {
+                title: "Start with one service",
+                description:
+                  "Adopt Cyoda for a bounded backend service first. Prove the entity model, workflow, transactions, and history before expanding.",
+              },
+              {
+                title: "Build with the core team",
+                description:
+                  "Work with Cyoda engineers on entity modelling, workflow design, processors, integrations, and audit requirements.",
+              },
+              {
+                title: "Choose the right runtime",
+                description:
+                  "Develop and test with in-memory, SQLite, or PostgreSQL. Run smaller deployments on PostgreSQL. Use the licensed Cassandra engine when the workload needs distributed resilience, throughput, and fault tolerance.",
+              },
+              {
+                title: "Support for regulated systems",
+                description:
+                  "Get practical help with architecture review, security questions, due diligence, and regulated-customer conversations from engineers who have built core systems in investment banks.",
+              },
             ].map((item) => (
               <div key={item.title}>
-                <p className="text-sm font-semibold text-foreground mb-0.5">{item.title}</p>
-                <p className="text-xs text-muted-foreground leading-relaxed">{item.description}</p>
+                <p className="text-sm font-semibold text-foreground mb-0.5">
+                  {item.title}
+                </p>
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  {item.description}
+                </p>
               </div>
             ))}
           </div>
@@ -64,7 +87,6 @@ const CyodaPathsSection = () => {
           Other ways to run Cyoda
         </p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-
           {/* Run it yourself */}
           <div className="rounded-xl border border-border bg-card p-6 flex flex-col">
             <div className="flex items-center gap-3 mb-3">
@@ -75,20 +97,22 @@ const CyodaPathsSection = () => {
                 <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
                   Open Source
                 </span>
-                <h3 className="text-base font-semibold text-foreground leading-tight">Run it yourself</h3>
+                <h3 className="text-base font-semibold text-foreground leading-tight">
+                  Run it yourself
+                </h3>
               </div>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed flex-1">
-              Open source Cyoda on your own infrastructure. Start with in-memory or SQLite,
-              grow to PostgreSQL without changing your model.
+              Open source Cyoda on your own infrastructure. Start with in-memory
+              or SQLite, grow to PostgreSQL without changing your model.
             </p>
             <div className="mt-4">
               <a
-                href="https://cyoda.org"
+                href="https://cyoda.dev"
                 rel="noopener noreferrer"
                 className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
               >
-                cyoda.org
+                cyoda.dev
               </a>
             </div>
           </div>
@@ -103,12 +127,14 @@ const CyodaPathsSection = () => {
                 <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
                   SaaS
                 </span>
-                <h3 className="text-base font-semibold text-foreground leading-tight">Cyoda Cloud</h3>
+                <h3 className="text-base font-semibold text-foreground leading-tight">
+                  Cyoda Cloud
+                </h3>
               </div>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed flex-1">
-              Hosted Cyoda with a free evaluation tier. Managed control plane, your business
-              logic runs in your code via gRPC.
+              Hosted Cyoda with a free evaluation tier. Managed control plane,
+              your business logic runs in your code via gRPC.
             </p>
             <div className="mt-4">
               <a
@@ -120,7 +146,6 @@ const CyodaPathsSection = () => {
               </a>
             </div>
           </div>
-
         </div>
       </div>
     </section>

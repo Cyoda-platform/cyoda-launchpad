@@ -23,7 +23,7 @@ Core capabilities:
 ## Cyoda Web Estate
 
 - cyoda.com — Enterprise Cyoda. Commercially supported, scalable deployment for regulated and mission-critical environments.
-- cyoda.org — Open-source Cyoda. Developer-first, self-hosted, run-it-yourself.
+- cyoda.dev — Open-source Cyoda. Developer-first, self-hosted, run-it-yourself.
 - ai.cyoda.net — Cyoda Cloud. Hosted SaaS Cyoda. Free tier available.
 - docs.cyoda.net — Documentation and API reference.
 

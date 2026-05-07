@@ -1,56 +1,56 @@
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { SiGithub, SiLinkedin, SiX, SiYoutube } from "react-icons/si";
-import cyodaLogo from '@/assets/cyoda-logo.png';
-import { useState } from 'react';
-import { CookiePreferencesModal } from '@/components/CookiePreferencesModal';
+import cyodaLogo from "@/assets/cyoda-logo.png";
+import { useState } from "react";
+import { CookiePreferencesModal } from "@/components/CookiePreferencesModal";
 
 const Footer = () => {
   const [prefsOpen, setPrefsOpen] = useState(false);
   const currentYear = new Date().getFullYear();
 
   const platformLinks = [
-    { name: 'Use Cases', href: '/use-cases' },
-    { name: 'Docs', href: 'https://docs.cyoda.net/', external: true },
-    { name: 'Blog', href: '/blog' },
+    { name: "Use Cases", href: "/use-cases" },
+    { name: "Docs", href: "https://docs.cyoda.net/", external: true },
+    { name: "Blog", href: "/blog" },
   ];
 
   const companyLinks = [
-    { name: 'About', href: '/about' },
-    { name: 'Support', href: '/support' },
-    { name: 'Contact', href: '/contact' },
+    { name: "About", href: "/about" },
+    { name: "Support", href: "/support" },
+    { name: "Contact", href: "/contact" },
   ];
 
   const cyodaWebLinks = [
-    { name: 'Enterprise Cyoda', href: '/' },
-    { name: 'Cyoda Cloud', href: 'https://ai.cyoda.net/', external: true },
-    { name: 'Open Source', href: 'https://cyoda.org', external: true },
-    { name: 'Docs', href: 'https://docs.cyoda.net', external: true },
+    { name: "Enterprise Cyoda", href: "/" },
+    { name: "Cyoda Cloud", href: "https://ai.cyoda.net/", external: true },
+    { name: "Open Source", href: "https://cyoda.dev", external: true },
+    { name: "Docs", href: "https://docs.cyoda.net", external: true },
   ];
 
   const socialLinks = [
     {
       icon: SiLinkedin,
-      href: 'https://www.linkedin.com/company/cyoda',
-      label: 'LinkedIn',
-      hoverColor: 'hover:text-blue-400'
+      href: "https://www.linkedin.com/company/cyoda",
+      label: "LinkedIn",
+      hoverColor: "hover:text-blue-400",
     },
     {
       icon: SiX,
-      href: 'https://twitter.com/cyodaops',
-      label: 'X (Twitter)',
-      hoverColor: 'hover:text-blue-400'
+      href: "https://twitter.com/cyodaops",
+      label: "X (Twitter)",
+      hoverColor: "hover:text-blue-400",
     },
     {
       icon: SiYoutube,
-      href: 'https://www.youtube.com/@cyoda934',
-      label: 'YouTube',
-      hoverColor: 'hover:text-red-400'
+      href: "https://www.youtube.com/@cyoda934",
+      label: "YouTube",
+      hoverColor: "hover:text-red-400",
     },
     {
       icon: SiGithub,
-      href: 'https://github.com/Cyoda-platform/',
-      label: 'GitHub',
-      hoverColor: 'hover:text-gray-300'
+      href: "https://github.com/Cyoda-platform/",
+      label: "GitHub",
+      hoverColor: "hover:text-gray-300",
     },
   ];
 
@@ -61,12 +61,12 @@ const Footer = () => {
           {/* Logo and description */}
           <div className="md:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
-
-                <img src={cyodaLogo} alt="Cyoda" className="h-6 sm:h-6" />
+              <img src={cyodaLogo} alt="Cyoda" className="h-6 sm:h-6" />
             </div>
             <p className="text-muted-foreground mb-6 max-w-md">
-              Enterprise Cyoda, commercially supported EDBMS for stateful, auditable, workflow-driven systems.
-              In production in European private-debt markets since 2017.
+              Enterprise Cyoda, commercially supported EDBMS for stateful,
+              auditable, workflow-driven systems. In production in European
+              private-debt markets since 2017.
             </p>
 
             {/* Social links with neon glow */}
@@ -90,7 +90,7 @@ const Footer = () => {
           <div>
             <h3 className="font-semibold mb-4 text-foreground">Platform</h3>
             <nav className="space-y-3">
-              {platformLinks.map((link) => (
+              {platformLinks.map((link) =>
                 link.external ? (
                   <a
                     key={link.name}
@@ -109,8 +109,8 @@ const Footer = () => {
                   >
                     {link.name}
                   </Link>
-                )
-              ))}
+                ),
+              )}
             </nav>
           </div>
 
@@ -134,7 +134,7 @@ const Footer = () => {
           <div>
             <h3 className="font-semibold mb-4 text-foreground">Cyoda</h3>
             <nav className="space-y-3">
-              {cyodaWebLinks.map((link) => (
+              {cyodaWebLinks.map((link) =>
                 link.external ? (
                   <a
                     key={link.name}
@@ -153,8 +153,8 @@ const Footer = () => {
                   >
                     {link.name}
                   </Link>
-                )
-              ))}
+                ),
+              )}
             </nav>
           </div>
         </div>
@@ -173,19 +173,27 @@ const Footer = () => {
               Cookie Preferences
             </button>
 
-            <Link to="/cookie-policy" className="text-muted-foreground hover:text-primary text-sm transition-colors">
+            <Link
+              to="/cookie-policy"
+              className="text-muted-foreground hover:text-primary text-sm transition-colors"
+            >
               Cookie Policy
             </Link>
-            <Link to="/privacy-policy" className="text-muted-foreground hover:text-primary text-sm transition-colors">
+            <Link
+              to="/privacy-policy"
+              className="text-muted-foreground hover:text-primary text-sm transition-colors"
+            >
               Privacy Policy
             </Link>
-            <Link to="/terms-of-service" className="text-muted-foreground hover:text-primary text-sm transition-colors">
+            <Link
+              to="/terms-of-service"
+              className="text-muted-foreground hover:text-primary text-sm transition-colors"
+            >
               Terms of Service
             </Link>
           </div>
         </div>
         <CookiePreferencesModal open={prefsOpen} onOpenChange={setPrefsOpen} />
-
       </div>
     </footer>
   );

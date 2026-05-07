@@ -51,11 +51,11 @@ After changes, run `npm run build && npm run typecheck` (and `npm run lint` befo
 The Cyoda web estate is split across three sites — this matters when writing copy and CTAs:
 
 - **cyoda.com** (this repo) — Enterprise, commercially supported.
-- **cyoda.org** — Open-source, self-hosted.
+- **cyoda.dev** — Open-source, self-hosted.
 - **ai.cyoda.net** — Cyoda Cloud, hosted SaaS.
 - **docs.cyoda.net** — Docs.
 
-Convention: CTA buttons that go to `cyoda.org` / `ai.cyoda.net` open in the **same tab**; only header/footer nav links to those properties use `target="_blank"`.
+Convention: CTA buttons that go to `cyoda.dev` / `ai.cyoda.net` open in the **same tab**; only header/footer nav links to those properties use `target="_blank"`.
 
 ## Project docs to consult
 

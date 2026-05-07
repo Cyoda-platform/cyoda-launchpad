@@ -72,7 +72,7 @@ Run `npm run build && npm run typecheck` after every task. Fix all errors before
 
 ## Cyoda Web Estate (three-site structure)
 - **cyoda.com** — Enterprise Cyoda (this site). Commercially supported for regulated production.
-- **cyoda.org** — Open-source Cyoda. Self-hosted, run-it-yourself.
+- **cyoda.dev** — Open-source Cyoda. Self-hosted, run-it-yourself.
 - **ai.cyoda.net** — Cyoda Cloud. Hosted SaaS, free evaluation tier.
 - **docs.cyoda.net** — Documentation and API reference.
 
@@ -88,7 +88,7 @@ are surfaced as secondary options in `CyodaPathsSection` and the header nav.
 - Do NOT use "Get Building for Free"
 - Do NOT invent customer names or metrics — use only verified proof points
 - Do NOT change the purpose or layout of `/cto` or `/dev` — only fix their SEO metadata
-- External links to cyoda.org and ai.cyoda.net should open in the **same tab** from CTA buttons;
+- External links to cyoda.dev and ai.cyoda.net should open in the **same tab** from CTA buttons;
   use `target="_blank"` for nav links only
 
 ## Routing — How to Add New Pages

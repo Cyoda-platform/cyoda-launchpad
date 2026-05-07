@@ -8,7 +8,7 @@ deployment of the Cyoda EDBMS for regulated and mission-critical production envi
 | Site | Purpose |
 |------|---------|
 | cyoda.com | Enterprise Cyoda — this repo |
-| cyoda.org | Open-source Cyoda — self-hosted, run-it-yourself |
+| cyoda.dev | Open-source Cyoda — self-hosted, run-it-yourself |
 | ai.cyoda.net | Cyoda Cloud — hosted SaaS, free evaluation tier |
 | docs.cyoda.net | Documentation and API reference |
 
@@ -65,7 +65,7 @@ If you're cleaning up before shipping, `npm run lint` is also worth running.
 - Do NOT put "Available to all" in any copy
 - Do NOT invent customer names or metrics — use only verified proof points
 - Do NOT remove the dark mode toggle, analytics, or cookie consent
-- External links to cyoda.org and ai.cyoda.net open in the same tab from CTAs;
+- External links to cyoda.dev and ai.cyoda.net open in the same tab from CTAs;
   `target="_blank"` is for nav links only
 
 ## Adding a new page

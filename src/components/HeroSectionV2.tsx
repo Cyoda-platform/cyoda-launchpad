@@ -1,7 +1,7 @@
-import { useLocation } from 'react-router-dom';
-import * as React from 'react';
-import { ArrowRight, GitBranch, ShieldCheck, Activity } from 'lucide-react';
-import { trackCtaConversion } from '@/utils/analytics';
+import { useLocation } from "react-router-dom";
+import * as React from "react";
+import { ArrowRight, GitBranch, ShieldCheck, Activity } from "lucide-react";
+import { trackCtaConversion } from "@/utils/analytics";
 
 type HeroProps = {
   renderHeadings?: boolean;
@@ -9,7 +9,7 @@ type HeroProps = {
   h2?: string;
   h3?: string;
   className?: string;
-  defaultHeadingAs?: 'h1' | 'h2';
+  defaultHeadingAs?: "h1" | "h2";
 };
 
 /**
@@ -80,13 +80,20 @@ const ArchitectureMesh = () => (
       <line x1="870" y1="460" x2="1110" y2="290" />
     </g>
     <line
-      x1="560" y1="180" x2="560" y2="400"
-      stroke="hsl(175, 55%, 50%)" strokeWidth="1.1" strokeOpacity="0.35"
+      x1="560"
+      y1="180"
+      x2="560"
+      y2="400"
+      stroke="hsl(175, 55%, 50%)"
+      strokeWidth="1.1"
+      strokeOpacity="0.35"
     />
 
     {/* Dashed orbit around hub */}
     <circle
-      cx="240" cy="290" r="130"
+      cx="240"
+      cy="290"
+      r="130"
       stroke="hsl(175, 60%, 55%)"
       strokeWidth="1.2"
       strokeOpacity="0.5"
@@ -95,32 +102,40 @@ const ArchitectureMesh = () => (
 
     {/* Nodes — concentric rings + filled centre + glow halo on hub */}
     {[
-      { cx: 240,  cy: 290, r: 18, hub: true },
-      { cx: 560,  cy: 180, r: 12 },
-      { cx: 560,  cy: 400, r: 12 },
-      { cx: 870,  cy: 120, r: 10 },
-      { cx: 870,  cy: 460, r: 10 },
+      { cx: 240, cy: 290, r: 18, hub: true },
+      { cx: 560, cy: 180, r: 12 },
+      { cx: 560, cy: 400, r: 12 },
+      { cx: 870, cy: 120, r: 10 },
+      { cx: 870, cy: 460, r: 10 },
       { cx: 1110, cy: 290, r: 14 },
     ].map((n, i) => (
       <g key={i}>
         {n.hub && (
           <circle
-            cx={n.cx} cy={n.cy} r={n.r + 22}
-            stroke="hsl(175, 80%, 60%)" strokeWidth="1" strokeOpacity="0.3"
+            cx={n.cx}
+            cy={n.cy}
+            r={n.r + 22}
+            stroke="hsl(175, 80%, 60%)"
+            strokeWidth="1"
+            strokeOpacity="0.3"
           />
         )}
         <circle
-          cx={n.cx} cy={n.cy} r={n.r + 8}
-          stroke="hsl(175, 65%, 55%)" strokeWidth="1" strokeOpacity="0.4"
+          cx={n.cx}
+          cy={n.cy}
+          r={n.r + 8}
+          stroke="hsl(175, 65%, 55%)"
+          strokeWidth="1"
+          strokeOpacity="0.4"
         />
         <circle
-          cx={n.cx} cy={n.cy} r={n.r}
-          stroke="hsl(175, 75%, 65%)" strokeWidth="1.5"
+          cx={n.cx}
+          cy={n.cy}
+          r={n.r}
+          stroke="hsl(175, 75%, 65%)"
+          strokeWidth="1.5"
         />
-        <circle
-          cx={n.cx} cy={n.cy} r={n.r * 0.4}
-          fill="hsl(175, 85%, 65%)"
-        />
+        <circle cx={n.cx} cy={n.cy} r={n.r * 0.4} fill="hsl(175, 85%, 65%)" />
       </g>
     ))}
   </svg>
@@ -135,11 +150,11 @@ const ArchitectureMesh = () => (
  */
 const StateMachineArtefact = () => {
   const states = [
-    { label: 'Submitted',    ts: '09:14:02', status: 'done'    as const },
-    { label: 'KYC Verified', ts: '09:14:08', status: 'done'    as const },
-    { label: 'Underwriting', ts: '09:17:31', status: 'current' as const },
-    { label: 'Approval',     ts: '—',        status: 'pending' as const },
-    { label: 'Settlement',   ts: '—',        status: 'pending' as const },
+    { label: "Submitted", ts: "09:14:02", status: "done" as const },
+    { label: "KYC Verified", ts: "09:14:08", status: "done" as const },
+    { label: "Underwriting", ts: "09:17:31", status: "current" as const },
+    { label: "Approval", ts: "—", status: "pending" as const },
+    { label: "Settlement", ts: "—", status: "pending" as const },
   ];
 
   return (
@@ -156,50 +171,54 @@ const StateMachineArtefact = () => {
               entity:loan_application
             </span>
           </div>
-          <span className="text-[11px] font-mono text-white/40">id 0x4f2a…918c</span>
+          <span className="text-[11px] font-mono text-white/40">
+            id 0x4f2a…918c
+          </span>
         </div>
 
         {/* States */}
         <div className="px-5 py-5 space-y-2.5">
           {states.map((s, i) => {
-            const isCurrent = s.status === 'current';
-            const isDone    = s.status === 'done';
+            const isCurrent = s.status === "current";
+            const isDone = s.status === "done";
             return (
               <div
                 key={s.label}
                 className={
                   isCurrent
-                    ? 'flex items-center gap-3 rounded-lg px-3 py-2 bg-[hsl(175,55%,45%)]/15 border border-[hsl(175,65%,55%)]/40'
+                    ? "flex items-center gap-3 rounded-lg px-3 py-2 bg-[hsl(175,55%,45%)]/15 border border-[hsl(175,65%,55%)]/40"
                     : isDone
-                    ? 'flex items-center gap-3 rounded-lg px-3 py-2 bg-white/[0.03] border border-white/5'
-                    : 'flex items-center gap-3 rounded-lg px-3 py-2 opacity-50 border border-transparent'
+                      ? "flex items-center gap-3 rounded-lg px-3 py-2 bg-white/[0.03] border border-white/5"
+                      : "flex items-center gap-3 rounded-lg px-3 py-2 opacity-50 border border-transparent"
                 }
               >
                 <div
                   className={
                     isCurrent
-                      ? 'shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold bg-[hsl(175,75%,55%)] text-[hsl(220,40%,10%)]'
+                      ? "shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold bg-[hsl(175,75%,55%)] text-[hsl(220,40%,10%)]"
                       : isDone
-                      ? 'shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold bg-[hsl(175,40%,30%)] text-[hsl(175,75%,75%)]'
-                      : 'shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold bg-white/10 text-white/40'
+                        ? "shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold bg-[hsl(175,40%,30%)] text-[hsl(175,75%,75%)]"
+                        : "shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold bg-white/10 text-white/40"
                   }
                 >
-                  {isDone ? '✓' : i + 1}
+                  {isDone ? "✓" : i + 1}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div
                     className={
                       isCurrent
-                        ? 'text-sm font-medium text-white'
+                        ? "text-sm font-medium text-white"
                         : isDone
-                        ? 'text-sm font-medium text-white/85'
-                        : 'text-sm font-medium text-white/40'
+                          ? "text-sm font-medium text-white/85"
+                          : "text-sm font-medium text-white/40"
                     }
                   >
                     {s.label}
                   </div>
                 </div>
-                <div className="text-[11px] font-mono text-white/40 tabular-nums">{s.ts}</div>
+                <div className="text-[11px] font-mono text-white/40 tabular-nums">
+                  {s.ts}
+                </div>
               </div>
             );
           })}
@@ -224,30 +243,30 @@ const StateMachineArtefact = () => {
 const HeroSectionV2: React.FC<HeroProps> = ({
   renderHeadings = false,
   h1,
-  defaultHeadingAs = 'h1',
+  defaultHeadingAs = "h1",
 }) => {
   const location = useLocation();
 
-  const getPageVariant = (): 'home' | 'dev' | 'cto' => {
+  const getPageVariant = (): "home" | "dev" | "cto" => {
     const path = location.pathname;
-    if (path === '/dev') return 'dev';
-    if (path === '/cto') return 'cto';
-    return 'home';
+    if (path === "/dev") return "dev";
+    if (path === "/cto") return "cto";
+    return "home";
   };
 
   const handleContactSales = () => {
     trackCtaConversion({
-      location: 'hero',
+      location: "hero",
       page_variant: getPageVariant(),
-      cta: 'talk_to_us',
-      url: '/contact',
+      cta: "talk_to_us",
+      url: "/contact",
     });
-    window.location.href = '/contact';
+    window.location.href = "/contact";
   };
 
   const HeadingTag = defaultHeadingAs;
   const headingClasses =
-    'text-4xl md:text-5xl lg:text-[3.75rem] font-extrabold tracking-tight text-white leading-[1.05]';
+    "text-4xl md:text-5xl lg:text-[3.75rem] font-extrabold tracking-tight text-white leading-[1.05]";
 
   return (
     <section
@@ -263,7 +282,6 @@ const HeroSectionV2: React.FC<HeroProps> = ({
 
       <div className="relative z-10 container mx-auto px-4 py-20 md:py-24 lg:py-28">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-10 items-center">
-
           {/* Left column — copy + CTAs */}
           <div className="lg:col-span-7 max-w-2xl">
             {/* Eyebrow */}
@@ -289,9 +307,9 @@ const HeroSectionV2: React.FC<HeroProps> = ({
 
             {/* Subtitle */}
             <p className="mt-6 text-lg md:text-xl text-white/70 leading-relaxed max-w-xl">
-              Cyoda unifies state, workflow, transactions, events, and history in
-              one entity model — so regulated and mission-critical systems don't
-              need duct tape to stay consistent.
+              Cyoda unifies state, workflow, transactions, events, and history
+              in one entity model — so regulated and mission-critical systems
+              don't need duct tape to stay consistent.
             </p>
 
             {/* CTAs */}
@@ -304,7 +322,7 @@ const HeroSectionV2: React.FC<HeroProps> = ({
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
               </button>
               <a
-                href="https://cyoda.org"
+                href="https://cyoda.dev"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 rounded-lg border border-white/20 hover:border-white/40 bg-white/[0.04] hover:bg-white/10 px-7 py-3.5 text-sm font-semibold text-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[hsl(220,35%,9%)]"
               >

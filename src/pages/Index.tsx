@@ -7,6 +7,7 @@ import EcosystemSection from '@/components/EcosystemSection';
 import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
 import { organizationSchema } from '@/data/schemas';
+import riskblocsLogo from '@/assets/riskblocs.png';
 import { Building2, BarChart3, UserCheck, Bot } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -28,6 +29,25 @@ const integratedArchCards = [
     description: 'Start on SQLite or PostgreSQL, scale to Cassandra without changing your entity model.',
   },
 ];
+
+const customerProofTestimonials = [
+  {
+    quote:
+      '“By collaborating with Cyoda, we developed the solution in a fraction of the time normally associated with such a large-scale project.”',
+    name: 'Tobias Zoller',
+    title: 'Co-founder',
+    company: 'Value Concepts (VC Trade)',
+  },
+  {
+    quote:
+      '“We are attracted to Cyoda’s ability to transform complex business logic into a scalable, distributed backend. Its structured architecture provides the high-fidelity, compliant foundation required for AI to reason effectively within our regulated domain.”',
+    name: 'Justyn Trenner',
+    title: 'Founder & CEO',
+    company: 'RiskBlocs',
+    logo: riskblocsLogo,
+    logoAlt: 'RiskBlocs logo',
+  },
+] as const;
 
 const Index = () => {
   return (
@@ -106,19 +126,35 @@ const Index = () => {
 
         {/* Customer proof */}
         <section className="py-16 md:py-20 bg-background">
-          <div className="container mx-auto px-4 max-w-5xl">
-            <div className="mx-auto max-w-4xl rounded-2xl border border-border bg-card/70 px-6 py-8 shadow-sm md:px-10 md:py-10">
-              <p className="text-xs font-semibold text-primary uppercase tracking-widest mb-4">
+          <div className="container mx-auto px-4 max-w-6xl">
+            <div className="mx-auto max-w-5xl">
+              <p className="text-xs font-semibold text-primary uppercase tracking-widest mb-6 text-center">
                 Customer Proof
               </p>
-              <blockquote className="max-w-3xl text-2xl font-medium leading-relaxed text-foreground md:text-[1.95rem]">
-                “By collaborating with Cyoda, we developed the solution in a fraction of the time normally associated with such a large-scale project.”
-              </blockquote>
-              <div className="mt-6 border-t border-border pt-5">
-                <p className="text-sm font-semibold text-foreground">Tobias Zoller</p>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  Co-founder, Value Concepts (VC Trade)
-                </p>
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                {customerProofTestimonials.map((testimonial) => (
+                  <article
+                    key={testimonial.name}
+                    className="flex h-full flex-col rounded-2xl border border-border bg-card/70 px-6 py-7 shadow-sm md:px-8 md:py-8"
+                  >
+                    <blockquote className="flex-1 text-lg font-medium leading-relaxed text-foreground md:text-xl">
+                      {testimonial.quote}
+                    </blockquote>
+                    <div className="mt-6 border-t border-border pt-5">
+                      {testimonial.logo ? (
+                        <img
+                          src={testimonial.logo}
+                          alt={testimonial.logoAlt}
+                          className="mb-4 h-5 w-auto object-contain md:h-6"
+                          loading="lazy"
+                        />
+                      ) : null}
+                      <p className="text-sm font-semibold text-foreground">{testimonial.name}</p>
+                      <p className="mt-1 text-sm text-muted-foreground">{testimonial.title}</p>
+                      <p className="mt-1 text-sm text-muted-foreground">{testimonial.company}</p>
+                    </div>
+                  </article>
+                ))}
               </div>
             </div>
           </div>

@@ -28,6 +28,7 @@ dist-ssr
 test-results/
 playwright-report/
 *.png
+!src/assets/riskblocs.png
 
 # Environment files (keep .env.test for testing)
 .env.test
