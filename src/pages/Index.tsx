@@ -8,6 +8,7 @@ import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
 import { organizationSchema } from '@/data/schemas';
 import riskblocsLogo from '@/assets/riskblocs.png';
+import vcTradeLogo from '@/assets/vc-trade-logo.jpeg';
 import { Building2, BarChart3, UserCheck, Bot } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -37,6 +38,8 @@ const customerProofTestimonials = [
     name: 'Tobias Zoller',
     title: 'Co-founder',
     company: 'Value Concepts (VC Trade)',
+    logo: vcTradeLogo,
+    logoAlt: 'VC Trade logo',
   },
   {
     quote:
@@ -137,15 +140,17 @@ const Index = () => {
                     key={testimonial.name}
                     className="flex h-full flex-col rounded-2xl border border-border bg-card/70 px-6 py-7 shadow-sm md:px-8 md:py-8"
                   >
-                    <blockquote className="flex-1 text-lg font-medium leading-relaxed text-foreground md:text-xl">
-                      {testimonial.quote}
-                    </blockquote>
+                    <div className="flex flex-1 items-center">
+                      <blockquote className="text-lg font-medium leading-relaxed text-foreground md:text-xl">
+                        {testimonial.quote}
+                      </blockquote>
+                    </div>
                     <div className="mt-6 border-t border-border pt-5">
                       {testimonial.logo ? (
                         <img
                           src={testimonial.logo}
                           alt={testimonial.logoAlt}
-                          className="mb-4 h-5 w-auto object-contain md:h-6"
+                          className="mb-4 h-8 w-auto max-w-[9rem] object-contain object-left md:h-9 md:max-w-[10rem]"
                           loading="lazy"
                         />
                       ) : null}
