@@ -18,7 +18,9 @@ export type AppRoute = {
 export const appRoutes: AppRoute[] = [
   { path: "/", component: lazy(() => import("./pages/Index")), prerender: true },
   { path: "/blog", component: lazy(() => import("./pages/Blog")), prerender: true },
-  { path: "/blog/:slug", component: lazy(() => import("./pages/BlogPost")), prerender: "blog", waitFor: "article" },
+  // waitFor anchors on the LOADED article body (.prose markdown wrapper) — the
+  // loading skeleton also renders an <article>, so "article" alone could race.
+  { path: "/blog/:slug", component: lazy(() => import("./pages/BlogPost")), prerender: "blog", waitFor: "article .prose" },
   { path: "/blog-test", component: lazy(() => import("./pages/BlogTest")), prerender: false },
   { path: "/blog-system-test", component: lazy(() => import("./pages/BlogSystemTest")), prerender: false },
   // /guides and /guides/:slug stay disabled (they were commented out in App.tsx).
