@@ -369,11 +369,31 @@ migration, SSR meta-frameworks, `hydrateRoot` (future optimization).
   client-side BlogPost fallback redirects home. A real 404 status is served to
   non-JS clients, which is semantically correct. Accepted.
 
+## Implementation footnotes (from confirmation review)
+
+Non-material notes for the implementer — verified facts, no design impact:
+
+1. **`blog-index.json` is an object keyed by source filename**, not an array —
+   iterate `Object.values(...)` in the prerender URL expansion and the sitemap
+   `lastmod` lookup.
+2. **The prerender script itself writes `dist/404.html`** from its saved clean
+   shell (it holds the shell in memory and has already overwritten
+   `dist/index.html` by then); the CI change is simply deleting the old `cp` line.
+3. **Do not copy captured `<html>` attributes** in the template-merge. Starting
+   from the clean shell already (correctly) avoids baking in next-themes'
+   runtime `class="light"`/`dark` while preserving `lang="en"`.
+4. **The post-deploy smoke check must poll/retry** — `deploy-pages` completing
+   does not guarantee the CDN edge serves the new bytes immediately.
+
 ## Review incorporation
 
-Three independent fresh-context review iterations: v1→v2 and v2→v3 verdicts
-"sound-with-fixes"; v3 verdict "settled-with-minor-fixes" (architecture settled,
-no further design round recommended).
+Four independent fresh-context review iterations: v1→v2 and v2→v3 verdicts
+"sound-with-fixes"; v3 verdict "settled-with-minor-fixes"; v4 confirmation pass
+verdict **"settled"** — every v4 addition verified against code (helmet title
+behavior, shell static-tag dedup necessity, SEO fallback flow, CI job feasibility,
+viewer error-path, URL counts), end-to-end traces of `/comparison`,
+`/use-cases/kyc-onboarding`, and `/blog/demo-to-poc-in-fintech` found no cracks,
+and no further design review warranted.
 
 **v2 (review 1):** `VITE_SITE_ORIGIN` origin fix; template-merge capture + portal
 handling; `__PRERENDER_READY__` as primary readiness; flat `<route>.html` output;
