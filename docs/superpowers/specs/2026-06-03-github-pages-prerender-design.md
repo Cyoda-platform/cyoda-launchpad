@@ -3,7 +3,7 @@
 **Date:** 2026-06-03
 **Status:** Approved (design) — pending implementation plan
 **Repo:** cyoda-launchpad (cyoda.com marketing site)
-**Revision:** v2 — incorporates findings from an independent design review (see "Review incorporation" at the end).
+**Revision:** v3 — incorporates two independent review iterations (see "Review incorporation" at the end).
 
 ## Problem
 
@@ -42,15 +42,28 @@ redirect hack or on client-side JS execution.
 - **All real routes are enumerable at build time** (static routes + published blog
   slugs), so prerendering covers 100% of public URLs. No unknown dynamic paths.
 - **Output URL shape: flat `<route>.html`.** Write `dist/use-cases/loan-lifecycle.html`
-  (not `…/loan-lifecycle/index.html`). GitHub Pages "pretty URLs" then serve
-  `/use-cases/loan-lifecycle` as a **direct 200 with no redirect**, matching the
-  existing no-trailing-slash canonical tags. No canonical/sitemap URL-shape changes
-  needed. `/` is served from `index.html`. (Decided.)
-- **Canonical/OG/JSON-LD origin comes from a build-time env var.** `SEO.tsx` and
-  `toAbsoluteUrl` must prefer `VITE_SITE_ORIGIN` (= `https://cyoda.com`) over
-  `window.location`, so the crawl (which runs against `vite preview` on localhost)
-  does not bake localhost URLs into canonical/`og:url`/`og:image`/`twitter:image`/
-  JSON-LD. This also fixes runtime correctness. (Decided — see Risk H1.)
+  (not `…/loan-lifecycle/index.html`). GitHub Pages "pretty URLs" serve
+  `/use-cases/loan-lifecycle` as a **direct 200 with no redirect** (verified
+  behavior), matching the existing no-trailing-slash canonical tags. A file
+  (`blog.html`) and a same-named directory (`blog/`) coexist. `/` is served from
+  `index.html`. Trailing-slash variants (`/foo/`) fall through to `404.html` —
+  browsers recover client-side via the SPA shell; non-JS clients get a 404. Our
+  canonicals and sitemap are slash-free, so this is an accepted edge (see Risk L3).
+  (Decided.)
+- **Canonical/OG/JSON-LD origin comes from a build-time env var.**
+  `VITE_SITE_ORIGIN` (= `https://cyoda.com`) must be preferred over
+  `window.location` **everywhere a URL ends up in SEO-relevant markup**, not just in
+  `SEO.tsx`/`toAbsoluteUrl`: `BlogPost.tsx` (passes `url={window.location.href}` to
+  `<SEO>` and `SocialShare`) and `Guide.tsx` (same pattern) must derive URLs from
+  the env origin + route path instead. Otherwise the crawl (which runs against
+  `vite preview` on localhost) bakes localhost into canonical/`og:url`/`og:image`/
+  `twitter:image`/JSON-LD on exactly the highest-value pages. (Decided — Risk H1.)
+- **Fix the hardcoded off-brand OG fallback while we're here.** `SEO.tsx` hardcodes
+  `https://lovable.dev/opengraph-image-p98pqg.png` as the default OG image and as
+  the JSON-LD publisher logo. Prerendering would freeze that into static HTML on
+  every page without an explicit image. Replace with a cyoda.com asset (e.g.
+  `/opengraph-image-cyoda.png`, which exists in `public/`). (Decided — pre-existing
+  bug surfaced by review.)
 - **The existing `sitemap.xml` is NOT a trustworthy source** (audit below); the
   route list is derived from the app itself, and the sitemap is regenerated from the
   same canonical source.
@@ -67,10 +80,10 @@ prerendering, a real file exists for each route, so Pages returns it as a 200 to
   references → React boots and the SPA becomes interactive (workflow visualizer
   animates, nav works). The snapshot is first-paint only.
 
-`main.tsx` uses `createRoot().render()` (client render, not `hydrateRoot`), so on
-boot React renders into `#root`. There are **no hydration-mismatch errors**; at most
-a sub-second first-paint flash. `hydrateRoot` is a possible future optimization, out
-of scope here.
+`main.tsx` uses `createRoot().render()` (client render, not `hydrateRoot`): on boot
+React wipes `#root` and re-renders, so injected snapshot content is purely cosmetic
+first paint — **no hydration-mismatch errors**, at most a sub-second flash.
+`hydrateRoot` is a possible future optimization, out of scope here.
 
 ## Sitemap audit (why we can't trust it)
 
@@ -92,6 +105,8 @@ Comparing `public/sitemap.xml` against `App.tsx` routes and `blog-index.json`:
   **prerender posts where `published === true`** (matches the runtime filter in
   `blog-loader.ts`), which drops test content automatically. All published slugs
   exist in `public/docs/blogs/`, so `vite preview` can serve every targeted URL.
+  Slugs in the index match runtime lookup (`blog-loader.ts` resolves by
+  `post.slug`).
 
 ## Architecture
 
@@ -117,7 +132,8 @@ export const appRoutes: AppRoute[] = [
   { path: "/blog-test", component: lazy(() => import("./pages/BlogTest")), prerender: false },
   { path: "/blog-system-test", component: lazy(() => import("./pages/BlogSystemTest")), prerender: false },
   { path: "/guide-system-test", component: lazy(() => import("./pages/GuideSystemTest")), prerender: false },
-  { path: "/cookie-consent-test", component: lazy(() => import("./components/CookieConsentTest")), prerender: false },
+  // CookieConsentTest is a named export — preserve the .then(m => ({default: m.CookieConsentTest})) mapping:
+  { path: "/cookie-consent-test", component: lazy(() => import("./components/CookieConsentTest").then(m => ({ default: m.CookieConsentTest }))), prerender: false },
   { path: "*", component: lazy(() => import("./pages/NotFound")), prerender: false },
 ];
 ```
@@ -131,80 +147,111 @@ export const appRoutes: AppRoute[] = [
 - The three intentional governed-AI aliases
   (`/use-cases/governed-agentic-workflows`, `/use-cases/governed-ai-actions`,
   `/use-cases/agentic-ai`) remain mapped to `UseCaseGovernedAiActions` and are each
-  prerendered so external links resolve.
-- **Constraint:** `routes.tsx` must contain **no eval-time side effects** beyond the
-  `import { lazy } from "react"` and the `lazy()` calls themselves (which are
-  side-effect-free; the dynamic `import()` is never invoked when the prerender/sitemap
-  scripts load the module). This keeps the single-source table importable in Node via
-  Vite `ssrLoadModule` without running page code. (We deliberately keep one table
-  rather than splitting paths into a React-free data module, to avoid reintroducing
-  the two-lists drift this design exists to prevent.)
+  prerendered so external links resolve. The page's single canonical `url` prop
+  (pointing at one of the three) prevents duplicate-content signals.
+- **Constraint:** `routes.tsx` must contain **no eval-time side effects** beyond
+  `import { lazy } from "react"` and the `lazy()` calls themselves (side-effect-free;
+  the dynamic `import()` is never invoked when build scripts load the module). The
+  prerender and sitemap scripts load the table via Vite `ssrLoadModule` and read
+  **only** `path` / `prerender` / `waitFor` — they never touch `component`. (We
+  deliberately keep one table rather than splitting paths into a React-free data
+  module, to avoid reintroducing the two-lists drift this design exists to prevent.)
 
 ### 2. Prerender script — `scripts/prerender.mjs`
 
 Runs **after** `vite build`, against the built `dist/`. The build that produces the
 prerendered `dist/` sets `VITE_SITE_ORIGIN=https://cyoda.com` so SEO tags use the
-production origin.
+production origin. (`prebuild` regenerates `blog-index.json` before `vite build`,
+so the prerender step always reads the fresh index.)
 
+0. **Save the clean shell first.** Before any prerender writes, copy the original
+   built `dist/index.html` (hashed asset tags, empty `#root`) aside. It is both the
+   template-merge base (step 4) and the source for `404.html` (§4). This ordering
+   matters because step 5 overwrites `dist/index.html` with the prerendered
+   homepage.
 1. **Load routes without executing components.** Import `appRoutes` via Vite
-   `ssrLoadModule('/src/routes.tsx')`. `lazy()` is invoked but its dynamic `import()`
-   is not, so no page/`window` code runs in Node.
+   `ssrLoadModule('/src/routes.tsx')`; read only `path`/`prerender`/`waitFor`.
 2. **Build the URL list:**
    - static paths where `prerender === true` (no `:param`), plus
    - for the `prerender: "blog"` entry, one URL per `blog-index.json` post with
      `published === true` (`/blog/<slug>`).
-3. **Serve & crawl:** start `vite preview` on `dist/`; launch Playwright (Chromium)
-   with bounded concurrency. For each URL:
-   - wait for the loading spinner / skeleton selectors to be **absent**, AND
-   - **primary readiness signal:** wait for `window.__PRERENDER_READY__ === true`.
-     The app sets this once first-meaningful content has rendered; the five async
-     workflow-viewer pages flip it only after their diagram has laid out (see §2a).
-     Do **not** rely on Playwright `networkidle` — `mermaid.render`, `elkjs` layout,
-     and React-Query retries can keep the network busy or leave a spinner on screen.
+3. **Serve & crawl:** start `vite preview` on an explicit port and **wait for it to
+   accept connections** before crawling; launch Playwright (Chromium) with bounded
+   concurrency. For each URL:
+   - **primary readiness signal:** wait for `window.__PRERENDER_READY__ === true`
+     (contract in §2a). Do **not** rely on Playwright `networkidle` —
+     `mermaid.render`, `elkjs` layout, and React-Query retries can keep the network
+     busy or leave a spinner on screen.
    - also wait for the content selector to be present (`main` default; per-route
-     `waitFor` override, e.g. a rendered viewer node such as `.react-flow__node`),
+     `waitFor` override, e.g. a rendered viewer node such as `.react-flow__node`)
+     and for loading spinner / skeleton selectors to be **absent**,
+   - assert the cookie-consent banner did not render (see step 4),
    - all under a hard max-timeout.
 4. **Build output HTML via template-merge** (not raw `documentElement.outerHTML`):
-   - take the original built `dist/index.html` as the shell (preserves the
-     `<script>`/`<link>` asset tags so browsers still boot the SPA),
-   - merge in the helmet-produced `<head>` tags (title, meta, canonical, OG/Twitter,
-     JSON-LD), de-duplicating against the shell's existing head,
+   - start from the saved clean shell (step 0) — preserves the `<script>`/`<link>`
+     asset tags so browsers still boot the SPA,
+   - merge in the helmet-produced `<head>` tags (identified by react-helmet-async's
+     `data-rh` marker: title, meta, canonical, OG/Twitter, JSON-LD), de-duplicating
+     against the shell's existing head,
    - inject the captured **`#root` innerHTML** as the shell's `#root` content,
-   - **strip nodes rendered outside `#root`** — Sonner toasts, Radix tooltips/portals,
-     and the cookie-consent banner — so crawlers index clean content and browsers
-     don't inherit orphaned portal DOM that React won't reconcile.
-5. **Write** flat files: `dist/<route>.html` (root route stays `dist/index.html`).
-   `base: '/'` means absolute `/assets/...` URLs resolve regardless of nesting.
-6. **Fail the build (non-zero exit)** if any route times out, errors, or yields an
-   empty `#root`. A silently-blank page must not ship as a 200.
+   - **discard nodes outside `#root`** (Sonner/Toaster and Radix portals mount on
+     `document.body`; they are empty at load but must not leak into output).
+     Note: the cookie-consent banner renders **inside** `#root` but self-suppresses
+     during the crawl (no stored consent → `showBanner` false → renders null); the
+     capture asserts its absence rather than stripping it. If the assertion ever
+     fails, remove it from the captured `#root` HTML by selector (harmless, since
+     `createRoot` wipes `#root` on boot).
+5. **Write** flat files: `dist/<route>.html` (root route overwrites
+   `dist/index.html`). `base: '/'` means absolute `/assets/...` URLs resolve
+   regardless of nesting.
+6. **Fail the build (non-zero exit)** if any route times out, errors, yields an
+   empty `#root`, or contains the preview origin (localhost) anywhere in its head.
 
-### 2a. In-app readiness signal
+### 2a. In-app readiness contract
 
-A small, app-level mechanism sets `window.__PRERENDER_READY__ = true` when the page
-is ready to capture. For most pages this is "after the first render commit." For the
-five workflow-viewer pages, the viewer components
-(`GovernedAiActionsWorkflowViewer`, `LoanLifecycleWorkflowViewer`,
-`ClaimsAdjudicationWorkflowViewer`, and the KYC/Trade-Settlement viewers) participate
-so the flag flips only after their async layout settles. The flag is inert in normal
-browser use; it exists purely for the crawl.
+A small `usePrerenderReady` mechanism (inert in normal browsing) defines
+`window.__PRERENDER_READY__`:
+
+- **Non-viewer pages:** ready = the lazy route chunk has mounted its `main` content
+  (first commit of the page component). The `main`-present wait in §2 step 3 is the
+  practical proxy; the flag flips in an effect after mount.
+- **Viewer pages:** the five live workflow-viewer components
+  (`GovernedAiActionsWorkflowViewer`, `ClaimsAdjudicationWorkflowViewer`,
+  `KycOnboardingWorkflowViewer`, `LoanLifecycleWorkflowViewer`,
+  `TradeSettlementWorkflowViewer`) **register** as pending on mount and **resolve**
+  when their async layout result is set (each has a discernible point — e.g.
+  `layoutGraph(...).then(setLayout)`; resolve in an effect keyed on the layout
+  state). The page-level flag flips only when the page is mounted AND all registered
+  viewers have resolved.
+- `AgenticAiWorkflowViewer` is orphaned dead code (no page imports it) and does not
+  participate.
 
 ### 3. Sitemap regeneration — same `appRoutes`
 
-Regenerate `sitemap.xml` from the canonical static routes + published blog slugs
-(reuse the slug logic so URLs match exactly, no trailing slash — matching the flat
+Regenerate the sitemap from the canonical static routes + published blog slugs
+(reuse the slug logic so URLs match exactly; no trailing slash — matching the flat
 output shape and existing canonicals). Fixes the 4 dead URLs and drops the 14 bogus
-`.md` paths. Preserve the legitimate `/llm/` and `/llms.txt` entries. Generated as
-part of the build pipeline so the sitemap can never drift from the routes again.
+`.md` paths. Preserve the legitimate `/llm/` and `/llms.txt` entries.
+
+- **Emit into `dist/sitemap.xml` during the post-build step, not into `public/`** —
+  regenerating a checked-in `public/sitemap.xml` in CI would leave the working tree
+  dirty and fight the committed copy. Remove the stale checked-in file (or replace
+  it with the generated output once, then stop hand-editing it).
+- **Metadata policy:** omit `changefreq`/`priority` (Google ignores them). Set
+  `lastmod` for blog posts from the post `date` in `blog-index.json`; omit
+  `lastmod` for static routes (no reliable source).
+- `robots.txt` already references the sitemap URL; verify it points at
+  `https://cyoda.com/sitemap.xml` (unchanged location).
 
 ### 4. CI — `.github/workflows/pages.yml`
 
 - Add `npx playwright install --with-deps chromium`.
 - Run the prerender step after `npm run build` (with `VITE_SITE_ORIGIN` set) and
   before `actions/upload-pages-artifact`.
-- **Replace** `cp dist/index.html dist/404.html` with a **minimal SPA shell**
-  `404.html` (boots the SPA, contains no homepage content) so genuine 404s do not
-  serve full prerendered homepage markup + homepage canonical/OG under a 404 status
-  (avoids soft-404).
+- **Replace** `cp dist/index.html dist/404.html` with: write the **saved clean
+  shell** (§2 step 0 — hashed assets, empty `#root`) as `404.html`. Genuine 404s
+  then boot the SPA for client-side recovery without serving prerendered homepage
+  content + homepage canonical/OG under a 404 status (avoids soft-404).
 
 NPM scripts: keep `build` = `vite build` (fast; no browser). Add `prerender` (runs
 the script) and a convenience `build:static` = `build && prerender` for local
@@ -212,59 +259,85 @@ full-fidelity reproduction. CI runs build then prerender as explicit, separate s
 
 ### 5. Verification
 
-- **Primary gate:** the prerender script fails on timeout / error / empty `#root`.
+- **Primary gate:** the prerender script fails on timeout / error / empty `#root` /
+  localhost leakage in head tags.
 - **Vitest guard:** assert every `prerender: true` route produced a non-empty output
-  file (non-empty `<title>`, `#root` has children, canonical/OG use `https://cyoda.com`
-  not localhost) and that every `published === true` blog slug is covered.
+  file (non-empty `<title>`, `#root` has children, canonical/OG/JSON-LD use
+  `https://cyoda.com`), every `published === true` blog slug is covered, and the
+  generated sitemap contains exactly the prerendered URL set + `/llm/` + `/llms.txt`.
 - **Local smoke:** `curl -i` a nested route against `vite preview` of the
   post-prerender `dist/` returns 200 with rendered content and route-specific
   `<title>`.
 - **Post-deploy smoke (required):** after deploy, `curl -i` a live nested URL
   (e.g. `https://cyoda.com/use-cases/loan-lifecycle`) and assert HTTP 200 + rendered
   content + production-origin canonical. `vite preview` does NOT replicate Pages'
-  serving/redirect semantics, so preview verification is necessary but not sufficient.
+  serving/redirect semantics, so preview verification is necessary but not
+  sufficient.
 
-## Out of scope / untouched
+## Scope of app-code changes
 
-- All page components except: the `SEO`/`toAbsoluteUrl` origin change, the small
-  readiness-signal hooks in the five viewer components, and the `App.tsx`→`routes.tsx`
-  routing refactor.
-- `reactflow` / `mermaid` / `@cyoda/workflow-*` viewer internals — no SSR-safety work.
-- The dev server and `base: '/'`.
-- Migrating hosts or adopting an SSR meta-framework.
-- `hydrateRoot` migration (possible later optimization).
+Deliberately small, and all serve the goal:
+
+- `App.tsx` → render routes from `src/routes.tsx` (new file).
+- `SEO.tsx` + `toAbsoluteUrl` → prefer `VITE_SITE_ORIGIN`; replace the hardcoded
+  `lovable.dev` OG image / publisher logo with a cyoda.com asset.
+- `BlogPost.tsx`, `Guide.tsx` (and its `SocialShare` usage) → build URLs from the
+  env origin + route path instead of `window.location.href`.
+- The five live viewer components + a small `usePrerenderReady` hook → readiness
+  registration (§2a).
+
+**Untouched:** viewer internals (`reactflow`/`mermaid`/`@cyoda/workflow-*`), the dev
+server, `base: '/'`. **Out of scope:** host migration, SSR meta-frameworks,
+`hydrateRoot` (future optimization).
 
 ## Risks & mitigations
 
-- **[H1 — fixed in design] Localhost origin baked into SEO tags.** `SEO.tsx` and
-  `toAbsoluteUrl` build canonical/OG/JSON-LD URLs from `window.location`; under the
-  preview crawl that is localhost. Mitigation: `VITE_SITE_ORIGIN` env var, preferred
-  over `window.location`. Verified by the Vitest guard.
-- **[H2 — fixed in design] Snapshot duplication / orphaned portal DOM.** Raw
-  `documentElement.outerHTML` would duplicate head tags on re-boot and capture
-  toasts/tooltips/banner rendered outside `#root`. Mitigation: template-merge + strip
-  non-`#root` nodes (§2 step 4).
-- **[H3 — fixed in design] `networkidle` never fires / captures spinner.** Async
-  mermaid/elkjs + React-Query retries. Mitigation: `__PRERENDER_READY__` is the
-  primary signal (§2a); networkidle is not used.
-- **[M1] `vite preview` ≠ Pages.** Mitigation: required post-deploy live-URL smoke
-  check (§5).
-- **[M2] CI cost/flakiness from the headless crawl (~28 URLs).** Mitigation: bounded
-  concurrency, per-route max-timeout, hard build-fail surfaces problems immediately.
-  Viewer pages (elkjs layout) are the slow ones; the readiness signal bounds them.
+- **[H1 — fixed in design] Localhost origin baked into SEO tags.** Origin now comes
+  from `VITE_SITE_ORIGIN`, including the explicit-`url` call sites in
+  `BlogPost.tsx`/`Guide.tsx` that would have bypassed an SEO.tsx-only fix. Enforced
+  by the prerender localhost-leak check and the Vitest guard.
+- **[H2 — fixed in design] Snapshot duplication / orphaned portal DOM.**
+  Template-merge from the saved clean shell + `data-rh`-keyed head merge + discard
+  of body-mounted portals (§2 step 4).
+- **[H3 — fixed in design] `networkidle` never fires / captures spinner.**
+  `__PRERENDER_READY__` contract (§2a) is the primary signal; networkidle unused.
+- **[M1] `vite preview` ≠ Pages.** Required post-deploy live-URL smoke check (§5).
+- **[M2] CI cost/flakiness from the headless crawl (~28 URLs).** Bounded
+  concurrency, explicit preview port + listen-wait, per-route max-timeout, hard
+  build-fail. Viewer pages (elkjs layout) are the slow ones; the readiness signal
+  bounds them.
 - **[L1] First-paint flash on browsers** (createRoot, not hydrate). Accepted;
   `hydrateRoot` is the future fix.
 - **[L2] GA pollution during crawl** — not a risk: default consent is denied with no
-  localStorage, so `AnalyticsManager` does not initialize GA during the crawl
-  (confirmed in review).
+  localStorage, so `AnalyticsManager` does not initialize GA during the crawl.
+- **[L3] Trailing-slash inbound links** (`/foo/`) 404 under flat files: browsers
+  recover via the `404.html` SPA shell; non-JS clients get a 404. Internal links,
+  canonicals, and the sitemap are all slash-free, so only malformed external links
+  are affected. Accepted.
+- **[L4] Unpublished/unknown blog slugs** get no flat file → `404.html` shell →
+  client-side BlogPost fallback redirects home. A real 404 status is served to
+  non-JS clients, which is semantically correct. Accepted.
 
-## Review incorporation (v2)
+## Review incorporation
 
-An independent reviewer (fresh context) verified the spec against the code and
-returned "sound-with-fixes." Incorporated: the H1 origin blocker (env var), H2
-template-merge + portal stripping, H3 `__PRERENDER_READY__` as primary readiness,
-flat `<route>.html` output, all four dev/test routes excluded, minimal-shell
-`404.html`, and the post-deploy smoke check. Declined: splitting `appRoutes` into a
-React-free data module (would reintroduce two-lists drift); instead the single table
-is kept with a documented no-eval-side-effects constraint so `ssrLoadModule` can load
-it safely.
+Two independent fresh-context review iterations, both verdict "sound-with-fixes."
+
+**v2 (review 1):** `VITE_SITE_ORIGIN` origin fix; template-merge capture + portal
+handling; `__PRERENDER_READY__` as primary readiness; flat `<route>.html` output;
+all four dev/test routes excluded; minimal-shell `404.html`; post-deploy smoke
+check. Declined: splitting `appRoutes` into a React-free data module (would
+reintroduce two-lists drift); single table kept with a documented
+no-eval-side-effects constraint.
+
+**v3 (review 2):** extended the origin fix to `BlogPost.tsx`/`Guide.tsx` explicit
+`url={window.location.href}` call sites (an SEO.tsx-only fix would have missed the
+blog); replaced the hardcoded `lovable.dev` OG image / JSON-LD publisher logo with
+a cyoda.com asset; corrected the cookie-banner handling (it renders inside `#root`
+and self-suppresses — assert absence rather than "strip outside #root"); defined
+the concrete §2a readiness contract (register/resolve, layout-keyed); fixed the
+shell/404 ordering footgun (save clean shell before the homepage overwrite); pinned
+sitemap mechanics (emit to `dist/`, lastmod from blog dates, drop
+changefreq/priority); specified CI preview-port readiness; acknowledged
+trailing-slash and unpublished-slug edges (L3/L4). Scripts read only
+`path`/`prerender`/`waitFor` from the route table; `CookieConsentTest` named-export
+mapping preserved.
