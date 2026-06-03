@@ -3,7 +3,7 @@
 **Date:** 2026-06-03
 **Status:** Approved (design) — pending implementation plan
 **Repo:** cyoda-launchpad (cyoda.com marketing site)
-**Revision:** v3 — incorporates two independent review iterations (see "Review incorporation" at the end).
+**Revision:** v4 — incorporates three independent review iterations (see "Review incorporation" at the end).
 
 ## Problem
 
@@ -58,6 +58,17 @@ redirect hack or on client-side JS execution.
   the env origin + route path instead. Otherwise the crawl (which runs against
   `vite preview` on localhost) bakes localhost into canonical/`og:url`/`og:image`/
   `twitter:image`/JSON-LD on exactly the highest-value pages. (Decided — Risk H1.)
+  Two precise rules complete this fix:
+  - **No-`url` pages:** `CookiePolicy.tsx`, `PrivacyPolicy.tsx`, and
+    `TermsOfService.tsx` pass no `url` prop, so `SEO.tsx`'s fallback must be
+    `VITE_SITE_ORIGIN + window.location.pathname` (the pathname is correct at crawl
+    time; only the origin is wrong), not raw `window.location.href`.
+  - **Unset-var behavior:** when `VITE_SITE_ORIGIN` is not set (local dev, the
+    Surge preview-deploy workflow), fall back to `window.location.origin` — the
+    pre-change behavior. The env var is required only for the production
+    prerendering build; dev and preview deploys keep working unchanged. (The
+    preview workflow's existing `SITE_URL`/`SURGE_URL` env vars are dead code —
+    never read by `src/`; Vite only exposes `VITE_*` vars.)
 - **Fix the hardcoded off-brand OG fallback while we're here.** `SEO.tsx` hardcodes
   `https://lovable.dev/opengraph-image-p98pqg.png` as the default OG image and as
   the JSON-LD publisher logo. Prerendering would freeze that into static HTML on
@@ -190,9 +201,19 @@ so the prerender step always reads the fresh index.)
 4. **Build output HTML via template-merge** (not raw `documentElement.outerHTML`):
    - start from the saved clean shell (step 0) — preserves the `<script>`/`<link>`
      asset tags so browsers still boot the SPA,
-   - merge in the helmet-produced `<head>` tags (identified by react-helmet-async's
-     `data-rh` marker: title, meta, canonical, OG/Twitter, JSON-LD), de-duplicating
-     against the shell's existing head,
+   - **title rule:** react-helmet-async sets the title via `document.title` and
+     adds **no `data-rh` marker** to the `<title>` element — so capture
+     `document.title` separately and **overwrite the shell's static `<title>`
+     unconditionally**. A `data-rh`-only selector would miss it and ship the
+     generic homepage title on every page.
+   - **meta/link/script rule:** merge the helmet-produced tags (these DO carry
+     `data-rh`: meta, canonical link, JSON-LD script). The shell `index.html`
+     ships its own static `description`/`og:*`/`twitter:*` meta tags **without**
+     `data-rh`, so dedup must key on tag identity and **remove the shell's static
+     counterpart** when a helmet tag with the same key exists: key = `name` for
+     `<meta name=…>`, `property` for `<meta property=…>` (OG), `rel` for
+     `<link rel=…>`. Appending without keyed removal would emit duplicate
+     stale + correct tag pairs on every page.
    - inject the captured **`#root` innerHTML** as the shell's `#root` content,
    - **discard nodes outside `#root`** (Sonner/Toaster and Radix portals mount on
      `document.body`; they are empty at load but must not leak into output).
@@ -219,10 +240,17 @@ A small `usePrerenderReady` mechanism (inert in normal browsing) defines
   (`GovernedAiActionsWorkflowViewer`, `ClaimsAdjudicationWorkflowViewer`,
   `KycOnboardingWorkflowViewer`, `LoanLifecycleWorkflowViewer`,
   `TradeSettlementWorkflowViewer`) **register** as pending on mount and **resolve**
-  when their async layout result is set (each has a discernible point — e.g.
-  `layoutGraph(...).then(setLayout)`; resolve in an effect keyed on the layout
-  state). The page-level flag flips only when the page is mounted AND all registered
-  viewers have resolved.
+  when their async layout result is set (all five share the identical
+  `layoutGraph(...).then(setLayout)` pattern in an effect keyed on `graph`; all are
+  statically imported and unconditionally rendered by their pages, so they always
+  mount during a crawl visit). The page-level flag flips only when the page is
+  mounted AND all registered viewers have resolved. Ordering is well-defined:
+  React effects run children-first, so a viewer registers before the page-level
+  flip effect runs.
+  - **Error path:** a viewer must register only once `graph` is non-null, and must
+    **resolve (not hang) on its error branch** — otherwise a future bad workflow
+    JSON would surface as an opaque crawl timeout instead of a visible error card
+    in captured output.
 - `AgenticAiWorkflowViewer` is orphaned dead code (no page imports it) and does not
   participate.
 
@@ -236,7 +264,13 @@ output shape and existing canonicals). Fixes the 4 dead URLs and drops the 14 bo
 - **Emit into `dist/sitemap.xml` during the post-build step, not into `public/`** —
   regenerating a checked-in `public/sitemap.xml` in CI would leave the working tree
   dirty and fight the committed copy. Remove the stale checked-in file (or replace
-  it with the generated output once, then stop hand-editing it).
+  it with the generated output once, then stop hand-editing it). Accepted
+  consequence: `npm run dev` and a bare `vite build` (no prerender) have no
+  `/sitemap.xml` — only the full production pipeline produces it. Update
+  `docs/REQUIREMENTS.md` (REQ-SITEMAP), which still describes the sitemap as a
+  manually maintained `public/` file. External references
+  (`robots.txt`, `public/llm/index.html`) use the absolute
+  `https://cyoda.com/sitemap.xml` URL, which still resolves — no change needed.
 - **Metadata policy:** omit `changefreq`/`priority` (Google ignores them). Set
   `lastmod` for blog posts from the post `date` in `blog-index.json`; omit
   `lastmod` for static routes (no reliable source).
@@ -259,19 +293,33 @@ full-fidelity reproduction. CI runs build then prerender as explicit, separate s
 
 ### 5. Verification
 
-- **Primary gate:** the prerender script fails on timeout / error / empty `#root` /
-  localhost leakage in head tags.
-- **Vitest guard:** assert every `prerender: true` route produced a non-empty output
-  file (non-empty `<title>`, `#root` has children, canonical/OG/JSON-LD use
-  `https://cyoda.com`), every `published === true` blog slug is covered, and the
-  generated sitemap contains exactly the prerendered URL set + `/llm/` + `/llms.txt`.
+Every check has a defined owner and trigger — nothing is aspirational:
+
+- **Primary gate (owner: `scripts/prerender.mjs`, runs in the deploy workflow):**
+  fails the build on timeout / error / empty `#root` / localhost leakage in head
+  tags, AND asserts post-write that every `prerender: true` route produced a
+  non-empty output file (non-empty route-specific `<title>`, `#root` has children,
+  canonical/OG/JSON-LD use `https://cyoda.com`), every `published === true` blog
+  slug is covered, and the generated sitemap contains exactly the prerendered URL
+  set + `/llm/` + `/llms.txt`. These `dist/`-dependent assertions live in the
+  prerender script itself (not Vitest) because only the deploy pipeline has a
+  built+prerendered `dist/` and a Chromium install.
+- **Vitest guard (owner: unit tests, runs with the normal test suite):** route-table
+  invariants that need no `dist/` — all four dev/test routes are `prerender: false`,
+  no duplicate paths, the `*` catch-all is last and excluded, the three governed-AI
+  aliases are present.
 - **Local smoke:** `curl -i` a nested route against `vite preview` of the
   post-prerender `dist/` returns 200 with rendered content and route-specific
   `<title>`.
-- **Post-deploy smoke (required):** after deploy, `curl -i` a live nested URL
+- **Local smoke note:** Vite 7's `preview` defaults to `appType: 'spa'` with an
+  html-fallback middleware that resolves extensionless paths to `<path>.html` —
+  the same pretty-URL behavior as Pages — AND falls back to `index.html` for
+  unknown paths, which is also why the crawl itself works before flat files exist.
+- **Post-deploy smoke (required; owner: a final CI step in `pages.yml` after the
+  deploy job):** `curl -i` a live nested URL
   (e.g. `https://cyoda.com/use-cases/loan-lifecycle`) and assert HTTP 200 + rendered
   content + production-origin canonical. `vite preview` does NOT replicate Pages'
-  serving/redirect semantics, so preview verification is necessary but not
+  serving semantics exactly, so preview verification is necessary but not
   sufficient.
 
 ## Scope of app-code changes
@@ -287,8 +335,10 @@ Deliberately small, and all serve the goal:
   registration (§2a).
 
 **Untouched:** viewer internals (`reactflow`/`mermaid`/`@cyoda/workflow-*`), the dev
-server, `base: '/'`. **Out of scope:** host migration, SSR meta-frameworks,
-`hydrateRoot` (future optimization).
+server, `base: '/'`, and the Surge **preview-deploy workflow** — preview deploys
+stay un-prerendered (deep links there still 404; acceptable for previews) and keep
+working via the unset-`VITE_SITE_ORIGIN` fallback. **Out of scope:** host
+migration, SSR meta-frameworks, `hydrateRoot` (future optimization).
 
 ## Risks & mitigations
 
@@ -302,7 +352,8 @@ server, `base: '/'`. **Out of scope:** host migration, SSR meta-frameworks,
 - **[H3 — fixed in design] `networkidle` never fires / captures spinner.**
   `__PRERENDER_READY__` contract (§2a) is the primary signal; networkidle unused.
 - **[M1] `vite preview` ≠ Pages.** Required post-deploy live-URL smoke check (§5).
-- **[M2] CI cost/flakiness from the headless crawl (~28 URLs).** Bounded
+- **[M2] CI cost/flakiness from the headless crawl (~25 URLs: 19 static + 6
+  published posts; don't hard-code the count in assertions).** Bounded
   concurrency, explicit preview port + listen-wait, per-route max-timeout, hard
   build-fail. Viewer pages (elkjs layout) are the slow ones; the readiness signal
   bounds them.
@@ -320,7 +371,9 @@ server, `base: '/'`. **Out of scope:** host migration, SSR meta-frameworks,
 
 ## Review incorporation
 
-Two independent fresh-context review iterations, both verdict "sound-with-fixes."
+Three independent fresh-context review iterations: v1→v2 and v2→v3 verdicts
+"sound-with-fixes"; v3 verdict "settled-with-minor-fixes" (architecture settled,
+no further design round recommended).
 
 **v2 (review 1):** `VITE_SITE_ORIGIN` origin fix; template-merge capture + portal
 handling; `__PRERENDER_READY__` as primary readiness; flat `<route>.html` output;
@@ -341,3 +394,17 @@ changefreq/priority); specified CI preview-port readiness; acknowledged
 trailing-slash and unpublished-slug edges (L3/L4). Scripts read only
 `path`/`prerender`/`waitFor` from the route table; `CookieConsentTest` named-export
 mapping preserved.
+
+**v4 (review 3):** verified the linchpin (Vite 7 preview SPA-fallback makes the
+crawl work and resolves extensionless paths like Pages); fixed the title-merge rule
+(helmet sets `document.title` with no `data-rh` — overwrite the shell title
+unconditionally); specified keyed meta dedup (`name`/`property`/`rel`) so shell
+static OG/description tags are replaced, not duplicated; SEO.tsx fallback for
+no-`url` pages (legal pages) = `VITE_SITE_ORIGIN + pathname`, with
+`window.location.origin` fallback when the var is unset (dev/Surge previews); moved
+`dist/`-dependent assertions into the prerender script and scoped the Vitest guard
+to route-table invariants (every check now has an owner/trigger, incl. the
+post-deploy smoke as a CI step); viewer readiness must resolve on the error branch;
+corrected URL count (~25); acknowledged dev-mode sitemap absence +
+`docs/REQUIREMENTS.md` doc drift; noted the preview workflow's dead
+`SITE_URL`/`SURGE_URL` env vars.
