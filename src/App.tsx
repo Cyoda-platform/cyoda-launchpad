@@ -12,9 +12,10 @@ import { useAnalyticsTracking } from "@/hooks/use-analytics-tracking";
 import { useUtmTracking } from "@/hooks/use-utm-tracking";
 
 import { HelmetProvider } from "react-helmet-async";
-import { Suspense, lazy, useState } from "react";
+import { Suspense, lazy, useState, useEffect } from "react";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { appRoutes } from "@/routes";
+import { markPageMounted } from "@/lib/prerender-ready";
 
 const queryClient = new QueryClient();
 // Lazy-load consent preferences UI to optimize initial load
@@ -24,6 +25,17 @@ const LazyCookiePreferencesModal = lazy(() => import("@/components/CookiePrefere
 const AnalyticsTracker = () => {
   useAnalyticsTracking();
   useUtmTracking(); // Capture UTM parameters on app load
+  return null;
+};
+
+// Flips the page-mounted half of window.__PRERENDER_READY__. Rendered inside
+// the same <Suspense> as <Routes>, so its effect runs only after the lazy route
+// chunk has committed — and AFTER the route subtree's own effects (React runs
+// effects children-first), so viewers register their pending tasks first.
+const PrerenderReadySignal = () => {
+  useEffect(() => {
+    markPageMounted();
+  }, []);
   return null;
 };
 
@@ -52,6 +64,7 @@ const App = () => {
                     <Route key={path} path={path} element={<Component />} />
                   ))}
                 </Routes>
+                <PrerenderReadySignal />
               </Suspense>
 
               {/* Global Cookie Consent Banner - hide when preferences modal is open */}
