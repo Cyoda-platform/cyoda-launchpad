@@ -11,9 +11,9 @@ export type AppRoute = {
 };
 
 // Single source of truth for routing, prerendering, and sitemap generation.
-// scripts/prerender.mjs loads this module via Vite ssrLoadModule and reads ONLY
-// path / prerender / waitFor — it never touches `component`. Keep this file free
-// of eval-time side effects beyond the lazy() calls themselves (their dynamic
+// scripts/prerender.mjs parses this file via @babel/parser (static AST) and reads
+// ONLY path / prerender / waitFor — it never touches `component`. Keep this file
+// free of eval-time side effects beyond the lazy() calls themselves (their dynamic
 // import() is never invoked by the build scripts).
 export const appRoutes: AppRoute[] = [
   { path: "/", component: lazy(() => import("./pages/Index")), prerender: true },
@@ -33,14 +33,17 @@ export const appRoutes: AppRoute[] = [
   { path: "/cto", component: lazy(() => import("./pages/Cto")), prerender: true },
   { path: "/about", component: lazy(() => import("./pages/About")), prerender: true },
   { path: "/use-cases", component: lazy(() => import("./pages/UseCases")), prerender: true },
-  { path: "/use-cases/loan-lifecycle", component: lazy(() => import("./pages/UseCaseLoanLifecycle")), prerender: true, waitFor: ".react-flow__node" },
-  { path: "/use-cases/trade-settlement", component: lazy(() => import("./pages/UseCaseTradeSettlement")), prerender: true, waitFor: ".react-flow__node" },
-  { path: "/use-cases/kyc-onboarding", component: lazy(() => import("./pages/UseCaseKycOnboarding")), prerender: true, waitFor: ".react-flow__node" },
+  // waitFor: WorkflowViewer renders an SVG viewport (data-testid="workflow-viewer") —
+  // NOT ReactFlow nodes. The prerender crawl waits for this sentinel after
+  // window.__PRERENDER_READY__ confirms the async elkjs layout has settled.
+  { path: "/use-cases/loan-lifecycle", component: lazy(() => import("./pages/UseCaseLoanLifecycle")), prerender: true, waitFor: '[data-testid="workflow-viewer"]' },
+  { path: "/use-cases/trade-settlement", component: lazy(() => import("./pages/UseCaseTradeSettlement")), prerender: true, waitFor: '[data-testid="workflow-viewer"]' },
+  { path: "/use-cases/kyc-onboarding", component: lazy(() => import("./pages/UseCaseKycOnboarding")), prerender: true, waitFor: '[data-testid="workflow-viewer"]' },
   // Three intentional aliases for the same page — they preserve external links. Do NOT deduplicate.
-  { path: "/use-cases/governed-agentic-workflows", component: lazy(() => import("./pages/UseCaseGovernedAiActions")), prerender: true, waitFor: ".react-flow__node" },
-  { path: "/use-cases/governed-ai-actions", component: lazy(() => import("./pages/UseCaseGovernedAiActions")), prerender: true, waitFor: ".react-flow__node" },
-  { path: "/use-cases/governed-claims-adjudication", component: lazy(() => import("./pages/UseCaseGovernedClaimsAdjudication")), prerender: true, waitFor: ".react-flow__node" },
-  { path: "/use-cases/agentic-ai", component: lazy(() => import("./pages/UseCaseGovernedAiActions")), prerender: true, waitFor: ".react-flow__node" },
+  { path: "/use-cases/governed-agentic-workflows", component: lazy(() => import("./pages/UseCaseGovernedAiActions")), prerender: true, waitFor: '[data-testid="workflow-viewer"]' },
+  { path: "/use-cases/governed-ai-actions", component: lazy(() => import("./pages/UseCaseGovernedAiActions")), prerender: true, waitFor: '[data-testid="workflow-viewer"]' },
+  { path: "/use-cases/governed-claims-adjudication", component: lazy(() => import("./pages/UseCaseGovernedClaimsAdjudication")), prerender: true, waitFor: '[data-testid="workflow-viewer"]' },
+  { path: "/use-cases/agentic-ai", component: lazy(() => import("./pages/UseCaseGovernedAiActions")), prerender: true, waitFor: '[data-testid="workflow-viewer"]' },
   { path: "/contact", component: lazy(() => import("./pages/Contact")), prerender: true },
   { path: "/comparison", component: lazy(() => import("./pages/Comparison")), prerender: true },
   // ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE
