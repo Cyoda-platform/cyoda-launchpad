@@ -15,6 +15,7 @@ import {
   CorruptedMarkdownFallback
 } from '@/components/BlogFallbacks';
 import { resolveAppAssetUrl } from '@/lib/utils';
+import { siteUrl } from '@/lib/site-origin';
 
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -26,6 +27,10 @@ const BlogPost = () => {
   const currentIndex = allPosts.findIndex(p => p.slug === slug);
   const previousPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null;
   const nextPost = currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null;
+
+  // Canonical URL from the route path — never window.location.href, which
+  // would bake the localhost preview origin into prerendered output.
+  const canonicalUrl = siteUrl(`/blog/${slug ?? ''}`);
 
   // Loading state - show skeleton
   if (loading) {
@@ -90,7 +95,7 @@ const BlogPost = () => {
         publishedTime={new Date(post.frontmatter.date).toISOString()}
         tags={post.frontmatter.tags}
         image={post.frontmatter.image}
-        url={window.location.href}
+        url={canonicalUrl}
         type="article"
       />
       <Header />
@@ -191,7 +196,7 @@ const BlogPost = () => {
                   <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <SocialShare
                       title={post.frontmatter.title}
-                      url={window.location.href}
+                      url={canonicalUrl}
                       description={post.excerpt}
                       showLabels={true}
                       className="order-2 sm:order-1"

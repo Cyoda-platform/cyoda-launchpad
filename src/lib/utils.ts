@@ -1,5 +1,6 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
+import { siteOrigin } from "./site-origin"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -16,13 +17,13 @@ export function resolveAppAssetUrl(src?: string): string | undefined {
   return `${base}${clean}`
 }
 
-// Convert a possibly-relative URL to an absolute URL using window.location.origin when available
+// Convert a possibly-relative URL to an absolute URL using the canonical site
+// origin (VITE_SITE_ORIGIN, falling back to window.location.origin).
 export function toAbsoluteUrl(url?: string): string | undefined {
   if (!url) return url
   if (/^(?:https?:)?\/\//i.test(url)) return url
-  const origin = typeof window !== 'undefined' ? window.location.origin : ''
+  const origin = siteOrigin()
   if (!origin) return url
-  if (url.startsWith('//')) return `${window.location.protocol}${url}`
   if (url.startsWith('/')) return `${origin}${url}`
   return `${origin}/${url}`
 }

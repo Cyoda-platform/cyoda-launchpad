@@ -1,4 +1,5 @@
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import { siteUrl } from '@/lib/site-origin';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import GuideBreadcrumb from '@/components/GuideBreadcrumb';
@@ -25,6 +26,8 @@ const Guide = () => {
   const currentIndex = allGuides.findIndex(g => g.slug === slug);
   const previousGuide = currentIndex > 0 ? allGuides[currentIndex - 1] : null;
   const nextGuide = currentIndex < allGuides.length - 1 ? allGuides[currentIndex + 1] : null;
+
+  const canonicalUrl = siteUrl(`/guides/${slug ?? ''}`);
 
   // Loading state - show skeleton
   if (loading) {
@@ -89,7 +92,7 @@ const Guide = () => {
         publishedTime={new Date(guide.frontmatter.date).toISOString()}
         tags={guide.frontmatter.tags}
         image={guide.frontmatter.image}
-        url={window.location.href}
+        url={canonicalUrl}
         type="article"
       />
       <Header />
@@ -178,7 +181,7 @@ const Guide = () => {
                   <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                     <SocialShare
                       title={guide.frontmatter.title}
-                      url={window.location.href}
+                      url={canonicalUrl}
                       description={guide.excerpt}
                       showLabels={true}
                       className="order-2 sm:order-1"

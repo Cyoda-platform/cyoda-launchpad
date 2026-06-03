@@ -1,6 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { resolveAppAssetUrl, toAbsoluteUrl } from '@/lib/utils';
+import { siteUrl } from '@/lib/site-origin';
 
 interface SEOProps {
   title: string;
@@ -32,9 +33,9 @@ const SEO: React.FC<SEOProps> = ({
   jsonLd,
 }) => {
   const fullTitle = title;
-  const currentUrl = url || (typeof window !== 'undefined' ? window.location.href : '');
+  const currentUrl = url || (typeof window !== 'undefined' ? siteUrl(window.location.pathname) : '');
   const resolvedImage = resolveAppAssetUrl(image);
-  const defaultImage = toAbsoluteUrl(resolvedImage) || 'https://lovable.dev/opengraph-image-p98pqg.png';
+  const defaultImage = toAbsoluteUrl(resolvedImage) || siteUrl('/opengraph-image-cyoda.png');
 
   return (
     <Helmet>
@@ -102,7 +103,7 @@ const SEO: React.FC<SEOProps> = ({
               "name": siteName,
               "logo": {
                 "@type": "ImageObject",
-                "url": "https://lovable.dev/opengraph-image-p98pqg.png"
+                "url": siteUrl('/opengraph-image-cyoda.png')
               }
             },
             "datePublished": publishedTime,
