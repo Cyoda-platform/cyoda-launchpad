@@ -6,7 +6,7 @@ Do NOT create a new project. Work entirely within the existing codebase.
 
 ## Project Stack
 - **Framework**: Vite + React 18 + TypeScript
-- **Routing**: react-router-dom v6 (routes defined in `src/App.tsx`)
+- **Routing**: react-router-dom v6 (routes defined in `src/routes.tsx`, shell wired in `src/App.tsx`)
 - **Styling**: Tailwind CSS v3 + shadcn/ui component library
 - **Design tokens**: CSS variables in `src/index.css`
 - **Font**: Montserrat (Google Fonts, loaded in `src/index.css`)
@@ -31,7 +31,7 @@ Run `npm run build && npm run typecheck` after every task. Fix all errors before
 
 ## Current State — Completed Work
 
-### Pages (all routed in `src/App.tsx`)
+### Pages (all routed via `appRoutes` in `src/routes.tsx`)
 - `/` → `src/pages/Index.tsx` ✅
 - `/comparison` → `src/pages/Comparison.tsx` ✅
 - `/use-cases` → `src/pages/UseCases.tsx` ✅
