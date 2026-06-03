@@ -3,6 +3,7 @@
 // the routed page has mounted AND every registered async task (workflow-viewer
 // layout) has settled. Inert during normal browsing — it only maintains a window
 // flag that nothing in the app reads.
+// Relies on a fresh document per crawled URL; pageMounted is sticky, so this is NOT a reliable signal across client-side SPA navigations.
 declare global {
   interface Window {
     __PRERENDER_READY__?: boolean;

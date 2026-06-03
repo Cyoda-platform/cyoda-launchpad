@@ -6,6 +6,7 @@ import { registerPrerenderTask } from '@/lib/prerender-ready';
  * Workflow viewers: active = graph parsed successfully, done = async layout
  * settled (resolved OR rejected). A parse failure (graph null) never registers,
  * so the error card is captured without blocking the crawl.
+ * Callers must reset `done` if the `active` work ever restarts (viewer graphs are static today, so the layout effect runs once).
  */
 export function usePrerenderTask(active: boolean, done: boolean) {
   useEffect(() => {
