@@ -71,10 +71,9 @@ If you're cleaning up before shipping, `npm run lint` is also worth running.
 ## Adding a new page
 
 1. Create the file in `src/pages/`
-2. Import it in `src/App.tsx`
-3. Add `<Route path="..." element={<Component />} />` above the `*` catch-all
-4. Add `<SEO title="..." description="..." url="..." />` at the top of the page
-5. Add the URL to `public/sitemap.xml`
+2. Add an entry to `appRoutes` in `src/routes.tsx` above the `*` catch-all (set `prerender: true` for public pages)
+3. Add `<SEO title="..." description="..." url="..." />` in the page
+4. Done — the deploy pipeline prerenders the route and regenerates the sitemap automatically
 
 ## Project docs
 

@@ -41,48 +41,16 @@ Change the second `<h1>` to `<h2>`. Do not change any other content on the page.
 
 ---
 
-## REQ-SITEMAP: Add Missing URLs to `public/sitemap.xml`
+## REQ-SITEMAP: Sitemap is generated at build time
 
-The sitemap is a static file (`public/sitemap.xml`) — manually maintained.
-Add the following `<url>` entries. Use `<changefreq>monthly</changefreq>` and `<priority>` as shown.
-
-```xml
-<url>
-  <loc>https://cyoda.com/use-cases</loc>
-  <changefreq>monthly</changefreq>
-  <priority>0.8</priority>
-</url>
-<url>
-  <loc>https://cyoda.com/use-cases/loan-lifecycle</loc>
-  <changefreq>monthly</changefreq>
-  <priority>0.7</priority>
-</url>
-<url>
-  <loc>https://cyoda.com/use-cases/trade-settlement</loc>
-  <changefreq>monthly</changefreq>
-  <priority>0.7</priority>
-</url>
-<url>
-  <loc>https://cyoda.com/use-cases/kyc-onboarding</loc>
-  <changefreq>monthly</changefreq>
-  <priority>0.7</priority>
-</url>
-<url>
-  <loc>https://cyoda.com/use-cases/agentic-ai</loc>
-  <changefreq>monthly</changefreq>
-  <priority>0.7</priority>
-</url>
-<url>
-  <loc>https://cyoda.com/about</loc>
-  <changefreq>monthly</changefreq>
-  <priority>0.6</priority>
-</url>
-<url>
-  <loc>https://cyoda.com/contact</loc>
-  <changefreq>yearly</changefreq>
-  <priority>0.5</priority>
-</url>
-```
+`sitemap.xml` is no longer a checked-in file. `scripts/prerender.mjs` (run by
+the deploy workflow after `vite build`) generates `dist/sitemap.xml` from
+`src/routes.tsx` (every `prerender: true` route) plus the published blog slugs
+in `src/data/blog-index.json`, and preserves the static `/llm/` and `/llms.txt`
+entries. URLs carry no `changefreq`/`priority`; blog URLs set `lastmod` from
+the post date. Do not hand-edit a sitemap — add routes to `src/routes.tsx`
+instead. Note: `npm run dev` and a bare `vite build` produce no `/sitemap.xml`;
+only the full pipeline (`npm run build:static` or the deploy workflow) does.
 
 ---
 
