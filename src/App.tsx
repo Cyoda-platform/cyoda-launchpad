@@ -14,35 +14,7 @@ import { useUtmTracking } from "@/hooks/use-utm-tracking";
 import { HelmetProvider } from "react-helmet-async";
 import { Suspense, lazy, useState } from "react";
 import LoadingSpinner from "@/components/LoadingSpinner";
-
-// Lazy load components for better performance
-const Index = lazy(() => import("./pages/Index"));
-const Dev = lazy(() => import("./pages/Dev"));
-const Cto = lazy(() => import("./pages/Cto"));
-const Blog = lazy(() => import("./pages/Blog"));
-const BlogPost = lazy(() => import("./pages/BlogPost"));
-const BlogTest = lazy(() => import("./pages/BlogTest"));
-const BlogSystemTest = lazy(() => import("./pages/BlogSystemTest"));
-const Guides = lazy(() => import("./pages/Guides"));
-const Guide = lazy(() => import("./pages/Guide"));
-const GuideSystemTest = lazy(() => import("./pages/GuideSystemTest"));
-const Support = lazy(() => import("./pages/Support"));
-const CookiePolicy = lazy(() => import("./pages/CookiePolicy"));
-const PrivacyPolicy = lazy(() => import("./pages/PrivacyPolicy"));
-const TermsOfService = lazy(() => import("./pages/TermsOfService"));
-const About = lazy(() => import("./pages/About"));
-const UseCases = lazy(() => import("./pages/UseCases"));
-const UseCaseLoanLifecycle = lazy(() => import("./pages/UseCaseLoanLifecycle"));
-const UseCaseTradeSettlement = lazy(() => import("./pages/UseCaseTradeSettlement"));
-const UseCaseKycOnboarding = lazy(() => import("./pages/UseCaseKycOnboarding"));
-const UseCaseGovernedAiActions = lazy(() => import("./pages/UseCaseGovernedAiActions"));
-const UseCaseGovernedClaimsAdjudication = lazy(() => import("./pages/UseCaseGovernedClaimsAdjudication"));
-const Contact = lazy(() => import("./pages/Contact"));
-const Comparison = lazy(() => import("./pages/Comparison"));
-const NotFound = lazy(() => import("./pages/NotFound"));
-
-// Cookie consent test component
-const CookieConsentTest = lazy(() => import("./components/CookieConsentTest").then(module => ({ default: module.CookieConsentTest })));
+import { appRoutes } from "@/routes";
 
 const queryClient = new QueryClient();
 // Lazy-load consent preferences UI to optimize initial load
@@ -76,34 +48,9 @@ const App = () => {
               <AnalyticsTracker />
               <Suspense fallback={<LoadingSpinner text="Loading page..." />}>
                 <Routes>
-                  <Route path="/" element={<Index />} />
-                  <Route path="/blog" element={<Blog />} />
-                  <Route path="/blog/:slug" element={<BlogPost />} />
-                  <Route path="/blog-test" element={<BlogTest />} />
-                  <Route path="/blog-system-test" element={<BlogSystemTest />} />
-                  {/* <Route path="/guides" element={<Guides />} />
-                  <Route path="/guides/:slug" element={<Guide />} /> */}
-                  <Route path="/guide-system-test" element={<GuideSystemTest />} />
-                  <Route path="/cookie-consent-test" element={<CookieConsentTest />} />
-                  <Route path="/support" element={<Support />} />
-                  <Route path="/cookie-policy" element={<CookiePolicy />} />
-                  <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-                  <Route path="/terms-of-service" element={<TermsOfService />} />
-                    <Route path="/dev" element={<Dev />} />
-                    <Route path="/cto" element={<Cto />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/use-cases" element={<UseCases />} />
-                    <Route path="/use-cases/loan-lifecycle" element={<UseCaseLoanLifecycle />} />
-                    <Route path="/use-cases/trade-settlement" element={<UseCaseTradeSettlement />} />
-                    <Route path="/use-cases/kyc-onboarding" element={<UseCaseKycOnboarding />} />
-                    <Route path="/use-cases/governed-agentic-workflows" element={<UseCaseGovernedAiActions />} />
-                    <Route path="/use-cases/governed-ai-actions" element={<UseCaseGovernedAiActions />} />
-                    <Route path="/use-cases/governed-claims-adjudication" element={<UseCaseGovernedClaimsAdjudication />} />
-                    <Route path="/use-cases/agentic-ai" element={<UseCaseGovernedAiActions />} />
-                    <Route path="/contact" element={<Contact />} />
-                    <Route path="/comparison" element={<Comparison />} />
-                    {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                  <Route path="*" element={<NotFound />} />
+                  {appRoutes.map(({ path, component: Component }) => (
+                    <Route key={path} path={path} element={<Component />} />
+                  ))}
                 </Routes>
               </Suspense>
 
