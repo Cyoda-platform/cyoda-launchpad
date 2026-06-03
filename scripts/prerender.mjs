@@ -17,14 +17,10 @@
  */
 import fs from 'node:fs';
 import path from 'node:path';
-import { preview } from 'vite';
+import { createServer, preview } from 'vite';
 import { chromium } from 'playwright';
 import { JSDOM } from 'jsdom';
 import { buildSitemapXml } from './sitemap.mjs';
-import { parse as babelParse } from '@babel/parser';
-import _traverse from '@babel/traverse';
-// @babel/traverse ships CJS with a default export; ESM interop needs .default.
-const traverse = _traverse.default ?? _traverse;
 
 const DIST = path.resolve('dist');
 const PORT = 4173;
@@ -47,53 +43,24 @@ if (!fs.existsSync(shellPath)) {
 const cleanShell = fs.readFileSync(shellPath, 'utf8');
 
 // ---- Step 1: load the route table without executing any page component ----
-// We parse routes.tsx with @babel/parser instead of ssrLoadModule because React
-// ships only CJS and Vite 7's ESM SSR evaluator cannot shim `module`. Since we
-// only need path/prerender/waitFor — never the lazy() component — a static AST
-// parse is both safer and simpler.
-function loadAppRoutes() {
-  const routesPath = path.resolve('src/routes.tsx');
-  const source = fs.readFileSync(routesPath, 'utf8');
-  const ast = babelParse(source, {
-    sourceType: 'module',
-    plugins: ['typescript', 'jsx'],
+// configFile: false — the project config aliases react to a directory, which
+// breaks Vite's SSR externalization (`module is not defined` inside CJS react).
+// routes.tsx only needs default resolution: its sole static import is react,
+// and the lazy() dynamic imports are never invoked here.
+async function loadAppRoutes() {
+  const vite = await createServer({
+    configFile: false,
+    server: { middlewareMode: true },
+    appType: 'custom',
+    logLevel: 'error',
   });
-
-  const routes = [];
-  // Walk the AST looking for the `appRoutes` array literal.
-  traverse(ast, {
-    VariableDeclarator(nodePath) {
-      if (nodePath.node.id.name !== 'appRoutes') return;
-      const init = nodePath.node.init;
-      if (!init || init.type !== 'ArrayExpression') return;
-
-      for (const element of init.elements) {
-        if (!element || element.type !== 'ObjectExpression') continue;
-        const route = {};
-        for (const prop of element.properties) {
-          if (prop.type !== 'ObjectProperty') continue;
-          const key = prop.key.name ?? prop.key.value;
-          const val = prop.value;
-          if (key === 'path') {
-            route.path = val.value; // StringLiteral
-          } else if (key === 'prerender') {
-            if (val.type === 'BooleanLiteral') route.prerender = val.value;
-            else if (val.type === 'StringLiteral') route.prerender = val.value;
-          } else if (key === 'waitFor') {
-            route.waitFor = val.value;
-          }
-        }
-        if (route.path !== undefined && route.prerender !== undefined) {
-          routes.push(route);
-        }
-      }
-    },
-  });
-
-  if (routes.length === 0) {
-    fail('loadAppRoutes: no routes parsed from src/routes.tsx — check AST structure.');
+  try {
+    // Reads ONLY path / prerender / waitFor; lazy() components are inert here.
+    const mod = await vite.ssrLoadModule('/src/routes.tsx');
+    return mod.appRoutes;
+  } finally {
+    await vite.close();
   }
-  return routes;
 }
 
 // ---- Step 2: expand the URL list -------------------------------------------
@@ -178,20 +145,19 @@ function mergeIntoShell(shellHtml, snapshot) {
     const el = template.content.firstElementChild;
     if (!el || el.tagName === 'TITLE') continue;
 
-    // Keyed dedup: remove ALL existing counterparts (static shell AND any
-    // previously appended data-rh duplicates) before appending. React Helmet
-    // can emit the same tag set multiple times if it re-renders (StrictMode,
-    // hydration effects) — the last write wins, which is correct.
-    let keySelector = null;
+    // Keyed dedup: remove the shell's static counterpart (no data-rh) before
+    // appending, so output never ships stale + correct tag pairs. Helmet tags
+    // with repeated keys (e.g. one article:tag per tag) are all kept.
+    let shellSelector = null;
     if (el.tagName === 'META' && el.hasAttribute('name')) {
-      keySelector = `meta[name="${el.getAttribute('name')}"]`;
+      shellSelector = `meta[name="${el.getAttribute('name')}"]:not([data-rh])`;
     } else if (el.tagName === 'META' && el.hasAttribute('property')) {
-      keySelector = `meta[property="${el.getAttribute('property')}"]`;
+      shellSelector = `meta[property="${el.getAttribute('property')}"]:not([data-rh])`;
     } else if (el.tagName === 'LINK' && el.hasAttribute('rel')) {
-      keySelector = `link[rel="${el.getAttribute('rel')}"]`;
+      shellSelector = `link[rel="${el.getAttribute('rel')}"]:not([data-rh])`;
     }
-    if (keySelector) {
-      doc.head.querySelectorAll(keySelector).forEach((node) => node.remove());
+    if (shellSelector) {
+      doc.head.querySelectorAll(shellSelector).forEach((node) => node.remove());
     }
     doc.head.appendChild(el);
   }
@@ -219,7 +185,7 @@ function outputPathFor(routePath) {
 }
 
 // ---- main --------------------------------------------------------------------
-const appRoutes = loadAppRoutes();
+const appRoutes = await loadAppRoutes();
 
 // blog-index.json is an OBJECT keyed by source filename, not an array.
 const blogIndex = JSON.parse(fs.readFileSync(path.resolve('src/data/blog-index.json'), 'utf8'));

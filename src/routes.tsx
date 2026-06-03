@@ -11,7 +11,7 @@ export type AppRoute = {
 };
 
 // Single source of truth for routing, prerendering, and sitemap generation.
-// scripts/prerender.mjs parses this file via @babel/parser (static AST) and reads
+// scripts/prerender.mjs loads this file via Vite ssrLoadModule and reads
 // ONLY path / prerender / waitFor — it never touches `component`. Keep this file
 // free of eval-time side effects beyond the lazy() calls themselves (their dynamic
 // import() is never invoked by the build scripts).
