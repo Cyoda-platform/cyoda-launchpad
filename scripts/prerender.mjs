@@ -165,7 +165,9 @@ function mergeIntoShell(shellHtml, snapshot) {
   // First-paint content for non-JS clients; createRoot() wipes it on boot in
   // real browsers, so there is no hydration mismatch. Nodes outside #root
   // (Sonner/Radix portals on document.body) are discarded by construction.
-  doc.getElementById('root').innerHTML = snapshot.rootHtml;
+  const rootEl = doc.getElementById('root');
+  if (!rootEl) throw new Error('shell has no #root element');
+  rootEl.innerHTML = snapshot.rootHtml;
 
   const headHtml = doc.head.innerHTML;
   if (headHtml.includes('localhost') || headHtml.includes('127.0.0.1')) {
@@ -214,7 +216,6 @@ for (let i = 0; i < 100 && !up; i++) {
 }
 if (!up) fail(`vite preview did not start on port ${PORT}.`);
 
-const browser = await chromium.launch();
 const queue = [...targets];
 const failures = [];
 // IMPORTANT: hold merged HTML in memory and write only after the crawl ends.
@@ -241,9 +242,15 @@ async function worker() {
   }
   await context.close();
 }
-await Promise.all(Array.from({ length: CONCURRENCY }, () => worker()));
-await browser.close();
-await previewServer.close();
+
+let browser;
+try {
+  browser = await chromium.launch();
+  await Promise.all(Array.from({ length: CONCURRENCY }, () => worker()));
+} finally {
+  await browser?.close().catch(() => {});
+  await previewServer.close().catch(() => {});
+}
 
 if (failures.length > 0) {
   fail(`${failures.length} route(s) failed to prerender:\n  ${failures.join('\n  ')}`);
