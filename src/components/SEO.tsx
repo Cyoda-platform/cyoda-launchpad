@@ -54,17 +54,14 @@ const SEO: React.FC<SEOProps> = ({
       {defaultImage && <meta property="og:image" content={defaultImage} />}
       {defaultImage && <meta property="og:image:alt" content={title} />}
       
-      {/* Article-specific Open Graph tags */}
-      {type === 'article' && (
-        <>
-          {author && <meta property="article:author" content={author} />}
-          {publishedTime && <meta property="article:published_time" content={publishedTime} />}
-          {modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
-          {tags.map((tag, index) => (
-            <meta key={index} property="article:tag" content={tag} />
-          ))}
-        </>
-      )}
+      {/* Article-specific Open Graph tags (no fragment — react-helmet-async
+          only reads direct element children of <Helmet>) */}
+      {type === 'article' && author && <meta property="article:author" content={author} />}
+      {type === 'article' && publishedTime && <meta property="article:published_time" content={publishedTime} />}
+      {type === 'article' && modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
+      {type === 'article' && tags.map((tag, index) => (
+        <meta key={index} property="article:tag" content={tag} />
+      ))}
       
       {/* Twitter Card Meta Tags */}
       <meta name="twitter:card" content="summary_large_image" />
