@@ -9,6 +9,8 @@
  * - lastmod only for blog posts, from the post date in blog-index.json.
  * - /llm/ and /llms.txt are real static files in public/ — preserved as-is.
  */
+const escapeXml = (value) => value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
 export function buildSitemapXml({ siteOrigin, staticPaths, blogPosts }) {
   const entries = [];
 
@@ -25,8 +27,8 @@ export function buildSitemapXml({ siteOrigin, staticPaths, blogPosts }) {
 
   const body = entries
     .map((entry) => {
-      const lastmod = entry.lastmod ? `\n    <lastmod>${entry.lastmod}</lastmod>` : '';
-      return `  <url>\n    <loc>${entry.loc}</loc>${lastmod}\n  </url>`;
+      const lastmod = entry.lastmod ? `\n    <lastmod>${escapeXml(entry.lastmod)}</lastmod>` : '';
+      return `  <url>\n    <loc>${escapeXml(entry.loc)}</loc>${lastmod}\n  </url>`;
     })
     .join('\n');
 

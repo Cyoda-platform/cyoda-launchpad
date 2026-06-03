@@ -37,4 +37,14 @@ describe('buildSitemapXml', () => {
     expect(xml).toContain(`<loc>${ORIGIN}/llm/</loc>`);
     expect(xml).toContain(`<loc>${ORIGIN}/llms.txt</loc>`);
   });
+
+  it('escapes XML-special characters in loc values', () => {
+    const escaped = buildSitemapXml({
+      siteOrigin: ORIGIN,
+      staticPaths: ['/a&b'],
+      blogPosts: [],
+    });
+    expect(escaped).toContain(`<loc>${ORIGIN}/a&amp;b</loc>`);
+    expect(escaped).not.toContain('<loc>https://cyoda.com/a&b</loc>');
+  });
 });
