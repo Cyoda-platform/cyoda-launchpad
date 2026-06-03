@@ -50,4 +50,10 @@ describe('appRoutes (canonical route table)', () => {
   it('prerenders the homepage', () => {
     expect(appRoutes.find((r) => r.path === '/')?.prerender).toBe(true);
   });
+
+  it('every route has a lazy component', () => {
+    for (const route of appRoutes) {
+      expect(route.component, `route ${route.path} must have a component`).toBeTruthy();
+    }
+  });
 });
