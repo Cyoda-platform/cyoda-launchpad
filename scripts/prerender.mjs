@@ -20,10 +20,11 @@ import path from 'node:path';
 import { createServer, preview } from 'vite';
 import { chromium } from 'playwright';
 import { JSDOM } from 'jsdom';
+import TurndownService from 'turndown';
 import { buildSitemapXml } from './sitemap.mjs';
 
 const DIST = path.resolve('dist');
-const PORT = 4173;
+const PORT = Number(process.env.PRERENDER_PORT ?? 4173);
 const PREVIEW_ORIGIN = `http://localhost:${PORT}`;
 const SITE_ORIGIN = 'https://cyoda.com';
 const CONCURRENCY = 4;
@@ -142,7 +143,7 @@ async function capture(page, target) {
 }
 
 // ---- Step 4: template-merge into the clean shell -----------------------------
-function mergeIntoShell(shellHtml, snapshot) {
+function mergeIntoShell(shellHtml, snapshot, routePath) {
   // Start from the clean shell: preserves hashed <script>/<link> asset tags and
   // <html lang="en"> WITHOUT next-themes' runtime class (do not copy captured
   // <html> attributes).
@@ -190,6 +191,15 @@ function mergeIntoShell(shellHtml, snapshot) {
     );
   }
 
+  // Append rel=alternate link pointing at the .md sibling for this page.
+  // This coexists with the shell's existing /llms.txt alternate link (different type/href).
+  const altLink = doc.createElement('link');
+  altLink.setAttribute('rel', 'alternate');
+  altLink.setAttribute('type', 'text/markdown');
+  altLink.setAttribute('href', routePath === '/' ? '/index.md' : `${routePath}.md`);
+  altLink.setAttribute('title', 'Markdown version of this page');
+  doc.head.appendChild(altLink);
+
   return dom.serialize();
 }
 
@@ -198,6 +208,74 @@ function outputPathFor(routePath) {
   return routePath === '/'
     ? path.join(DIST, 'index.html')
     : path.join(DIST, `${routePath.replace(/^\//, '')}.html`);
+}
+
+// Markdown sibling: /use-cases/loan-lifecycle -> dist/use-cases/loan-lifecycle.md
+function mdPathFor(routePath) {
+  return routePath === '/'
+    ? path.join(DIST, 'index.md')
+    : path.join(DIST, `${routePath.replace(/^\//, '')}.md`);
+}
+
+// Generate markdown content for a route.
+// Blog routes: copy the original source file verbatim.
+// Built pages: convert <main> innerHTML via Turndown with YAML frontmatter.
+function generateMarkdown(target, snapshot, blogSourceBySlug) {
+  // Blog routes — copy the source markdown verbatim.
+  if (target.path.startsWith('/blog/')) {
+    const slug = target.path.slice('/blog/'.length);
+    const sourcePath = blogSourceBySlug.get(slug);
+    if (sourcePath) {
+      return fs.readFileSync(sourcePath, 'utf8');
+    }
+  }
+
+  // Built pages — extract <main>, strip noise, convert via Turndown.
+  const dom = new JSDOM(snapshot.rootHtml);
+  const doc = dom.window.document;
+  const mainEl = doc.querySelector('main');
+  if (!mainEl) throw new Error(`generateMarkdown: no <main> in captured rootHtml for ${target.path}`);
+
+  // Strip elements that have no markdown equivalent or produce junk output
+  // (coordinate streams, base64 data, hundreds of repeated SVG paths).
+  // Do this in the jsdom tree BEFORE serializing, as belt-and-braces alongside
+  // turndown.remove (which only acts on what Turndown's own parser sees).
+  mainEl.querySelectorAll('svg, button, form, script, style, iframe, noscript').forEach((el) => el.remove());
+
+  const turndown = new TurndownService({ headingStyle: 'atx', codeBlockStyle: 'fenced' });
+  // Interactive/visual elements have no markdown equivalent — drop them.
+  turndown.remove(['script', 'style', 'svg', 'button', 'form', 'iframe', 'noscript']);
+
+  const markdown = turndown.turndown(mainEl.innerHTML);
+
+  // Extract description from headTags (look for <meta name="description" ...>).
+  let description = '';
+  for (const tagHtml of snapshot.headTags) {
+    const m = tagHtml.match(/<meta[^>]+name="description"[^>]+content="([^"]*)"[^>]*>/i)
+      || tagHtml.match(/<meta[^>]+content="([^"]*)"[^>]+name="description"[^>]*>/i);
+    if (m) { description = m[1]; break; }
+  }
+
+  // Extract canonical URL from headTags.
+  let canonical = '';
+  for (const tagHtml of snapshot.headTags) {
+    const m = tagHtml.match(/<link[^>]+rel="canonical"[^>]+href="([^"]*)"[^>]*>/i)
+      || tagHtml.match(/<link[^>]+href="([^"]*)"[^>]+rel="canonical"[^>]*>/i);
+    if (m) { canonical = m[1]; break; }
+  }
+
+  // Escape double quotes in frontmatter strings.
+  const escFm = (s) => s.replace(/"/g, '\\"');
+
+  const frontmatter = [
+    '---',
+    `title: "${escFm(snapshot.title)}"`,
+    description ? `description: "${escFm(description)}"` : null,
+    canonical ? `canonical: ${canonical}` : null,
+    '---',
+  ].filter(Boolean).join('\n');
+
+  return `${frontmatter}\n\n${markdown}\n`;
 }
 
 // ---- main --------------------------------------------------------------------
@@ -209,6 +287,14 @@ const publishedPosts = Object.values(blogIndex).filter((post) => post.published 
 if (publishedPosts.length === 0) {
   fail('No published blog posts found in blog-index.json — did prebuild run?');
 }
+
+// Map slug → absolute source path for blog markdown siblings.
+const blogSourceBySlug = new Map(
+  Object.entries(blogIndex).map(([filename, post]) => [
+    post.slug,
+    path.resolve('public/docs/blogs', filename),
+  ]),
+);
 
 const targets = buildTargets(appRoutes, publishedPosts);
 console.log(`Prerendering ${targets.length} URLs (${publishedPosts.length} published blog posts).`);
@@ -236,6 +322,8 @@ const failures = [];
 // Writing dist/index.html mid-crawl would change what the preview's SPA
 // fallback serves to routes still being crawled.
 const outputs = new Map();
+// Markdown siblings — also held in memory until Step 5.
+const mdOutputs = new Map();
 
 async function worker() {
   const context = await browser.newContext();
@@ -245,7 +333,8 @@ async function worker() {
     const page = await context.newPage();
     try {
       const snapshot = await capture(page, target);
-      outputs.set(target.path, mergeIntoShell(cleanShell, snapshot));
+      outputs.set(target.path, mergeIntoShell(cleanShell, snapshot, target.path));
+      mdOutputs.set(target.path, generateMarkdown(target, snapshot, blogSourceBySlug));
       console.log(`✅ ${target.path}`);
     } catch (error) {
       failures.push(`${target.path}: ${error.message}`);
@@ -275,6 +364,13 @@ for (const [routePath, html] of outputs) {
   const outPath = outputPathFor(routePath);
   fs.mkdirSync(path.dirname(outPath), { recursive: true });
   fs.writeFileSync(outPath, html);
+}
+
+// Write markdown siblings.
+for (const [routePath, md] of mdOutputs) {
+  const mdPath = mdPathFor(routePath);
+  fs.mkdirSync(path.dirname(mdPath), { recursive: true });
+  fs.writeFileSync(mdPath, md);
 }
 
 // 404.html = the clean SPA shell (NOT prerendered homepage content): genuine
@@ -325,6 +421,36 @@ for (const target of targets) {
   }
 }
 
+// Every route must have a non-empty .md sibling containing a title: line
+// (blog sources already have YAML frontmatter with title:; built-page markdown
+// has a title: frontmatter line written by generateMarkdown).
+for (const target of targets) {
+  const mdPath = mdPathFor(target.path);
+  let mdContent = '';
+  try {
+    mdContent = fs.readFileSync(mdPath, 'utf8');
+  } catch {
+    verifyErrors.push(`${target.path}: missing markdown sibling ${mdPath}`);
+    continue;
+  }
+  if (!mdContent.trim()) {
+    verifyErrors.push(`${target.path}: markdown sibling is empty`);
+    continue;
+  }
+  const isBlogRoute = target.path.startsWith('/blog/');
+  const hasTitleLine = mdContent.includes('title:');
+  if (isBlogRoute) {
+    // Blog sources must have frontmatter; fall back to length check if no title: line.
+    if (!hasTitleLine && mdContent.length <= 200) {
+      verifyErrors.push(`${target.path}: markdown sibling has no title: line and is too short (${mdContent.length} chars)`);
+    }
+  } else {
+    if (!hasTitleLine) {
+      verifyErrors.push(`${target.path}: markdown sibling has no title: line`);
+    }
+  }
+}
+
 // The sitemap must contain exactly the prerendered URL set + /llm/ + /llms.txt.
 const sitemapLocs = new Set([...sitemapXml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]));
 const expectedLocs = new Set([
@@ -343,4 +469,4 @@ if (verifyErrors.length > 0) {
   fail(`Output verification failed:\n  ${verifyErrors.join('\n  ')}`);
 }
 
-console.log(`\n🎉 Prerendered ${targets.length} routes; wrote 404.html and sitemap.xml.`);
+console.log(`\n🎉 Prerendered ${targets.length} routes; wrote ${targets.length} .md siblings, 404.html, and sitemap.xml.`);

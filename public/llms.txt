@@ -27,6 +27,12 @@ Core capabilities:
 - ai.cyoda.net — Cyoda Cloud. Hosted SaaS Cyoda. Free tier available.
 - docs.cyoda.net — Documentation and API reference.
 
+## Markdown versions
+
+Every page on cyoda.com is also available as plain markdown: append `.md` to
+any page URL (e.g. https://cyoda.com/use-cases/loan-lifecycle.md). Blog posts
+serve their original markdown source.
+
 ## Who It Is For
 
 Enterprise Cyoda is for:
