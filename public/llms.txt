@@ -18,13 +18,13 @@ Core capabilities:
 - Point-in-time entity queries — not time-limited like Snowflake time-travel
 - Durable retry for external API calls modelled as entity state transitions
 - Workflow and state machine enforcement built into the storage layer
-- Deploys on PostgreSQL (default), Cassandra (scale-out), or as managed service (ai.cyoda.net)
+- Deploys on PostgreSQL (default), Cassandra (scale-out), or as managed service (Cyoda Cloud — coming soon)
 
 ## Cyoda Web Estate
 
 - cyoda.com — Enterprise Cyoda. Commercially supported, scalable deployment for regulated and mission-critical environments.
 - cyoda.dev — Open-source Cyoda. Developer-first, self-hosted, run-it-yourself.
-- ai.cyoda.net — Cyoda Cloud. Hosted SaaS Cyoda. Free tier available.
+- cyoda.com/cloud — Cyoda Cloud. Fully managed Cyoda platform, coming soon. Join the waitlist.
 - docs.cyoda.net — Documentation and API reference.
 
 ## Markdown versions
@@ -64,4 +64,4 @@ Enterprise Cyoda adds:
 Founded: 2012. Full-time: 2015, London.
 First production deployment: 2017 (VC Trade, European private-debt market).
 Previously deployed at a global KYC platform for four years.
-Cloud offering: https://ai.cyoda.net
+Cloud offering: https://cyoda.com/cloud (coming soon — join the waitlist)

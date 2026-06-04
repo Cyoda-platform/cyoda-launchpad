@@ -54,10 +54,10 @@ The Cyoda web estate is split across three sites — this matters when writing c
 
 - **cyoda.com** (this repo) — Enterprise, commercially supported.
 - **cyoda.dev** — Open-source, self-hosted.
-- **ai.cyoda.net** — Cyoda Cloud, hosted SaaS.
+- **cyoda.com/cloud** — Cyoda Cloud, fully managed platform (coming soon — waitlist page on this site).
 - **docs.cyoda.net** — Docs.
 
-Convention: CTA buttons that go to `cyoda.dev` / `ai.cyoda.net` open in the **same tab**; only header/footer nav links to those properties use `target="_blank"`.
+Convention: CTA buttons that go to `cyoda.dev` open in the **same tab**; only header/footer nav links to external Cyoda properties use `target="_blank"`. Cyoda Cloud links are internal (`/cloud` — the waitlist page).
 
 ## Project docs to consult
 

@@ -29,7 +29,7 @@ Then each page must pass its own complete title string. Every page must also pas
 | `/about` | `About \| Cyoda` | `Built by engineers who spent careers at LCH, Dresdner Kleinwort, Macquarie, and Westpac. Cyoda reflects what financial back-office systems actually need.` | `https://cyoda.com/about` |
 | `/contact` | `Contact \| Cyoda` | `Talk to the Cyoda team about your use case. We respond within one business day.` | `https://cyoda.com/contact` |
 | `/blog` | `Blog \| Cyoda` | `Technical articles on stateful systems, entity databases, and financial workflow engineering from the Cyoda team.` | `https://cyoda.com/blog` |
-| `/dev` | `For Developers \| Cyoda` | `A developer-first platform for building stateful, event-driven applications. Free tier at ai.cyoda.net — no credit card required.` | `https://cyoda.com/dev` |
+| `/dev` | `For Developers \| Cyoda` | `A developer-first platform for building stateful, event-driven applications. Open-source and self-hosted at cyoda.dev.` | `https://cyoda.com/dev` |
 | `/cto` | `For Engineering Leaders \| Cyoda` | `Replace the Postgres + Kafka + Camunda patchwork with one consistency model. Built for teams where correctness and audit are non-negotiable.` | `https://cyoda.com/cto` |
 
 ---
@@ -75,7 +75,7 @@ Core capabilities:
 - Immutable state history: every entity state transition is a durable, queryable event
 - Point-in-time entity queries — not time-limited like Snowflake time-travel
 - Durable retry for external API calls modelled as entity state transitions
-- Deploys on Kubernetes or as managed service (ai.cyoda.net — free tier available)
+- Deploys on Kubernetes or as managed service (Cyoda Cloud — coming soon)
 
 ## Who It Is For
 
@@ -95,7 +95,7 @@ is eliminated when the same consistency model governs storage, events, and workf
 
 Founded: 2012. Full-time: 2015, London.
 First production deployment: 2017 (VC Trade, European private-debt market).
-Free cloud beta: https://ai.cyoda.net
+Cloud offering: https://cyoda.com/cloud (coming soon — join the waitlist)
 ```
 
 ---
@@ -263,7 +263,7 @@ Replace with:
 1. H1: `"Financial-Grade Systems For Enterprise Backends"` (already correct — keep it)
 2. Sub-text: `"The unified platform that replaces Postgres + Kafka + Camunda for teams building stateful, auditable workflows in regulated financial services."`
 3. Two CTA buttons:
-   - Primary: `"Start Evaluating for Free"` → `https://ai.cyoda.net` (new tab)
+   - Primary: `"Start Evaluating for Free"` → `/cloud` (Cyoda Cloud waitlist)
    - Ghost: `"See How It Works"` → scrolls to `#how-it-works`
 4. Replace 3D node animation with static SVG state machine or clean gradient (see DESIGN.md)
 5. Do NOT use `.texture-overlay` class.
@@ -328,7 +328,7 @@ Company timeline (vertical list with `border-l` and dot markers):
 - 2012 — Cyoda founded
 - 2015 — Full-time operations, London
 - 2017 — First production deployment (VC Trade, European private-debt market)
-- 2025 — Cyoda Cloud live beta launched (free tier at ai.cyoda.net)
+- 2025 — Cyoda Cloud announced (coming soon — join the waitlist at cyoda.com/cloud)
 
 Mission statement:
 > "We built Cyoda because we were tired of rebuilding the same infrastructure at every bank
@@ -352,7 +352,7 @@ Four UseCaseCards linking to detail pages.
 3. "HOW CYODA SOLVES IT" overline + solution paragraph
 4. State machine diagram in a `Card` labelled "Entity State Machine" (see DESIGN.md)
 5. Feature checkpoints: 4–6 × CheckCircle icon + text
-6. Bottom CTA: "Start Your Evaluation" → `https://ai.cyoda.net` + "Talk to the Team" → `/contact`
+6. Bottom CTA: "Start Your Evaluation" → `/cloud` (Cyoda Cloud waitlist) + "Talk to the Team" → `/contact`
 
 ### Loan Lifecycle (`src/pages/UseCaseLoanLifecycle.tsx`)
 H1: `"Loan Origination and Full Lifecycle Management"`
@@ -440,7 +440,7 @@ Use shadcn `Input`, `Textarea`, `Select`, `Label`, `Button`.
 
 - "Used in production in the European private-debt market since 2017"
 - "VC Trade" (only named customer approved for use)
-- "Free tier available at ai.cyoda.net"
+- "Cyoda Cloud coming soon — join the waitlist at cyoda.com/cloud"
 - "Backed by Apache Cassandra and ZooKeeper — deploys on Kubernetes or as a managed service"
 - "Serializable Snapshot Isolation across asynchronous distributed workflows"
 - "Point-in-time querying across all entity history — not time-limited like Snowflake time-travel"

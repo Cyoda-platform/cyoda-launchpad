@@ -73,7 +73,7 @@ Run `npm run build && npm run typecheck` after every task. Fix all errors before
 ## Cyoda Web Estate (three-site structure)
 - **cyoda.com** — Enterprise Cyoda (this site). Commercially supported for regulated production.
 - **cyoda.dev** — Open-source Cyoda. Self-hosted, run-it-yourself.
-- **ai.cyoda.net** — Cyoda Cloud. Hosted SaaS, free evaluation tier.
+- **cyoda.com/cloud** — Cyoda Cloud. Fully managed Cyoda platform, coming soon. Join the waitlist.
 - **docs.cyoda.net** — Documentation and API reference.
 
 The homepage positions Enterprise Cyoda as the primary offering. The other two properties
@@ -88,8 +88,8 @@ are surfaced as secondary options in `CyodaPathsSection` and the header nav.
 - Do NOT use "Get Building for Free"
 - Do NOT invent customer names or metrics — use only verified proof points
 - Do NOT change the purpose or layout of `/cto` or `/dev` — only fix their SEO metadata
-- External links to cyoda.dev and ai.cyoda.net should open in the **same tab** from CTA buttons;
-  use `target="_blank"` for nav links only
+- External links to cyoda.dev should open in the **same tab** from CTA buttons;
+  use `target="_blank"` for nav links only. Cyoda Cloud links are internal (`/cloud` — the waitlist page).
 
 ## Routing — How to Add New Pages
 1. Create the file in `src/pages/`

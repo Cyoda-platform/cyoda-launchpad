@@ -197,7 +197,7 @@ Check `getPageVariant()` logic — ensure `/dev` and `/cto` still render correct
 - [ ] No `<Textarea>` or chatbot input in the hero
 - [ ] H1 reads "Financial-Grade Systems For Enterprise Backends"
 - [ ] Sub-text references "Postgres + Kafka + Camunda" and "financial services"
-- [ ] "Start Evaluating for Free" opens `https://ai.cyoda.net` in a new tab
+- [ ] "Start Evaluating for Free" opens `/cloud` (Cyoda Cloud waitlist)
 - [ ] "See How It Works" scrolls to `#how-it-works`
 - [ ] Background is not the 3D node animation
 - [ ] `/dev` and `/cto` hero still renders (test both routes)
@@ -302,7 +302,7 @@ Add `--state-node-bg` and `--state-node-border` CSS tokens to `src/index.css` if
 - [ ] Each detail page: correct H1, problem, solution, state machine diagram, ≥4 checkpoints, CTAs
 - [ ] State machine diagrams use `--state-node-bg` and `--state-node-border` tokens
 - [ ] All 5 pages have correct SEO title, description, url
-- [ ] Bottom CTAs link to `https://ai.cyoda.net` (new tab) and `/contact`
+- [ ] Bottom CTAs link to `/cloud` (Cyoda Cloud waitlist) and `/contact`
 - [ ] `npm run build` passes
 
 ---
@@ -336,7 +336,7 @@ On submit: `console.log(data)` + show success message.
    `/about`, `/contact`, `/blog`, `/dev`, `/cto`
 4. Check dark mode toggle on all new pages
 5. Verify "See How It Works" scrolls to `#how-it-works`
-6. Verify all external links (`ai.cyoda.net`, `docs.cyoda.net`, LinkedIn) open in new tab
+6. Verify all external links (`docs.cyoda.net`, LinkedIn) open in new tab
 7. Confirm `/dev` and `/cto` pages are unchanged and functional
 
 **Acceptance Criteria**:
