@@ -22,7 +22,7 @@ const Footer = () => {
 
   const cyodaWebLinks = [
     { name: "Enterprise Cyoda", href: "/" },
-    { name: "Cyoda Cloud", href: "https://ai.cyoda.net/", external: true },
+    { name: "Cyoda Cloud", href: "/cloud" },
     { name: "Open Source", href: "https://cyoda.dev", external: true },
     { name: "Docs", href: "https://docs.cyoda.net", external: true },
   ];
