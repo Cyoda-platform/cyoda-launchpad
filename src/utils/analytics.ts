@@ -1,5 +1,5 @@
 import { analyticsService } from "@/lib/analytics";
-import { trackAdConversion, isAiCyodaNetDestination } from "@/utils/conversion-tracking";
+import { trackAdConversion, isWaitlistDestination } from "@/utils/conversion-tracking";
 
 /**
  * Parameters for tracking CTA (Call-to-Action) clicks
@@ -33,7 +33,7 @@ export type CtaParams = {
  * - Button clicks that don't lead to conversions
  * - Navigation and engagement tracking
  *
- * **For conversion tracking (e.g., clicks to ai.cyoda.net), use `trackCtaConversion()` instead.**
+ * **For conversion tracking (e.g., clicks to /cloud (waitlist signup)), use `trackCtaConversion()` instead.**
  *
  * @param params - CTA parameters including location, page variant, CTA identifier, and optional metadata
  *
@@ -45,7 +45,7 @@ export type CtaParams = {
  *   page_variant: "home",
  *   cta: "try_now",
  *   label: "Get Started",
- *   url: "https://ai.cyoda.net"
+ *   url: "/cloud"
  * });
  * ```
  *
@@ -77,13 +77,13 @@ export function trackCta(params: CtaParams) {
  * product or service. It uses the specialized `trackConversion()` method which
  * provides enhanced conversion tracking in analytics.
  *
- * **Special handling for ai.cyoda.net destinations:**
+ * **Special handling for /cloud (waitlist signup) destinations:**
  * - Uses enhanced ad conversion tracking with time-to-conversion calculation
  * - Includes complete UTM attribution and user journey data
  * - Enables ad campaign ROI analysis
  *
  * **Use this function for:**
- * - Clicks to ai.cyoda.net (product/demo access)
+ * - Clicks to /cloud (waitlist signup)
  * - "Talk to Sales" or "Contact Us" CTAs
  * - Sign-up or registration CTAs
  * - Any CTA that represents a conversion goal
@@ -94,19 +94,19 @@ export function trackCta(params: CtaParams) {
  * - All CTA metadata (location, page_variant, cta, label, url)
  * - UTM parameters from session storage
  * - Timestamp and page location
- * - Time-to-conversion (for ai.cyoda.net destinations)
+ * - Time-to-conversion (for /cloud waitlist destinations)
  *
  * @param params - CTA parameters including location, page variant, CTA identifier, and optional metadata
  *
  * @example
  * ```typescript
- * // Track a conversion click to ai.cyoda.net (uses enhanced tracking)
+ * // Track a conversion click to /cloud (uses enhanced tracking)
  * trackCtaConversion({
  *   location: "hero",
  *   page_variant: "home",
  *   cta: "try_now",
  *   label: "Try CYODA Now",
- *   url: "https://ai.cyoda.net"
+ *   url: "/cloud"
  * });
  * ```
  *
@@ -123,15 +123,15 @@ export function trackCta(params: CtaParams) {
  * ```
  *
  * @see trackCta - For tracking general (non-conversion) CTA clicks
- * @see trackAdConversion - For the enhanced ai.cyoda.net conversion tracking
+ * @see trackAdConversion - For the enhanced /cloud waitlist conversion tracking
  */
 export function trackCtaConversion(params: CtaParams) {
-    // Check if this is an ai.cyoda.net destination
+    // Check if this is a /cloud waitlist destination
     const destination = params.url || params.cta;
-    const isAiCyodaNet = params.url && isAiCyodaNetDestination(params.url);
+    const isWaitlist = params.url && isWaitlistDestination(params.url);
 
-    // Use enhanced ad conversion tracking for ai.cyoda.net destinations
-    if (isAiCyodaNet && params.url) {
+    // Use enhanced ad conversion tracking for /cloud waitlist destinations
+    if (isWaitlist && params.url) {
         // Build explicit UTM parameters if provided
         const explicitUtmParams: Record<string, string> = {};
         if (params.utm_source) explicitUtmParams.utm_source = params.utm_source;
@@ -150,7 +150,7 @@ export function trackCtaConversion(params: CtaParams) {
         return;
     }
 
-    // For non-ai.cyoda.net destinations, use standard conversion tracking
+    // For non-waitlist destinations, use standard conversion tracking
     // Determine conversion type based on CTA identifier
     const conversionType = params.cta;
 

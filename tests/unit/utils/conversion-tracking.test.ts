@@ -3,7 +3,7 @@ import {
   trackAdConversion,
   calculateTimeToConversion,
   getConversionContext,
-  isAiCyodaNetDestination,
+  isWaitlistDestination,
   type AdConversionParams,
 } from '@/utils/conversion-tracking';
 import * as analyticsLib from '@/lib/analytics';
@@ -62,25 +62,17 @@ describe('conversion-tracking', () => {
     vi.restoreAllMocks();
   });
 
-  describe('isAiCyodaNetDestination', () => {
-    it('should return true for ai.cyoda.net URLs', () => {
-      expect(isAiCyodaNetDestination('https://ai.cyoda.net')).toBe(true);
-      expect(isAiCyodaNetDestination('https://ai.cyoda.net/')).toBe(true);
-      expect(isAiCyodaNetDestination('https://ai.cyoda.net/signup')).toBe(true);
-      expect(isAiCyodaNetDestination('https://ai.cyoda.net/path?query=value')).toBe(true);
+  describe('isWaitlistDestination', () => {
+    it('returns true for waitlist URLs', () => {
+      expect(isWaitlistDestination('/cloud')).toBe(true);
+      expect(isWaitlistDestination('https://cyoda.com/cloud')).toBe(true);
     });
 
-    it('should return false for non-ai.cyoda.net URLs', () => {
-      expect(isAiCyodaNetDestination('https://cyoda.net')).toBe(false);
-      expect(isAiCyodaNetDestination('https://www.cyoda.net')).toBe(false);
-      expect(isAiCyodaNetDestination('https://github.com/cyoda')).toBe(false);
-      expect(isAiCyodaNetDestination('https://example.com')).toBe(false);
-    });
-
-    it('should return false for invalid URLs', () => {
-      expect(isAiCyodaNetDestination('not-a-url')).toBe(false);
-      expect(isAiCyodaNetDestination('')).toBe(false);
-      expect(isAiCyodaNetDestination('javascript:alert(1)')).toBe(false);
+    it('returns false for non-waitlist URLs', () => {
+      expect(isWaitlistDestination('https://github.com/cyoda')).toBe(false);
+      expect(isWaitlistDestination('https://cyoda.com/contact')).toBe(false);
+      expect(isWaitlistDestination('/cloudy')).toBe(false);
+      expect(isWaitlistDestination('not a url')).toBe(false);
     });
   });
 
@@ -231,7 +223,7 @@ describe('conversion-tracking', () => {
         location: 'hero',
         page_variant: 'home',
         cta: 'try_now',
-        destination: 'https://ai.cyoda.net',
+        destination: 'https://cyoda.com/cloud',
         label: 'Try CYODA Now',
       };
 
@@ -241,7 +233,7 @@ describe('conversion-tracking', () => {
       // Assert
       expect(analyticsLib.analyticsService.trackConversion).toHaveBeenCalledWith(
         'try_now',
-        'https://ai.cyoda.net',
+        'https://cyoda.com/cloud',
         expect.objectContaining({
           utm_source: 'google',
           utm_medium: 'cpc',
@@ -250,7 +242,7 @@ describe('conversion-tracking', () => {
           page_variant: 'home',
           cta: 'try_now',
           label: 'Try CYODA Now',
-          destination: 'https://ai.cyoda.net',
+          destination: 'https://cyoda.com/cloud',
           time_to_conversion: 300, // 5 minutes
           page_path: '/test',
           page_title: 'Test Page',
@@ -273,7 +265,7 @@ describe('conversion-tracking', () => {
         location: 'cta_section',
         page_variant: 'home',
         cta: 'get_started',
-        destination: 'https://ai.cyoda.net/signup',
+        destination: '/cloud',
       };
 
       // Act
@@ -282,12 +274,12 @@ describe('conversion-tracking', () => {
       // Assert
       expect(analyticsLib.analyticsService.trackConversion).toHaveBeenCalledWith(
         'get_started',
-        'https://ai.cyoda.net/signup',
+        '/cloud',
         expect.objectContaining({
           location: 'cta_section',
           page_variant: 'home',
           cta: 'get_started',
-          destination: 'https://ai.cyoda.net/signup',
+          destination: '/cloud',
           time_to_conversion: null,
           is_direct_conversion: false,
         })
@@ -302,7 +294,7 @@ describe('conversion-tracking', () => {
         location: 'footer',
         page_variant: 'home',
         cta: 'try_now',
-        destination: 'https://ai.cyoda.net',
+        destination: '/cloud',
       };
 
       // Act

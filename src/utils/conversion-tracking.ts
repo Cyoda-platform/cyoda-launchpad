@@ -1,12 +1,12 @@
 /**
- * Conversion Event Tracking for ai.cyoda.net Clicks
+ * Conversion Event Tracking for Cyoda Cloud Waitlist Conversions
  *
  * This module provides specialized conversion tracking that captures the complete
  * user journey from ad click (UTM parameters) through landing page to CTA conversion,
  * enabling ad campaign ROI analysis.
  *
  * **Key Features:**
- * - Tracks conversions specifically for ai.cyoda.net destinations
+ * - Tracks conversions specifically for /cloud (waitlist) destinations
  * - Calculates time-to-conversion from landing to CTA click
  * - Enriches conversion events with complete UTM attribution data
  * - Captures full conversion context (page, referrer, session info)
@@ -14,12 +14,12 @@
  *
  * **Usage:**
  * ```typescript
- * // Track a conversion when user clicks a CTA to ai.cyoda.net
+ * // Track a conversion when user clicks a CTA to /cloud
  * trackAdConversion({
  *   location: "hero",
  *   page_variant: "home",
  *   cta: "try_now",
- *   destination: "https://ai.cyoda.net"
+ *   destination: "/cloud"
  * });
  * ```
  */
@@ -186,23 +186,25 @@ export function getConversionContext(pageVariant: string): ConversionContext {
 }
 
 /**
- * Check if a URL is an ai.cyoda.net destination
+ * Check if a URL is the Cyoda Cloud waitlist destination (/cloud) —
+ * the site's primary conversion goal while the managed platform is pre-launch.
  *
  * @param url - URL to check
- * @returns True if URL points to ai.cyoda.net
+ * @returns True if URL is the /cloud waitlist destination
  *
  * @example
  * ```typescript
- * isAiCyodaNetDestination("https://ai.cyoda.net"); // true
- * isAiCyodaNetDestination("https://github.com/cyoda"); // false
+ * isWaitlistDestination("/cloud"); // true
+ * isWaitlistDestination("https://cyoda.com/cloud"); // true
+ * isWaitlistDestination("https://github.com/cyoda"); // false
  * ```
  */
-export function isAiCyodaNetDestination(url: string): boolean {
+export function isWaitlistDestination(url: string): boolean {
+    if (url === '/cloud') return true;
     try {
-        const urlObj = new URL(url);
-        return urlObj.hostname === 'ai.cyoda.net';
+        const urlObj = new URL(url, 'https://cyoda.com');
+        return urlObj.hostname === 'cyoda.com' && urlObj.pathname === '/cloud';
     } catch {
-        // Invalid URL
         return false;
     }
 }
@@ -210,15 +212,15 @@ export function isAiCyodaNetDestination(url: string): boolean {
 /**
  * Track an ad conversion event
  *
- * This function tracks conversions specifically for ai.cyoda.net destinations.
+ * This function tracks conversions specifically for /cloud (waitlist) destinations.
  * It enriches the conversion event with:
  * - Complete UTM attribution data
  * - Time-to-conversion calculation
  * - Full conversion context
  * - User journey information
  *
- * **Important:** This function should only be called for ai.cyoda.net destinations.
- * Use `isAiCyodaNetDestination()` to validate before calling.
+ * **Important:** This function should only be called for waitlist destinations.
+ * Use `isWaitlistDestination()` to validate before calling.
  *
  * @param params - Ad conversion parameters
  * @param explicitUtmParams - Optional explicit UTM parameters that override stored values
@@ -230,7 +232,7 @@ export function isAiCyodaNetDestination(url: string): boolean {
  *   location: "hero",
  *   page_variant: "home",
  *   cta: "try_now",
- *   destination: "https://ai.cyoda.net",
+ *   destination: "/cloud",
  *   label: "Try CYODA Now"
  * });
  * ```
@@ -242,7 +244,7 @@ export function isAiCyodaNetDestination(url: string): boolean {
  *   location: "cta_section",
  *   page_variant: "home",
  *   cta: "get_started",
- *   destination: "https://ai.cyoda.net/signup"
+ *   destination: "/cloud"
  * }, {
  *   utm_source: "linkedin",
  *   utm_medium: "social"
@@ -300,7 +302,7 @@ export function trackAdConversion(
             ...(params.label && { label: params.label }),
 
             // Destination
-            // Where the user is being sent (e.g., https://ai.cyoda.net)
+            // Where the user is being sent (e.g., /cloud)
             destination: params.destination,
 
             // User journey data

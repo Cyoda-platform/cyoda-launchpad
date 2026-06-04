@@ -25,7 +25,7 @@ describe('analytics utility', () => {
         page_variant: 'home',
         cta: 'try_now',
         label: 'Get Started',
-        url: 'https://ai.cyoda.net',
+        url: '/cloud',
       };
 
       // Act
@@ -88,20 +88,20 @@ describe('analytics utility', () => {
 
   describe('trackCtaConversion', () => {
     beforeEach(() => {
-      // Mock isAiCyodaNetDestination to return true for ai.cyoda.net URLs
-      vi.mocked(conversionTracking.isAiCyodaNetDestination).mockImplementation((url: string) => {
-        return url.includes('ai.cyoda.net');
+      // Mock isWaitlistDestination to return true for /cloud URLs
+      vi.mocked(conversionTracking.isWaitlistDestination).mockImplementation((url: string) => {
+        return url === '/cloud' || url === 'https://cyoda.com/cloud';
       });
     });
 
-    it('should use trackAdConversion for ai.cyoda.net destinations', () => {
+    it('should use trackAdConversion for waitlist destinations', () => {
       // Arrange
       const params: CtaParams = {
         location: 'hero',
         page_variant: 'home',
         cta: 'try_now',
         label: 'Try CYODA Now',
-        url: 'https://ai.cyoda.net',
+        url: '/cloud',
       };
 
       // Act
@@ -113,7 +113,7 @@ describe('analytics utility', () => {
           location: 'hero',
           page_variant: 'home',
           cta: 'try_now',
-          destination: 'https://ai.cyoda.net',
+          destination: '/cloud',
           label: 'Try CYODA Now',
         },
         {} // empty explicit UTM params
@@ -195,13 +195,13 @@ describe('analytics utility', () => {
       );
     });
 
-    it('should pass through explicitly provided UTM parameters for ai.cyoda.net', () => {
+    it('should pass through explicitly provided UTM parameters for waitlist destinations', () => {
       // Arrange
       const params: CtaParams = {
         location: 'hero',
         page_variant: 'home',
         cta: 'try_now',
-        url: 'https://ai.cyoda.net',
+        url: '/cloud',
         utm_source: 'linkedin',
         utm_medium: 'social',
         utm_campaign: 'product-launch',
@@ -218,7 +218,7 @@ describe('analytics utility', () => {
           location: 'hero',
           page_variant: 'home',
           cta: 'try_now',
-          destination: 'https://ai.cyoda.net',
+          destination: '/cloud',
         },
         {
           utm_source: 'linkedin',
