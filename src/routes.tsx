@@ -48,6 +48,7 @@ export const appRoutes: AppRoute[] = [
   { path: "/use-cases/agentic-ai", component: lazy(() => import("./pages/UseCaseGovernedAiActions")), prerender: true, waitFor: '[data-testid="workflow-viewer"]' },
   { path: "/contact", component: lazy(() => import("./pages/Contact")), prerender: true },
   { path: "/comparison", component: lazy(() => import("./pages/Comparison")), prerender: true },
+  { path: "/cloud", component: lazy(() => import("./pages/CyodaCloud")), prerender: true },
   // ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE
   { path: "*", component: lazy(() => import("./pages/NotFound")), prerender: false },
 ];
