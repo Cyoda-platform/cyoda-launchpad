@@ -74,18 +74,22 @@ Add a helper alongside `organizationSchema` and the breadcrumb builders:
 
 ```ts
 export const faqPageSchema = (faqs: { question: string; answer: string }[]) => ({
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
   mainEntity: faqs.map((faq) => ({
-    '@type': 'Question',
+    "@type": "Question",
     name: faq.question,
-    acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+    acceptedAnswer: { "@type": "Answer", text: faq.answer },
   })),
 });
 ```
 
+(Double-quoted, quoted-key style matches the existing exports in `schemas.ts`.)
+
 ### `src/pages/Support.tsx`
 
+- Extend the schemas import to
+  `import { organizationSchema, faqPageSchema } from '@/data/schemas';`.
 - Replace the `faqs` array contents with the eight Q&As above. Same shape
   (`{ question, answer }`, plain strings) — the Accordion rendering is untouched.
 - Pass both schemas to the page's `<SEO>`:
@@ -106,4 +110,6 @@ export const faqPageSchema = (faqs: { question: string; answer: string }[]) => (
   `acceptedAnswer.text` (Google rich-results shape).
 - Grep `dist/support.html` for retired-era terms (`ai.cyoda.net`, `AI Assistant`,
   `generated code`, `free tier`, `operated to SOC 2`) — none present. Note: "SOC 2"
-  alone is fine; Q6 names it as a topic without claiming certification.
+  alone is fine; Q6 names it as a topic without claiming certification. The grep must
+  run against **freshly built** output — the existing `dist/` predates the rewrite and
+  still contains old-era copy.
