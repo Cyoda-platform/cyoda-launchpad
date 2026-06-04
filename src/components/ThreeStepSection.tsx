@@ -2,12 +2,13 @@
 import { Button } from "@/components/ui/button";
 import { Bot, Code, Rocket } from "lucide-react";
 import { HashLink } from "react-router-hash-link";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { trackCtaConversion } from '@/utils/analytics';
 
 const
     ThreeStepSection = () => {
   const location = useLocation();
+  const navigate = useNavigate();
 
   // Determine page variant based on current route
   const getPageVariant = (): "home" | "dev" | "cto" => {
@@ -21,17 +22,17 @@ const
     trackCtaConversion({
       location: "cta_section",
       page_variant: getPageVariant(),
-      cta: "try_now",
-      url: "https://ai.cyoda.net"
+      cta: "join_waitlist",
+      url: "/cloud"
     });
-    window.open('https://ai.cyoda.net', '_blank');
+    navigate('/cloud');
   };
 
   const steps = [
     {
       icon: Bot,
-      title: "1. Let AI build your prototype",
-      description: "Describe your application requirements in natural language at ai.cyoda.net. The AI generates entity models, state machine configurations, and API scaffolding. You get a running prototype with full workflow state from the first session.",
+      title: "1. Start with open source",
+      description: "Self-host open-source Cyoda from cyoda.dev and model your application as entities with explicit workflows. Start with in-memory or SQLite, grow to PostgreSQL without changing your model.",
       gradient: "bg-icon"
     },
     {
@@ -45,7 +46,7 @@ const
       title: "3. Deploy to production",
       description: (
         <>
-          Deploy to Cyoda Cloud or your own Kubernetes cluster. Horizontal scalability, point-in-time queryable audit history, and serializable snapshot isolation are platform features. Not things you build before your first enterprise client asks for them.
+          Deploy to your own Kubernetes cluster today — or to the fully managed Cyoda Cloud when it arrives. Horizontal scalability, point-in-time queryable audit history, and serializable snapshot isolation are platform features. Not things you build before your first enterprise client asks for them.
           <sup>
             <HashLink
               to="#footnote-production"
@@ -71,7 +72,7 @@ const
             From prototype to production without a platform team
           </h2>
           <p className="mobile-text-lg text-muted-foreground max-w-3xl mx-auto">
-            Describe your application. Cyoda generates the data model, workflow configuration, and API. The platform handles consistency, audit, and state. Your code handles the business logic.
+            Model your application as entities with explicit workflows. The platform handles consistency, audit, and state. Your code handles the business logic.
           </p>
         </div>
 
@@ -109,7 +110,7 @@ const
                 className="bg-primary text-primary-foreground mobile-btn-text-lg px-6 py-3 sm:px-8 sm:py-4 min-h-[44px]"
                 onClick={handleTryNowClick}
             >
-                Try Now
+                Join the Cyoda Cloud waitlist
             </Button>
         </div>
 

@@ -1,4 +1,5 @@
 import { Server, Cloud, Building2 } from "lucide-react";
+import { Link } from 'react-router-dom';
 
 const CyodaPathsSection = () => {
   return (
@@ -133,17 +134,16 @@ const CyodaPathsSection = () => {
               </div>
             </div>
             <p className="text-sm text-muted-foreground leading-relaxed flex-1">
-              Hosted Cyoda with a free evaluation tier. Managed control plane,
+              The fully managed Cyoda platform — coming soon. Managed control plane,
               your business logic runs in your code via gRPC.
             </p>
             <div className="mt-4">
-              <a
-                href="https://ai.cyoda.net/"
-                rel="noopener noreferrer"
+              <Link
+                to="/cloud"
                 className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
               >
-                ai.cyoda.net
-              </a>
+                Join the waitlist
+              </Link>
             </div>
           </div>
         </div>
