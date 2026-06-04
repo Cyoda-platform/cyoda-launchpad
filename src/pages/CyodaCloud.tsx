@@ -72,6 +72,7 @@ const CyodaCloud = () => (
       {/* Value props */}
       <section className="py-16 bg-[hsl(var(--section-alt-bg))]">
         <div className="container mx-auto px-4">
+          <h2 className="sr-only">Why Cyoda Cloud</h2>
           <div className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
             {valueProps.map((prop) => (
               <Card key={prop.title} className="border-border/60 bg-card/80">
@@ -89,20 +90,20 @@ const CyodaCloud = () => (
       </section>
 
       {/* What waitlist members get */}
-      <section className="py-12">
+      <section className="py-12 md:py-16">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 text-center">
+          <ul className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 text-center list-none">
             {waitlistPerks.map((perk) => (
-              <p key={perk} className="text-sm font-medium text-foreground">
+              <li key={perk} className="text-sm font-medium text-foreground">
                 {perk}
-              </p>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
       {/* Anonymous alternative */}
-      <section className="py-16 border-t border-border/50">
+      <section className="py-16 md:py-20 border-t border-border/50">
         <div className="container mx-auto px-4">
           <div className="max-w-xl mx-auto text-center">
             <h2 className="text-lg font-semibold text-foreground mb-2">
@@ -126,7 +127,7 @@ const CyodaCloud = () => (
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-md border border-border bg-card font-semibold text-sm text-foreground hover:border-primary/40 transition-colors"
             >
-              <SiGithub className="w-4 h-4" />
+              <SiGithub className="w-4 h-4" aria-hidden="true" />
               Star on GitHub
             </a>
           </div>
