@@ -409,6 +409,11 @@ page content for AI fetchers, complementing `/llms.txt`.
 - **Verification**: every prerendered route must also produce a non-empty
   `.md` file. The `.md` files are alternates, **not** canonical pages — they
   stay out of `sitemap.xml`.
+- **Known local-preview artifact**: `vite preview` serves `.md` without a
+  `charset` parameter, so browsers may mis-decode UTF-8 punctuation (`’` →
+  `â€™`) when previewing locally. The files are valid UTF-8; GitHub Pages
+  serves `text/markdown; charset=utf-8` (verified against the live site), so
+  production renders correctly. Not a bug in the generated output.
 
 ## Review incorporation
 
