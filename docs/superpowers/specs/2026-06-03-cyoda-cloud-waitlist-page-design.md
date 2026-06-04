@@ -27,7 +27,7 @@ all decisions below are deliberately proportionate to that.
 | Public promises | Value prop + early-access tiers (cohort invitations, founding-customer pricing, direct line to the team). **No dates, no prices, no feature lists** |
 | Signup model | **Email capture** via branded form → Google Forms `formResponse` endpoint (free, in Cyoda's Workspace). **The product-IdP decision is deliberately NOT made here** (PRD §2.7 keeps Clerk/Kinde/WorkOS open). Clerk's native waitlist mode is the documented upgrade path *if* Clerk is later chosen — the form component boundary makes that a one-component swap |
 | Anti-spam | Honeypot + minimum-time check (silent fake success on both). Proportionate to traffic; DDoS is not a real exposure (GitHub Pages/Fastly fronts the site; Google fronts the form endpoint). Escalation path if junk materializes: Cloudflare Turnstile + verifying Worker |
-| Form fields | Email (required) + Company (optional) + "What are you building?" (optional) |
+| Form fields | Email (required) + Company (optional) + "What are you building?" (optional **pre-selection** — option strings defined in the Google Form are the source of truth; the site mirrors them exactly, since POSTed values must match byte-for-byte) + "Anything you'd like to tell us?" (optional free text) |
 | Secondary CTA | Star `Cyoda-platform/cyoda-cloud-cli` on GitHub, framed as the anonymous alternative ("not ready to share your email?") — explicitly subordinate to the waitlist CTA so it captures rather than cannibalizes |
 | Try-it-now story | **OSS is the on-ramp**: "Self-host open-source Cyoda from cyoda.dev today; the fully managed Cyoda Cloud is coming — join the waitlist." All live-SaaS capability claims (AI assistant, prototype-in-first-session, free tier) are retired until the new Cloud ships |
 
@@ -84,7 +84,9 @@ GitHub instead — every star is a vote to ship this sooner." Button:
 not a Cyoda property; follow existing external-link styling).
 
 Form labels: "Work email" (required), "Company" (optional), "What are you
-building?" (optional textarea). Submit: "Join the waitlist". Success state
+building?" (optional select — options mirrored from the Google Form), and
+"Anything you'd like to tell us?" (optional textarea). Submit: "Join the
+waitlist". Success state
 (replaces form inline): "You're on the list. We'll be in touch when early
 access opens." Error state (fetch rejection only): "Something went wrong — try
 again, or reach us via the contact page."
@@ -165,10 +167,13 @@ Untouched: all `cyoda.dev` and `docs.cyoda.net` links.
 
 ## Prerequisites (Paul, outside this repo)
 
-1. **Google Form** with three questions — Email (short answer, required),
-   Company (short answer), What are you building? (paragraph) — and share the
-   form URL; the implementer extracts `FORM_ID` + `entry` IDs from the
-   prefill link. *Blocks implementation of the form component.*
+1. **Google Form** with four questions — Work email (short answer, required),
+   Company (short answer), What are you building? (multiple choice/dropdown),
+   Anything you'd like to tell us? (paragraph) — settings: workspace
+   restriction OFF, limit-to-1-response OFF, collect-email OFF. Share the form
+   URL; the implementer extracts `FORM_ID`, `entry` IDs, and the option
+   strings from the public form page. *Blocks implementation of the form
+   component.*
 2. **Groom `Cyoda-platform/cyoda-cloud-cli`**: add a description and a README
    stating the vision. *Blocks launch, not implementation* (0 stars + empty
    README undercuts the star CTA).
