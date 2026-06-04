@@ -385,6 +385,31 @@ Non-material notes for the implementer — verified facts, no design impact:
 4. **The post-deploy smoke check must poll/retry** — `deploy-pages` completing
    does not guarantee the CDN edge serves the new bytes immediately.
 
+## Addendum: markdown siblings (approved during implementation)
+
+Every prerendered page also gets a **markdown sibling** at the same URL with a
+`.md` extension (`/use-cases/loan-lifecycle.md`), served by Pages as a flat
+file (`dist/<route>.md`; root → `dist/index.md`). Purpose: machine-readable
+page content for AI fetchers, complementing `/llms.txt`.
+
+- **Blog routes** (`/blog/<slug>.md`): copy the **original source markdown**
+  from `public/docs/blogs/` verbatim (perfect fidelity; the files are already
+  public at `/docs/blogs/<file>.md`). The filename↔slug mapping comes from
+  `blog-index.json` (keyed by source filename, value carries `slug`).
+- **Built pages**: convert the captured `<main>` innerHTML (extracted in Node
+  from the snapshot's `#root` HTML via jsdom) with **Turndown** (new
+  devDependency). Rules: drop `svg`/`button`/`form` noise; `<pre>` blocks →
+  fenced code. Prepend frontmatter: `title`, `description` (from the captured
+  meta), `canonical`.
+- **Discoverability**: each prerendered page's head gains
+  `<link rel="alternate" type="text/markdown" href="<route>.md">` (added in
+  the template-merge, alongside the shell's existing `/llms.txt` alternate —
+  two `rel="alternate"` links with different `type`/`href` are valid);
+  `public/llms.txt` gains a note that every page URL has a `.md` sibling.
+- **Verification**: every prerendered route must also produce a non-empty
+  `.md` file. The `.md` files are alternates, **not** canonical pages — they
+  stay out of `sitemap.xml`.
+
 ## Review incorporation
 
 Four independent fresh-context review iterations: v1→v2 and v2→v3 verdicts
