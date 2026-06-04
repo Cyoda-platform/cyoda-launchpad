@@ -106,7 +106,7 @@ const Dev = () => (
             className="text-lg leading-relaxed mb-8 max-w-xl mx-auto"
             style={{ color: "hsl(215,18%,38%)" }}
           >
-            Start on the open-source project or on Cyoda Cloud. Come back to
+            Start on the open-source project — or join the Cyoda Cloud waitlist. Come back to
             cyoda.com when you need commercial support.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">

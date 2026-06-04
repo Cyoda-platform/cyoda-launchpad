@@ -76,7 +76,7 @@ const WIN_LOSS_SUMMARY = [
       'Built-in workflow engine',
       'ACID distributed transactions',
       'Financial services production track record',
-      'Managed cloud available now',
+      'Managed cloud coming soon',
       'Horizontal scale proven (Cassandra-backed)',
     ],
     theyWin: [
