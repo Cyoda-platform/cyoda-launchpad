@@ -3,6 +3,7 @@ import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
 import { ComparisonTable } from '@/components/ComparisonTable';
 import { organizationSchema } from '@/data/schemas';
+import { Link } from 'react-router-dom';
 
 const WIN_LOSS_SUMMARY = [
   {
@@ -198,17 +199,15 @@ export default function Comparison() {
               Ready to evaluate Cyoda?
             </h2>
             <p className="text-muted-foreground mb-8">
-              Free tier available at ai.cyoda.net. No credit card required.
+              The fully managed Cyoda Cloud is coming. Join the waitlist for early access — or self-host the open-source platform today from cyoda.dev.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <a
-                href="https://ai.cyoda.net"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/cloud"
                 className="inline-flex items-center justify-center px-6 py-3 rounded-md bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90 transition-opacity"
               >
-                Start Evaluating for Free
-              </a>
+                Join the Cyoda Cloud waitlist
+              </Link>
               <a
                 href="https://docs.cyoda.net/"
                 target="_blank"

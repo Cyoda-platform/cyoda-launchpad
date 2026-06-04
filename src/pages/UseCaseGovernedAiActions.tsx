@@ -218,7 +218,7 @@ const UseCaseGovernedAiActions = () => {
                 className="px-8 font-semibold"
                 asChild
               >
-                <a href="https://ai.cyoda.net">Start an evaluation</a>
+                <Link to="/cloud">Join the Cloud waitlist</Link>
               </Button>
             </div>
           </div>

@@ -78,7 +78,7 @@ const faqs = [
   {
     question: 'How do I get started with Cyoda?',
     answer:
-      'Sign up for a free Cyoda Cloud account at ai.cyoda.net and try the AI Assistant. The documentation and how-to guides at docs.cyoda.net cover the underlying entity model.',
+      'Start with the open-source platform at cyoda.dev — the documentation and how-to guides at docs.cyoda.net cover the underlying entity model. The fully managed Cyoda Cloud is coming soon; join the waitlist at cyoda.com/cloud.',
   },
   {
     question: 'What programming languages does Cyoda support?',

@@ -23,7 +23,7 @@ const timeline = [
   { year: '2012', event: 'Cyoda founded' },
   { year: '2015', event: 'Platform feature-complete with core architectural innovations in place' },
   { year: '2017', event: 'First production deployment (VC Trade, European private-debt market)' },
-  { year: '2025', event: 'Cyoda Cloud live beta launched (free tier at ai.cyoda.net)' },
+  { year: '2025', event: 'Cyoda Cloud live beta launched' },
   { year: '2026', event: 'Release of cyoda-go — digital twin of the scalable Cyoda EDBMS. Open-source storage engines for different operational shapes, plus a commercial Cassandra plugin for fully scalable production' },
 ];
 
