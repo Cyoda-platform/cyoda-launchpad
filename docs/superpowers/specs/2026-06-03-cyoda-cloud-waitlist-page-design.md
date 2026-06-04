@@ -178,9 +178,10 @@ Untouched: all `cyoda.dev` and `docs.cyoda.net` links.
 ## Sequencing
 
 This work depends on `src/routes.tsx` and the prerender pipeline, which live
-on the unmerged `feat/prerender` branch. Order: resolve the pending
-`feat/prerender` merge first; this work then goes on a fresh branch off
-`main`.
+on the unmerged `feat/prerender` branch. Decision (Paul, 2026-06-03): **stack
+this work onto `feat/prerender`** and ship both in a single PR — the changes
+are largely orthogonal but the waitlist page consumes the route
+table/prerender machinery, so one PR keeps the dependency reviewable.
 
 ## Out of scope
 
