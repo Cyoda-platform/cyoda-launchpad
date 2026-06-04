@@ -38,9 +38,9 @@ const UTM_STORAGE_KEY = 'cyoda_utm_params';
  */
 export interface AdConversionParams {
     /** Location of the CTA on the page */
-    location: "header" | "header_mobile" | "hero" | "cta_section" | "footer" | "nav";
+    location: "header" | "header_mobile" | "hero" | "cta_section" | "footer" | "nav" | "waitlist_form";
     /** Page variant where the conversion occurred */
-    page_variant: "dev" | "cto" | "home";
+    page_variant: "dev" | "cto" | "home" | "cloud";
     /** CTA identifier (e.g., "try_now", "talk_to_sales") */
     cta: string;
     /** Destination URL */

@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -52,7 +52,12 @@ const CloudWaitlistForm = () => {
   const [honeypot, setHoneypot] = useState('');
   const [emailError, setEmailError] = useState('');
   const [status, setStatus] = useState<Status>('idle');
-  const mountedAt = useRef(Date.now());
+  // Set on mount (not render) — satisfies react-hooks/purity and is the
+  // semantically correct anchor for the min-time anti-spam window.
+  const mountedAt = useRef(0);
+  useEffect(() => {
+    mountedAt.current = Date.now();
+  }, []);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
