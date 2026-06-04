@@ -74,6 +74,12 @@ describe('conversion-tracking', () => {
       expect(isWaitlistDestination('/cloudy')).toBe(false);
       expect(isWaitlistDestination('not a url')).toBe(false);
     });
+
+    it('returns false for invalid or non-http inputs', () => {
+      expect(isWaitlistDestination('')).toBe(false);
+      expect(isWaitlistDestination('not-a-url')).toBe(false);
+      expect(isWaitlistDestination('javascript:alert(1)')).toBe(false);
+    });
   });
 
   describe('calculateTimeToConversion', () => {

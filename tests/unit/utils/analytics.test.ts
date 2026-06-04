@@ -121,7 +121,7 @@ describe('analytics utility', () => {
       expect(analyticsLib.analyticsService.trackConversion).not.toHaveBeenCalled();
     });
 
-    it('should use standard tracking for non-ai.cyoda.net destinations', () => {
+    it('should use standard tracking for non-waitlist destinations', () => {
       // Arrange
       const params: CtaParams = {
         location: 'cta_section',
