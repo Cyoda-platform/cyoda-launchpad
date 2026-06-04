@@ -117,17 +117,17 @@ describe('UTM Conversion Flow Integration', () => {
         location: 'hero',
         page_variant: 'home',
         cta: 'try_now',
-        url: 'https://ai.cyoda.net',
+        url: '/cloud',
       });
 
       // STEP 5: Verify conversion was tracked
-      // Note: trackCtaConversion calls trackAdConversion for ai.cyoda.net URLs
+      // Note: trackCtaConversion calls trackAdConversion for /cloud (waitlist) URLs
       expect(conversionTracking.trackAdConversion).toHaveBeenCalledWith(
         expect.objectContaining({
           location: 'hero',
           page_variant: 'home',
           cta: 'try_now',
-          destination: 'https://ai.cyoda.net',
+          destination: '/cloud',
         }),
         {} // empty explicit UTM params (will use stored params)
       );
@@ -172,7 +172,7 @@ describe('UTM Conversion Flow Integration', () => {
         page_variant: 'home',
         cta: 'try_now',
         label: 'Try CYODA Now',
-        url: 'https://ai.cyoda.net',
+        url: '/cloud',
       });
 
       // STEP 3: Verify trackAdConversion was called with correct params
@@ -181,7 +181,7 @@ describe('UTM Conversion Flow Integration', () => {
           location: 'hero',
           page_variant: 'home',
           cta: 'try_now',
-          destination: 'https://ai.cyoda.net',
+          destination: '/cloud',
           label: 'Try CYODA Now',
         },
         {} // empty explicit UTM params
@@ -202,7 +202,7 @@ describe('UTM Conversion Flow Integration', () => {
         location: 'hero',
         page_variant: 'home',
         cta: 'try_now',
-        url: 'https://ai.cyoda.net',
+        url: '/cloud',
       });
 
       // STEP 4: Verify conversion was still tracked (just without UTM data)
@@ -211,7 +211,7 @@ describe('UTM Conversion Flow Integration', () => {
           location: 'hero',
           page_variant: 'home',
           cta: 'try_now',
-          destination: 'https://ai.cyoda.net',
+          destination: '/cloud',
         }),
         {}
       );

@@ -66,8 +66,8 @@ const DeveloperReliabilitySection = () => {
             The short version: Cyoda replaces several years of platform engineering work with configuration. Every business entity (a loan, a trade, a KYC record) is modeled with its own lifecycle, its own history, and its own transition rules. Your team defines the business logic. Cyoda handles consistency, audit, and scale.
           </p>
           <p className="text-muted-foreground">
-            For the technical detail, the architecture is below. For a working prototype, go to{' '}
-            <a href="https://ai.cyoda.net" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80 underline underline-offset-2">ai.cyoda.net</a>.
+            For the technical detail, the architecture is below. To build one yourself, start from{' '}
+            <a href="https://cyoda.dev" target="_blank" rel="noopener noreferrer" className="text-primary hover:text-primary/80 underline underline-offset-2">cyoda.dev</a>.
           </p>
         </div>
 

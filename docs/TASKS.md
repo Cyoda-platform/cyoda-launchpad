@@ -52,17 +52,10 @@ Do not change any other content, layout, or styling on the page.
 
 ---
 
-### T04 · [MODIFY] Add missing URLs to sitemap.xml
-**File**: `public/sitemap.xml`
-**Instructions**: Add the 7 missing `<url>` entries from REQ-SITEMAP (REQUIREMENTS.md).
-These are: `/use-cases`, `/use-cases/loan-lifecycle`, `/use-cases/trade-settlement`,
-`/use-cases/kyc-onboarding`, `/use-cases/agentic-ai`, `/about`, `/contact`.
-Use the exact `<loc>`, `<changefreq>`, and `<priority>` values from the requirements.
-
-**Acceptance Criteria**:
-- [ ] All 7 URLs appear in `public/sitemap.xml`
-- [ ] XML is valid (no parse errors)
-- [ ] All existing entries unchanged
+### T04 · [DONE] Sitemap is now generated at build time
+`public/sitemap.xml` has been removed. `scripts/prerender.mjs` generates `dist/sitemap.xml`
+from `src/routes.tsx` (every `prerender: true` route) plus published blog posts. Add routes
+to `src/routes.tsx` — do not hand-edit a sitemap.
 
 ---
 
@@ -204,7 +197,7 @@ Check `getPageVariant()` logic — ensure `/dev` and `/cto` still render correct
 - [ ] No `<Textarea>` or chatbot input in the hero
 - [ ] H1 reads "Financial-Grade Systems For Enterprise Backends"
 - [ ] Sub-text references "Postgres + Kafka + Camunda" and "financial services"
-- [ ] "Start Evaluating for Free" opens `https://ai.cyoda.net` in a new tab
+- [ ] "Start Evaluating for Free" opens `/cloud` (Cyoda Cloud waitlist)
 - [ ] "See How It Works" scrolls to `#how-it-works`
 - [ ] Background is not the 3D node animation
 - [ ] `/dev` and `/cto` hero still renders (test both routes)
@@ -309,7 +302,7 @@ Add `--state-node-bg` and `--state-node-border` CSS tokens to `src/index.css` if
 - [ ] Each detail page: correct H1, problem, solution, state machine diagram, ≥4 checkpoints, CTAs
 - [ ] State machine diagrams use `--state-node-bg` and `--state-node-border` tokens
 - [ ] All 5 pages have correct SEO title, description, url
-- [ ] Bottom CTAs link to `https://ai.cyoda.net` (new tab) and `/contact`
+- [ ] Bottom CTAs link to `/cloud` (Cyoda Cloud waitlist) and `/contact`
 - [ ] `npm run build` passes
 
 ---
@@ -343,7 +336,7 @@ On submit: `console.log(data)` + show success message.
    `/about`, `/contact`, `/blog`, `/dev`, `/cto`
 4. Check dark mode toggle on all new pages
 5. Verify "See How It Works" scrolls to `#how-it-works`
-6. Verify all external links (`ai.cyoda.net`, `docs.cyoda.net`, LinkedIn) open in new tab
+6. Verify all external links (`docs.cyoda.net`, LinkedIn) open in new tab
 7. Confirm `/dev` and `/cto` pages are unchanged and functional
 
 **Acceptance Criteria**:
@@ -364,7 +357,7 @@ On submit: `console.log(data)` + show success message.
 | T01 | MODIFY | `src/components/SEO.tsx`                 | 1-SEO | Title auto-append bug |
 | T02 | MODIFY | All `src/pages/` + SEO.tsx               | 1-SEO | Identical titles/metas|
 | T03 | MODIFY | `src/pages/Cto.tsx`                      | 1-SEO | Duplicate H1          |
-| T04 | MODIFY | `public/sitemap.xml`                     | 1-SEO | Missing 7 pages       |
+| T04 | DONE   | `dist/sitemap.xml` (generated)           | 1-SEO | Sitemap now generated |
 | T05 | MODIFY | `public/llms.txt`                        | 1-AI  | Weak description      |
 | T06 | MODIFY | SEO.tsx + all pages                      | 2-SD  | Zero structured data  |
 | T08 | MODIFY | 4 use-case detail pages                  | 2-SD  | BreadcrumbList        |

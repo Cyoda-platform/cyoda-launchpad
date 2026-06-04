@@ -9,7 +9,7 @@ deployment of the Cyoda EDBMS for regulated and mission-critical production envi
 |------|---------|
 | cyoda.com | Enterprise Cyoda — this repo |
 | cyoda.dev | Open-source Cyoda — self-hosted, run-it-yourself |
-| ai.cyoda.net | Cyoda Cloud — hosted SaaS, free evaluation tier |
+| cyoda.com/cloud | Cyoda Cloud — fully managed platform, coming soon (waitlist) |
 | docs.cyoda.net | Documentation and API reference |
 
 ## Stack
@@ -65,16 +65,15 @@ If you're cleaning up before shipping, `npm run lint` is also worth running.
 - Do NOT put "Available to all" in any copy
 - Do NOT invent customer names or metrics — use only verified proof points
 - Do NOT remove the dark mode toggle, analytics, or cookie consent
-- External links to cyoda.dev and ai.cyoda.net open in the same tab from CTAs;
-  `target="_blank"` is for nav links only
+- External links to cyoda.dev open in the same tab from CTAs;
+  `target="_blank"` is for nav links only. Cyoda Cloud links are internal (`/cloud` — the waitlist page).
 
 ## Adding a new page
 
 1. Create the file in `src/pages/`
-2. Import it in `src/App.tsx`
-3. Add `<Route path="..." element={<Component />} />` above the `*` catch-all
-4. Add `<SEO title="..." description="..." url="..." />` at the top of the page
-5. Add the URL to `public/sitemap.xml`
+2. Add an entry to `appRoutes` in `src/routes.tsx` above the `*` catch-all (set `prerender: true` for public pages)
+3. Add `<SEO title="..." description="..." url="..." />` in the page
+4. Done — the deploy pipeline prerenders the route and regenerates the sitemap automatically
 
 ## Project docs
 

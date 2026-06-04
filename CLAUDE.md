@@ -11,6 +11,8 @@ npm run dev         # Vite dev server on port 8080
 npm run dev:test    # Dev server with Vite mode "test" (uses .env.test)
 npm run build       # Production build (runs prebuild → generate-blog-index.js)
 npm run build:dev   # Build with development mode (sourcemaps, no minify)
+npm run build:static # Build + prerender all routes to flat dist/<route>.html + sitemap (what CI deploys)
+npm run prerender    # Prerender an existing dist/ (requires prior build with VITE_SITE_ORIGIN)
 npm run lint        # ESLint
 npm run typecheck   # tsc --noEmit
 npm run generate-index   # Manually rebuild src/data/blog-index.json from src/content/
@@ -32,7 +34,7 @@ After changes, run `npm run build && npm run typecheck` (and `npm run lint` befo
 
 **SPA shape.** Vite + React 18 + TypeScript. `@` is aliased to `src/` (see `vite.config.ts`). React/react-dom are deduped and pinned via explicit aliases — don't add a second copy via a sub-dependency.
 
-**Routing & app shell — `src/App.tsx`.** All pages are `React.lazy()` imports, wrapped in a single `<Suspense>`. Routes are declared above a `*` catch-all (`NotFound`). The shell wires, in order: `HelmetProvider` → `QueryClientProvider` (TanStack Query) → `ThemeProvider` (`next-themes`, `attribute="class"`, `defaultTheme="light"`) → `CookieConsentProvider` → `AnalyticsManager` → `TooltipProvider` → `BrowserRouter` (with `basename` from `import.meta.env.BASE_URL`) → `AnalyticsTracker` (calls `useAnalyticsTracking` + `useUtmTracking`). The cookie-consent banner and the lazy-loaded preferences modal sit outside the routed area so they persist across navigation. New pages must be added inside the `<Routes>` block, above the catch-all, and registered in `public/sitemap.xml`.
+**Routing & app shell — `src/App.tsx`.** All pages are `React.lazy()` imports, wrapped in a single `<Suspense>`. Routes are declared above a `*` catch-all (`NotFound`). The shell wires, in order: `HelmetProvider` → `QueryClientProvider` (TanStack Query) → `ThemeProvider` (`next-themes`, `attribute="class"`, `defaultTheme="light"`) → `CookieConsentProvider` → `AnalyticsManager` → `TooltipProvider` → `BrowserRouter` (with `basename` from `import.meta.env.BASE_URL`) → `AnalyticsTracker` (calls `useAnalyticsTracking` + `useUtmTracking`). The cookie-consent banner and the lazy-loaded preferences modal sit outside the routed area so they persist across navigation. Routes live in `src/routes.tsx` (`appRoutes` — the single source of truth consumed by the router, the prerender crawl, and sitemap generation). New pages must be added there above the `*` catch-all entry with `prerender: true`; the deploy pipeline prerenders every such route to a flat `dist/<route>.html` and regenerates `sitemap.xml` automatically.
 
 **Note on aliased routes.** `App.tsx` intentionally maps several use-case URLs (`/use-cases/governed-agentic-workflows`, `/use-cases/governed-ai-actions`, `/use-cases/agentic-ai`) to the same `UseCaseGovernedAiActions` page. Don't "deduplicate" these — they exist to preserve external links.
 
@@ -52,10 +54,10 @@ The Cyoda web estate is split across three sites — this matters when writing c
 
 - **cyoda.com** (this repo) — Enterprise, commercially supported.
 - **cyoda.dev** — Open-source, self-hosted.
-- **ai.cyoda.net** — Cyoda Cloud, hosted SaaS.
+- **cyoda.com/cloud** — Cyoda Cloud, fully managed platform (coming soon — waitlist page on this site).
 - **docs.cyoda.net** — Docs.
 
-Convention: CTA buttons that go to `cyoda.dev` / `ai.cyoda.net` open in the **same tab**; only header/footer nav links to those properties use `target="_blank"`.
+Convention: CTA buttons that go to `cyoda.dev` open in the **same tab**; only header/footer nav links to external Cyoda properties use `target="_blank"`. Cyoda Cloud links are internal (`/cloud` — the waitlist page).
 
 ## Project docs to consult
 

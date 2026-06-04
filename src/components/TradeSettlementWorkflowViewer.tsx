@@ -11,6 +11,7 @@ import { layoutGraph, type LayoutResult as WorkflowLayoutResult } from '@cyoda/w
 import { WorkflowViewer } from '@cyoda/workflow-viewer';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import EntityDataModelCard from '@/components/EntityDataModelCard';
+import { usePrerenderTask } from '@/hooks/use-prerender-task';
 import workflowJson from '@/data/workflows/tradeSettlementWorkflow.json?raw';
 import tradeEntityJson from '@/data/examples/tradeEntity.json?raw';
 
@@ -61,6 +62,7 @@ function stateLabel(node?: GraphNode) {
 export default function TradeSettlementWorkflowViewer() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [layout, setLayout] = useState<WorkflowLayoutResult | null>(null);
+  const [layoutSettled, setLayoutSettled] = useState(false);
 
   const parsed = useMemo(() => {
     return parseImportPayload(workflowJson);
@@ -82,11 +84,21 @@ export default function TradeSettlementWorkflowViewer() {
     void layoutGraph(graph, {
       preset: 'opsAudit',
       nodeSize: { width: 176, height: 88 },
-    }).then((nextLayout) => {
-      if (!cancelled) {
-        setLayout(nextLayout);
-      }
-    });
+    })
+      .then((nextLayout) => {
+        if (!cancelled) {
+          setLayout(nextLayout);
+        }
+      })
+      .catch(() => {
+        // Swallow layout failures: the viewer falls back to its unpositioned
+        // render and the prerender crawl must not hang (see usePrerenderTask).
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setLayoutSettled(true);
+        }
+      });
 
     return () => {
       cancelled = true;
@@ -111,6 +123,9 @@ export default function TradeSettlementWorkflowViewer() {
 
     return null;
   }, [graph, selectedId]);
+
+  // Hold the prerender crawl open until the async elkjs layout settles.
+  usePrerenderTask(graph !== null, layoutSettled);
 
   if (!graph) {
     return (

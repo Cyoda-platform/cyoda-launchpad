@@ -1,6 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { resolveAppAssetUrl, toAbsoluteUrl } from '@/lib/utils';
+import { siteUrl } from '@/lib/site-origin';
 
 interface SEOProps {
   title: string;
@@ -32,9 +33,9 @@ const SEO: React.FC<SEOProps> = ({
   jsonLd,
 }) => {
   const fullTitle = title;
-  const currentUrl = url || (typeof window !== 'undefined' ? window.location.href : '');
+  const currentUrl = url || (typeof window !== 'undefined' ? siteUrl(window.location.pathname) : '');
   const resolvedImage = resolveAppAssetUrl(image);
-  const defaultImage = toAbsoluteUrl(resolvedImage) || 'https://lovable.dev/opengraph-image-p98pqg.png';
+  const defaultImage = toAbsoluteUrl(resolvedImage) || siteUrl('/opengraph-image-cyoda.png');
 
   return (
     <Helmet>
@@ -53,17 +54,14 @@ const SEO: React.FC<SEOProps> = ({
       {defaultImage && <meta property="og:image" content={defaultImage} />}
       {defaultImage && <meta property="og:image:alt" content={title} />}
       
-      {/* Article-specific Open Graph tags */}
-      {type === 'article' && (
-        <>
-          {author && <meta property="article:author" content={author} />}
-          {publishedTime && <meta property="article:published_time" content={publishedTime} />}
-          {modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
-          {tags.map((tag, index) => (
-            <meta key={index} property="article:tag" content={tag} />
-          ))}
-        </>
-      )}
+      {/* Article-specific Open Graph tags (no fragment — react-helmet-async
+          only reads direct element children of <Helmet>) */}
+      {type === 'article' && author && <meta property="article:author" content={author} />}
+      {type === 'article' && publishedTime && <meta property="article:published_time" content={publishedTime} />}
+      {type === 'article' && modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
+      {type === 'article' && tags.map((tag, index) => (
+        <meta key={index} property="article:tag" content={tag} />
+      ))}
       
       {/* Twitter Card Meta Tags */}
       <meta name="twitter:card" content="summary_large_image" />
@@ -102,7 +100,7 @@ const SEO: React.FC<SEOProps> = ({
               "name": siteName,
               "logo": {
                 "@type": "ImageObject",
-                "url": "https://lovable.dev/opengraph-image-p98pqg.png"
+                "url": siteUrl('/opengraph-image-cyoda.png')
               }
             },
             "datePublished": publishedTime,

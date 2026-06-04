@@ -39,9 +39,9 @@ const developerCards = [
   },
   {
     icon: Rocket,
-    title: 'Start at ai.cyoda.net, clone into your IDE',
+    title: 'Start at cyoda.dev, build in your IDE',
     description:
-      'Describe your application. The AI generates entity models, state machine config, and gRPC scaffolding. Deploy to Cyoda Cloud or your own Kubernetes cluster.',
+      'Self-host the open-source EDBMS, model entities and workflows in configuration, and run your business logic in your code via gRPC. The fully managed Cyoda Cloud is coming.',
   },
 ];
 

@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const AINativeSection = () => {
   return (
     <section className="py-16 md:py-24 bg-background">
@@ -17,15 +19,23 @@ const AINativeSection = () => {
           </p>
         </div>
         <p className="mt-8 text-muted-foreground">
+          The fully managed Cyoda Cloud is on its way —{' '}
+          <Link
+            to="/cloud"
+            className="text-primary hover:text-primary/80 underline underline-offset-2"
+          >
+            join the waitlist
+          </Link>
+          , or self-host today from{' '}
           <a
-            href="https://ai.cyoda.net"
+            href="https://cyoda.dev"
             target="_blank"
             rel="noopener noreferrer"
             className="text-primary hover:text-primary/80 underline underline-offset-2"
           >
-            Start at ai.cyoda.net
-          </a>{' '}
-          and describe what you want to build.
+            cyoda.dev
+          </a>
+          .
         </p>
       </div>
     </section>

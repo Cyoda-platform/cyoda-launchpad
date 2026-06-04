@@ -219,17 +219,18 @@ const Header = () => {
               </NavigationMenuContent>
             </NavigationMenuItem>
 
-            {/* Cyoda Cloud — external top-level link */}
+            {/* Cyoda Cloud — internal coming-soon/waitlist page */}
             <NavigationMenuItem>
               <NavigationMenuLink asChild>
-                <a
-                  href="https://ai.cyoda.net/"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  to="/cloud"
                   className="text-foreground hover:text-primary transition-colors font-medium text-sm"
                 >
                   Cyoda Cloud
-                </a>
+                  <span className="ml-1.5 align-middle text-[10px] font-semibold uppercase tracking-wider text-primary border border-primary/30 rounded px-1 py-0.5">
+                    Soon
+                  </span>
+                </Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
 
@@ -363,14 +364,15 @@ const Header = () => {
               <p className="py-1 text-xs font-semibold text-muted-foreground uppercase tracking-widest mt-3">
                 Cyoda Web
               </p>
-              <a
-                href="https://ai.cyoda.net/"
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                to="/cloud"
                 className="block py-1.5 pl-3 text-sm text-foreground hover:text-primary transition-colors"
               >
                 Cyoda Cloud
-              </a>
+                <span className="ml-1.5 align-middle text-[10px] font-semibold uppercase tracking-wider text-primary border border-primary/30 rounded px-1 py-0.5">
+                  Soon
+                </span>
+              </Link>
               <a
                 href="https://cyoda.dev"
                 target="_blank"

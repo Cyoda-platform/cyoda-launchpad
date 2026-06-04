@@ -6,7 +6,7 @@ Do NOT create a new project. Work entirely within the existing codebase.
 
 ## Project Stack
 - **Framework**: Vite + React 18 + TypeScript
-- **Routing**: react-router-dom v6 (routes defined in `src/App.tsx`)
+- **Routing**: react-router-dom v6 (routes defined in `src/routes.tsx`, shell wired in `src/App.tsx`)
 - **Styling**: Tailwind CSS v3 + shadcn/ui component library
 - **Design tokens**: CSS variables in `src/index.css`
 - **Font**: Montserrat (Google Fonts, loaded in `src/index.css`)
@@ -17,7 +17,7 @@ Do NOT create a new project. Work entirely within the existing codebase.
 - **Analytics**: GA4 via `src/components/AnalyticsManager.tsx`
 - **Blog**: Markdown content in `src/content/`, indexed by `scripts/generate-blog-index.js`
 - **shadcn/ui**: Full component library in `src/components/ui/`
-- **Sitemap**: Static file at `public/sitemap.xml` (manually maintained)
+- **Sitemap**: Generated at deploy time into `dist/sitemap.xml` by `scripts/prerender.mjs` from `src/routes.tsx` + published blog posts — do not hand-edit
 - **llms.txt**: Static file at `public/llms.txt`
 
 ## Build Commands
@@ -31,7 +31,7 @@ Run `npm run build && npm run typecheck` after every task. Fix all errors before
 
 ## Current State — Completed Work
 
-### Pages (all routed in `src/App.tsx`)
+### Pages (all routed via `appRoutes` in `src/routes.tsx`)
 - `/` → `src/pages/Index.tsx` ✅
 - `/comparison` → `src/pages/Comparison.tsx` ✅
 - `/use-cases` → `src/pages/UseCases.tsx` ✅
@@ -46,6 +46,7 @@ Run `npm run build && npm run typecheck` after every task. Fix all errors before
 - `/blog` → `src/pages/Blog.tsx` ✅
 - `/blog/:slug` → `src/pages/BlogPost.tsx` ✅
 - `/support` → `src/pages/Support.tsx` ✅
+- `/cloud` → `src/pages/CyodaCloud.tsx` ✅
 
 ### Components
 - `src/components/HeroSection.tsx` ✅ — SVG architecture field background; CTAs: "Talk to us" + "Open source, run it yourself"
@@ -62,7 +63,7 @@ Run `npm run build && npm run typecheck` after every task. Fix all errors before
 - `src/components/SEO.tsx` ✅ — auto-append removed; renders `jsonLd` prop
 - `src/data/schemas.ts` ✅ — `organizationSchema` and breadcrumb schemas
 - All pages: unique title, description, canonical URL ✅
-- `public/sitemap.xml` ✅ — includes all routes
+- `dist/sitemap.xml` ✅ — generated at deploy time from `src/routes.tsx` (all prerendered routes + published posts)
 - `public/llms.txt` ✅ — describes three-site structure and Enterprise Cyoda
 
 ### Design System
@@ -73,7 +74,7 @@ Run `npm run build && npm run typecheck` after every task. Fix all errors before
 ## Cyoda Web Estate (three-site structure)
 - **cyoda.com** — Enterprise Cyoda (this site). Commercially supported for regulated production.
 - **cyoda.dev** — Open-source Cyoda. Self-hosted, run-it-yourself.
-- **ai.cyoda.net** — Cyoda Cloud. Hosted SaaS, free evaluation tier.
+- **cyoda.com/cloud** — Cyoda Cloud. Fully managed Cyoda platform, coming soon. Join the waitlist.
 - **docs.cyoda.net** — Documentation and API reference.
 
 The homepage positions Enterprise Cyoda as the primary offering. The other two properties
@@ -88,15 +89,14 @@ are surfaced as secondary options in `CyodaPathsSection` and the header nav.
 - Do NOT use "Get Building for Free"
 - Do NOT invent customer names or metrics — use only verified proof points
 - Do NOT change the purpose or layout of `/cto` or `/dev` — only fix their SEO metadata
-- External links to cyoda.dev and ai.cyoda.net should open in the **same tab** from CTA buttons;
-  use `target="_blank"` for nav links only
+- External links to cyoda.dev should open in the **same tab** from CTA buttons;
+  use `target="_blank"` for nav links only. Cyoda Cloud links are internal (`/cloud` — the waitlist page).
 
 ## Routing — How to Add New Pages
 1. Create the file in `src/pages/`
-2. Import it in `src/App.tsx`
-3. Add `<Route path="..." element={<Component />} />` above the `*` catch-all
-4. Add `<SEO title="..." description="..." url="..." />` in the page
-5. Add the URL to `public/sitemap.xml`
+2. Add an entry to `appRoutes` in `src/routes.tsx` above the `*` catch-all (set `prerender: true` for public pages)
+3. Add `<SEO title="..." description="..." url="..." />` in the page
+4. Done — the deploy pipeline prerenders the route and regenerates the sitemap automatically
 
 ## Read Next
 1. `docs/DESIGN.md` — visual specs, design tokens, entity model

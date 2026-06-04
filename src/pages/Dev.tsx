@@ -30,8 +30,8 @@ const routingCards: RoutingCard[] = [
     badge: "SaaS",
     title: "Cyoda Cloud",
     description:
-      "Free evaluation tier. Managed control plane. Your business logic runs in your code via gRPC.",
-    link: { label: "Go to ai.cyoda.net", href: "https://ai.cyoda.net/" },
+      "Fully managed Cyoda — coming soon. Managed control plane, your business logic runs in your code via gRPC.",
+    link: { label: "Join the waitlist", href: "/cloud", internal: true },
   },
   {
     icon: Building2,
@@ -67,7 +67,7 @@ const Dev = () => (
   <div className="min-h-screen bg-background">
     <SEO
       title="For developers | Cyoda"
-      description="Building with Cyoda? Start on the open-source project at cyoda.dev or try Cyoda Cloud free at ai.cyoda.net. Come to cyoda.com when you need commercial support."
+      description="Building with Cyoda? Start on the open-source project at cyoda.dev — the fully managed Cyoda Cloud is coming. Come to cyoda.com when you need commercial support."
       url="https://cyoda.com/dev"
       type="website"
       jsonLd={organizationSchema}
@@ -106,7 +106,7 @@ const Dev = () => (
             className="text-lg leading-relaxed mb-8 max-w-xl mx-auto"
             style={{ color: "hsl(215,18%,38%)" }}
           >
-            Start on the open-source project or on Cyoda Cloud. Come back to
+            Start on the open-source project — or join the Cyoda Cloud waitlist. Come back to
             cyoda.com when you need commercial support.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
@@ -121,9 +121,7 @@ const Dev = () => (
               className="px-7 text-base font-semibold"
               asChild
             >
-              <a href="https://ai.cyoda.net/" rel="noopener noreferrer">
-                Try Cyoda Cloud
-              </a>
+              <Link to="/cloud">Join the Cloud waitlist</Link>
             </Button>
           </div>
           <p className="mt-5 text-sm" style={{ color: "hsl(215,18%,48%)" }}>
@@ -278,18 +276,8 @@ const Dev = () => (
               },
               {
                 step: "2",
-                content: (
-                  <>
-                    Build or test on{" "}
-                    <a
-                      href="https://ai.cyoda.net/"
-                      rel="noopener noreferrer"
-                      className="text-primary font-medium hover:underline"
-                    >
-                      ai.cyoda.net
-                    </a>
-                  </>
-                ),
+                content:
+                  "Build or test on your own infrastructure — or join the Cyoda Cloud waitlist for the managed platform.",
               },
               {
                 step: "3",
@@ -337,9 +325,7 @@ const Dev = () => (
               className="px-7 text-base font-semibold"
               asChild
             >
-              <a href="https://ai.cyoda.net/" rel="noopener noreferrer">
-                Try Cyoda Cloud
-              </a>
+              <Link to="/cloud">Join the Cloud waitlist</Link>
             </Button>
           </div>
         </div>
