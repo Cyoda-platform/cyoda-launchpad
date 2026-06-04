@@ -328,7 +328,7 @@ Company timeline (vertical list with `border-l` and dot markers):
 - 2012 — Cyoda founded
 - 2015 — Full-time operations, London
 - 2017 — First production deployment (VC Trade, European private-debt market)
-- 2025 — Cyoda Cloud announced (coming soon — join the waitlist at cyoda.com/cloud)
+- 2025 — Cyoda Cloud live beta launched
 
 Mission statement:
 > "We built Cyoda because we were tired of rebuilding the same infrastructure at every bank
