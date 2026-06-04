@@ -46,6 +46,7 @@ Run `npm run build && npm run typecheck` after every task. Fix all errors before
 - `/blog` → `src/pages/Blog.tsx` ✅
 - `/blog/:slug` → `src/pages/BlogPost.tsx` ✅
 - `/support` → `src/pages/Support.tsx` ✅
+- `/cloud` → `src/pages/CyodaCloud.tsx` ✅
 
 ### Components
 - `src/components/HeroSection.tsx` ✅ — SVG architecture field background; CTAs: "Talk to us" + "Open source, run it yourself"
