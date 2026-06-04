@@ -42,6 +42,13 @@ if (!fs.existsSync(shellPath)) {
 }
 const cleanShell = fs.readFileSync(shellPath, 'utf8');
 
+// The shell must be the untouched vite-build output. A prior prerender bakes
+// data-rh tags into dist/index.html; merging on top of that duplicates every
+// SEO tag. Not idempotent by design — always rebuild before re-prerendering.
+if (cleanShell.includes('data-rh')) {
+  fail('dist/index.html already contains prerendered (data-rh) tags — run `npm run build` first (or use `npm run build:static`).');
+}
+
 // ---- Step 1: load the route table without executing any page component ----
 // configFile: false — the project config aliases react to a directory, which
 // breaks Vite's SSR externalization (`module is not defined` inside CJS react).
@@ -308,6 +315,14 @@ for (const target of targets) {
     verifyErrors.push(`${target.path}: og:url "${ogUrl}" does not use ${SITE_ORIGIN}`);
   }
   if (rootChildren === 0) verifyErrors.push(`${target.path}: #root has no children`);
+  const canonicalCount = doc.querySelectorAll('link[rel="canonical"]').length;
+  const ogUrlCount = doc.querySelectorAll('meta[property="og:url"]').length;
+  if (canonicalCount !== 1) {
+    verifyErrors.push(`${target.path}: expected exactly 1 canonical link, found ${canonicalCount}`);
+  }
+  if (ogUrlCount !== 1) {
+    verifyErrors.push(`${target.path}: expected exactly 1 og:url meta, found ${ogUrlCount}`);
+  }
 }
 
 // The sitemap must contain exactly the prerendered URL set + /llm/ + /llms.txt.
