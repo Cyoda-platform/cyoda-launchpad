@@ -41,7 +41,7 @@ const developerCards = [
     icon: Rocket,
     title: 'Start at cyoda.dev, build in your IDE',
     description:
-      'Self-host the open-source EDBMS, model entities and workflows in configuration, and run your business logic in your code via gRPC. The fully managed Cyoda Cloud is coming — join the waitlist.',
+      'Self-host the open-source EDBMS, model entities and workflows in configuration, and run your business logic in your code via gRPC. The fully managed Cyoda Cloud is coming.',
   },
 ];
 

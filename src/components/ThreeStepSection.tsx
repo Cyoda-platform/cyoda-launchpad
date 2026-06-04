@@ -38,7 +38,7 @@ const
     {
       icon: Code,
       title: "2. Iterate in your IDE",
-      description: "Clone the generated project into your IDE. Business logic runs in your code, in your language, via gRPC. The platform handles the rest: transactions, sharding, workflow orchestration, audit history.",
+      description: "Build in your IDE. Business logic runs in your code, in your language, via gRPC. The platform handles the rest: transactions, sharding, workflow orchestration, audit history.",
       gradient: "bg-icon"
     },
     {
