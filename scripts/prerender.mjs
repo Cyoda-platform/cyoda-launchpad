@@ -53,6 +53,7 @@ async function loadAppRoutes() {
     server: { middlewareMode: true },
     appType: 'custom',
     logLevel: 'error',
+    optimizeDeps: { noDiscovery: true, include: [] },
   });
   try {
     // Reads ONLY path / prerender / waitFor; lazy() components are inert here.
@@ -99,31 +100,37 @@ async function capture(page, target) {
   await page.waitForFunction(() => document.querySelector('.animate-spin') === null, null, {
     timeout: PAGE_TIMEOUT_MS,
   });
+  // react-helmet-async flushes head tags on a deferred animation frame — wait
+  // for the canonical link (every public page renders <SEO> with one) so the
+  // snapshot cannot race the flush. A page missing <SEO> would time out here,
+  // which is the correct failure mode (every public page must own its SEO tags).
+  await page.waitForSelector('head link[rel="canonical"][data-rh]', {
+    state: 'attached',
+    timeout: PAGE_TIMEOUT_MS,
+  });
 
   const snapshot = await page.evaluate((bannerSelector) => {
     const root = document.getElementById('root');
-    const banner = root ? root.querySelector(bannerSelector) : null;
-    let rootHtml = root ? root.innerHTML : '';
-    if (banner) {
-      // Fallback only — the banner self-suppresses without stored consent.
-      const clone = root.cloneNode(true);
+    // Expected: with no stored consent the banner renders (showBannerByDefault) —
+    // strip it from the capture; browsers re-show it live after React boots.
+    const clone = root ? root.cloneNode(true) : null;
+    if (clone) {
       clone.querySelectorAll(bannerSelector).forEach((el) => el.remove());
-      rootHtml = clone.innerHTML;
     }
+    const rootHtml = clone ? clone.innerHTML : '';
+    const bannerStillPresent = clone ? clone.querySelector(bannerSelector) !== null : false;
     return {
       title: document.title,
       // helmet marks its meta/link/script tags with data-rh (NOT the <title>).
       headTags: Array.from(document.head.querySelectorAll('[data-rh]')).map((el) => el.outerHTML),
       rootHtml,
-      bannerPresent: Boolean(banner),
+      bannerStillPresent,
     };
   }, BANNER_SELECTOR);
 
+  if (snapshot.bannerStillPresent) throw new Error('cookie banner survived strip');
   if (!snapshot.rootHtml.trim()) throw new Error('empty #root');
   if (!snapshot.title.trim()) throw new Error('empty document.title');
-  if (snapshot.bannerPresent) {
-    console.warn(`⚠️  ${target.path}: cookie banner rendered during crawl (stripped) — investigate.`);
-  }
   return snapshot;
 }
 

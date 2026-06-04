@@ -196,7 +196,7 @@ so the prerender step always reads the fresh index.)
    - also wait for the content selector to be present (`main` default; per-route
      `waitFor` override, e.g. a rendered viewer node such as `.react-flow__node`)
      and for loading spinner / skeleton selectors to be **absent**,
-   - assert the cookie-consent banner did not render (see step 4),
+   - strip the cookie-consent banner from `#root` and assert the strip succeeded (see step 4),
    - all under a hard max-timeout.
 4. **Build output HTML via template-merge** (not raw `documentElement.outerHTML`):
    - start from the saved clean shell (step 0) — preserves the `<script>`/`<link>`
@@ -217,11 +217,11 @@ so the prerender step always reads the fresh index.)
    - inject the captured **`#root` innerHTML** as the shell's `#root` content,
    - **discard nodes outside `#root`** (Sonner/Toaster and Radix portals mount on
      `document.body`; they are empty at load but must not leak into output).
-     Note: the cookie-consent banner renders **inside** `#root` but self-suppresses
-     during the crawl (no stored consent → `showBanner` false → renders null); the
-     capture asserts its absence rather than stripping it. If the assertion ever
-     fails, remove it from the captured `#root` HTML by selector (harmless, since
-     `createRoot` wipes `#root` on boot).
+     Note: the cookie-consent banner renders **inside** `#root` and DOES appear
+     during the crawl (no stored consent → `showBannerByDefault: true` — the original
+     design assumption was inverted; discovered during implementation). The capture
+     strips it by selector and asserts the strip succeeded (harmless, since
+     `createRoot` wipes `#root` on boot and live browsers re-show the banner).
 5. **Write** flat files: `dist/<route>.html` (root route overwrites
    `dist/index.html`). `base: '/'` means absolute `/assets/...` URLs resolve
    regardless of nesting.
