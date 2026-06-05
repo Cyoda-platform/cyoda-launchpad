@@ -1,7 +1,7 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import SEO from '@/components/SEO';
-import { organizationSchema } from '@/data/schemas';
+import { organizationSchema, faqPageSchema } from '@/data/schemas';
 import { Card, CardContent } from '@/components/ui/card';
 import {
   Accordion,
@@ -76,34 +76,45 @@ const resources = [
 
 const faqs = [
   {
+    question: 'What is Cyoda?',
+    answer:
+      'Cyoda is a platform for building stateful, data-driven backends where state transitions, auditability, and consistency under failure matter — corporate lending, KYC, trade settlement, claims adjudication, and similar regulated workloads.',
+  },
+  {
     question: 'How do I get started with Cyoda?',
     answer:
-      'Start with the open-source platform at cyoda.dev — the documentation and how-to guides at docs.cyoda.net cover the underlying entity model. The fully managed Cyoda Cloud is coming soon; join the waitlist at cyoda.com/cloud.',
+      "Start with the open-source platform at cyoda.dev — download it and run it yourself. The documentation at docs.cyoda.net covers the entity model, workflow design, and the APIs. If you're evaluating Cyoda for a regulated production deployment, contact the team directly.",
   },
   {
-    question: 'What programming languages does Cyoda support?',
+    question: 'Is there a hosted version of Cyoda?',
     answer:
-      'Generated applications are produced in Java or Python. The exported code can be integrated with any language via the Cyoda HTTP and event APIs. If you need another target language, get in touch.',
+      "Cyoda Cloud — a fully managed Cyoda platform — is coming soon. It isn't live yet; join the waitlist at cyoda.com/cloud for early access. In the meantime, the open-source platform at cyoda.dev is the self-serve way to run Cyoda.",
   },
   {
-    question: 'Can I export my code from Cyoda?',
+    question:
+      "What's the difference between open-source Cyoda, Cyoda Cloud, and Enterprise Cyoda?",
     answer:
-      'Yes. You have full access to the generated code and can export it to your own GitHub branch and IDE.',
+      'Open-source Cyoda (cyoda.dev) is self-hosted — you run and operate it yourself. Cyoda Cloud is the upcoming fully managed platform, currently waitlist-only. Enterprise Cyoda is the commercially supported offering for regulated production deployments. The difference is who operates the platform and what support stands behind it.',
   },
   {
-    question: 'What kind of applications can I build?',
+    question: 'What languages can I build with?',
     answer:
-      'Cyoda is designed for stateful, data-driven systems where state transitions, auditability, and consistency under failure matter — corporate lending, KYC, trade settlement, claims adjudication, and similar regulated workloads.',
+      'Cyoda exposes HTTP and gRPC APIs, so application and compute code can be written in any language that speaks them.',
   },
   {
-    question: 'Can I run the AI Assistant locally?',
+    question: 'How does Cyoda handle audit and compliance requirements?',
     answer:
-      'Yes. The AI Assistant is open source and runs on Cyoda Cloud, but you can self-host it, configure your own LLMs, and run it locally.',
+      "Auditability is structural, not bolted on: every entity carries its complete state history by construction. For specific compliance requirements — SOC 2, GDPR, data residency — contact the team and we'll walk through how a supported deployment meets them.",
   },
   {
-    question: 'How secure are applications built with Cyoda?',
+    question: 'Where do I go for help?',
     answer:
-      'Authentication, authorization, encryption, and audit are first-class concerns. Cyoda Cloud is operated to SOC 2 and GDPR standards.',
+      'The Discord community is the fastest place for hands-on questions. The documentation at docs.cyoda.net covers guides and API reference. For architecture or commercial questions, contact the team directly.',
+  },
+  {
+    question: 'Does Cyoda offer commercial support?',
+    answer:
+      'Yes. Enterprise Cyoda is the commercially supported path for production deployments — architecture reviews, deployment guidance, and ongoing support from the engineers who build the platform. Get in touch to discuss your requirements.',
   },
 ];
 
@@ -115,7 +126,7 @@ const Support = () => {
         description="Get help with Cyoda — documentation, Discord community, and direct support for engineering teams building stateful systems."
         url="https://cyoda.com/support"
         type="website"
-        jsonLd={organizationSchema}
+        jsonLd={[organizationSchema, faqPageSchema(faqs)]}
       />
       <Header />
       <main>
