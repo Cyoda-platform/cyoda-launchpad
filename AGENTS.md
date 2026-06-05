@@ -18,7 +18,7 @@ Do NOT create a new project. Work entirely within the existing codebase.
 - **Blog**: Markdown content in `src/content/`, indexed by `scripts/generate-blog-index.js`
 - **shadcn/ui**: Full component library in `src/components/ui/`
 - **Sitemap**: Generated at deploy time into `dist/sitemap.xml` by `scripts/prerender.mjs` from `src/routes.tsx` + published blog posts — do not hand-edit
-- **llms.txt**: Static file at `public/llms.txt`
+- **llms.txt**: Hand-written preamble at `scripts/llms-preamble.md`; `npm run build:static` appends a generated page index (dist/llms.txt) and writes dist/llms-full.txt (concatenated core-page markdown)
 
 ## Build Commands
 ```bash
@@ -64,7 +64,7 @@ Run `npm run build && npm run typecheck` after every task. Fix all errors before
 - `src/data/schemas.ts` ✅ — `organizationSchema` and breadcrumb schemas
 - All pages: unique title, description, canonical URL ✅
 - `dist/sitemap.xml` ✅ — generated at deploy time from `src/routes.tsx` (all prerendered routes + published posts)
-- `public/llms.txt` ✅ — describes three-site structure and Enterprise Cyoda
+- `scripts/llms-preamble.md` ✅ — llms.txt narrative (three-site structure, Enterprise Cyoda); index auto-generated at build
 
 ### Design System
 - Light mode default with teal primary (`--primary: 175 65% 32%`)
