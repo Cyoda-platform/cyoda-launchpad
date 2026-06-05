@@ -22,6 +22,7 @@ import { chromium } from 'playwright';
 import { JSDOM } from 'jsdom';
 import TurndownService from 'turndown';
 import { buildSitemapXml } from './sitemap.mjs';
+import { buildLlmsTxt, buildLlmsFullTxt, mdUrlFor } from './llms.mjs';
 
 const DIST = path.resolve('dist');
 const PORT = Number(process.env.PRERENDER_PORT ?? 4173);
@@ -217,6 +218,24 @@ function mdPathFor(routePath) {
     : path.join(DIST, `${routePath.replace(/^\//, '')}.md`);
 }
 
+// Extract description + canonical from captured helmet head tags.
+// Shared by generateMarkdown (frontmatter) and the llms.txt page index.
+function extractHeadMeta(headTags) {
+  let description = '';
+  for (const tagHtml of headTags) {
+    const m = tagHtml.match(/<meta[^>]+name="description"[^>]+content="([^"]*)"[^>]*>/i)
+      || tagHtml.match(/<meta[^>]+content="([^"]*)"[^>]+name="description"[^>]*>/i);
+    if (m) { description = m[1]; break; }
+  }
+  let canonical = '';
+  for (const tagHtml of headTags) {
+    const m = tagHtml.match(/<link[^>]+rel="canonical"[^>]+href="([^"]*)"[^>]*>/i)
+      || tagHtml.match(/<link[^>]+href="([^"]*)"[^>]+rel="canonical"[^>]*>/i);
+    if (m) { canonical = m[1]; break; }
+  }
+  return { description, canonical };
+}
+
 // Generate markdown content for a route.
 // Blog routes: copy the original source file verbatim.
 // Built pages: convert <main> innerHTML via Turndown with YAML frontmatter.
@@ -248,21 +267,7 @@ function generateMarkdown(target, snapshot, blogSourceBySlug) {
 
   const markdown = turndown.turndown(mainEl.innerHTML);
 
-  // Extract description from headTags (look for <meta name="description" ...>).
-  let description = '';
-  for (const tagHtml of snapshot.headTags) {
-    const m = tagHtml.match(/<meta[^>]+name="description"[^>]+content="([^"]*)"[^>]*>/i)
-      || tagHtml.match(/<meta[^>]+content="([^"]*)"[^>]+name="description"[^>]*>/i);
-    if (m) { description = m[1]; break; }
-  }
-
-  // Extract canonical URL from headTags.
-  let canonical = '';
-  for (const tagHtml of snapshot.headTags) {
-    const m = tagHtml.match(/<link[^>]+rel="canonical"[^>]+href="([^"]*)"[^>]*>/i)
-      || tagHtml.match(/<link[^>]+href="([^"]*)"[^>]+rel="canonical"[^>]*>/i);
-    if (m) { canonical = m[1]; break; }
-  }
+  const { description, canonical } = extractHeadMeta(snapshot.headTags);
 
   // Escape double quotes in frontmatter strings.
   const escFm = (s) => s.replace(/"/g, '\\"');
@@ -324,6 +329,8 @@ const failures = [];
 const outputs = new Map();
 // Markdown siblings — also held in memory until Step 5.
 const mdOutputs = new Map();
+// Per-page head meta (title/description/canonical) for the llms.txt index.
+const pageMeta = new Map();
 
 async function worker() {
   const context = await browser.newContext();
@@ -335,6 +342,7 @@ async function worker() {
       const snapshot = await capture(page, target);
       outputs.set(target.path, mergeIntoShell(cleanShell, snapshot, target.path));
       mdOutputs.set(target.path, generateMarkdown(target, snapshot, blogSourceBySlug));
+      pageMeta.set(target.path, { title: snapshot.title, ...extractHeadMeta(snapshot.headTags) });
       console.log(`✅ ${target.path}`);
     } catch (error) {
       failures.push(`${target.path}: ${error.message}`);
@@ -372,6 +380,39 @@ for (const [routePath, md] of mdOutputs) {
   fs.mkdirSync(path.dirname(mdPath), { recursive: true });
   fs.writeFileSync(mdPath, md);
 }
+
+// llms.txt = hand-written preamble + generated page index; llms-full.txt =
+// concatenated .md siblings of the core pages. Legal pages are linked but not
+// inlined; blog posts are linked under ## Optional. Alias routes (three
+// use-case URLs render one page) share a canonical and are listed once.
+const LEGAL_PATHS = new Set(['/privacy-policy', '/terms-of-service', '/cookie-policy']);
+const seenCanonicals = new Set();
+const corePages = [];
+const optionalPages = [];
+for (const target of targets) {
+  if (target.path.startsWith('/blog/')) continue;
+  const meta = pageMeta.get(target.path);
+  if (meta.canonical) {
+    if (seenCanonicals.has(meta.canonical)) continue;
+    seenCanonicals.add(meta.canonical);
+  }
+  const page = { path: target.path, title: meta.title, description: meta.description };
+  (LEGAL_PATHS.has(target.path) ? optionalPages : corePages).push(page);
+}
+const llmsPreamble = fs.readFileSync(path.resolve('scripts/llms-preamble.md'), 'utf8');
+const llmsTxt = buildLlmsTxt({
+  siteOrigin: SITE_ORIGIN,
+  preamble: llmsPreamble,
+  pages: corePages,
+  optionalPages,
+  blogPosts: publishedPosts,
+});
+fs.writeFileSync(path.join(DIST, 'llms.txt'), llmsTxt);
+const llmsFullTxt = buildLlmsFullTxt({
+  siteOrigin: SITE_ORIGIN,
+  sections: corePages.map((p) => ({ markdown: mdOutputs.get(p.path) })),
+});
+fs.writeFileSync(path.join(DIST, 'llms-full.txt'), llmsFullTxt);
 
 // 404.html = the clean SPA shell (NOT prerendered homepage content): genuine
 // 404s boot the SPA for client-side recovery without serving homepage
@@ -451,11 +492,10 @@ for (const target of targets) {
   }
 }
 
-// The sitemap must contain exactly the prerendered URL set + /llm/ + /llms.txt.
+// The sitemap must contain exactly the prerendered URL set + /llms.txt.
 const sitemapLocs = new Set([...sitemapXml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]));
 const expectedLocs = new Set([
   ...targets.map((t) => (t.path === '/' ? `${SITE_ORIGIN}/` : `${SITE_ORIGIN}${t.path}`)),
-  `${SITE_ORIGIN}/llm/`,
   `${SITE_ORIGIN}/llms.txt`,
 ]);
 for (const loc of expectedLocs) {
@@ -465,8 +505,32 @@ for (const loc of sitemapLocs) {
   if (!expectedLocs.has(loc)) verifyErrors.push(`sitemap.xml: unexpected <loc>${loc}</loc>`);
 }
 
+// llms.txt must link every unique page exactly once and every published post.
+for (const page of [...corePages, ...optionalPages]) {
+  const link = `(${mdUrlFor(SITE_ORIGIN, page.path)})`;
+  const count = llmsTxt.split(link).length - 1;
+  if (count !== 1) verifyErrors.push(`llms.txt: expected exactly 1 link to ${page.path}, found ${count}`);
+}
+for (const post of publishedPosts) {
+  if (!llmsTxt.includes(`(${SITE_ORIGIN}/blog/${post.slug}.md)`)) {
+    verifyErrors.push(`llms.txt: missing blog link for ${post.slug}`);
+  }
+}
+if (llmsTxt.includes('localhost')) verifyErrors.push('llms.txt: preview origin leaked');
+// llms-full.txt must inline every core page and no legal page.
+for (const page of corePages) {
+  if (!llmsFullTxt.includes(`title: "${page.title.replace(/"/g, '\\"')}"`)) {
+    verifyErrors.push(`llms-full.txt: missing section for ${page.path}`);
+  }
+}
+for (const legalPath of LEGAL_PATHS) {
+  if (llmsFullTxt.includes(`canonical: ${SITE_ORIGIN}${legalPath}`)) {
+    verifyErrors.push(`llms-full.txt: legal page ${legalPath} must not be inlined`);
+  }
+}
+
 if (verifyErrors.length > 0) {
   fail(`Output verification failed:\n  ${verifyErrors.join('\n  ')}`);
 }
 
-console.log(`\n🎉 Prerendered ${targets.length} routes; wrote ${targets.length} .md siblings, 404.html, and sitemap.xml.`);
+console.log(`\n🎉 Prerendered ${targets.length} routes; wrote ${targets.length} .md siblings, llms.txt (${corePages.length} pages + ${optionalPages.length} optional + ${publishedPosts.length} posts), llms-full.txt, 404.html, and sitemap.xml.`);
