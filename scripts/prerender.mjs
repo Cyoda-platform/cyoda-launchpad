@@ -396,8 +396,11 @@ for (const target of targets) {
     if (seenCanonicals.has(meta.canonical)) continue;
     seenCanonicals.add(meta.canonical);
   }
-  const page = { path: target.path, title: meta.title, description: meta.description };
-  (LEGAL_PATHS.has(target.path) ? optionalPages : corePages).push(page);
+  // List the canonical path, not the crawled one — alias routes must never
+  // surface an alias URL in llms.txt, regardless of route order in routes.tsx.
+  const listedPath = meta.canonical ? new URL(meta.canonical).pathname : target.path;
+  const page = { path: listedPath, title: meta.title, description: meta.description, canonical: meta.canonical };
+  (LEGAL_PATHS.has(listedPath) ? optionalPages : corePages).push(page);
 }
 const llmsPreamble = fs.readFileSync(path.resolve('scripts/llms-preamble.md'), 'utf8');
 const llmsTxt = buildLlmsTxt({
@@ -517,10 +520,15 @@ for (const post of publishedPosts) {
   }
 }
 if (llmsTxt.includes('localhost')) verifyErrors.push('llms.txt: preview origin leaked');
-// llms-full.txt must inline every core page and no legal page.
+// llms-full.txt must inline every core page exactly once and no legal page.
+// Match on the canonical frontmatter line — unique per page, unlike titles.
 for (const page of corePages) {
-  if (!llmsFullTxt.includes(`title: "${page.title.replace(/"/g, '\\"')}"`)) {
-    verifyErrors.push(`llms-full.txt: missing section for ${page.path}`);
+  const needle = page.canonical
+    ? `canonical: ${page.canonical}\n`
+    : `title: "${page.title.replace(/"/g, '\\"')}"`;
+  const count = llmsFullTxt.split(needle).length - 1;
+  if (count !== 1) {
+    verifyErrors.push(`llms-full.txt: expected exactly 1 section for ${page.path}, found ${count}`);
   }
 }
 for (const legalPath of LEGAL_PATHS) {
