@@ -16,7 +16,7 @@ tags: ["comparison", "platform", "enterprise", "workflow", "cloud-native", "data
 
 Building mission-critical backend systems typically requires assembling databases, workflow engines, message queues, and custom glue code to connect them. As requirements grow (audit trails, transactional consistency, regulatory compliance), that glue code becomes the bottleneck.
 
-Cyoda reduces this fragmentation with a single platform built around an **Entity Database** — where business entities carry their own data, state, and lifecycle logic via finite state machines. The result: fewer moving parts, core non-functional requirements (consistency, auditability, scalability) handled as platform concerns, and a structured configuration surface that AI tools can operate against via well-defined APIs and JSON artefacts.
+Cyoda reduces this fragmentation with a single platform built around an **Entity Database** — where business entities carry their own data, state, and lifecycle logic via finite state machines. The result: fewer moving parts, core non-functional requirements (consistency, auditability, scalability) handled as platform concerns, and a structured configuration surface that modern AI coding agents can operate against via well-defined APIs and JSON artefacts.
 
 This comparison maps Cyoda against tools you may already evaluate, grouped by category.
 
