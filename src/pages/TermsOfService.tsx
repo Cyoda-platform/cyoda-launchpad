@@ -22,7 +22,7 @@ const TermsOfService = () => {
                 Website Terms of Use
               </h1>
               <p className="legal-hero-subtitle mb-4 sm:mb-6">
-                Effective Date: June 4, 2026
+                Effective Date: June 6, 2026
               </p>
             </div>
           </div>
@@ -45,6 +45,8 @@ const TermsOfService = () => {
               <p>
                 Cyoda Limited is a company registered in England and Wales under company number 09755017,
                 with its registered office at 1 Darell Road, Richmond, London, TW9 4LF, United Kingdom.
+                Our VAT registration number is GB314619905. You can contact us using the details in
+                Section 14 below.
               </p>
 
               <h2>2. Changes to These Terms</h2>
@@ -73,7 +75,17 @@ const TermsOfService = () => {
                 <li>Use automated systems to access the Site in a manner that sends more requests than a human could reasonably produce, except for reasonable use of search engine crawlers, AI agents, and similar tools accessing publicly available content.</li>
               </ul>
 
-              <h2>5. Intellectual Property</h2>
+              <h2>5. Your Submissions</h2>
+              <p>
+                The Site includes forms through which you can contact us or register interest in future
+                products (for example, the Cyoda Cloud waitlist). Personal data you submit through the Site
+                is handled as described in our Privacy Policy. You confirm that any information you submit
+                is accurate and that you are entitled to provide it, and you must not submit any material
+                that is unlawful, infringing, or harmful. We may use your submissions to respond to you and
+                to provide what you have requested (for example, contacting you about a waitlist place).
+              </p>
+
+              <h2>6. Intellectual Property</h2>
               <p>
                 Unless otherwise stated, we are the owner or licensee of all intellectual property rights in
                 the Site and in the material published on it, including text, graphics, logos, and software.
@@ -84,7 +96,9 @@ const TermsOfService = () => {
                 You may view, download, and print pages or content from the Site for your personal or
                 internal business use, provided you do not modify the materials and do not remove any
                 copyright or other proprietary notices. You must not use any part of the content on the Site
-                for commercial purposes without obtaining a licence to do so from us.
+                for commercial purposes without obtaining a licence to do so from us. Nothing in this section
+                restricts any use permitted by applicable law (for example, fair dealing for the purposes of
+                criticism, review, or quotation).
               </p>
               <p>
                 Nothing in these Terms grants you any rights to use Cyoda's trademarks, logos, or domain
@@ -93,7 +107,7 @@ const TermsOfService = () => {
                 these Terms.
               </p>
 
-              <h2>6. Information on the Site Is Not Advice</h2>
+              <h2>7. Information on the Site Is Not Advice</h2>
               <p>
                 The content on the Site, including blog posts, comparisons, and technical documentation, is
                 provided for general information only. It is not intended to amount to advice on which you
@@ -103,7 +117,7 @@ const TermsOfService = () => {
                 guarantees, whether express or implied, that the content is accurate, complete, or current.
               </p>
 
-              <h2>7. Third-Party Links</h2>
+              <h2>8. Third-Party Links</h2>
               <p>
                 Where the Site contains links to other sites and resources provided by third parties, these
                 links are provided for your information only. Such links should not be interpreted as approval
@@ -111,40 +125,46 @@ const TermsOfService = () => {
                 control over the contents of those sites or resources.
               </p>
 
-              <h2>8. Privacy and Cookies</h2>
+              <h2>9. Privacy and Cookies</h2>
               <p>
                 Our{' '}
                 <a href="/privacy-policy" className="text-primary hover:underline">Privacy Policy</a>{' '}
                 describes how we collect and use personal data in connection with the Site, and our{' '}
                 <a href="/cookie-policy" className="text-primary hover:underline">Cookie Policy</a>{' '}
-                describes the cookies the Site uses. By using the Site, you acknowledge that such processing
-                takes place as described in those policies.
+                describes the cookies the Site uses. Our use of non-essential cookies is based on the consent
+                you give or refuse through the cookie banner on the Site, as described in the Cookie Policy.
+                By using the Site, you acknowledge the Privacy Policy and the Cookie Policy.
               </p>
 
-              <h2>9. Disclaimer of Warranties</h2>
-              <div className="bg-yellow-500/20 border border-yellow-500/30 rounded-xl p-6 my-6">
-                <p className="text-yellow-900 dark:text-yellow-100 font-medium">
-                  THE SITE AND ITS CONTENT ARE PROVIDED "AS IS" AND "AS AVAILABLE." TO THE MAXIMUM EXTENT
-                  PERMITTED BY APPLICABLE LAW, CYODA EXCLUDES ALL CONDITIONS, WARRANTIES, REPRESENTATIONS,
-                  AND OTHER TERMS THAT MAY APPLY TO THE SITE OR ANY CONTENT ON IT, WHETHER EXPRESS OR IMPLIED.
-                </p>
-              </div>
-
-              <h2>10. Limitation of Liability</h2>
+              <h2>10. Disclaimer and Limitation of Liability</h2>
               <p>
                 Nothing in these Terms excludes or limits our liability for death or personal injury arising
                 from our negligence, for fraud or fraudulent misrepresentation, or for any other liability
-                that cannot be excluded or limited under the law of England and Wales.
+                that cannot be excluded or limited under the law of England and Wales. If you are a consumer,
+                nothing in these Terms affects your statutory rights.
               </p>
               <p>
-                Subject to the paragraph above: we exclude all implied conditions, warranties, representations,
-                and other terms that may apply to the Site or any content on it; and we will not be liable to
-                you for any loss or damage, whether in contract, tort (including negligence), breach of
-                statutory duty, or otherwise, even if foreseeable, arising under or in connection with the use
-                of, or inability to use, the Site, or the use of or reliance on any content displayed on the
-                Site. In particular, we will not be liable for any loss of profits, sales, business, or
-                revenue; business interruption; loss of anticipated savings; loss of business opportunity,
-                goodwill, or reputation; or any indirect or consequential loss or damage.
+                The Site is provided free of charge for general information. To the fullest extent permitted
+                by applicable law, we exclude all conditions, warranties, and other terms that may be implied
+                into these Terms by statute or common law, and we do not guarantee that the Site will be
+                secure or free from bugs or viruses. You are responsible for configuring your own technology
+                to access the Site and should use your own virus protection software.
+              </p>
+              <p>
+                <strong>If you are a business user:</strong> we will not be liable to you for any loss or
+                damage, whether in contract, tort (including negligence), breach of statutory duty, or
+                otherwise, even if foreseeable, arising under or in connection with your use of (or inability
+                to use) the Site or your reliance on any content on it. In particular, we will not be liable
+                for loss of profits, sales, business, or revenue; business interruption; loss of anticipated
+                savings; loss of business opportunity, goodwill, or reputation; or any indirect or
+                consequential loss or damage.
+              </p>
+              <p>
+                <strong>If you are a consumer:</strong> you agree to use the Site only for domestic and
+                private purposes, and we will not be liable to you for any loss of profit, loss of business,
+                business interruption, or loss of business opportunity. We are responsible only for loss or
+                damage you suffer that is a foreseeable result of our breach of these Terms or our failure to
+                use reasonable care and skill.
               </p>
 
               <h2>11. Products and Services</h2>
@@ -155,20 +175,46 @@ const TermsOfService = () => {
                 purchase that product or service.
               </p>
 
-              <h2>12. Governing Law and Jurisdiction</h2>
+              <h2>12. General</h2>
+              <ul>
+                <li>
+                  <strong>Severability:</strong> Each section of these Terms operates separately. If any court
+                  or competent authority decides that any of them is unlawful or unenforceable, the remaining
+                  sections will remain in full force and effect.
+                </li>
+                <li>
+                  <strong>No waiver:</strong> If we fail to insist that you perform any of your obligations
+                  under these Terms, or if we do not enforce our rights against you, or delay in doing so,
+                  that will not mean that we have waived our rights against you.
+                </li>
+                <li>
+                  <strong>Third-party rights:</strong> These Terms are between you and us. No other person has
+                  any rights under the Contracts (Rights of Third Parties) Act 1999 to enforce any of these
+                  Terms.
+                </li>
+              </ul>
+
+              <h2>13. Governing Law and Jurisdiction</h2>
               <p>
                 These Terms, their subject matter, and their formation (and any non-contractual disputes or
-                claims) are governed by the law of England and Wales. You and we both agree that the courts
-                of England and Wales will have exclusive jurisdiction.
+                claims) are governed by the law of England and Wales. If you are a business, you and we agree
+                that the courts of England and Wales will have exclusive jurisdiction. If you are a consumer,
+                you may also bring proceedings in the courts of the part of the United Kingdom in which you
+                live.
               </p>
 
-              <h2>13. Contact</h2>
-              <p>If you have any questions about these Terms, please contact us.</p>
+              <h2>14. Contact</h2>
+              <p>
+                If you have any questions about these Terms, please contact us using the details below or via
+                our <a href="/contact" className="text-primary hover:underline">contact form</a>.
+              </p>
 
               <div className="legal-card page-break-inside-avoid">
                 <p className="mb-2 sm:mb-3"><strong>Cyoda Limited</strong></p>
                 <p className="mb-2 sm:mb-3">Company number 09755017 (England and Wales)</p>
+                <p className="mb-2 sm:mb-3">VAT registration number: GB314619905</p>
                 <p className="mb-2 sm:mb-3">1 Darell Road, Richmond, London, TW9 4LF, United Kingdom</p>
+                <p className="mb-2 sm:mb-3">Email: <a href="mailto:info@cyoda.com" className="text-primary hover:underline">info@cyoda.com</a></p>
                 <p>Website: <a href="https://cyoda.com" className="text-primary hover:underline">https://cyoda.com</a></p>
               </div>
             </div>
