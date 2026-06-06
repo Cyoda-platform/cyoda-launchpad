@@ -31,7 +31,9 @@ Core capabilities:
 
 Every page on cyoda.com is also available as plain markdown: append `.md` to
 any page URL (e.g. https://cyoda.com/use-cases/loan-lifecycle.md). Blog posts
-serve their original markdown source.
+serve their original markdown source. The concatenated markdown of all core
+pages is available at https://cyoda.com/llms-full.txt. A generated link index
+of every page follows at the end of this file.
 
 ## Who It Is For
 

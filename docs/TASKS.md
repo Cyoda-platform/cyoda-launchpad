@@ -60,7 +60,7 @@ to `src/routes.tsx` — do not hand-edit a sitemap.
 ---
 
 ### T05 · [MODIFY] Update llms.txt
-**File**: `public/llms.txt`
+**File**: `scripts/llms-preamble.md`
 **Instructions**: Replace the entire file contents with the new description from REQ-LLMS
 (REQUIREMENTS.md). Copy it verbatim — do not paraphrase.
 
@@ -358,7 +358,7 @@ On submit: `console.log(data)` + show success message.
 | T02 | MODIFY | All `src/pages/` + SEO.tsx               | 1-SEO | Identical titles/metas|
 | T03 | MODIFY | `src/pages/Cto.tsx`                      | 1-SEO | Duplicate H1          |
 | T04 | DONE   | `dist/sitemap.xml` (generated)           | 1-SEO | Sitemap now generated |
-| T05 | MODIFY | `public/llms.txt`                        | 1-AI  | Weak description      |
+| T05 | MODIFY | `scripts/llms-preamble.md`               | 1-AI  | Weak description      |
 | T06 | MODIFY | SEO.tsx + all pages                      | 2-SD  | Zero structured data  |
 | T08 | MODIFY | 4 use-case detail pages                  | 2-SD  | BreadcrumbList        |
 | T09 | MODIFY | `DeveloperReliabilitySection.tsx`        | 3-AI  | Warehouse entity model|

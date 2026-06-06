@@ -53,26 +53,6 @@
     ],
     "image": "/images/blogs/Illustration of an Entity Database Management System (EDBMS).webp"
   },
-  "agentic-ai-with-cyoda.md": {
-    "slug": "agentic-ai-with-cyoda",
-    "title": "Building Agentic AI Applications with Cyoda Online Platform",
-    "author": "Patrick Stanton",
-    "date": "2025-09-05",
-    "category": "AI",
-    "excerpt": "Cyoda's online platform enables developers to create agentic AI applications faster, safer, and with greater reliability. By combining entity-centric design, workflows, and transactional consistency, Cyoda provides a powerful alternative to traditional AI development stacks.",
-    "readTime": "4 min read",
-    "wordCount": 657,
-    "featured": false,
-    "published": false,
-    "tags": [
-      "agentic AI",
-      "Cyoda",
-      "platform",
-      "AI Assistant",
-      "workflows"
-    ],
-    "image": "/images/blogs/ai-assistant.png"
-  },
   "asynchronous-workflow-automation.md": {
     "slug": "asynchronous-workflow-automation",
     "title": "Asynchronous Workflow Automation: State Machines as First-Class Citizens",
@@ -119,9 +99,9 @@
     "author": "Cyoda Team",
     "date": "2026-02-18",
     "category": "Platform",
-    "excerpt": "How Cyoda compares to workflow engines, databases, cloud-native orchestrators, data platforms, and AI developer tools — and where it fits in your stack.",
-    "readTime": "8 min read",
-    "wordCount": 1550,
+    "excerpt": "How Cyoda compares to workflow engines, databases, cloud-native orchestrators, and data platforms — and where it fits in your stack.",
+    "readTime": "7 min read",
+    "wordCount": 1233,
     "featured": false,
     "published": true,
     "tags": [

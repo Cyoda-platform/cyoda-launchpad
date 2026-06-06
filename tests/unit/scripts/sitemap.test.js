@@ -33,9 +33,9 @@ describe('buildSitemapXml', () => {
     expect(xml).not.toContain('<priority>');
   });
 
-  it('preserves the static /llm/ and /llms.txt entries', () => {
-    expect(xml).toContain(`<loc>${ORIGIN}/llm/</loc>`);
+  it('preserves the /llms.txt entry and omits the retired /llm/ page', () => {
     expect(xml).toContain(`<loc>${ORIGIN}/llms.txt</loc>`);
+    expect(xml).not.toContain(`<loc>${ORIGIN}/llm/</loc>`);
   });
 
   it('escapes XML-special characters in loc values', () => {

@@ -3,7 +3,7 @@ title: "Cyoda vs. the Alternatives: A Platform Comparison for Technical Decision
 author: "Cyoda Team"
 date: "2026-02-18"
 category: "Platform"
-excerpt: "How Cyoda compares to workflow engines, databases, cloud-native orchestrators, data platforms, and AI developer tools — and where it fits in your stack."
+excerpt: "How Cyoda compares to workflow engines, databases, cloud-native orchestrators, and data platforms — and where it fits in your stack."
 featured: false
 published: true
 image: "/images/blogs/comparison_overview.png"
@@ -16,7 +16,7 @@ tags: ["comparison", "platform", "enterprise", "workflow", "cloud-native", "data
 
 Building mission-critical backend systems typically requires assembling databases, workflow engines, message queues, and custom glue code to connect them. As requirements grow (audit trails, transactional consistency, regulatory compliance), that glue code becomes the bottleneck.
 
-Cyoda reduces this fragmentation with a single platform built around an **Entity Database** — where business entities carry their own data, state, and lifecycle logic via finite state machines. The result: fewer moving parts, core non-functional requirements (consistency, auditability, scalability) handled as platform concerns, and a structured configuration surface that AI tools can operate against via well-defined APIs and JSON artefacts.
+Cyoda reduces this fragmentation with a single platform built around an **Entity Database** — where business entities carry their own data, state, and lifecycle logic via finite state machines. The result: fewer moving parts, core non-functional requirements (consistency, auditability, scalability) handled as platform concerns, and a structured configuration surface that modern AI coding agents can operate against via well-defined APIs and JSON artefacts.
 
 This comparison maps Cyoda against tools you may already evaluate, grouped by category.
 
@@ -63,28 +63,7 @@ Cloud-provider orchestrators work well within their ecosystems. Cyoda provides c
 
 ---
 
-## 4. AI Coding Tools and Cyoda AI Studio
-
-General-purpose AI coding tools (IDE assistants and coding agents) help developers write and refactor code in a repository. Cyoda AI Studio serves a different purpose: it helps teams design and evolve systems on Cyoda — working with Cyoda-specific concepts such as entity models, lifecycle state machines, integrations, and service scaffolding.
-
-AI Studio does not compete with tools like IDE copilots and coding agents. It works alongside them. In practice, those tools implement the services and tasks that fall out of a Cyoda build.
-
-**How teams typically combine them:**
-
-- **Cyoda AI Studio** translates requirements into Cyoda-specific artefacts (entity models, lifecycle definitions) and maintains consistency as requirements change.The AI Studio proposes and iterates these artefacts with the developer; it does not replace engineering review, testing, or standard CI/CD
-- **General coding agents / IDE assistants** implement client services, integrations, tests, and surrounding application code in whatever language and toolchain the team prefers.
-- **Optionally:** teams can take the Cyoda system context and generate a task list for any coding agent to execute against the repo and Cyoda APIs. The AI context files are avaliable in the open source template projects in GitHub.
-
-| Tool type | What it handles | How it pairs with Cyoda |
-|-----------|----------------|------------------------|
-| IDE assistants / coding agents | Editing code, refactors, tests, PRs | Implement client services and integrations that interact with Cyoda via gRPC |
-| Cyoda AI Studio | Cyoda-specific modelling and system evolution | Produces and maintains Cyoda artefacts (entity schemas, state machines, data contracts) |
-
-**When this matters:** If your backend involves long-lived entity lifecycles, audit requirements, and deterministic state transitions, Cyoda provides a structured surface area that AI tools can operate against more reliably than an ad-hoc stack of disconnected components. Cyoda makes the platform layer AI-operable; your preferred coding tool makes the code layer faster.
-
----
-
-## 5. Databases
+## 4. Databases
 
 This comparison addresses the most fundamental question: why not use a database and build the rest yourself?
 
@@ -111,6 +90,6 @@ Cyoda reduces the custom glue code required across databases, workflow engines, 
 - **Auditability:** Immutable history and point-in-time querying as platform concerns.
 - **Horizontal scalability:** Cassandra-backed distributed storage.
 - **Cloud-agnostic deployment:** Cyoda Cloud, on-prem K8s, or container images.
-- **AI-operability:** JSON-driven models and state machines exposed via well-defined APIs — operable by Cyoda AI Studio or any modern coding agent.
+- **AI-operability:** JSON-driven models and state machines exposed via well-defined APIs — operable by any modern AI coding agent.
 
 If your team spends more time on platform plumbing than product logic, or you face a "prototype-to-production wall" driven by compliance and scalability requirements, Cyoda consolidates the data/state/workflow layer into a single platform.

@@ -46,15 +46,16 @@ Change the second `<h1>` to `<h2>`. Do not change any other content on the page.
 `sitemap.xml` is no longer a checked-in file. `scripts/prerender.mjs` (run by
 the deploy workflow after `vite build`) generates `dist/sitemap.xml` from
 `src/routes.tsx` (every `prerender: true` route) plus the published blog slugs
-in `src/data/blog-index.json`, and preserves the static `/llm/` and `/llms.txt`
-entries. URLs carry no `changefreq`/`priority`; blog URLs set `lastmod` from
+in `src/data/blog-index.json`. `/llms.txt` is generated at build from
+`scripts/llms-preamble.md` plus a page index and is listed in the sitemap;
+`/llm/` is a retired noindex redirect stub and is not in the sitemap. URLs carry no `changefreq`/`priority`; blog URLs set `lastmod` from
 the post date. Do not hand-edit a sitemap — add routes to `src/routes.tsx`
 instead. Note: `npm run dev` and a bare `vite build` produce no `/sitemap.xml`;
 only the full pipeline (`npm run build:static` or the deploy workflow) does.
 
 ---
 
-## REQ-LLMS: Update `public/llms.txt`
+## REQ-LLMS: Update `scripts/llms-preamble.md`
 
 Replace the current description with:
 

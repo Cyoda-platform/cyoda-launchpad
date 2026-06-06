@@ -2,7 +2,6 @@
   "A_Technical_Description_of_the_Cyoda_Platform.md",
   "Entity_Workflows_for_Event-Driven_Architectures.md",
   "Whats_an_Entity_Database.md",
-  "agentic-ai-with-cyoda.md",
   "asynchronous-workflow-automation.md",
   "beyond-traditional-databases.md",
   "cyoda_comparison_by_category.md",
@@ -13,7 +12,5 @@
   "querying-the-past.md",
   "the-future-of-cyoda-cloud.md",
   "when-transactions-meet-workflows.md",
-  "demo_to_PoC_in_fintech.md",
-  "cyoda_comparison_by_category.md"
-
+  "demo_to_PoC_in_fintech.md"
 ]
