@@ -154,7 +154,7 @@ const PrivacyPolicy = () => {
               </p>
               <div className="legal-card page-break-inside-avoid">
                 <p className="mb-2 sm:mb-3"><strong>Email address:</strong> <a href="mailto:infosec@cyoda.com" className="text-primary hover:underline">infosec@cyoda.com</a></p>
-                <p className="mb-2 sm:mb-3"><strong>Postal address:</strong> Cyoda Ltd, 1 Darell Road, Richmond, London, TW9 4LF</p>
+                <p className="mb-2 sm:mb-3"><strong>Postal address:</strong> Cyoda Limited, 1 Darell Road, Richmond, London, TW9 4LF</p>
                 <p>You have the right to make a complaint to the supervisory authority if you are unhappy with how we've handled your Personal Information. In the UK, the supervisory authority is the <a href="http://www.ico.org.uk" className="text-primary hover:underline">Information Commissioner's Office</a>.</p>
               </div>
             </div>

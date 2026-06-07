@@ -6,8 +6,8 @@ const TermsOfService = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Alpha/Beta Terms of Service"
-        description="Terms of Service for Cyoda's alpha and beta versions. Learn about your rights and responsibilities when using our experimental services."
+        title="Website Terms of Use"
+        description="Terms of use for the cyoda.com website, operated by Cyoda Limited (UK). Covers acceptable use, intellectual property, disclaimers, and governing law."
         type="website"
       />
       <Header />
@@ -19,17 +19,11 @@ const TermsOfService = () => {
           <div className="legal-container relative z-10">
             <div className="text-center legal-content-width">
               <h1 className="legal-hero-title mb-4 sm:mb-6 lg:mb-8">
-                Alpha/Beta Terms of Service
+                Website Terms of Use
               </h1>
               <p className="legal-hero-subtitle mb-4 sm:mb-6">
-                Effective Date: June 2, 2025
+                Effective Date: June 6, 2026
               </p>
-              <div className="bg-yellow-500/20 border border-yellow-500/30 rounded-xl p-4 sm:p-6 lg:p-8 mt-6 sm:mt-8 text-left page-break-inside-avoid">
-                <p className="text-sm sm:text-base font-medium text-yellow-900 dark:text-yellow-200 mb-2 sm:mb-3">IMPORTANT NOTICE</p>
-                <p className="text-sm sm:text-base text-yellow-900 dark:text-yellow-100 leading-relaxed">
-                  PLEASE READ THESE TERMS OF SERVICE CAREFULLY. BY ACCESSING OR USING THE SERVICES, YOU AGREE TO BE BOUND BY THESE TERMS. IF YOU DO NOT AGREE TO ALL OF THESE TERMS, DO NOT ACCESS OR USE THE SERVICES.
-                </p>
-              </div>
             </div>
           </div>
         </section>
@@ -38,129 +32,189 @@ const TermsOfService = () => {
         <section className="legal-section-spacing relative">
           <div className="legal-container">
             <div className="legal-content-width legal-document">
-              
+
               <p className="lead">
-                Welcome to Cyoda! These Terms of Service ("Terms") govern your access to and use of the alpha or beta versions (the "Alpha/Beta Period") of Cyoda's products and services, including the Cyoda Cloud, Cyoda Platform, and AI Assistant (collectively, the "Services"). These Services are provided by Cyoda Limited, a company registered in the United Kingdom ("Cyoda", "we", "us", or "our").
+                These terms of use ("Terms") govern your access to and use of the website at{' '}
+                <a href="https://cyoda.com" className="text-primary hover:underline">https://cyoda.com</a>{' '}
+                (the "Site"). The Site is operated by Cyoda Limited ("Cyoda", "we", "us", or "our").
+                By using the Site, you confirm that you accept these Terms and agree to comply with them.
+                If you do not agree to these Terms, do not use the Site.
               </p>
+
+              <h2>1. Who We Are</h2>
               <p>
-                These Terms constitute a legally binding agreement between you ("User", "you", or "your") and Cyoda.
+                Cyoda Limited is a company registered in England and Wales under company number 09755017,
+                with its registered office at 1 Darell Road, Richmond, London, TW9 4LF, United Kingdom.
+                Our VAT registration number is GB314619905. You can contact us using the details in
+                Section 14 below.
               </p>
 
-              <h2>1. Definitions</h2>
-              <div className="space-y-4">
-                <div className="bg-card/20 backdrop-blur border border-border/50 p-4 rounded-lg">
-                  <p><strong>AI Assistant:</strong> Cyoda's artificial intelligence tool designed to assist users in building applications, accessed via a cloud-hosted interface provided by Cyoda.</p>
-                </div>
-                <div className="bg-card/20 backdrop-blur border border-border/50 p-4 rounded-lg">
-                  <p><strong>Alpha/Beta Period:</strong> The current experimental phase during which the Services are offered for testing and feedback purposes before a general commercial release.</p>
-                </div>
-                <div className="bg-card/20 backdrop-blur border border-border/50 p-4 rounded-lg">
-                  <p><strong>Cyoda Cloud:</strong> The managed cloud environment provided by Cyoda where users can host applications built on the Cyoda Platform.</p>
-                </div>
-                <div className="bg-card/20 backdrop-blur border border-border/50 p-4 rounded-lg">
-                  <p><strong>Services:</strong> Collectively, the Cyoda Cloud, Cyoda Platform, and AI Assistant as offered during the Alpha/Beta Period.</p>
-                </div>
-              </div>
-
-              <h2>2. Acceptance of Terms</h2>
+              <h2>2. Changes to These Terms</h2>
               <p>
-                By creating an account, accessing, or using any part of the Services, you acknowledge that you have read, understood, and agree to be bound by these Terms. If you are using the Services on behalf of an organization, you represent and warrant that you have the authority to bind that organization to these Terms, and "you" and "your" will refer to that organization.
+                We may revise these Terms at any time by amending this page. The "Effective Date" above
+                indicates when these Terms were last updated. Please check this page from time to time,
+                as the version in force at the time you use the Site is the version that applies.
               </p>
 
-              <h2>3. Scope of Services & Alpha/Beta Nature</h2>
-              <div className="bg-red-500/20 border border-red-500/30 rounded-xl p-6 my-6">
-                <h3 className="text-red-900 dark:text-red-200 mt-0">Important Alpha/Beta Limitations</h3>
-                <ul className="text-red-900 dark:text-red-100 space-y-2">
-                  <li><strong>Experimental Services:</strong> You acknowledge that the Services are provided during an Alpha/Beta Period and are experimental, pre-release versions. They may contain bugs, errors, and defects, and may not operate correctly or continuously.</li>
-                  <li><strong>"AS IS" and "AS AVAILABLE":</strong> The Services are provided strictly on an "AS IS" and "AS AVAILABLE" basis, without any warranties or representations of any kind, express or implied.</li>
-                  <li><strong>No Service Level Agreement (SLA):</strong> Cyoda provides NO SERVICE LEVEL AGREEMENT (SLA) during the Alpha/Beta Period.</li>
-                  <li><strong>Not for Production Use:</strong> The Services, in their current Alpha/Beta state, are NOT INTENDED OR WARRANTED FOR PRODUCTION USE.</li>
-                </ul>
-              </div>
+              <h2>3. Changes to the Site</h2>
+              <p>
+                We may update and change the Site and its content at any time and without notice. The Site
+                is made available free of charge. We do not guarantee that the Site, or any content on it,
+                will always be available, uninterrupted, or error-free, and we may suspend, withdraw, or
+                restrict the availability of all or any part of the Site for business or operational reasons.
+              </p>
 
-              <h2>4. Account Registration and Eligibility</h2>
+              <h2>4. Acceptable Use</h2>
+              <p>You may use the Site only for lawful purposes. You agree not to:</p>
               <ul>
-                <li><strong>Account Requirement:</strong> While contributing to Cyoda's open-source repositories may not require an account, accessing and using the Cyoda Platform to run applications requires you to register for an account.</li>
-                <li><strong>Accurate Information:</strong> You agree to provide accurate, current, and complete information during the registration process and to update such information to keep it accurate, current, and complete.</li>
-                <li><strong>Account Security:</strong> You are responsible for safeguarding your account password and for any activities or actions under your account.</li>
-                <li><strong>Eligibility:</strong> You must have the legal capacity to enter into a binding agreement to use the Services.</li>
+                <li>Use the Site in any way that breaches applicable local, national, or international law or regulation.</li>
+                <li>Use the Site in any way that is fraudulent or has any fraudulent or harmful purpose or effect.</li>
+                <li>Knowingly transmit any data or material that contains viruses or any other harmful programs or code.</li>
+                <li>Attempt to gain unauthorised access to the Site, the server on which it is hosted, or any server, computer, or database connected to it.</li>
+                <li>Attack the Site via a denial-of-service attack or similar, or otherwise interfere with or disrupt its integrity or performance.</li>
+                <li>Use automated systems to access the Site in a manner that sends more requests than a human could reasonably produce, except for reasonable use of search engine crawlers, AI agents, and similar tools accessing publicly available content.</li>
               </ul>
 
-              <h2>5. Use Rights and Restrictions</h2>
-              <h3>Limited License</h3>
+              <h2>5. Your Submissions</h2>
               <p>
-                Subject to your compliance with these Terms, Cyoda grants you a limited, non-exclusive, non-transferable, non-sublicensable, revocable license to access and use the Services during the Alpha/Beta Period solely for internal evaluation and testing purposes.
+                The Site includes forms through which you can contact us or register interest in future
+                products (for example, the Cyoda Cloud waitlist). Personal data you submit through the Site
+                is handled as described in our Privacy Policy. You confirm that any information you submit
+                is accurate and that you are entitled to provide it, and you must not submit any material
+                that is unlawful, infringing, or harmful. We may use your submissions to respond to you and
+                to provide what you have requested (for example, contacting you about a waitlist place).
               </p>
-              
-              <h3>Prohibited Uses</h3>
-              <p>You agree not to:</p>
+
+              <h2>6. Intellectual Property</h2>
+              <p>
+                Unless otherwise stated, we are the owner or licensee of all intellectual property rights in
+                the Site and in the material published on it, including text, graphics, logos, and software.
+                Those works are protected by copyright and other intellectual property laws and treaties
+                around the world. All such rights are reserved.
+              </p>
+              <p>
+                You may view, download, and print pages or content from the Site for your personal or
+                internal business use, provided you do not modify the materials and do not remove any
+                copyright or other proprietary notices. You must not use any part of the content on the Site
+                for commercial purposes without obtaining a licence to do so from us. Nothing in this section
+                restricts any use permitted by applicable law (for example, fair dealing for the purposes of
+                criticism, review, or quotation).
+              </p>
+              <p>
+                Nothing in these Terms grants you any rights to use Cyoda's trademarks, logos, or domain
+                names. Open-source Cyoda software is made available separately (for example via our public
+                repositories) and is governed by the open-source licence accompanying that software, not by
+                these Terms.
+              </p>
+
+              <h2>7. Information on the Site Is Not Advice</h2>
+              <p>
+                The content on the Site, including blog posts, comparisons, and technical documentation, is
+                provided for general information only. It is not intended to amount to advice on which you
+                should rely. You must obtain professional or specialist advice before taking, or refraining
+                from, any action on the basis of the content on the Site. Although we make reasonable efforts
+                to keep the information on the Site up to date, we make no representations, warranties, or
+                guarantees, whether express or implied, that the content is accurate, complete, or current.
+              </p>
+
+              <h2>8. Third-Party Links</h2>
+              <p>
+                Where the Site contains links to other sites and resources provided by third parties, these
+                links are provided for your information only. Such links should not be interpreted as approval
+                by us of those linked websites or of any information you may obtain from them. We have no
+                control over the contents of those sites or resources.
+              </p>
+
+              <h2>9. Privacy and Cookies</h2>
+              <p>
+                Our{' '}
+                <a href="/privacy-policy" className="text-primary hover:underline">Privacy Policy</a>{' '}
+                describes how we collect and use personal data in connection with the Site, and our{' '}
+                <a href="/cookie-policy" className="text-primary hover:underline">Cookie Policy</a>{' '}
+                describes the cookies the Site uses. Our use of non-essential cookies is based on the consent
+                you give or refuse through the cookie banner on the Site, as described in the Cookie Policy.
+                By using the Site, you acknowledge the Privacy Policy and the Cookie Policy.
+              </p>
+
+              <h2>10. Disclaimer and Limitation of Liability</h2>
+              <p>
+                Nothing in these Terms excludes or limits our liability for death or personal injury arising
+                from our negligence, for fraud or fraudulent misrepresentation, or for any other liability
+                that cannot be excluded or limited under the law of England and Wales. If you are a consumer,
+                nothing in these Terms affects your statutory rights.
+              </p>
+              <p>
+                The Site is provided free of charge for general information. To the fullest extent permitted
+                by applicable law, we exclude all conditions, warranties, and other terms that may be implied
+                into these Terms by statute or common law, and we do not guarantee that the Site will be
+                secure or free from bugs or viruses. You are responsible for configuring your own technology
+                to access the Site and should use your own virus protection software.
+              </p>
+              <p>
+                <strong>If you are a business user:</strong> we will not be liable to you for any loss or
+                damage, whether in contract, tort (including negligence), breach of statutory duty, or
+                otherwise, even if foreseeable, arising under or in connection with your use of (or inability
+                to use) the Site or your reliance on any content on it. In particular, we will not be liable
+                for loss of profits, sales, business, or revenue; business interruption; loss of anticipated
+                savings; loss of business opportunity, goodwill, or reputation; or any indirect or
+                consequential loss or damage.
+              </p>
+              <p>
+                <strong>If you are a consumer:</strong> you agree to use the Site only for domestic and
+                private purposes, and we will not be liable to you for any loss of profit, loss of business,
+                business interruption, or loss of business opportunity. We are responsible only for loss or
+                damage you suffer that is a foreseeable result of our breach of these Terms or our failure to
+                use reasonable care and skill.
+              </p>
+
+              <h2>11. Products and Services</h2>
+              <p>
+                These Terms govern use of the Site only. They do not govern the supply of any Cyoda product
+                or service. Any current or future Cyoda products or services — including any managed cloud
+                offering — will be governed by separate terms made available when you register for or
+                purchase that product or service.
+              </p>
+
+              <h2>12. General</h2>
               <ul>
-                <li>Use the Services for any illegal, harmful, or fraudulent activities.</li>
-                <li>Reverse engineer, decompile, disassemble, or otherwise attempt to discover the source code or underlying ideas or algorithms of the non-open-source components of the Services.</li>
-                <li>Conduct performance testing, benchmarking, or vulnerability scanning on the Services without prior written consent from Cyoda.</li>
-                <li>Use the Services in a manner that infringes upon the intellectual property rights of Cyoda or any third party.</li>
-                <li>Interfere with or disrupt the integrity or performance of the Services or the data contained therein.</li>
-                <li>Attempt to gain unauthorized access to the Services or their related systems or networks.</li>
-                <li>Use the Services for any production or commercial purposes during the Alpha/Beta period without explicit written agreement from Cyoda.</li>
+                <li>
+                  <strong>Severability:</strong> Each section of these Terms operates separately. If any court
+                  or competent authority decides that any of them is unlawful or unenforceable, the remaining
+                  sections will remain in full force and effect.
+                </li>
+                <li>
+                  <strong>No waiver:</strong> If we fail to insist that you perform any of your obligations
+                  under these Terms, or if we do not enforce our rights against you, or delay in doing so,
+                  that will not mean that we have waived our rights against you.
+                </li>
+                <li>
+                  <strong>Third-party rights:</strong> These Terms are between you and us. No other person has
+                  any rights under the Contracts (Rights of Third Parties) Act 1999 to enforce any of these
+                  Terms.
+                </li>
               </ul>
 
-              <h2>6. User Content Data Management</h2>
-              <div className="bg-blue-500/20 border border-blue-500/30 rounded-xl p-6 my-6">
-                <h3 className="text-blue-900 dark:text-blue-200 mt-0">Data We Use for AI Assistant Improvement</h3>
-                <p className="text-blue-900 dark:text-blue-100">
-                  To continuously develop, improve, and enhance the functionality, accuracy, safety, and overall performance of Our AI Assistant, Cyoda may use:
-                </p>
-                <ul className="text-blue-900 dark:text-blue-100">
-                  <li><strong>User Input Prompts:</strong> We may use Your User Input Prompts to understand user needs and refine the AI Assistant's ability to generate relevant and accurate responses.</li>
-                  <li><strong>AI-Generated Code:</strong> We may use the AI-Generated Code produced by Our AI Assistant to further teach, train, evaluate, and improve the AI Assistant.</li>
-                  <li><strong>Open Source Repository Contributions:</strong> If You voluntarily contribute to our designated open-source repositories, we may use these contributions for AI Assistant Improvement.</li>
-                </ul>
-              </div>
-
-              <div className="bg-green-500/20 border border-green-500/30 rounded-xl p-6 my-6">
-                <h3 className="text-green-900 dark:text-green-200 mt-0">Data We Do Not Access or Use</h3>
-                <p className="text-green-900 dark:text-green-100">
-                  <strong>User Application Data in Your Running System:</strong> Cyoda will not retrieve, copy, or use Your User Application Data that is located, stored, and managed within Your Running System for the purposes of AI Assistant Improvement, or for training, fine-tuning, or evaluating any of Cyoda's AI models or algorithms.
-                </p>
-              </div>
-
-              <h2>7. Intellectual Property</h2>
+              <h2>13. Governing Law and Jurisdiction</h2>
               <p>
-                Except for the limited license granted in Section 5, Cyoda and its licensors retain all right, title, and interest in and to the Services, including all related intellectual property rights. These Terms do not grant you any rights to use Cyoda's trademarks, logos, domain names, or other brand features.
+                These Terms, their subject matter, and their formation (and any non-contractual disputes or
+                claims) are governed by the law of England and Wales. If you are a business, you and we agree
+                that the courts of England and Wales will have exclusive jurisdiction. If you are a consumer,
+                you may also bring proceedings in the courts of the part of the United Kingdom in which you
+                live.
               </p>
 
-              <h2>8. Disclaimers of Warranties</h2>
-              <div className="bg-yellow-500/20 border border-yellow-500/30 rounded-xl p-6 my-6">
-                <p className="text-yellow-900 dark:text-yellow-100 font-medium">
-                  THE SERVICES ARE PROVIDED "AS IS," "AS AVAILABLE," AND WITHOUT WARRANTY OF ANY KIND. TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, CYODA EXPRESSLY DISCLAIMS ALL WARRANTIES, WHETHER EXPRESS, IMPLIED, STATUTORY, OR OTHERWISE, INCLUDING, BUT NOT LIMITED TO, WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, QUIET ENJOYMENT, ACCURACY, AND NON-INFRINGEMENT.
-                </p>
-              </div>
-
-              <h2>9. Limitation of Liability</h2>
-              <div className="bg-red-500/20 border border-red-500/30 rounded-xl p-6 my-6">
-                <p className="text-red-900 dark:text-red-100 font-medium">
-                  TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL CYODA, ITS AFFILIATES, DIRECTORS, EMPLOYEES, AGENTS, OR LICENSORS BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, PUNITIVE, OR EXEMPLARY DAMAGES ARISING OUT OF OR IN CONNECTION WITH YOUR ACCESS TO OR USE OF, OR INABILITY TO ACCESS OR USE, THE SERVICES DURING THE ALPHA/BETA PERIOD.
-                </p>
-                <p className="text-red-900 dark:text-red-100 mt-4">
-                  <strong>CYODA'S TOTAL CUMULATIVE LIABILITY TO YOU FOR ANY AND ALL CLAIMS ARISING FROM OR RELATING TO THESE TERMS OR YOUR USE OF THE SERVICES DURING THE ALPHA/BETA PERIOD SHALL NOT EXCEED TEN POUNDS STERLING (£10.00 GBP).</strong>
-                </p>
-              </div>
-
-              <h2>12. Governing Law and Dispute Resolution</h2>
+              <h2>14. Contact</h2>
               <p>
-                These Terms and any dispute or claim arising out of or in connection with them or their subject matter or formation (including non-contractual disputes or claims) shall be governed by and construed in accordance with the laws of England and Wales, without giving effect to any choice or conflict of law provision or rule.
-              </p>
-              <p>
-                Any legal suit, action, or proceeding arising out of, or related to, these Terms or the Services shall be instituted exclusively in the courts of England and Wales. You waive any and all objections to the exercise of jurisdiction over you by such courts and to venue in such courts.
+                If you have any questions about these Terms, please contact us using the details below or via
+                our <a href="/contact" className="text-primary hover:underline">contact form</a>.
               </p>
 
-              <h2>14. Contact Information</h2>
-              <p>If you have any questions about these Terms, please contact Cyoda.</p>
-              
               <div className="legal-card page-break-inside-avoid">
                 <p className="mb-2 sm:mb-3"><strong>Cyoda Limited</strong></p>
-                <p className="mb-2 sm:mb-3">1 Darell Road, Richmond, TW9 4LF, UK</p>
-                <p className="mb-2 sm:mb-3">United Kingdom</p>
+                <p className="mb-2 sm:mb-3">Company number 09755017 (England and Wales)</p>
+                <p className="mb-2 sm:mb-3">VAT registration number: GB314619905</p>
+                <p className="mb-2 sm:mb-3">1 Darell Road, Richmond, London, TW9 4LF, United Kingdom</p>
+                <p className="mb-2 sm:mb-3">Email: <a href="mailto:info@cyoda.com" className="text-primary hover:underline">info@cyoda.com</a></p>
                 <p>Website: <a href="https://cyoda.com" className="text-primary hover:underline">https://cyoda.com</a></p>
               </div>
             </div>
